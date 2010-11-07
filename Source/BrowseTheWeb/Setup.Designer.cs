@@ -72,6 +72,7 @@
       this.tabPage3 = new System.Windows.Forms.TabPage();
       this.tabPage4 = new System.Windows.Forms.TabPage();
       this.listBox1 = new System.Windows.Forms.ListBox();
+      this.chkRemote = new System.Windows.Forms.CheckBox();
       this.contextMenuStrip1.SuspendLayout();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
@@ -506,6 +507,7 @@
       // tabPage4
       // 
       this.tabPage4.BackColor = System.Drawing.SystemColors.Control;
+      this.tabPage4.Controls.Add(this.chkRemote);
       this.tabPage4.Controls.Add(this.listBox1);
       this.tabPage4.Location = new System.Drawing.Point(4, 25);
       this.tabPage4.Name = "tabPage4";
@@ -520,8 +522,18 @@
       this.listBox1.ItemHeight = 16;
       this.listBox1.Location = new System.Drawing.Point(6, 15);
       this.listBox1.Name = "listBox1";
-      this.listBox1.Size = new System.Drawing.Size(550, 452);
+      this.listBox1.Size = new System.Drawing.Size(550, 420);
       this.listBox1.TabIndex = 0;
+      // 
+      // chkRemote
+      // 
+      this.chkRemote.AutoSize = true;
+      this.chkRemote.Location = new System.Drawing.Point(6, 441);
+      this.chkRemote.Name = "chkRemote";
+      this.chkRemote.Size = new System.Drawing.Size(199, 20);
+      this.chkRemote.TabIndex = 5;
+      this.chkRemote.Text = "Show diagnose on status bar";
+      this.chkRemote.UseVisualStyleBackColor = true;
       // 
       // Setup
       // 
@@ -561,6 +573,7 @@
       this.tabPage3.ResumeLayout(false);
       this.tabPage3.PerformLayout();
       this.tabPage4.ResumeLayout(false);
+      this.tabPage4.PerformLayout();
       this.ResumeLayout(false);
 
     }
@@ -609,5 +622,6 @@
     private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
     private System.Windows.Forms.CheckBox chkOSD;
     private System.Windows.Forms.RadioButton optNoZoom;
+    private System.Windows.Forms.CheckBox chkRemote;
   }
 }

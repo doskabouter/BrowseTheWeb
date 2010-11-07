@@ -554,7 +554,7 @@ namespace BrowseTheWeb
       {
         chkHome.Checked = xmlreader.GetValueAsBool("btWeb", "usehome", true);
         txtHome.Text = xmlreader.GetValueAsString("btWeb", "homepage", "http://team-mediaportal.com");
-        trkRemote.Value = xmlreader.GetValueAsInt("btWeb", "remote", 15);
+        trkRemote.Value = xmlreader.GetValueAsInt("btWeb", "remote", 25);
         txtName.Text = xmlreader.GetValueAsString("btWeb", "name", "Browse Web");
         chkBlank.Checked = xmlreader.GetValueAsBool("btWeb", "blank", false);
         chkStatus.Checked = xmlreader.GetValueAsBool("btWeb", "status", false);
@@ -564,6 +564,8 @@ namespace BrowseTheWeb
         trkFont.Value = xmlreader.GetValueAsInt("btWeb", "font", 100);
         optZoomPage.Checked = xmlreader.GetValueAsBool("btWeb", "page", true);
         optZoomDomain.Checked = xmlreader.GetValueAsBool("btWeb", "domain", false);
+
+        chkRemote.Checked = xmlreader.GetValueAsBool("btWeb", "remote", false);
       }
     }
     private void SaveSettings()
@@ -583,6 +585,8 @@ namespace BrowseTheWeb
         xmlwriter.SetValue("btWeb", "font", trkFont.Value);
         xmlwriter.SetValueAsBool("btWeb", "page", optZoomPage.Checked);
         xmlwriter.SetValueAsBool("btWeb", "domain", optZoomDomain.Checked);
+
+        xmlwriter.SetValueAsBool("btWeb", "remote", chkRemote.Checked);
       }
     }
 
