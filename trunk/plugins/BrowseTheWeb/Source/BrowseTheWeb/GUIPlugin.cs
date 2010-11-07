@@ -66,6 +66,7 @@ namespace BrowseTheWeb
     private bool zoomPage = false;
     private bool zoomDomain = false;
     private string lastDomain = string.Empty;
+    private bool remote = false;
 
     private float defaultZoom = 1.0f;
     private float zoom = 1.0f;
@@ -184,11 +185,13 @@ namespace BrowseTheWeb
         if ((usehome) && (loadFav == string.Empty))
         {
           webBrowser.Navigate(homepage);
+          MyLog.debug("load home page " + homepage);
         }
       }
       if (loadFav != string.Empty)
       {
         webBrowser.Navigate(loadFav);
+        MyLog.debug("load favorite " + loadFav);
         loadFav = string.Empty;
       }
 
@@ -218,6 +221,8 @@ namespace BrowseTheWeb
         font = (float)xmlreader.GetValueAsInt("btWeb", "font", 100) / 100;
         zoomPage = xmlreader.GetValueAsBool("btWeb", "page", true);
         zoomDomain = xmlreader.GetValueAsBool("btWeb", "domain", false);
+
+        remote = xmlreader.GetValueAsBool("btWeb", "remote", false);
       }
     }
 
@@ -250,7 +255,11 @@ namespace BrowseTheWeb
     {
       if (new_windowId != 54537688)
       { // not if you got favs
-        if (blankBrowser) webBrowser.Navigate("about:blank");
+        if (blankBrowser)
+        {
+          webBrowser.Navigate("about:blank");
+          MyLog.debug("blank on destroy");
+        }
       }
       webBrowser.Visible = false;
       osd_linkID.Visible = false;
@@ -266,10 +275,18 @@ namespace BrowseTheWeb
 
     public override void OnAction(Action action)
     {
+      if (remote)
+      {
+        if (action.wID != Action.ActionType.ACTION_KEY_PRESSED)
+          GUIPropertyManager.SetProperty("#btWeb.status", action.wID.ToString());
+        else
+          GUIPropertyManager.SetProperty("#btWeb.status", action.wID.ToString() + " / " + action.m_key.KeyChar.ToString());
+      }
       switch (action.wID)
       {
         case Action.ActionType.ACTION_KEY_PRESSED:
           linkTime = 0;
+          MyLog.debug("action key press=" + action.m_key.KeyChar);
           switch (action.m_key.KeyChar)
           {
             #region 0..9
@@ -316,6 +333,7 @@ namespace BrowseTheWeb
             if (Bookmark.isValidUrl(selectedUrl))
             {
               webBrowser.Navigate(selectedUrl);
+              MyLog.debug("navigate to " + selectedUrl);
             }
             else
               ShowAlert("Wrong link ?", " The link you entered seems to be not valid.", "Input:", selectedUrl);
@@ -324,6 +342,7 @@ namespace BrowseTheWeb
           break;
         case Action.ActionType.ACTION_PAUSE:
           webBrowser.Navigate(homepage);
+          MyLog.debug("load home page " + homepage);
           GUIPropertyManager.SetProperty("#btWeb.status", "go to homepage");
           break;
         case Action.ActionType.ACTION_STOP:
@@ -331,7 +350,16 @@ namespace BrowseTheWeb
           GUIPropertyManager.SetProperty("#btWeb.status", "Stop");
           break;
         case Action.ActionType.ACTION_PARENT_DIR:
-          if (linkId != string.Empty) OnLinkId(linkId);
+        case Action.ActionType.ACTION_ASPECT_RATIO:
+          if (linkId != string.Empty)
+          {
+            MyLog.debug("confirm link pressed");
+            OnLinkId(linkId);
+          }
+          else
+          {
+            MyLog.debug("confirm link pressed, no link present");
+          }
           break;
         case Action.ActionType.ACTION_CONTEXT_MENU:
         case Action.ActionType.ACTION_SHOW_INFO:
@@ -340,10 +368,12 @@ namespace BrowseTheWeb
         case Action.ActionType.ACTION_PREV_ITEM:
           webBrowser.GoBack();
           GUIPropertyManager.SetProperty("#btWeb.status", "go backward");
+          MyLog.debug("navigate go back");
           break;
         case Action.ActionType.ACTION_NEXT_ITEM:
           webBrowser.GoForward();
           GUIPropertyManager.SetProperty("#btWeb.status", "go forward");
+          MyLog.debug("navigate go forward");
           break;
         case Action.ActionType.ACTION_RECORD:
           string title = webBrowser.Document.Title;
@@ -578,12 +608,14 @@ namespace BrowseTheWeb
         {
           case HtmlInputType.Link:
             webBrowser.Navigate(hln.Link);
+            MyLog.debug("navigate to linkid=" + LinkId + " URL=" + hln.Link);
             break;
           case HtmlInputType.Input:
             ShowInputDialog(hln);
             break;
           case HtmlInputType.Action:
             webBrowser.Navigate("javascript:document.getElementById(\"" + hln.Id + "\").click()");
+            MyLog.debug("action linkid=" + LinkId);
             break;
         }
       }
@@ -684,6 +716,5 @@ namespace BrowseTheWeb
     {
       MediaPortal.Util.Utils.PlaySound(strFilePath, false, true);
     }
-    
   }
 }

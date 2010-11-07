@@ -263,12 +263,12 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
     <Author>Mark Koenig (kroko) 2010</Author>
     <HomePage>http://www.team-mediaportal.com</HomePage>
-    <ForumPage />
-    <UpdateUrl />
+    <ForumPage>http://forum.team-mediaportal.com/mediaportal-plugins-47/plugin-browse-web-webbrowser-89101/</ForumPage>
+    <UpdateUrl>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.mpe1</UpdateUrl>
     <Version>
       <Major>0</Major>
       <Minor>1</Minor>
-      <Build>0</Build>
+      <Build>1</Build>
       <Revision>0</Revision>
     </Version>
     <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / " Webbrowser.
@@ -276,14 +276,14 @@ Click Next to continue or Cancel to exit Setup.</Value>
 </ExtensionDescription>
     <VersionDescription>inital release</VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
-    <OnlineLocation />
+    <OnlineLocation>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.xml</OnlineLocation>
     <ReleaseDate>2010-11-06T15:09:04.5514802+01:00</ReleaseDate>
     <Tags>webbrowser, internet, web</Tags>
     <Location>C:\AAA\BrowseTheWeb\Release\BrowseTheWeb.mpe1</Location>
     <Params>
       <Items>
         <SectionParam Name="Icon">
-          <Value />
+          <Value>..\Source\BrowseTheWeb\xulrunner.png</Value>
           <ValueType>File</ValueType>
           <Description>The icon file of the package (jpg,png,bmp)</Description>
         </SectionParam>
@@ -300,7 +300,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
  If have .dll extension used like MP plugin configuration</Description>
         </SectionParam>
         <SectionParam Name="Online Screenshots">
-          <Value />
+          <Value>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/browser1.jpg;https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/setup3.jpg</Value>
           <ValueType>String</ValueType>
           <Description>Online stored screenshot urls separated by ; </Description>
         </SectionParam>
@@ -391,6 +391,13 @@ Click Next to continue or Cancel to exit Setup.</Value>
         <ZipFileName>Installer{CopyFile}\{261f9f9e-cace-4e95-b709-c1db6c350606}-hover_browsetheweb.png</ZipFileName>
         <DestinationFilename>%Skin%\Blue3wide\Media\hover_browsetheweb.png</DestinationFilename>
       </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="true" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>..\Source\BrowseTheWeb\xulrunner.png</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{ae79ffc1-4c93-4417-9842-359b85693512}-xulrunner.png</ZipFileName>
+        <DestinationFilename />
+      </FileItem>
     </Items>
   </UniqueFileList>
   <ProjectSettings>
@@ -427,7 +434,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
       </FolderGroup>
     </FolderGroups>
     <ProjectFilename>C:\AAA\BrowseTheWeb\Release\BrowseTheWeb.xmp2</ProjectFilename>
-    <UpdatePath1 />
+    <UpdatePath1>C:\AAA\BrowseTheWeb\Release\BrowseTheWeb.xml</UpdatePath1>
     <UpdatePath2 />
     <UpdatePath3 />
   </ProjectSettings>

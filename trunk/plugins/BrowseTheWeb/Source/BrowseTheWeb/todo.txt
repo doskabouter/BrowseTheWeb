@@ -1,4 +1,5 @@
 ﻿V0.1 inital release
+V0.1.1 add diagnose remote / logs
 
 todo:
 nothing yet
@@ -7,4 +8,4 @@ planed:
 better alternate OSD
 speed up (if possible), partly done
 add statistics and sort functions
-show circle on loading
+show circle on loading ??

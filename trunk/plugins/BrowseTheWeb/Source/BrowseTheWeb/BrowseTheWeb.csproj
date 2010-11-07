@@ -77,6 +77,7 @@
     <Compile Include="GUIPlugin.cs" />
     <Compile Include="HtmlInputType.cs" />
     <Compile Include="HtmlLinkNumber.cs" />
+    <Compile Include="MyLog.cs" />
     <Compile Include="OSD_LinkId.cs">
       <SubType>UserControl</SubType>
     </Compile>
