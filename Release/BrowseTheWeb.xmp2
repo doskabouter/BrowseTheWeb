@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageClass xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Version>2.0</Version>
+  <Groups>
+    <Items>
+      <GroupItem Name="Default">
+        <ParentGroup />
+        <DisplayName>Default</DisplayName>
+        <DefaulChecked>true</DefaulChecked>
+        <Description>Default</Description>
+        <Files>
+          <Items>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Files\xulrunner.zip</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{c9cda48b-d308-439e-9997-5d29e02e898d}-xulrunner.zip</ZipFileName>
+              <DestinationFilename>%Cache%\xulrunner.zip</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Files\unzip.exe</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{f8239056-5461-4664-99ae-baedfed8cc25}-unzip.exe</ZipFileName>
+              <DestinationFilename>%Cache%\unzip.exe</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Plugins\Windows\BrowseTheWeb.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{1506466c-26c2-4a8f-bbe3-20b5be6eefdf}-BrowseTheWeb.dll</ZipFileName>
+              <DestinationFilename>%Plugins%\Windows\BrowseTheWeb.dll</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Plugins\Windows\HtmlAgilityPack.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{3c35cede-0ef8-455e-8ea5-f341e7d0398e}-HtmlAgilityPack.dll</ZipFileName>
+              <DestinationFilename>%Plugins%\Windows\HtmlAgilityPack.dll</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Plugins\Windows\Skybound.Gecko.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{a57471fc-683c-417b-8a58-b57de15ace66}-Skybound.Gecko.dll</ZipFileName>
+              <DestinationFilename>%Plugins%\Windows\Skybound.Gecko.dll</DestinationFilename>
+            </FileItem>
+          </Items>
+        </Files>
+      </GroupItem>
+      <GroupItem Name="Blue3">
+        <DisplayName>Blue3</DisplayName>
+        <DefaulChecked>true</DefaulChecked>
+        <Description>Blue3</Description>
+        <Files>
+          <Items>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Skin\Blue3\browsetheweb.xml</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{f5702498-f4fe-4d93-a3e4-147b4259f022}-browsetheweb.xml</ZipFileName>
+              <DestinationFilename>%Skin%\Blue3\browsetheweb.xml</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Skin\Blue3\browsethewebbook.xml</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{ff6dcc58-3934-4b17-9304-ba0969411580}-browsethewebbook.xml</ZipFileName>
+              <DestinationFilename>%Skin%\Blue3\browsethewebbook.xml</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Skin\Blue3\Media\hover_browsetheweb.png</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{a8509fba-5a4e-45c8-ad6c-5c6a50931b30}-hover_browsetheweb.png</ZipFileName>
+              <DestinationFilename>%Skin%\Blue3\Media\hover_browsetheweb.png</DestinationFilename>
+            </FileItem>
+          </Items>
+        </Files>
+      </GroupItem>
+      <GroupItem Name="Blue3wide">
+        <DisplayName>Blue3wide</DisplayName>
+        <DefaulChecked>true</DefaulChecked>
+        <Description>Blue3wide</Description>
+        <Files>
+          <Items>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Skin\Blue3wide\browsetheweb.xml</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{682a1fa4-16db-4bc3-961f-e05e59ce1787}-browsetheweb.xml</ZipFileName>
+              <DestinationFilename>%Skin%\Blue3wide\browsetheweb.xml</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Skin\Blue3wide\browsethewebbook.xml</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{d4d67df8-81ad-4d73-b98e-350693b4644b}-browsethewebbook.xml</ZipFileName>
+              <DestinationFilename>%Skin%\Blue3wide\browsethewebbook.xml</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Skin\Blue3wide\Media\hover_browsetheweb.png</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{261f9f9e-cace-4e95-b709-c1db6c350606}-hover_browsetheweb.png</ZipFileName>
+              <DestinationFilename>%Skin%\Blue3wide\Media\hover_browsetheweb.png</DestinationFilename>
+            </FileItem>
+          </Items>
+        </Files>
+      </GroupItem>
+    </Items>
+  </Groups>
+  <Sections>
+    <Items>
+      <SectionItem Guid="0e2b5186-4083-4773-992d-669cce5d27f7" Name="Welcome Screen" ConditionGroup="">
+        <Params>
+          <Items>
+            <SectionParam Name="Header text">
+              <Value>Welcome to the Extension Installer for [Name]</Value>
+              <ValueType>String</ValueType>
+              <Description />
+            </SectionParam>
+            <SectionParam Name="Description">
+              <Value>This will install [Name] version [Version] on your computer.
+It is recommended that you close all other applications before continuing.
+Click Next to continue or Cancel to exit Setup.</Value>
+              <ValueType>String</ValueType>
+              <Description />
+            </SectionParam>
+            <SectionParam Name="Left part image">
+              <Value />
+              <ValueType>File</ValueType>
+              <Description />
+            </SectionParam>
+            <SectionParam Name="Header image">
+              <Value />
+              <ValueType>File</ValueType>
+              <Description>Image in upper right part</Description>
+            </SectionParam>
+          </Items>
+        </Params>
+        <Actions>
+          <Items />
+        </Actions>
+        <IncludedGroups />
+        <PanelName>Welcome Screen</PanelName>
+        <WizardButtonsEnum>NextCancel</WizardButtonsEnum>
+      </SectionItem>
+      <SectionItem Guid="f787cbf1-9aaa-46eb-8e68-d8a0eb6dd35d" Name="Install Section" ConditionGroup="">
+        <Params>
+          <Items>
+            <SectionParam Name="Header Title">
+              <Value>Install files</Value>
+              <ValueType>String</ValueType>
+              <Description>Header title</Description>
+            </SectionParam>
+            <SectionParam Name="Header description">
+              <Value />
+              <ValueType>String</ValueType>
+              <Description>Description of section, shown in under section title</Description>
+            </SectionParam>
+            <SectionParam Name="Header image">
+              <Value />
+              <ValueType>File</ValueType>
+              <Description>Image in upper right part</Description>
+            </SectionParam>
+          </Items>
+        </Params>
+        <Actions>
+          <Items>
+            <ActionItem Name="InstallFiles" ActionType="InstallFiles" ConditionGroup="Default">
+              <Params>
+                <Items />
+              </Params>
+              <ExecuteLocation>AfterPanelShow</ExecuteLocation>
+            </ActionItem>
+          </Items>
+        </Actions>
+        <IncludedGroups />
+        <PanelName>Install Section</PanelName>
+        <WizardButtonsEnum>Next</WizardButtonsEnum>
+      </SectionItem>
+      <SectionItem Guid="e0c3a914-a347-4f81-ad22-0c87e70ecbe6" Name="Install Section" ConditionGroup="">
+        <Params>
+          <Items>
+            <SectionParam Name="Header Title">
+              <Value>Configure plugin</Value>
+              <ValueType>String</ValueType>
+              <Description>Header title</Description>
+            </SectionParam>
+            <SectionParam Name="Header description">
+              <Value />
+              <ValueType>String</ValueType>
+              <Description>Description of section, shown in under section title</Description>
+            </SectionParam>
+            <SectionParam Name="Header image">
+              <Value />
+              <ValueType>File</ValueType>
+              <Description>Image in upper right part</Description>
+            </SectionParam>
+          </Items>
+        </Params>
+        <Actions>
+          <Items>
+            <ActionItem Name="ConfigurePlugin" ActionType="ConfigurePlugin" ConditionGroup="Default">
+              <Params>
+                <Items>
+                  <SectionParam Name="Path to plugin">
+                    <Value>%Plugins%\windows\browsetheweb.dll</Value>
+                    <ValueType>Template</ValueType>
+                    <Description>Path to the plugin like 
+ %Plugins%\Windows\plugin.dll</Description>
+                  </SectionParam>
+                </Items>
+              </Params>
+              <ExecuteLocation>AfterPanelShow</ExecuteLocation>
+            </ActionItem>
+          </Items>
+        </Actions>
+        <IncludedGroups />
+        <PanelName>Install Section</PanelName>
+        <WizardButtonsEnum>Next</WizardButtonsEnum>
+      </SectionItem>
+      <SectionItem Guid="67389f75-db2b-4081-b553-91600f1cbcca" Name="Setup Complete" ConditionGroup="">
+        <Params>
+          <Items>
+            <SectionParam Name="Header text">
+              <Value>The Extension Installer Wizard has successfully installed [Name].</Value>
+              <ValueType>String</ValueType>
+              <Description />
+            </SectionParam>
+            <SectionParam Name="Left part image">
+              <Value />
+              <ValueType>File</ValueType>
+              <Description />
+            </SectionParam>
+            <SectionParam Name="Show radio buttons">
+              <Value />
+              <ValueType>Bool</ValueType>
+              <Description>Use radiobutton in place of combobox</Description>
+            </SectionParam>
+            <SectionParam Name="Header image">
+              <Value />
+              <ValueType>File</ValueType>
+              <Description>Image in upper right part</Description>
+            </SectionParam>
+          </Items>
+        </Params>
+        <Actions>
+          <Items />
+        </Actions>
+        <IncludedGroups />
+        <PanelName>Setup Complete</PanelName>
+        <WizardButtonsEnum>Finish</WizardButtonsEnum>
+      </SectionItem>
+    </Items>
+  </Sections>
+  <Dependencies>
+    <Items />
+  </Dependencies>
+  <GeneralInfo>
+    <Name>Browse The Web</Name>
+    <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
+    <Author>Mark Koenig (kroko) 2010</Author>
+    <HomePage>http://www.team-mediaportal.com</HomePage>
+    <ForumPage />
+    <UpdateUrl />
+    <Version>
+      <Major>0</Major>
+      <Minor>1</Minor>
+      <Build>0</Build>
+      <Revision>0</Revision>
+    </Version>
+    <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / " Webbrowser.
+
+</ExtensionDescription>
+    <VersionDescription>inital release</VersionDescription>
+    <DevelopmentStatus>Stable</DevelopmentStatus>
+    <OnlineLocation />
+    <ReleaseDate>2010-11-06T15:09:04.5514802+01:00</ReleaseDate>
+    <Tags>webbrowser, internet, web</Tags>
+    <Location>C:\AAA\BrowseTheWeb\Release\BrowseTheWeb.mpe1</Location>
+    <Params>
+      <Items>
+        <SectionParam Name="Icon">
+          <Value />
+          <ValueType>File</ValueType>
+          <Description>The icon file of the package (jpg,png,bmp)</Description>
+        </SectionParam>
+        <SectionParam Name="Online Icon">
+          <Value />
+          <ValueType>String</ValueType>
+          <Description>The icon file of the package stored online (jpg,png,bmp)</Description>
+        </SectionParam>
+        <SectionParam Name="Configuration file">
+          <Value />
+          <ValueType>Template</ValueType>
+          <Description>The file used to configure the extension.
+ If have .exe extension the will be executed
+ If have .dll extension used like MP plugin configuration</Description>
+        </SectionParam>
+        <SectionParam Name="Online Screenshots">
+          <Value />
+          <ValueType>String</ValueType>
+          <Description>Online stored screenshot urls separated by ; </Description>
+        </SectionParam>
+        <SectionParam Name="Force to uninstall on update">
+          <Value>yes</Value>
+          <ValueType>Bool</ValueType>
+          <Description>Show dialog and force to uninstall previous version when updating an extension. Should only be disabled if you are using an NSIS/MSI installer.</Description>
+        </SectionParam>
+      </Items>
+    </Params>
+  </GeneralInfo>
+  <UniqueFileList>
+    <Items>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Files\xulrunner.zip</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{c9cda48b-d308-439e-9997-5d29e02e898d}-xulrunner.zip</ZipFileName>
+        <DestinationFilename>%Cache%\xulrunner.zip</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Files\unzip.exe</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{f8239056-5461-4664-99ae-baedfed8cc25}-unzip.exe</ZipFileName>
+        <DestinationFilename>%Cache%\unzip.exe</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Plugins\Windows\BrowseTheWeb.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{1506466c-26c2-4a8f-bbe3-20b5be6eefdf}-BrowseTheWeb.dll</ZipFileName>
+        <DestinationFilename>%Plugins%\Windows\BrowseTheWeb.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Plugins\Windows\HtmlAgilityPack.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{3c35cede-0ef8-455e-8ea5-f341e7d0398e}-HtmlAgilityPack.dll</ZipFileName>
+        <DestinationFilename>%Plugins%\Windows\HtmlAgilityPack.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Plugins\Windows\Skybound.Gecko.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{a57471fc-683c-417b-8a58-b57de15ace66}-Skybound.Gecko.dll</ZipFileName>
+        <DestinationFilename>%Plugins%\Windows\Skybound.Gecko.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Skin\Blue3\browsetheweb.xml</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{f5702498-f4fe-4d93-a3e4-147b4259f022}-browsetheweb.xml</ZipFileName>
+        <DestinationFilename>%Skin%\Blue3\browsetheweb.xml</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Skin\Blue3\browsethewebbook.xml</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{ff6dcc58-3934-4b17-9304-ba0969411580}-browsethewebbook.xml</ZipFileName>
+        <DestinationFilename>%Skin%\Blue3\browsethewebbook.xml</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Skin\Blue3\Media\hover_browsetheweb.png</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{a8509fba-5a4e-45c8-ad6c-5c6a50931b30}-hover_browsetheweb.png</ZipFileName>
+        <DestinationFilename>%Skin%\Blue3\Media\hover_browsetheweb.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Skin\Blue3wide\browsetheweb.xml</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{682a1fa4-16db-4bc3-961f-e05e59ce1787}-browsetheweb.xml</ZipFileName>
+        <DestinationFilename>%Skin%\Blue3wide\browsetheweb.xml</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Skin\Blue3wide\browsethewebbook.xml</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{d4d67df8-81ad-4d73-b98e-350693b4644b}-browsethewebbook.xml</ZipFileName>
+        <DestinationFilename>%Skin%\Blue3wide\browsethewebbook.xml</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Skin\Blue3wide\Media\hover_browsetheweb.png</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{261f9f9e-cace-4e95-b709-c1db6c350606}-hover_browsetheweb.png</ZipFileName>
+        <DestinationFilename>%Skin%\Blue3wide\Media\hover_browsetheweb.png</DestinationFilename>
+      </FileItem>
+    </Items>
+  </UniqueFileList>
+  <ProjectSettings>
+    <FolderGroups>
+      <FolderGroup InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName />
+        <ZipFileName>Installer{CopyFile}\{65cd0963-1418-4979-8453-c97cd8dcb02e}-</ZipFileName>
+        <DestinationFilename>%Plugins%\Windows</DestinationFilename>
+        <Folder>Plugins\Windows</Folder>
+        <Group>Default</Group>
+        <Recursive>true</Recursive>
+      </FolderGroup>
+      <FolderGroup InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName />
+        <ZipFileName>Installer{CopyFile}\{8b965339-4bf4-4bd8-af6b-3e88ccd8dcc5}-</ZipFileName>
+        <DestinationFilename>%Skin%\Blue3wide</DestinationFilename>
+        <Folder>Skin\Blue3wide</Folder>
+        <Group>Blue3wide</Group>
+        <Recursive>true</Recursive>
+      </FolderGroup>
+      <FolderGroup InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName />
+        <ZipFileName>Installer{CopyFile}\{498c8a98-0745-46db-b751-8090812bde0d}-</ZipFileName>
+        <DestinationFilename>%Skin%\Blue3</DestinationFilename>
+        <Folder>Skin\Blue3</Folder>
+        <Group>Blue3</Group>
+        <Recursive>true</Recursive>
+      </FolderGroup>
+    </FolderGroups>
+    <ProjectFilename>C:\AAA\BrowseTheWeb\Release\BrowseTheWeb.xmp2</ProjectFilename>
+    <UpdatePath1 />
+    <UpdatePath2 />
+    <UpdatePath3 />
+  </ProjectSettings>
+</PackageClass>
