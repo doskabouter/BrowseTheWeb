@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window>
+  <id>54537689</id>
+  <defaultcontrol>50</defaultcontrol>
+  <allowoverlay>yes</allowoverlay>
+  <autohidetopbar>yes</autohidetopbar>
+  <controls>
+
+    <control>
+      <description>BackGround</description>
+      <type>image</type>
+      <id>1</id>
+      <posX>0</posX>
+      <posY>0</posY>
+      <width>720</width>
+      <height>576</height>
+      <texture>background.png</texture>
+    </control>
+
+
+    <control>
+      <description>listcontrol</description>
+      <type>listcontrol</type>
+      <id>50</id>
+      <posX>120</posX> 
+      <posY>120</posY> 
+      <width>480</width> 
+      <height>450</height> 
+      <animation effect="zoom" start="20,20" end="100,100" center="640,360" time="250">WindowOpen</animation>
+      <animation effect="zoom" start="100,100" end="1,1" center="640,360" time="250">WindowClose</animation>  
+    </control>     
+    
+  </controls>
+</window>

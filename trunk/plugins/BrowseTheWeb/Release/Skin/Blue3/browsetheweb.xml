@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window>
+  <id>54537689</id>
+  <defaultcontrol>2</defaultcontrol>
+  <allowoverlay>no</allowoverlay>
+  <disabletopbar>true</disabletopbar>
+  <controls>
+ <control>
+      <description>background image</description>
+      <type>image</type>
+      <id>1</id>
+      <width>720</width>
+      <height>576</height>
+    </control>
+   
+    <control>
+      <description>Status label</description>
+      <type>label</type>
+      <id>9</id>
+      <posX>7</posX>
+      <posY>540</posY>
+      <label>#btWeb.status</label>
+      <font>font12</font>
+      <align>left</align>
+      <textcolor>ffffffff</textcolor>
+    </control>
+    <control>
+      <description>Link id label</description>
+      <type>label</type>
+      <id>9</id>
+      <posX>900</posX>
+      <posY>540</posY>
+      <label>#btWeb.linkid</label>
+      <font>font10</font>
+      <align>left</align>
+      <textcolor>ffffffff</textcolor>
+    </control>
+    
+  </controls>
+</window>
