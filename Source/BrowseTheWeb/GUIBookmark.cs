@@ -78,7 +78,7 @@ namespace BrowseTheWeb
           }
           else
           {
-            GUIPlugin.loadFav = item.Path;
+            GUIPlugin.StartupLink = item.Path;
             GUIWindowManager.ActivateWindow(54537689);
           }
         }

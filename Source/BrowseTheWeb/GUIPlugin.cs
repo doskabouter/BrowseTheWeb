@@ -134,6 +134,19 @@ namespace BrowseTheWeb
         base.GetID = value;
       }
     }
+
+    public static string StartupLink
+    {
+        get
+        {
+          string value = GUIPropertyManager.GetProperty("#btWeb.startup.link");
+          if (null != value && !string.IsNullOrEmpty(value.Trim()))
+            return value.Trim();
+          return string.Empty;
+        }
+        set { GUIPropertyManager.SetProperty("#btWeb.startup.link", string.IsNullOrEmpty(value) ? " " : value.Trim()); }
+    }
+
     public override bool Init()
     {
       Xpcom.Initialize(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\xulrunner");
@@ -180,19 +193,22 @@ namespace BrowseTheWeb
       webBrowser.DocumentCompleted += new EventHandler(webBrowser_DocumentCompleted);
       webBrowser.StatusTextChanged += new EventHandler(webBrowser_StatusTextChanged);
 
+      string loadFav = StartupLink;
+
       if (webBrowser.Document.Domain == string.Empty)
       {
-        if ((usehome) && (loadFav == string.Empty))
+        if ((usehome) && (string.IsNullOrEmpty(loadFav)))
         {
           webBrowser.Navigate(homepage);
           MyLog.debug("load home page " + homepage);
         }
       }
-      if (loadFav != string.Empty)
+
+      if (!string.IsNullOrEmpty(loadFav))
       {
         webBrowser.Navigate(loadFav);
         MyLog.debug("load favorite " + loadFav);
-        loadFav = string.Empty;
+        StartupLink = string.Empty;
       }
 
       #endregion
