@@ -264,7 +264,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <Author>Mark Koenig (kroko) 2010</Author>
     <HomePage>http://www.team-mediaportal.com</HomePage>
     <ForumPage>http://forum.team-mediaportal.com/mediaportal-plugins-47/plugin-browse-web-webbrowser-89101/</ForumPage>
-    <UpdateUrl>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.mpe1</UpdateUrl>
+    <UpdateUrl>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
     <Version>
       <Major>0</Major>
       <Minor>1</Minor>
@@ -276,7 +276,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
 </ExtensionDescription>
     <VersionDescription>inital release</VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
-    <OnlineLocation>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.xml</OnlineLocation>
+    <OnlineLocation>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.mpe1</OnlineLocation>
     <ReleaseDate>2010-11-06T15:09:04.5514802+01:00</ReleaseDate>
     <Tags>webbrowser, internet, web</Tags>
     <Location>C:\AAA\BrowseTheWeb\Release\BrowseTheWeb.mpe1</Location>
@@ -395,7 +395,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>..\Source\BrowseTheWeb\xulrunner.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{ae79ffc1-4c93-4417-9842-359b85693512}-xulrunner.png</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{3e02e324-41b2-4de9-82f4-959298f2e173}-xulrunner.png</ZipFileName>
         <DestinationFilename />
       </FileItem>
     </Items>
