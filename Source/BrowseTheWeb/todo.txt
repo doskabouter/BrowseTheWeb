@@ -1,5 +1,14 @@
 ﻿V0.1 inital release
+
 V0.1.1 add diagnose remote / logs
+
+V0.2
+add thumbs for webpages
+bookmark add / edit can be set even url is not valid
+Ready for Info Service, Thanks to SilentExeption
+
+
+
 
 todo:
 nothing yet
@@ -9,3 +18,4 @@ better alternate OSD
 speed up (if possible), partly done
 add statistics and sort functions
 show circle on loading ??
+mouse support for e.g. flash content

@@ -67,6 +67,12 @@
     <Compile Include="GetFolder.designer.cs">
       <DependentUpon>GetFolder.cs</DependentUpon>
     </Compile>
+    <Compile Include="GetThumb.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GetThumb.Designer.cs">
+      <DependentUpon>GetThumb.cs</DependentUpon>
+    </Compile>
     <Compile Include="GetUrl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,6 +135,9 @@
     <None Include="res\edit-icon.png" />
     <Content Include="res\fav-b-icon.png" />
     <Content Include="todo.txt" />
+    <EmbeddedResource Include="GetThumb.resx">
+      <DependentUpon>GetThumb.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OSD_LinkId.resx">
       <DependentUpon>OSD_LinkId.cs</DependentUpon>
       <SubType>Designer</SubType>
