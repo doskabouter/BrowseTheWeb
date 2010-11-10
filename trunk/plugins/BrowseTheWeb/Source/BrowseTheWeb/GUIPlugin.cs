@@ -25,6 +25,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+using System.Drawing;
 
 using MediaPortal.GUI.Library;
 using MediaPortal.Dialogs;
@@ -66,7 +68,9 @@ namespace BrowseTheWeb
     private bool zoomPage = false;
     private bool zoomDomain = false;
     private string lastDomain = string.Empty;
+    private bool cacheThumbs = false;
     private bool remote = false;
+    private string remote_1 = string.Empty;
 
     private float defaultZoom = 1.0f;
     private float zoom = 1.0f;
@@ -137,14 +141,14 @@ namespace BrowseTheWeb
 
     public static string StartupLink
     {
-        get
-        {
-          string value = GUIPropertyManager.GetProperty("#btWeb.startup.link");
-          if (null != value && !string.IsNullOrEmpty(value.Trim()))
-            return value.Trim();
-          return string.Empty;
-        }
-        set { GUIPropertyManager.SetProperty("#btWeb.startup.link", string.IsNullOrEmpty(value) ? " " : value.Trim()); }
+      get
+      {
+        string value = GUIPropertyManager.GetProperty("#btWeb.startup.link");
+        if (null != value && !string.IsNullOrEmpty(value.Trim()))
+          return value.Trim();
+        return string.Empty;
+      }
+      set { GUIPropertyManager.SetProperty("#btWeb.startup.link", string.IsNullOrEmpty(value) ? " " : value.Trim()); }
     }
 
     public override bool Init()
@@ -214,7 +218,7 @@ namespace BrowseTheWeb
       #endregion
 
       osd_linkID.Location = new System.Drawing.Point((GUIGraphicsContext.form.Width / 2) - (osd_linkID.Width / 2),
-                                                           (GUIGraphicsContext.form.Height / 2) - (osd_linkID.Height / 2));
+                                                     (GUIGraphicsContext.form.Height / 2) - (osd_linkID.Height / 2));
 
       base.OnPageLoad();
     }
@@ -238,7 +242,10 @@ namespace BrowseTheWeb
         zoomPage = xmlreader.GetValueAsBool("btWeb", "page", true);
         zoomDomain = xmlreader.GetValueAsBool("btWeb", "domain", false);
 
+        cacheThumbs = xmlreader.GetValueAsBool("btWeb", "cachethumbs", false);
+
         remote = xmlreader.GetValueAsBool("btWeb", "remote", false);
+        remote_1 = xmlreader.GetValueAsString("btWeb", "key_1", "REMOTE_1");
       }
     }
 
@@ -298,6 +305,21 @@ namespace BrowseTheWeb
         else
           GUIPropertyManager.SetProperty("#btWeb.status", action.wID.ToString() + " / " + action.m_key.KeyChar.ToString());
       }
+
+      string strAction = action.wID.ToString();
+      if (strAction == remote_1)
+      {
+        if (linkId != string.Empty)
+        {
+          MyLog.debug("confirm2 link pressed");
+          OnLinkId(linkId);
+        }
+        else
+        {
+          MyLog.debug("confirm2 link pressed, no link present");
+        }
+      }
+
       switch (action.wID)
       {
         case Action.ActionType.ACTION_KEY_PRESSED:
@@ -611,6 +633,25 @@ namespace BrowseTheWeb
           }
         }
         lastDomain = webBrowser.Document.Domain;
+      }
+      #endregion
+
+      #region save snapshot
+
+      if (webBrowser.Url.ToString() != "about:blank")
+      {
+        if (cacheThumbs)
+        {
+          Bitmap snap = new Bitmap(webBrowser.Width, webBrowser.Height);
+          webBrowser.DrawToBitmap(snap, new Rectangle(0, 0, webBrowser.Width, webBrowser.Height));
+
+          snap = MediaPortal.Util.BitmapResize.Resize(ref snap, 300, 400, false, true);
+
+          Graphics g = Graphics.FromImage((Image)snap);
+          g.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(1, 1, snap.Width - 2, snap.Height - 2));
+
+          Bookmark.SaveSnap(snap, webBrowser.Url.ToString());
+        }
       }
       #endregion
     }

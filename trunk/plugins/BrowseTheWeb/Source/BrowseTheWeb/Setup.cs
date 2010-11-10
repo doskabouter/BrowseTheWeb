@@ -33,26 +33,54 @@ using System.Xml;
 using System.Reflection;
 using System.IO;
 
-
+using Skybound.Gecko;
 using MediaPortal.Configuration;
 
 namespace BrowseTheWeb
 {
   public partial class Setup : Form
   {
+    #region declare vars
     private TreeNode sourceNode;
+
+    private string remote_1 = string.Empty;
+    private string remote_2 = string.Empty;
+    private string remote_3 = string.Empty;
+    private string remote_4 = string.Empty;
+
+    #endregion
 
     public Setup()
     {
       InitializeComponent();
+      Xpcom.Initialize(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\xulrunner");
     }
 
     private void Setup_Load(object sender, EventArgs e)
     {
+      Bookmark.InitCachePath();
       Bookmark.Load(treeView1, Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml");
       treeView1.ExpandAll();
 
       LoadSettings();
+
+      #region test for remote setup
+      foreach (MediaPortal.GUI.Library.Action.ActionType
+              val in Enum.GetValues(typeof(MediaPortal.GUI.Library.Action.ActionType)))
+      {
+        comboBox1.Items.Add(val);
+      }
+
+      foreach (Object obj in comboBox1.Items)
+      {
+        string act = obj.ToString();
+        if (act == remote_1)
+        {
+          comboBox1.SelectedItem = obj;
+          break;
+        }
+      }
+      #endregion
 
       #region add info for keyboard
       listBox1.Items.Add("Keyboard\t\tRemote\t\tFunction");
@@ -72,12 +100,10 @@ namespace BrowseTheWeb
       listBox1.Items.Add("down\t\tdown\t\tmove down");
       listBox1.Items.Add("left\t\tleft\t\tmove left");
       listBox1.Items.Add("right\t\tright\t\tmove right");
-      listBox1.Items.Add("ESC\t\tESC\t\tleave plugin");
-      listBox1.Items.Add("M\t\tMute\t\ttoggle mute");
       listBox1.Items.Add("X\t\tRed\t\ttoggle statusbar");
       #endregion
 
-      #region create xulrunner
+      #region create xulrunner if needed
       string dir = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\xulrunner";
       string dirCache = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache);
 
@@ -107,13 +133,17 @@ namespace BrowseTheWeb
 
     private void btnSave_Click(object sender, EventArgs e)
     {
-      bool res = Bookmark.Save(treeView1, Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml");
-      if (!res)
+      bool result = Bookmark.Save(treeView1, Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml");
+      if (!result)
+      {
         MessageBox.Show("Bookmarks could not be saved !");
+        return; // should never happen
+      }
+
       if ((chkHome.Checked) && (!Bookmark.isValidUrl(txtHome.Text)))
       {
-        MessageBox.Show("Please correct homepage adress !");
-        return;
+        DialogResult res = MessageBox.Show("The homepage adress seems not to be valid !\nContinue anyway ?", "Error home page address", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+        if (res != DialogResult.Yes) return;
       }
 
       SaveSettings();
@@ -124,6 +154,7 @@ namespace BrowseTheWeb
       this.Close();
     }
 
+    #region treeview / drag drop
     private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
     {
       TreeNode n = (TreeNode)e.Node;
@@ -131,16 +162,22 @@ namespace BrowseTheWeb
 
       if (bkm != null)
       {
-        if (bkm.isFolder) txtLink.Text = bkm.Name;
+        if (bkm.isFolder)
+        {
+          pictureBox1.Image = null;
+          txtLink.Text = bkm.Name;
+        }
         else
+        {
           txtLink.Text = bkm.Url;
+          pictureBox1.Image = Bookmark.GetSnap(bkm.Url);
+        }
       }
       else
       {
         txtLink.Text = n.Text;
       }
     }
-
     private void treeView1_Click(object sender, EventArgs e)
     {
       MouseEventArgs arg = (MouseEventArgs)e;
@@ -181,11 +218,6 @@ namespace BrowseTheWeb
         contextMenuStrip1.Close();
       }
     }
-    private void treeView1_DoubleClick(object sender, EventArgs e)
-    {
-      // browse ???
-    }
-
     private void treeView1_DragEnter(object sender, DragEventArgs e)
     {
       if (e.Data.GetDataPresent(DataFormats.Text))
@@ -335,7 +367,9 @@ namespace BrowseTheWeb
     {
       contextMenuStrip1.Close();
     }
+    #endregion
 
+    #region tree view action add / remove..
     private void onAddFolder(object sender, EventArgs e)
     {
       TreeNode node = treeView1.SelectedNode;
@@ -408,8 +442,15 @@ namespace BrowseTheWeb
           }
           if (!Bookmark.isValidUrl(get.SelectedUrl))
           {
-            MessageBox.Show("URL is not valid", "Error name", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
+            DialogResult res = MessageBox.Show("The url seems not to be valid !\nContinue anyway ?", "Error home page address", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (res != DialogResult.Yes) return;
+          }
+
+          if (chkUseThumbs.Checked)
+          {
+            GetThumb thumb = new GetThumb();
+            thumb.SelectedUrl = get.SelectedUrl;
+            thumb.ShowDialog();
           }
 
           if (bkm != null)
@@ -531,8 +572,8 @@ namespace BrowseTheWeb
             {
               if (!Bookmark.isValidUrl(get.SelectedUrl))
               {
-                MessageBox.Show("URL is not valid", "Error name", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                DialogResult res = MessageBox.Show("The url seems not to be valid !\nContinue anyway ?", "Error home page address", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (res != DialogResult.Yes) return;
               }
             }
 
@@ -546,6 +587,7 @@ namespace BrowseTheWeb
         }
       }
     }
+    #endregion
 
     private void LoadSettings()
     {
@@ -565,7 +607,11 @@ namespace BrowseTheWeb
         optZoomPage.Checked = xmlreader.GetValueAsBool("btWeb", "page", true);
         optZoomDomain.Checked = xmlreader.GetValueAsBool("btWeb", "domain", false);
 
+        chkUseThumbs.Checked = xmlreader.GetValueAsBool("btWeb", "usethumbs", true);
+        chkThumbsOnVisit.Checked = xmlreader.GetValueAsBool("btWeb", "cachethumbs", false);
+
         chkRemote.Checked = xmlreader.GetValueAsBool("btWeb", "remote", false);
+        remote_1 = xmlreader.GetValueAsString("btWeb", "key_1", "REMOTE_1");
       }
     }
     private void SaveSettings()
@@ -586,10 +632,15 @@ namespace BrowseTheWeb
         xmlwriter.SetValueAsBool("btWeb", "page", optZoomPage.Checked);
         xmlwriter.SetValueAsBool("btWeb", "domain", optZoomDomain.Checked);
 
+        xmlwriter.SetValueAsBool("btWeb", "usethumbs", chkUseThumbs.Checked);
+        xmlwriter.SetValueAsBool("btWeb", "cachethumbs", chkThumbsOnVisit.Checked);
+
         xmlwriter.SetValueAsBool("btWeb", "remote", chkRemote.Checked);
+        xmlwriter.SetValue("btWeb", "key_1", comboBox1.SelectedItem.ToString());
       }
     }
 
+    #region zoom & font
     private void trkRemote_ValueChanged(object sender, EventArgs e)
     {
       txtRemote.Text = "Reset link ID after " + (((decimal)trkRemote.Value) / 10) + " s";
@@ -601,6 +652,25 @@ namespace BrowseTheWeb
     private void trkFont_ValueChanged(object sender, EventArgs e)
     {
       txtFont.Text = "Default font " + trkFont.Value + "%";
+    }
+    #endregion
+
+    private void pictureBox1_DoubleClick(object sender, EventArgs e)
+    {
+      TreeNode n = treeView1.SelectedNode;
+      Bookmark bkm = (Bookmark)n.Tag;
+
+      if (bkm != null)
+      {
+        if (!bkm.isFolder)
+        {
+          GetThumb thumb = new GetThumb();
+          thumb.SelectedUrl = bkm.Url;
+
+          thumb.ShowDialog();
+          pictureBox1.Image = Bookmark.GetSnap(bkm.Url);
+        }
+      }
     }
   }
 }

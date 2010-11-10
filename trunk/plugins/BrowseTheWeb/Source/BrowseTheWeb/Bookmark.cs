@@ -29,6 +29,9 @@ using System.Xml;
 using System.IO;
 using System.Windows.Forms;
 using System.Net;
+using MediaPortal.Configuration;
+
+using System.Drawing;
 
 namespace BrowseTheWeb
 {
@@ -316,7 +319,7 @@ namespace BrowseTheWeb
       {
         Uri urlCheck = new Uri(URL);
         WebRequest request = WebRequest.Create(urlCheck);
-        request.Timeout = 3000;
+        request.Timeout = 10000;
 
         WebResponse response;
 
@@ -327,6 +330,83 @@ namespace BrowseTheWeb
         return false; //url does not exist
       }
       return true;
+    }
+
+    public static void SaveSnap(Bitmap Snap, string Url)
+    {
+      try
+      {
+        string filename = Url;
+
+        if (filename.EndsWith("/")) filename = filename.Substring(0, filename.Length - 1);
+
+        int x = filename.IndexOf("//");
+        if (x > 0)
+        {
+          filename = filename.Substring(x + 2);
+          filename = filename.Replace("/", "_");
+          filename = filename.Replace(".", "_");
+          filename = filename + ".png";
+
+          filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb\\" + filename;
+          Snap.Save(filename);
+        }
+      }
+      catch { }
+    }
+    public static Bitmap GetSnap(string Url)
+    {
+      Bitmap snap = null;
+
+      try
+      {
+        string filename = Url;
+
+        if (filename.EndsWith("/")) filename = filename.Substring(0, filename.Length - 1);
+
+        int x = filename.IndexOf("//");
+        if (x > 0)
+        {
+          filename = filename.Substring(x + 2);
+          filename = filename.Replace("/", "_");
+          filename = filename.Replace(".", "_");
+          filename = filename + ".png";
+
+          filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb\\" + filename;
+          if (File.Exists(filename))
+            snap = (Bitmap)Bitmap.FromFile(filename);
+
+          return snap;
+        }
+      }
+      catch { }
+
+      return snap;
+    }
+
+    public static string GetSnapPath(string Url)
+    {
+      string filename = Url;
+      if (filename.EndsWith("/")) filename = filename.Substring(0, filename.Length - 1);
+
+      int x = filename.IndexOf("//");
+      if (x > 0)
+      {
+        filename = filename.Substring(x + 2);
+      }
+
+      filename = filename.Replace("/", "_");
+      filename = filename.Replace(".", "_");
+      filename = filename + ".png";
+
+      filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb\\" + filename;
+
+      return filename;
+    }
+    public static void InitCachePath()
+    {
+      if(!Directory.Exists(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb"))
+        Directory.CreateDirectory(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb");
     }
   }
 }

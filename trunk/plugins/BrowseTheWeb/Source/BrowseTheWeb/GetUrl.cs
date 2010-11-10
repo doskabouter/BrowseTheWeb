@@ -63,6 +63,8 @@ namespace BrowseTheWeb
           SelectedName = txtName.Text;
           SelectedUrl = txtUrl.Text;
 
+          if (SelectedName.EndsWith("/")) SelectedName = SelectedName.Substring(0, SelectedName.Length - 1);
+
           this.DialogResult = DialogResult.OK;
           this.Close();
         }

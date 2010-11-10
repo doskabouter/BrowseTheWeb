@@ -59,6 +59,9 @@
       this.trkRemote = new System.Windows.Forms.TrackBar();
       this.groupBox3 = new System.Windows.Forms.GroupBox();
       this.tabPage2 = new System.Windows.Forms.TabPage();
+      this.groupBox7 = new System.Windows.Forms.GroupBox();
+      this.chkThumbsOnVisit = new System.Windows.Forms.CheckBox();
+      this.chkUseThumbs = new System.Windows.Forms.CheckBox();
       this.groupBox6 = new System.Windows.Forms.GroupBox();
       this.optNoZoom = new System.Windows.Forms.RadioButton();
       this.optZoomDomain = new System.Windows.Forms.RadioButton();
@@ -70,9 +73,14 @@
       this.txtZoom = new System.Windows.Forms.Label();
       this.trkZoom = new System.Windows.Forms.TrackBar();
       this.tabPage3 = new System.Windows.Forms.TabPage();
+      this.label4 = new System.Windows.Forms.Label();
+      this.label3 = new System.Windows.Forms.Label();
+      this.pictureBox1 = new System.Windows.Forms.PictureBox();
       this.tabPage4 = new System.Windows.Forms.TabPage();
-      this.listBox1 = new System.Windows.Forms.ListBox();
+      this.label1 = new System.Windows.Forms.Label();
+      this.comboBox1 = new System.Windows.Forms.ComboBox();
       this.chkRemote = new System.Windows.Forms.CheckBox();
+      this.listBox1 = new System.Windows.Forms.ListBox();
       this.contextMenuStrip1.SuspendLayout();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
@@ -81,12 +89,14 @@
       ((System.ComponentModel.ISupportInitialize)(this.trkRemote)).BeginInit();
       this.groupBox3.SuspendLayout();
       this.tabPage2.SuspendLayout();
+      this.groupBox7.SuspendLayout();
       this.groupBox6.SuspendLayout();
       this.groupBox2.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.trkFont)).BeginInit();
       this.groupBox1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.trkZoom)).BeginInit();
       this.tabPage3.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
       this.tabPage4.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -99,9 +109,8 @@
       this.treeView1.Location = new System.Drawing.Point(6, 17);
       this.treeView1.Name = "treeView1";
       this.treeView1.SelectedImageIndex = 0;
-      this.treeView1.Size = new System.Drawing.Size(539, 378);
+      this.treeView1.Size = new System.Drawing.Size(539, 330);
       this.treeView1.TabIndex = 9;
-      this.treeView1.DoubleClick += new System.EventHandler(this.treeView1_DoubleClick);
       this.treeView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView1_DragDrop);
       this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
       this.treeView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView1_DragEnter);
@@ -210,11 +219,10 @@
       // 
       // txtLink
       // 
-      this.txtLink.AutoSize = true;
       this.txtLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.txtLink.Location = new System.Drawing.Point(6, 398);
+      this.txtLink.Location = new System.Drawing.Point(6, 353);
       this.txtLink.Name = "txtLink";
-      this.txtLink.Size = new System.Drawing.Size(89, 20);
+      this.txtLink.Size = new System.Drawing.Size(433, 74);
       this.txtLink.TabIndex = 13;
       this.txtLink.Text = "Bookmarks";
       // 
@@ -370,6 +378,7 @@
       // tabPage2
       // 
       this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+      this.tabPage2.Controls.Add(this.groupBox7);
       this.tabPage2.Controls.Add(this.groupBox6);
       this.tabPage2.Controls.Add(this.groupBox2);
       this.tabPage2.Controls.Add(this.groupBox1);
@@ -380,6 +389,37 @@
       this.tabPage2.TabIndex = 1;
       this.tabPage2.Text = "Appeareance";
       // 
+      // groupBox7
+      // 
+      this.groupBox7.Controls.Add(this.chkThumbsOnVisit);
+      this.groupBox7.Controls.Add(this.chkUseThumbs);
+      this.groupBox7.Location = new System.Drawing.Point(22, 382);
+      this.groupBox7.Name = "groupBox7";
+      this.groupBox7.Size = new System.Drawing.Size(534, 88);
+      this.groupBox7.TabIndex = 21;
+      this.groupBox7.TabStop = false;
+      this.groupBox7.Text = "Thumbs caching";
+      // 
+      // chkThumbsOnVisit
+      // 
+      this.chkThumbsOnVisit.AutoSize = true;
+      this.chkThumbsOnVisit.Location = new System.Drawing.Point(26, 47);
+      this.chkThumbsOnVisit.Name = "chkThumbsOnVisit";
+      this.chkThumbsOnVisit.Size = new System.Drawing.Size(213, 20);
+      this.chkThumbsOnVisit.TabIndex = 1;
+      this.chkThumbsOnVisit.Text = "cache thumb if a page is visited";
+      this.chkThumbsOnVisit.UseVisualStyleBackColor = true;
+      // 
+      // chkUseThumbs
+      // 
+      this.chkUseThumbs.AutoSize = true;
+      this.chkUseThumbs.Location = new System.Drawing.Point(26, 21);
+      this.chkUseThumbs.Name = "chkUseThumbs";
+      this.chkUseThumbs.Size = new System.Drawing.Size(167, 20);
+      this.chkUseThumbs.TabIndex = 0;
+      this.chkUseThumbs.Text = "use thumbs for favorites";
+      this.chkUseThumbs.UseVisualStyleBackColor = true;
+      // 
       // groupBox6
       // 
       this.groupBox6.Controls.Add(this.optNoZoom);
@@ -387,7 +427,7 @@
       this.groupBox6.Controls.Add(this.optZoomPage);
       this.groupBox6.Location = new System.Drawing.Point(22, 239);
       this.groupBox6.Name = "groupBox6";
-      this.groupBox6.Size = new System.Drawing.Size(537, 137);
+      this.groupBox6.Size = new System.Drawing.Size(534, 137);
       this.groupBox6.TabIndex = 20;
       this.groupBox6.TabStop = false;
       this.groupBox6.Text = "Zoom settings";
@@ -430,7 +470,7 @@
       this.groupBox2.Controls.Add(this.trkFont);
       this.groupBox2.Location = new System.Drawing.Point(22, 130);
       this.groupBox2.Name = "groupBox2";
-      this.groupBox2.Size = new System.Drawing.Size(537, 97);
+      this.groupBox2.Size = new System.Drawing.Size(534, 97);
       this.groupBox2.TabIndex = 2;
       this.groupBox2.TabStop = false;
       this.groupBox2.Text = "Font";
@@ -495,6 +535,9 @@
       // tabPage3
       // 
       this.tabPage3.BackColor = System.Drawing.SystemColors.Control;
+      this.tabPage3.Controls.Add(this.label4);
+      this.tabPage3.Controls.Add(this.label3);
+      this.tabPage3.Controls.Add(this.pictureBox1);
       this.tabPage3.Controls.Add(this.treeView1);
       this.tabPage3.Controls.Add(this.txtLink);
       this.tabPage3.Location = new System.Drawing.Point(4, 25);
@@ -504,9 +547,42 @@
       this.tabPage3.TabIndex = 2;
       this.tabPage3.Text = "Bookmarks";
       // 
+      // label4
+      // 
+      this.label4.AutoSize = true;
+      this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label4.Location = new System.Drawing.Point(323, 452);
+      this.label4.Name = "label4";
+      this.label4.Size = new System.Drawing.Size(113, 13);
+      this.label4.TabIndex = 16;
+      this.label4.Text = "Doubleclick  to refresh";
+      // 
+      // label3
+      // 
+      this.label3.AutoSize = true;
+      this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label3.Location = new System.Drawing.Point(376, 427);
+      this.label3.Name = "label3";
+      this.label3.Size = new System.Drawing.Size(63, 20);
+      this.label3.TabIndex = 15;
+      this.label3.Text = "Preview";
+      // 
+      // pictureBox1
+      // 
+      this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      this.pictureBox1.Location = new System.Drawing.Point(445, 353);
+      this.pictureBox1.Name = "pictureBox1";
+      this.pictureBox1.Size = new System.Drawing.Size(100, 112);
+      this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+      this.pictureBox1.TabIndex = 14;
+      this.pictureBox1.TabStop = false;
+      this.pictureBox1.DoubleClick += new System.EventHandler(this.pictureBox1_DoubleClick);
+      // 
       // tabPage4
       // 
       this.tabPage4.BackColor = System.Drawing.SystemColors.Control;
+      this.tabPage4.Controls.Add(this.label1);
+      this.tabPage4.Controls.Add(this.comboBox1);
       this.tabPage4.Controls.Add(this.chkRemote);
       this.tabPage4.Controls.Add(this.listBox1);
       this.tabPage4.Location = new System.Drawing.Point(4, 25);
@@ -516,14 +592,22 @@
       this.tabPage4.TabIndex = 3;
       this.tabPage4.Text = "Keyboard";
       // 
-      // listBox1
+      // label1
       // 
-      this.listBox1.FormattingEnabled = true;
-      this.listBox1.ItemHeight = 16;
-      this.listBox1.Location = new System.Drawing.Point(6, 15);
-      this.listBox1.Name = "listBox1";
-      this.listBox1.Size = new System.Drawing.Size(550, 420);
-      this.listBox1.TabIndex = 0;
+      this.label1.AutoSize = true;
+      this.label1.Location = new System.Drawing.Point(284, 397);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(92, 16);
+      this.label1.TabIndex = 7;
+      this.label1.Text = "Confirm link ID";
+      // 
+      // comboBox1
+      // 
+      this.comboBox1.FormattingEnabled = true;
+      this.comboBox1.Location = new System.Drawing.Point(6, 393);
+      this.comboBox1.Name = "comboBox1";
+      this.comboBox1.Size = new System.Drawing.Size(272, 24);
+      this.comboBox1.TabIndex = 6;
       // 
       // chkRemote
       // 
@@ -534,6 +618,15 @@
       this.chkRemote.TabIndex = 5;
       this.chkRemote.Text = "Show diagnose on status bar";
       this.chkRemote.UseVisualStyleBackColor = true;
+      // 
+      // listBox1
+      // 
+      this.listBox1.FormattingEnabled = true;
+      this.listBox1.ItemHeight = 16;
+      this.listBox1.Location = new System.Drawing.Point(6, 15);
+      this.listBox1.Name = "listBox1";
+      this.listBox1.Size = new System.Drawing.Size(550, 372);
+      this.listBox1.TabIndex = 0;
       // 
       // Setup
       // 
@@ -562,6 +655,8 @@
       this.groupBox3.ResumeLayout(false);
       this.groupBox3.PerformLayout();
       this.tabPage2.ResumeLayout(false);
+      this.groupBox7.ResumeLayout(false);
+      this.groupBox7.PerformLayout();
       this.groupBox6.ResumeLayout(false);
       this.groupBox6.PerformLayout();
       this.groupBox2.ResumeLayout(false);
@@ -572,6 +667,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.trkZoom)).EndInit();
       this.tabPage3.ResumeLayout(false);
       this.tabPage3.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
       this.tabPage4.ResumeLayout(false);
       this.tabPage4.PerformLayout();
       this.ResumeLayout(false);
@@ -623,5 +719,13 @@
     private System.Windows.Forms.CheckBox chkOSD;
     private System.Windows.Forms.RadioButton optNoZoom;
     private System.Windows.Forms.CheckBox chkRemote;
+    private System.Windows.Forms.ComboBox comboBox1;
+    private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.PictureBox pictureBox1;
+    private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.Label label4;
+    private System.Windows.Forms.GroupBox groupBox7;
+    private System.Windows.Forms.CheckBox chkThumbsOnVisit;
+    private System.Windows.Forms.CheckBox chkUseThumbs;
   }
 }

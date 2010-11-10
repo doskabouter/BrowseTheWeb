@@ -25,6 +25,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+using System.Drawing;
 
 using MediaPortal.GUI.Library;
 using MediaPortal.Dialogs;
@@ -38,7 +40,7 @@ namespace BrowseTheWeb
   public class GUIBookmark : GUIWindow
   {
     [SkinControlAttribute(50)]
-    private GUIListControl facade = null;
+    private GUIFacadeControl facade = null;
 
     public override int GetID
     {
@@ -60,6 +62,7 @@ namespace BrowseTheWeb
     protected override void OnPageLoad()
     {
       LoadFacade(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml", "");
+      Bookmark.InitCachePath();
       base.OnPageLoad();
     }
     protected override void OnClicked(int controlId, GUIControl control, Action.ActionType actionType)
@@ -87,7 +90,11 @@ namespace BrowseTheWeb
 
     public void LoadFacade(string Path, string Folder)
     {
+      string dirCache = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb";
+
+      facade.View = GUIFacadeControl.ViewMode.LargeIcons;
       facade.Clear();
+
       GUIListItem item = new GUIListItem();
 
       try
@@ -102,6 +109,9 @@ namespace BrowseTheWeb
           {
             Bookmark bkm = GetData(node);
 
+            string name = bkm.Name.Replace(" ", "_");
+            name = name.Replace(".", "_");
+
             if ((bkm.isFolder) ||
                 (!bkm.isFolder) && (!bkm.isSubFolder))
             {
@@ -110,7 +120,16 @@ namespace BrowseTheWeb
               item.Label = bkm.Name;
               item.Path = bkm.Url;
               if (item.IsFolder)
+              {
                 item.IconImage = "defaultFolder.png";
+                item.IconImageBig = "defaultFolderBig.png";
+              }
+              else
+              {
+                string file = Bookmark.GetSnapPath(bkm.Url);
+                item.IconImage = file;
+                item.IconImageBig = file;
+              }
 
               facade.Add(item);
             }
@@ -124,6 +143,7 @@ namespace BrowseTheWeb
           item.Label = "..";
           item.Path = "..";
           item.IconImage = "defaultFolderBack.png";
+          item.IconImageBig = "defaultFolderBackBig.png";
           facade.Add(item);
 
           bool found = false;
@@ -147,6 +167,10 @@ namespace BrowseTheWeb
                 item.IsFolder = bkm.isFolder;
                 item.Label = bkm.Name;
                 item.Path = bkm.Url;
+
+                string file = Bookmark.GetSnapPath(bkm.Url);
+                item.IconImage = file;
+                item.IconImageBig = file;
 
                 facade.Add(item);
               }
