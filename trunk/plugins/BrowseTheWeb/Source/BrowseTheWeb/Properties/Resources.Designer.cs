@@ -87,5 +87,12 @@ namespace BrowseTheWeb.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap icon_48x48_mouse {
+            get {
+                object obj = ResourceManager.GetObject("icon-48x48-mouse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

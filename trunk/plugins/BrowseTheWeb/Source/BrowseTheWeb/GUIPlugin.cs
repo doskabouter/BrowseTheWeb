@@ -54,6 +54,7 @@ namespace BrowseTheWeb
     #region declare vars
     private GeckoWebBrowser webBrowser;
     private OSD_LinkId osd_linkID;
+    private Mouse mouse;
     private string linkId = string.Empty;
     private int linkTime = 0;
     private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
@@ -71,6 +72,10 @@ namespace BrowseTheWeb
     private bool cacheThumbs = false;
     private bool remote = false;
     private string remote_1 = string.Empty;
+
+    private bool useProxy = false;
+    private string Server = string.Empty;
+    private int Port = 8080;
 
     private float defaultZoom = 1.0f;
     private float zoom = 1.0f;
@@ -163,6 +168,10 @@ namespace BrowseTheWeb
       GUIGraphicsContext.form.Controls.Add(osd_linkID);
       osd_linkID.Visible = false;
 
+      mouse = new Mouse();
+      GUIGraphicsContext.form.Controls.Add(mouse);
+      mouse.Visible = false;
+
       LoadSettings();
       Bookmark.AddSavedFolder(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml");
 
@@ -246,7 +255,41 @@ namespace BrowseTheWeb
 
         remote = xmlreader.GetValueAsBool("btWeb", "remote", false);
         remote_1 = xmlreader.GetValueAsString("btWeb", "key_1", "REMOTE_1");
+
+        useProxy = xmlreader.GetValueAsBool("btWeb", "proxy", false);
+        Server = xmlreader.GetValueAsString("btWeb", "proxy_server", "127.0.0.1");
+        Port = xmlreader.GetValueAsInt("btWeb", "proxy_port", 8888);
+        TrySetProxy();
       }
+    }
+
+    private void TrySetProxy()
+    {
+      try
+      {
+        if (useProxy)
+          MyLog.debug("use proxy settings");
+        else
+          MyLog.debug("no proxy selected");
+
+        SetProxy(Server, Port, useProxy);
+      }
+      catch (Exception ex)
+      {
+        MyLog.debug("proxy exception : " + ex.Message + "\n" + ex.StackTrace);
+      }
+    }
+    private void SetProxy(string Server, int Port, bool useProxy)
+    {
+      // http://geckofx.org/viewtopic.php?id=832
+      GeckoPreferences.User["network.proxy.http"] = Server;
+      GeckoPreferences.User["network.proxy.http_port"] = Port;
+      int ena = 0; if (useProxy) ena = 1;
+      GeckoPreferences.User["network.proxy.type"] = ena;
+
+      // maybe possible... not sure...
+      // network.proxy.login
+      // network.proxy.password
     }
 
     private void timer_Tick(object sender, EventArgs e)
@@ -322,6 +365,8 @@ namespace BrowseTheWeb
 
       switch (action.wID)
       {
+        case Action.ActionType.ACTION_VOLUME_MUTE:
+          break;
         case Action.ActionType.ACTION_KEY_PRESSED:
           linkTime = 0;
           MyLog.debug("action key press=" + action.m_key.KeyChar);
@@ -512,6 +557,8 @@ namespace BrowseTheWeb
         _links = webBrowser.Document.Links;
         int i = 1;
 
+        MyLog.debug("page links cnt : " + _links.Count);
+
         foreach (GeckoElement element in _links)
         {
           string link = element.GetAttribute("href");
@@ -542,6 +589,9 @@ namespace BrowseTheWeb
 
         _forms = webBrowser.Document.GetElementsByTagName("form");
         HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+
+        MyLog.debug("page forms cnt : " + _forms.Count);
+
         foreach (GeckoElement element in _forms)
         {
           string action = element.GetAttribute("action");
