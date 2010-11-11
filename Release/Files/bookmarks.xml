@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<Bookmarks>
+  <Entry>
+    <Name>Saved by MP</Name>
+    <URL>
+    </URL>
+    <Visited>0</Visited>
+    <LastVisited>0001-01-01T00:00:00</LastVisited>
+    <Created>0001-01-01T00:00:00</Created>
+    <isFolder>true</isFolder>
+    <isSubFolder>false</isSubFolder>
+  </Entry>
+  <Entry>
+    <Name>MediaPortal</Name>
+    <URL />
+    <Visited>0</Visited>
+    <LastVisited>0001-01-01T00:00:00</LastVisited>
+    <Created>2010-11-11T17:57:14.8274734+01:00</Created>
+    <isFolder>true</isFolder>
+    <isSubFolder>false</isSubFolder>
+  </Entry>
+  <Entry>
+    <Name>MediaPortal Home</Name>
+    <URL>http://www.team-mediaportal.com</URL>
+    <Visited>0</Visited>
+    <LastVisited>0001-01-01T00:00:00</LastVisited>
+    <Created>2010-11-11T17:57:55.3597918+01:00</Created>
+    <isFolder>false</isFolder>
+    <isSubFolder>true</isSubFolder>
+  </Entry>
+  <Entry>
+    <Name>Forum</Name>
+    <URL>http://forum.team-mediaportal.com/</URL>
+    <Visited>0</Visited>
+    <LastVisited>0001-01-01T00:00:00</LastVisited>
+    <Created>2010-11-11T17:58:42.4794868+01:00</Created>
+    <isFolder>false</isFolder>
+    <isSubFolder>true</isSubFolder>
+  </Entry>
+  <Entry>
+    <Name>Plugins</Name>
+    <URL>http://forum.team-mediaportal.com/mediaportal-plugins-47/</URL>
+    <Visited>0</Visited>
+    <LastVisited>0001-01-01T00:00:00</LastVisited>
+    <Created>2010-11-11T18:00:00.9229736+01:00</Created>
+    <isFolder>false</isFolder>
+    <isSubFolder>true</isSubFolder>
+  </Entry>
+  <Entry>
+    <Name>Blog</Name>
+    <URL>http://www.team-mediaportal.com/team-blogs</URL>
+    <Visited>0</Visited>
+    <LastVisited>0001-01-01T00:00:00</LastVisited>
+    <Created>2010-11-11T18:00:33.8388562+01:00</Created>
+    <isFolder>false</isFolder>
+    <isSubFolder>true</isSubFolder>
+  </Entry>
+  <Entry>
+    <Name>BrowseTheWeb</Name>
+    <URL>http://forum.team-mediaportal.com/mediaportal-plugins-47/plugin-browse-web-webbrowser-89101/</URL>
+    <Visited>0</Visited>
+    <LastVisited>0001-01-01T00:00:00</LastVisited>
+    <Created>2010-11-11T18:01:21.1245608+01:00</Created>
+    <isFolder>false</isFolder>
+    <isSubFolder>true</isSubFolder>
+  </Entry>
+</Bookmarks>

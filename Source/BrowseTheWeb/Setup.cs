@@ -613,6 +613,12 @@ namespace BrowseTheWeb
 
         chkRemote.Checked = xmlreader.GetValueAsBool("btWeb", "remote", false);
         remote_1 = xmlreader.GetValueAsString("btWeb", "key_1", "REMOTE_1");
+
+        chkProxy.Checked = xmlreader.GetValueAsBool("btWeb", "proxy", false);
+        txtHttpServer.Text = xmlreader.GetValueAsString("btWeb", "proxy_server", "127.0.0.1");
+        txtHttpPort.Text = xmlreader.GetValueAsInt("btWeb", "proxy_port", 8888).ToString();
+
+        TrySetProxy();
       }
     }
     private void SaveSettings()
@@ -638,6 +644,10 @@ namespace BrowseTheWeb
 
         xmlwriter.SetValueAsBool("btWeb", "remote", chkRemote.Checked);
         xmlwriter.SetValue("btWeb", "key_1", comboBox1.SelectedItem.ToString());
+
+        xmlwriter.SetValueAsBool("btWeb", "proxy", chkProxy.Checked);
+        xmlwriter.SetValue("btWeb", "proxy_server", txtHttpServer.Text);
+        xmlwriter.SetValue("btWeb", "proxy_port", txtHttpPort.Text);
       }
     }
 
@@ -672,6 +682,41 @@ namespace BrowseTheWeb
           pictureBox1.Image = Bookmark.GetSnap(bkm.Url);
         }
       }
+    }
+
+    private void TrySetProxy()
+    {
+      try
+      {
+        int port = Convert.ToInt32(txtHttpPort.Text);
+        SetProxy(txtHttpServer.Text, port, chkProxy.Checked);
+      }
+      catch { }
+    }
+    private void SetProxy(string Server, int Port, bool useProxy)
+    {
+      // http://geckofx.org/viewtopic.php?id=832
+      GeckoPreferences.User["network.proxy.http"] = Server;
+      GeckoPreferences.User["network.proxy.http_port"] = Port;
+      int ena = 0; if (useProxy) ena = 1;
+      GeckoPreferences.User["network.proxy.type"] = ena;
+
+      // maybe possible... not sure...
+      // network.proxy.login
+      // network.proxy.password
+    }
+
+    private void txtHttpServer_TextChanged(object sender, EventArgs e)
+    {
+      TrySetProxy();
+    }
+    private void txtHttpPort_TextChanged(object sender, EventArgs e)
+    {
+      TrySetProxy();
+    }
+    private void chkProxy_CheckedChanged(object sender, EventArgs e)
+    {
+      TrySetProxy();
     }
   }
 }

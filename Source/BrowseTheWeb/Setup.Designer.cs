@@ -76,11 +76,19 @@
       this.label4 = new System.Windows.Forms.Label();
       this.label3 = new System.Windows.Forms.Label();
       this.pictureBox1 = new System.Windows.Forms.PictureBox();
+      this.tabPage5 = new System.Windows.Forms.TabPage();
+      this.groupBox8 = new System.Windows.Forms.GroupBox();
+      this.txtHttpPort = new System.Windows.Forms.TextBox();
+      this.txtHttpServer = new System.Windows.Forms.TextBox();
+      this.label6 = new System.Windows.Forms.Label();
+      this.label5 = new System.Windows.Forms.Label();
+      this.chkProxy = new System.Windows.Forms.CheckBox();
       this.tabPage4 = new System.Windows.Forms.TabPage();
       this.label1 = new System.Windows.Forms.Label();
       this.comboBox1 = new System.Windows.Forms.ComboBox();
       this.chkRemote = new System.Windows.Forms.CheckBox();
       this.listBox1 = new System.Windows.Forms.ListBox();
+      this.label7 = new System.Windows.Forms.Label();
       this.contextMenuStrip1.SuspendLayout();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
@@ -97,6 +105,8 @@
       ((System.ComponentModel.ISupportInitialize)(this.trkZoom)).BeginInit();
       this.tabPage3.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+      this.tabPage5.SuspendLayout();
+      this.groupBox8.SuspendLayout();
       this.tabPage4.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -106,10 +116,10 @@
       this.treeView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.treeView1.ImageIndex = 0;
       this.treeView1.ImageList = this.imageList1;
-      this.treeView1.Location = new System.Drawing.Point(6, 17);
+      this.treeView1.Location = new System.Drawing.Point(6, 34);
       this.treeView1.Name = "treeView1";
       this.treeView1.SelectedImageIndex = 0;
-      this.treeView1.Size = new System.Drawing.Size(539, 330);
+      this.treeView1.Size = new System.Drawing.Size(539, 313);
       this.treeView1.TabIndex = 9;
       this.treeView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView1_DragDrop);
       this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -250,6 +260,7 @@
       this.tabControl1.Controls.Add(this.tabPage1);
       this.tabControl1.Controls.Add(this.tabPage2);
       this.tabControl1.Controls.Add(this.tabPage3);
+      this.tabControl1.Controls.Add(this.tabPage5);
       this.tabControl1.Controls.Add(this.tabPage4);
       this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.tabControl1.Location = new System.Drawing.Point(12, 12);
@@ -535,6 +546,7 @@
       // tabPage3
       // 
       this.tabPage3.BackColor = System.Drawing.SystemColors.Control;
+      this.tabPage3.Controls.Add(this.label7);
       this.tabPage3.Controls.Add(this.label4);
       this.tabPage3.Controls.Add(this.label3);
       this.tabPage3.Controls.Add(this.pictureBox1);
@@ -553,9 +565,9 @@
       this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.label4.Location = new System.Drawing.Point(323, 452);
       this.label4.Name = "label4";
-      this.label4.Size = new System.Drawing.Size(113, 13);
+      this.label4.Size = new System.Drawing.Size(116, 13);
       this.label4.TabIndex = 16;
-      this.label4.Text = "Doubleclick  to refresh";
+      this.label4.Text = "Double click  to refresh";
       // 
       // label3
       // 
@@ -578,9 +590,82 @@
       this.pictureBox1.TabStop = false;
       this.pictureBox1.DoubleClick += new System.EventHandler(this.pictureBox1_DoubleClick);
       // 
+      // tabPage5
+      // 
+      this.tabPage5.BackColor = System.Drawing.SystemColors.Control;
+      this.tabPage5.Controls.Add(this.groupBox8);
+      this.tabPage5.Location = new System.Drawing.Point(4, 25);
+      this.tabPage5.Name = "tabPage5";
+      this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+      this.tabPage5.Size = new System.Drawing.Size(562, 476);
+      this.tabPage5.TabIndex = 4;
+      this.tabPage5.Text = "Proxy";
+      // 
+      // groupBox8
+      // 
+      this.groupBox8.Controls.Add(this.txtHttpPort);
+      this.groupBox8.Controls.Add(this.txtHttpServer);
+      this.groupBox8.Controls.Add(this.label6);
+      this.groupBox8.Controls.Add(this.label5);
+      this.groupBox8.Controls.Add(this.chkProxy);
+      this.groupBox8.Location = new System.Drawing.Point(6, 6);
+      this.groupBox8.Name = "groupBox8";
+      this.groupBox8.Size = new System.Drawing.Size(550, 145);
+      this.groupBox8.TabIndex = 1;
+      this.groupBox8.TabStop = false;
+      this.groupBox8.Text = "Proxy settings";
+      // 
+      // txtHttpPort
+      // 
+      this.txtHttpPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.txtHttpPort.Location = new System.Drawing.Point(137, 86);
+      this.txtHttpPort.Name = "txtHttpPort";
+      this.txtHttpPort.Size = new System.Drawing.Size(60, 22);
+      this.txtHttpPort.TabIndex = 17;
+      this.txtHttpPort.Text = "8080";
+      this.txtHttpPort.TextChanged += new System.EventHandler(this.txtHttpPort_TextChanged);
+      // 
+      // txtHttpServer
+      // 
+      this.txtHttpServer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.txtHttpServer.Location = new System.Drawing.Point(137, 58);
+      this.txtHttpServer.Name = "txtHttpServer";
+      this.txtHttpServer.Size = new System.Drawing.Size(108, 22);
+      this.txtHttpServer.TabIndex = 16;
+      this.txtHttpServer.Text = "127.0.0.1";
+      this.txtHttpServer.TextChanged += new System.EventHandler(this.txtHttpServer_TextChanged);
+      // 
+      // label6
+      // 
+      this.label6.AutoSize = true;
+      this.label6.Location = new System.Drawing.Point(41, 88);
+      this.label6.Name = "label6";
+      this.label6.Size = new System.Drawing.Size(71, 16);
+      this.label6.TabIndex = 2;
+      this.label6.Text = "HTTP port";
+      // 
+      // label5
+      // 
+      this.label5.AutoSize = true;
+      this.label5.Location = new System.Drawing.Point(41, 58);
+      this.label5.Name = "label5";
+      this.label5.Size = new System.Drawing.Size(81, 16);
+      this.label5.TabIndex = 1;
+      this.label5.Text = "HTTP proxy";
+      // 
+      // chkProxy
+      // 
+      this.chkProxy.AutoSize = true;
+      this.chkProxy.Location = new System.Drawing.Point(21, 21);
+      this.chkProxy.Name = "chkProxy";
+      this.chkProxy.Size = new System.Drawing.Size(85, 20);
+      this.chkProxy.TabIndex = 0;
+      this.chkProxy.Text = "use proxy";
+      this.chkProxy.UseVisualStyleBackColor = true;
+      this.chkProxy.CheckedChanged += new System.EventHandler(this.chkProxy_CheckedChanged);
+      // 
       // tabPage4
       // 
-      this.tabPage4.BackColor = System.Drawing.SystemColors.Control;
       this.tabPage4.Controls.Add(this.label1);
       this.tabPage4.Controls.Add(this.comboBox1);
       this.tabPage4.Controls.Add(this.chkRemote);
@@ -628,6 +713,15 @@
       this.listBox1.Size = new System.Drawing.Size(550, 372);
       this.listBox1.TabIndex = 0;
       // 
+      // label7
+      // 
+      this.label7.AutoSize = true;
+      this.label7.Location = new System.Drawing.Point(7, 15);
+      this.label7.Name = "label7";
+      this.label7.Size = new System.Drawing.Size(126, 16);
+      this.label7.TabIndex = 17;
+      this.label7.Text = "Right click to modify";
+      // 
       // Setup
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -668,6 +762,9 @@
       this.tabPage3.ResumeLayout(false);
       this.tabPage3.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+      this.tabPage5.ResumeLayout(false);
+      this.groupBox8.ResumeLayout(false);
+      this.groupBox8.PerformLayout();
       this.tabPage4.ResumeLayout(false);
       this.tabPage4.PerformLayout();
       this.ResumeLayout(false);
@@ -727,5 +824,13 @@
     private System.Windows.Forms.GroupBox groupBox7;
     private System.Windows.Forms.CheckBox chkThumbsOnVisit;
     private System.Windows.Forms.CheckBox chkUseThumbs;
+    private System.Windows.Forms.TabPage tabPage5;
+    private System.Windows.Forms.GroupBox groupBox8;
+    private System.Windows.Forms.Label label5;
+    private System.Windows.Forms.CheckBox chkProxy;
+    private System.Windows.Forms.TextBox txtHttpPort;
+    private System.Windows.Forms.TextBox txtHttpServer;
+    private System.Windows.Forms.Label label6;
+    private System.Windows.Forms.Label label7;
   }
 }
