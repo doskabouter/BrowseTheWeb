@@ -495,62 +495,102 @@ namespace BrowseTheWeb
     }
     private void webBrowser_DocumentCompleted(object sender, EventArgs e)
     {
-      #region MP gui stuff
-      string str = DateTime.Now.ToLongTimeString();
-      str += " Completed";
+      MyLog.debug("page completetd : " + webBrowser.Url.ToString());
 
-      GUIPropertyManager.SetProperty("#btWeb.status", str);
-      #endregion
-
-      #region add links to page
-      _htmlLinkNumbers = new List<HtmlLinkNumber>();
-
-      _links = webBrowser.Document.Links;
-      int i = 1;
-
-      foreach (GeckoElement element in _links)
+      try
       {
-        string link = element.GetAttribute("href");
+        #region MP gui stuff
+        string str = DateTime.Now.ToLongTimeString();
+        str += " Completed";
 
-        if (!link.StartsWith("javascript:"))
+        GUIPropertyManager.SetProperty("#btWeb.status", str);
+        #endregion
+
+        #region add links to page
+        _htmlLinkNumbers = new List<HtmlLinkNumber>();
+
+        _links = webBrowser.Document.Links;
+        int i = 1;
+
+        foreach (GeckoElement element in _links)
         {
-          if (!element.InnerHtml.Contains("gecko_id"))
-          {
-            element.InnerHtml += string.Format(_span, i, "", "LINK");
-          }
+          string link = element.GetAttribute("href");
 
-          string gb = element.GetAttribute("gb");
-          string id = element.GetAttribute("id");
-          string name = element.GetAttribute("name");
-          if (string.IsNullOrEmpty(gb))
+          if (!link.StartsWith("javascript:"))
           {
-            element.SetAttribute("gb", "gecko_link" + i);
-          }
-          if (string.IsNullOrEmpty(id))
-          {
-            element.SetAttribute("id", "gb" + i);
-            id = "gb" + i;
-          }
-          _htmlLinkNumbers.Add(new HtmlLinkNumber(i, id, name, link, HtmlInputType.Link));
-          i++;
-        }
-      }
-
-      _forms = webBrowser.Document.GetElementsByTagName("form");
-      HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
-      foreach (GeckoElement element in _forms)
-      {
-        string action = element.GetAttribute("action");
-        doc.LoadHtml(element.InnerHtml);
-        foreach (HtmlAgilityPack.HtmlNode link in doc.DocumentNode.SelectNodes("//*"))
-        {
-          if (link.OriginalName == "input")
-          {
-            if (link.Attributes["type"] != null)
+            if (!element.InnerHtml.Contains("gecko_id"))
             {
-              if (link.Attributes["type"].Value != "hidden")
-              {
+              element.InnerHtml += string.Format(_span, i, "", "LINK");
+            }
 
+            string gb = element.GetAttribute("gb");
+            string id = element.GetAttribute("id");
+            string name = element.GetAttribute("name");
+            if (string.IsNullOrEmpty(gb))
+            {
+              element.SetAttribute("gb", "gecko_link" + i);
+            }
+            if (string.IsNullOrEmpty(id))
+            {
+              element.SetAttribute("id", "gb" + i);
+              id = "gb" + i;
+            }
+            _htmlLinkNumbers.Add(new HtmlLinkNumber(i, id, name, link, HtmlInputType.Link));
+            i++;
+          }
+        }
+
+        _forms = webBrowser.Document.GetElementsByTagName("form");
+        HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+        foreach (GeckoElement element in _forms)
+        {
+          string action = element.GetAttribute("action");
+          doc.LoadHtml(element.InnerHtml);
+          foreach (HtmlAgilityPack.HtmlNode link in doc.DocumentNode.SelectNodes("//*"))
+          {
+            if (link.OriginalName == "input")
+            {
+              if (link.Attributes["type"] != null)
+              {
+                if (link.Attributes["type"].Value != "hidden")
+                {
+
+                  string gb = link.GetAttributeValue("gb", "");
+                  string id = link.GetAttributeValue("id", "");
+                  string name = link.GetAttributeValue("name", "");
+                  string outerHtml = link.OuterHtml;
+                  if (string.IsNullOrEmpty(gb))
+                  {
+                    link.SetAttributeValue("gb", "gecko_link" + i);
+                  }
+                  if (string.IsNullOrEmpty(id))
+                  {
+                    link.SetAttributeValue("id", "gb" + i);
+                    id = "gb" + i;
+                  }
+
+                  if (!element.InnerHtml.Contains("gecko_id=\"" + i + "\""))
+                  {
+                    string newLink = link.OuterHtml + string.Format(_span, i, action, "INPUT");
+                    element.InnerHtml = element.InnerHtml.Replace(outerHtml, newLink);
+                  }
+                  if (link.Attributes["type"].Value == "submit" ||
+                      link.Attributes["type"].Value == "reset" ||
+                      link.Attributes["type"].Value == "radio" ||
+                      link.Attributes["type"].Value == "image" ||
+                      link.Attributes["type"].Value == "checkbox")
+                  {
+                    _htmlLinkNumbers.Add(new HtmlLinkNumber(i, id, name, action, HtmlInputType.Action));
+                  }
+                  else
+                  {
+                    _htmlLinkNumbers.Add(new HtmlLinkNumber(i, id, name, action, HtmlInputType.Input));
+                  }
+                  i++;
+                }
+              }
+              else
+              {
                 string gb = link.GetAttributeValue("gb", "");
                 string id = link.GetAttributeValue("id", "");
                 string name = link.GetAttributeValue("name", "");
@@ -570,90 +610,59 @@ namespace BrowseTheWeb
                   string newLink = link.OuterHtml + string.Format(_span, i, action, "INPUT");
                   element.InnerHtml = element.InnerHtml.Replace(outerHtml, newLink);
                 }
-                if (link.Attributes["type"].Value == "submit" ||
-                    link.Attributes["type"].Value == "reset" ||
-                    link.Attributes["type"].Value == "radio" ||
-                    link.Attributes["type"].Value == "image" ||
-                    link.Attributes["type"].Value == "checkbox")
-                {
-                  _htmlLinkNumbers.Add(new HtmlLinkNumber(i, id, name, action, HtmlInputType.Action));
-                }
-                else
-                {
-                  _htmlLinkNumbers.Add(new HtmlLinkNumber(i, id, name, action, HtmlInputType.Input));
-                }
+
+                _htmlLinkNumbers.Add(new HtmlLinkNumber(i, id, name, action, HtmlInputType.Input));
                 i++;
               }
             }
-            else
+          }
+        }
+        #endregion
+
+        #region reset zoom
+        if (zoomPage)
+        {
+          webBrowser.Zoom = defaultZoom;
+          zoom = defaultZoom;
+          GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
+        }
+        if (zoomDomain)
+        {
+          if (lastDomain != webBrowser.Document.Domain)
+          {
             {
-              string gb = link.GetAttributeValue("gb", "");
-              string id = link.GetAttributeValue("id", "");
-              string name = link.GetAttributeValue("name", "");
-              string outerHtml = link.OuterHtml;
-              if (string.IsNullOrEmpty(gb))
-              {
-                link.SetAttributeValue("gb", "gecko_link" + i);
-              }
-              if (string.IsNullOrEmpty(id))
-              {
-                link.SetAttributeValue("id", "gb" + i);
-                id = "gb" + i;
-              }
-
-              if (!element.InnerHtml.Contains("gecko_id=\"" + i + "\""))
-              {
-                string newLink = link.OuterHtml + string.Format(_span, i, action, "INPUT");
-                element.InnerHtml = element.InnerHtml.Replace(outerHtml, newLink);
-              }
-
-              _htmlLinkNumbers.Add(new HtmlLinkNumber(i, id, name, action, HtmlInputType.Input));
-              i++;
+              webBrowser.Zoom = defaultZoom;
+              zoom = defaultZoom;
+              GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
             }
           }
+          lastDomain = webBrowser.Document.Domain;
         }
-      }
-      #endregion
+        #endregion
 
-      #region reset zoom
-      if (zoomPage)
-      {
-        webBrowser.Zoom = defaultZoom;
-        zoom = defaultZoom;
-        GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
-      }
-      if (zoomDomain)
-      {
-        if (lastDomain != webBrowser.Document.Domain)
+        #region save snapshot
+
+        if (webBrowser.Url.ToString() != "about:blank")
         {
+          if (cacheThumbs)
           {
-            webBrowser.Zoom = defaultZoom;
-            zoom = defaultZoom;
-            GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
+            Bitmap snap = new Bitmap(webBrowser.Width, webBrowser.Height);
+            webBrowser.DrawToBitmap(snap, new Rectangle(0, 0, webBrowser.Width, webBrowser.Height));
+
+            snap = MediaPortal.Util.BitmapResize.Resize(ref snap, 300, 400, false, true);
+
+            Graphics g = Graphics.FromImage((Image)snap);
+            g.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(1, 1, snap.Width - 2, snap.Height - 2));
+
+            Bookmark.SaveSnap(snap, webBrowser.Url.ToString());
           }
         }
-        lastDomain = webBrowser.Document.Domain;
+        #endregion
       }
-      #endregion
-
-      #region save snapshot
-
-      if (webBrowser.Url.ToString() != "about:blank")
+      catch (Exception ex)
       {
-        if (cacheThumbs)
-        {
-          Bitmap snap = new Bitmap(webBrowser.Width, webBrowser.Height);
-          webBrowser.DrawToBitmap(snap, new Rectangle(0, 0, webBrowser.Width, webBrowser.Height));
-
-          snap = MediaPortal.Util.BitmapResize.Resize(ref snap, 300, 400, false, true);
-
-          Graphics g = Graphics.FromImage((Image)snap);
-          g.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(1, 1, snap.Width - 2, snap.Height - 2));
-
-          Bookmark.SaveSnap(snap, webBrowser.Url.ToString());
-        }
+        MyLog.debug("on completed exception : " + ex.Message + "\n" + ex.StackTrace);
       }
-      #endregion
     }
 
     private void OnLinkId(string LinkId)

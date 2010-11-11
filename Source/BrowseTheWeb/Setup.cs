@@ -53,6 +53,34 @@ namespace BrowseTheWeb
     public Setup()
     {
       InitializeComponent();
+
+      #region create xulrunner if needed
+      string dir = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\xulrunner";
+      string dirCache = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache);
+
+      try
+      {
+        if (!Directory.Exists(dir))
+        {
+          System.Diagnostics.ProcessStartInfo procStartInfo =
+            new System.Diagnostics.ProcessStartInfo("cmd", "/c unzip.exe -o xulrunner -d ../");
+          procStartInfo.WorkingDirectory = dirCache;
+
+          procStartInfo.RedirectStandardOutput = true;
+          procStartInfo.UseShellExecute = false;
+
+          procStartInfo.CreateNoWindow = true;
+
+          System.Diagnostics.Process proc = new System.Diagnostics.Process();
+          proc.StartInfo = procStartInfo;
+          proc.Start();
+
+          string result = proc.StandardOutput.ReadToEnd();
+        }
+      }
+      catch { }
+      #endregion
+
       Xpcom.Initialize(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\xulrunner");
     }
 
@@ -101,33 +129,6 @@ namespace BrowseTheWeb
       listBox1.Items.Add("left\t\tleft\t\tmove left");
       listBox1.Items.Add("right\t\tright\t\tmove right");
       listBox1.Items.Add("X\t\tRed\t\ttoggle statusbar");
-      #endregion
-
-      #region create xulrunner if needed
-      string dir = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\xulrunner";
-      string dirCache = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache);
-
-      try
-      {
-        if (!Directory.Exists(dir))
-        {
-          System.Diagnostics.ProcessStartInfo procStartInfo =
-            new System.Diagnostics.ProcessStartInfo("cmd", "/c unzip.exe -o xulrunner -d ../");
-          procStartInfo.WorkingDirectory = dirCache;
-
-          procStartInfo.RedirectStandardOutput = true;
-          procStartInfo.UseShellExecute = false;
-
-          procStartInfo.CreateNoWindow = true;
-
-          System.Diagnostics.Process proc = new System.Diagnostics.Process();
-          proc.StartInfo = procStartInfo;
-          proc.Start();
-
-          string result = proc.StandardOutput.ReadToEnd();
-        }
-      }
-      catch { }
       #endregion
     }
 
