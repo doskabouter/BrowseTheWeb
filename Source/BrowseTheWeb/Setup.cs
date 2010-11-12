@@ -602,6 +602,7 @@ namespace BrowseTheWeb
         chkBlank.Checked = xmlreader.GetValueAsBool("btWeb", "blank", false);
         chkStatus.Checked = xmlreader.GetValueAsBool("btWeb", "status", false);
         chkOSD.Checked = xmlreader.GetValueAsBool("btWeb", "osd", true);
+        chkWindowed.Checked = xmlreader.GetValueAsBool("btWeb", "window", false);
 
         trkZoom.Value = xmlreader.GetValueAsInt("btWeb", "zoom", 100);
         trkFont.Value = xmlreader.GetValueAsInt("btWeb", "font", 100);
@@ -633,6 +634,7 @@ namespace BrowseTheWeb
         xmlwriter.SetValueAsBool("btWeb", "blank", chkBlank.Checked);
         xmlwriter.SetValueAsBool("btWeb", "status", chkStatus.Checked);
         xmlwriter.SetValueAsBool("btWeb", "osd", chkOSD.Checked);
+        xmlwriter.SetValueAsBool("btWeb", "window", chkWindowed.Checked);
 
         xmlwriter.SetValue("btWeb", "zoom", trkZoom.Value);
         xmlwriter.SetValue("btWeb", "font", trkFont.Value);
