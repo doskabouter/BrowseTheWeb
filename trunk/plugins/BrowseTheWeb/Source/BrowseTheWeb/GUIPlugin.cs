@@ -33,6 +33,9 @@ using MediaPortal.Dialogs;
 using MediaPortal.Util;
 using MediaPortal.Configuration;
 
+using System.Windows.Forms;
+using System.Runtime.InteropServices;
+
 using Skybound.Gecko;
 
 namespace BrowseTheWeb
@@ -41,6 +44,14 @@ namespace BrowseTheWeb
 
   public class GUIPlugin : GUIWindow, ISetupForm
   {
+    [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+    public static extern void mouse_event(long dwFlags, long dx, long dy, long cButtons, long dwExtraInfo);
+
+    private const int MOUSEEVENTF_LEFTDOWN = 0x02;
+    private const int MOUSEEVENTF_LEFTUP = 0x04;
+    private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
+    private const int MOUSEEVENTF_RIGHTUP = 0x10;
+
     #region Links
     private static GeckoElementCollection _links;
     private static GeckoElementCollection _forms;
@@ -66,6 +77,7 @@ namespace BrowseTheWeb
     private bool blankBrowser = false;
     private bool statusBar = true;
     private bool osd = false;
+    private bool windowed = false;
     private bool zoomPage = false;
     private bool zoomDomain = false;
     private string lastDomain = string.Empty;
@@ -206,6 +218,13 @@ namespace BrowseTheWeb
       webBrowser.DocumentCompleted += new EventHandler(webBrowser_DocumentCompleted);
       webBrowser.StatusTextChanged += new EventHandler(webBrowser_StatusTextChanged);
 
+      if (windowed)
+      {
+        MyLog.debug("switch to windowed fullscreen mode");
+        GUIMessage msg = new GUIMessage(GUIMessage.MessageType.GUI_MSG_SWITCH_FULL_WINDOWED, 0, 0, 0, 0, 0, null);
+        GUIWindowManager.SendMessage(msg);
+      }
+
       string loadFav = StartupLink;
 
       if (webBrowser.Document.Domain == string.Empty)
@@ -244,6 +263,7 @@ namespace BrowseTheWeb
         blankBrowser = xmlreader.GetValueAsBool("btWeb", "blank", false);
         statusBar = xmlreader.GetValueAsBool("btWeb", "status", true);
         osd = xmlreader.GetValueAsBool("btWeb", "osd", true);
+        windowed = xmlreader.GetValueAsBool("btWeb", "window", false);
 
         defaultZoom = (float)xmlreader.GetValueAsInt("btWeb", "zoom", 100) / 100;
         zoom = defaultZoom;
@@ -366,6 +386,14 @@ namespace BrowseTheWeb
       switch (action.wID)
       {
         case Action.ActionType.ACTION_VOLUME_MUTE:
+          /*
+           * test *
+          Cursor.Position = new Point(250, 350);
+
+          Cursor.Show();
+          mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, Cursor.Position.X, Cursor.Position.Y, 0, 0);
+          Cursor.Hide();
+          */
           break;
         case Action.ActionType.ACTION_KEY_PRESSED:
           linkTime = 0;

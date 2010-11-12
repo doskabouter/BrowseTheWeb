@@ -73,6 +73,7 @@
       this.txtZoom = new System.Windows.Forms.Label();
       this.trkZoom = new System.Windows.Forms.TrackBar();
       this.tabPage3 = new System.Windows.Forms.TabPage();
+      this.label7 = new System.Windows.Forms.Label();
       this.label4 = new System.Windows.Forms.Label();
       this.label3 = new System.Windows.Forms.Label();
       this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -88,7 +89,7 @@
       this.comboBox1 = new System.Windows.Forms.ComboBox();
       this.chkRemote = new System.Windows.Forms.CheckBox();
       this.listBox1 = new System.Windows.Forms.ListBox();
-      this.label7 = new System.Windows.Forms.Label();
+      this.chkWindowed = new System.Windows.Forms.CheckBox();
       this.contextMenuStrip1.SuspendLayout();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
@@ -284,6 +285,7 @@
       // 
       // groupBox5
       // 
+      this.groupBox5.Controls.Add(this.chkWindowed);
       this.groupBox5.Controls.Add(this.chkOSD);
       this.groupBox5.Controls.Add(this.chkStatus);
       this.groupBox5.Controls.Add(this.chkBlank);
@@ -301,9 +303,9 @@
       this.chkOSD.AutoSize = true;
       this.chkOSD.Location = new System.Drawing.Point(19, 129);
       this.chkOSD.Name = "chkOSD";
-      this.chkOSD.Size = new System.Drawing.Size(149, 20);
+      this.chkOSD.Size = new System.Drawing.Size(147, 20);
       this.chkOSD.TabIndex = 4;
-      this.chkOSD.Text = "Show OSD for link ID";
+      this.chkOSD.Text = "show OSD for link ID";
       this.chkOSD.UseVisualStyleBackColor = true;
       // 
       // chkStatus
@@ -311,9 +313,9 @@
       this.chkStatus.AutoSize = true;
       this.chkStatus.Location = new System.Drawing.Point(19, 103);
       this.chkStatus.Name = "chkStatus";
-      this.chkStatus.Size = new System.Drawing.Size(189, 20);
+      this.chkStatus.Size = new System.Drawing.Size(188, 20);
       this.chkStatus.TabIndex = 3;
-      this.chkStatus.Text = "Enable statusbar as default";
+      this.chkStatus.Text = "enable statusbar as default";
       this.chkStatus.UseVisualStyleBackColor = true;
       // 
       // chkBlank
@@ -321,9 +323,9 @@
       this.chkBlank.AutoSize = true;
       this.chkBlank.Location = new System.Drawing.Point(19, 77);
       this.chkBlank.Name = "chkBlank";
-      this.chkBlank.Size = new System.Drawing.Size(225, 20);
+      this.chkBlank.Size = new System.Drawing.Size(224, 20);
       this.chkBlank.TabIndex = 2;
-      this.chkBlank.Text = "Blank browser on window change";
+      this.chkBlank.Text = "blank browser on window change";
       this.chkBlank.UseVisualStyleBackColor = true;
       // 
       // txtName
@@ -358,9 +360,9 @@
       this.txtRemote.AutoSize = true;
       this.txtRemote.Location = new System.Drawing.Point(16, 53);
       this.txtRemote.Name = "txtRemote";
-      this.txtRemote.Size = new System.Drawing.Size(139, 16);
+      this.txtRemote.Size = new System.Drawing.Size(133, 16);
       this.txtRemote.TabIndex = 2;
-      this.txtRemote.Text = "Reset link ID after 1,5s";
+      this.txtRemote.Text = "reset link ID after 1,5s";
       // 
       // trkRemote
       // 
@@ -559,6 +561,15 @@
       this.tabPage3.TabIndex = 2;
       this.tabPage3.Text = "Bookmarks";
       // 
+      // label7
+      // 
+      this.label7.AutoSize = true;
+      this.label7.Location = new System.Drawing.Point(7, 15);
+      this.label7.Name = "label7";
+      this.label7.Size = new System.Drawing.Size(126, 16);
+      this.label7.TabIndex = 17;
+      this.label7.Text = "Right click to modify";
+      // 
       // label4
       // 
       this.label4.AutoSize = true;
@@ -713,14 +724,15 @@
       this.listBox1.Size = new System.Drawing.Size(550, 372);
       this.listBox1.TabIndex = 0;
       // 
-      // label7
+      // chkWindowed
       // 
-      this.label7.AutoSize = true;
-      this.label7.Location = new System.Drawing.Point(7, 15);
-      this.label7.Name = "label7";
-      this.label7.Size = new System.Drawing.Size(126, 16);
-      this.label7.TabIndex = 17;
-      this.label7.Text = "Right click to modify";
+      this.chkWindowed.AutoSize = true;
+      this.chkWindowed.Location = new System.Drawing.Point(19, 155);
+      this.chkWindowed.Name = "chkWindowed";
+      this.chkWindowed.Size = new System.Drawing.Size(223, 20);
+      this.chkWindowed.TabIndex = 5;
+      this.chkWindowed.Text = "use windowed mode in fullscreen";
+      this.chkWindowed.UseVisualStyleBackColor = true;
       // 
       // Setup
       // 
@@ -832,5 +844,6 @@
     private System.Windows.Forms.TextBox txtHttpServer;
     private System.Windows.Forms.Label label6;
     private System.Windows.Forms.Label label7;
+    private System.Windows.Forms.CheckBox chkWindowed;
   }
 }
