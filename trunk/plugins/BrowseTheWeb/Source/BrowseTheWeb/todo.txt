@@ -7,7 +7,11 @@ add thumbs for webpages
 bookmark add / edit can be set even url is not valid
 Ready for Info Service, Thanks to SilentExeption
 
+V0.2.1 extract xulrunner first in setup
 
+V0.2.2 add proxy support
+
+V0.2.3 add force windowed mode
 
 
 todo:

@@ -172,6 +172,7 @@ namespace BrowseTheWeb
     {
       Xpcom.Initialize(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\xulrunner");
 
+      #region add forms
       webBrowser = new GeckoWebBrowser();
       GUIGraphicsContext.form.Controls.Add(webBrowser);
       webBrowser.Visible = false;
@@ -183,70 +184,83 @@ namespace BrowseTheWeb
       mouse = new Mouse();
       GUIGraphicsContext.form.Controls.Add(mouse);
       mouse.Visible = false;
+      #endregion
 
       LoadSettings();
-      Bookmark.AddSavedFolder(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml");
+      Bookmark.AddFolder(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml", "Saved by MP");
 
       return Load(GUIGraphicsContext.Skin + @"\BrowseTheWeb.xml");
     }
 
     protected override void OnPageLoad()
     {
-      GUIPropertyManager.SetProperty("#btWeb.status", "Init browser");
-      GUIPropertyManager.SetProperty("#btWeb.linkid", "");
-      linkId = string.Empty;
-
-      timer.Interval = 100;
-      timer.Tick += new EventHandler(timer_Tick);
-      timer.Start();
-
-      #region init browser
-      webBrowser.Visible = true;
-      webBrowser.Enabled = false;
-
-      webBrowser.Dock = System.Windows.Forms.DockStyle.None;
-      webBrowser.Location = new System.Drawing.Point(0, 0);
-
-      if (statusBar)
-        webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height - 100);
-      else
-        webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height);
-
-      webBrowser.Window.TextZoom = font;
-      webBrowser.Zoom = zoom;
-
-      webBrowser.DocumentCompleted += new EventHandler(webBrowser_DocumentCompleted);
-      webBrowser.StatusTextChanged += new EventHandler(webBrowser_StatusTextChanged);
-
-      if (windowed)
+      try
       {
-        MyLog.debug("switch to windowed fullscreen mode");
-        GUIMessage msg = new GUIMessage(GUIMessage.MessageType.GUI_MSG_SWITCH_FULL_WINDOWED, 0, 0, 0, 0, 0, null);
-        GUIWindowManager.SendMessage(msg);
-      }
+        MyLog.debug("Init browser");
 
-      string loadFav = StartupLink;
+        GUIPropertyManager.SetProperty("#btWeb.status", "Init browser");
+        GUIPropertyManager.SetProperty("#btWeb.linkid", "");
+        linkId = string.Empty;
 
-      if (webBrowser.Document.Domain == string.Empty)
-      {
-        if ((usehome) && (string.IsNullOrEmpty(loadFav)))
+        #region init browser
+        webBrowser.Visible = true;
+        webBrowser.Enabled = false;
+
+        webBrowser.Dock = System.Windows.Forms.DockStyle.None;
+        webBrowser.Location = new System.Drawing.Point(0, 0);
+
+        if (statusBar)
+          webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height - 100);
+        else
+          webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height);
+
+        webBrowser.Window.TextZoom = font;
+        webBrowser.Zoom = zoom;
+
+        MyLog.debug("Create eventhandler");
+
+        webBrowser.DocumentCompleted += new EventHandler(webBrowser_DocumentCompleted);
+        webBrowser.StatusTextChanged += new EventHandler(webBrowser_StatusTextChanged);
+
+        if (windowed)
         {
-          webBrowser.Navigate(homepage);
-          MyLog.debug("load home page " + homepage);
+          MyLog.debug("switch to windowed fullscreen mode");
+          GUIMessage msg = new GUIMessage(GUIMessage.MessageType.GUI_MSG_SWITCH_FULL_WINDOWED, 0, 0, 0, 0, 0, null);
+          GUIWindowManager.SendMessage(msg);
         }
-      }
 
-      if (!string.IsNullOrEmpty(loadFav))
+        string loadFav = StartupLink;
+
+        if (webBrowser.Document.Domain == string.Empty)
+        {
+          if ((usehome) && (string.IsNullOrEmpty(loadFav)))
+          {
+            webBrowser.Navigate(homepage);
+            MyLog.debug("load home page " + homepage);
+          }
+        }
+
+        if (!string.IsNullOrEmpty(loadFav))
+        {
+          webBrowser.Navigate(loadFav);
+          MyLog.debug("load favorite " + loadFav);
+          StartupLink = string.Empty;
+        }
+
+        #endregion
+
+        osd_linkID.Location = new System.Drawing.Point((GUIGraphicsContext.form.Width / 2) - (osd_linkID.Width / 2),
+                                                       (GUIGraphicsContext.form.Height / 2) - (osd_linkID.Height / 2));
+
+        timer.Interval = 100;
+        timer.Tick += new EventHandler(timer_Tick);
+        timer.Start();
+      }
+      catch (Exception ex)
       {
-        webBrowser.Navigate(loadFav);
-        MyLog.debug("load favorite " + loadFav);
-        StartupLink = string.Empty;
+        MyLog.debug("Exception OnLoad : " + ex.Message);
+        MyLog.debug("Exception OnLoad : " + ex.StackTrace);
       }
-
-      #endregion
-
-      osd_linkID.Location = new System.Drawing.Point((GUIGraphicsContext.form.Width / 2) - (osd_linkID.Width / 2),
-                                                     (GUIGraphicsContext.form.Height / 2) - (osd_linkID.Height / 2));
 
       base.OnPageLoad();
     }
@@ -258,7 +272,7 @@ namespace BrowseTheWeb
       {
         usehome = xmlreader.GetValueAsBool("btWeb", "usehome", true);
         homepage = xmlreader.GetValueAsString("btWeb", "homepage", "http://team-mediaportal.com");
-        remoteTime = xmlreader.GetValueAsInt("btWeb", "remote", 15);
+        remoteTime = xmlreader.GetValueAsInt("btWeb", "remotetime", 15);
         pluginName = xmlreader.GetValueAsString("btWeb", "name", "Browse Web");
         blankBrowser = xmlreader.GetValueAsBool("btWeb", "blank", false);
         statusBar = xmlreader.GetValueAsBool("btWeb", "status", true);
@@ -515,13 +529,13 @@ namespace BrowseTheWeb
 
         #region zoom & move
         case Action.ActionType.ACTION_ZOOM_IN:
-        case Action.ActionType.ACTION_PAGE_DOWN:
+        case Action.ActionType.ACTION_PAGE_UP:
           if (zoom < 2) zoom += 0.1f;
           webBrowser.Zoom = zoom;
           GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
           break;
         case Action.ActionType.ACTION_ZOOM_OUT:
-        case Action.ActionType.ACTION_PAGE_UP:
+        case Action.ActionType.ACTION_PAGE_DOWN:
           if (zoom > 0.1f) zoom -= 0.1f;
           webBrowser.Zoom = zoom;
           GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
@@ -745,6 +759,10 @@ namespace BrowseTheWeb
 
     private void OnLinkId(string LinkId)
     {
+      linkId = string.Empty;
+      osd_linkID.Visible = false;
+      Application.DoEvents();
+
       HtmlLinkNumber hln = null;
       if (GetLinkById(Convert.ToInt32(LinkId), out hln))
       {
