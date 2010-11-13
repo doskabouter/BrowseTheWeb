@@ -16,12 +16,13 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>..\..\..\..\Program Files\Team MediaPortal\MediaPortal\plugins\Windows\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,18 +36,22 @@
     <Reference Include="Core, Version=1.1.1.11854, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files\Team MediaPortal\MediaPortal\Core.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Dialogs, Version=1.1.1.11860, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files\Team MediaPortal\MediaPortal\plugins\Windows\Dialogs.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files\Team MediaPortal\MediaPortal\plugins\Windows\HtmlAgilityPack.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Skybound.Gecko, Version=1.9.1.1, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files\Team MediaPortal\MediaPortal\plugins\Windows\Skybound.Gecko.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -57,6 +62,7 @@
     <Reference Include="Utils, Version=2.2.7.11849, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files\Team MediaPortal\MediaPortal\Utils.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -83,6 +89,12 @@
     <Compile Include="GUIPlugin.cs" />
     <Compile Include="HtmlInputType.cs" />
     <Compile Include="HtmlLinkNumber.cs" />
+    <Compile Include="ImportIE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportIE.Designer.cs">
+      <DependentUpon>ImportIE.cs</DependentUpon>
+    </Compile>
     <Compile Include="Mouse.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -108,6 +120,7 @@
     <Compile Include="Setup.Designer.cs">
       <DependentUpon>Setup.cs</DependentUpon>
     </Compile>
+    <Compile Include="SqlLite.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GetFolder.resx">
@@ -144,6 +157,10 @@
     <Content Include="todo.txt" />
     <EmbeddedResource Include="GetThumb.resx">
       <DependentUpon>GetThumb.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportIE.resx">
+      <DependentUpon>ImportIE.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Mouse.resx">
       <DependentUpon>Mouse.cs</DependentUpon>

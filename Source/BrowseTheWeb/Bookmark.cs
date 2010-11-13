@@ -143,7 +143,7 @@ namespace BrowseTheWeb
       catch { }
     }
 
-    public static void AddSavedFolder(string Path)
+    public static void AddFolder(string Path, string FolderName)
     {
       if (!File.Exists(Path))
       {
@@ -163,7 +163,7 @@ namespace BrowseTheWeb
         {
           foreach (XmlNode one in r.ChildNodes)
           {
-            if (one.FirstChild.InnerText == "Saved by MP") found = true;
+            if (one.FirstChild.InnerText == FolderName) found = true;
           }
         }
 
@@ -171,7 +171,7 @@ namespace BrowseTheWeb
         {
           XmlElement childElement = xmlDocument.CreateElement("Entry");
 
-          XmlElement sub1 = xmlDocument.CreateElement("Name"); sub1.InnerText = "Saved by MP";
+          XmlElement sub1 = xmlDocument.CreateElement("Name"); sub1.InnerText = FolderName;
           childElement.AppendChild(sub1);
           XmlElement sub2 = xmlDocument.CreateElement("URL"); sub2.InnerText = string.Empty;
           childElement.AppendChild(sub2);
@@ -179,7 +179,7 @@ namespace BrowseTheWeb
           childElement.AppendChild(sub3);
           XmlElement sub4 = xmlDocument.CreateElement("LastVisited"); sub4.InnerText = "0001-01-01T00:00:00";
           childElement.AppendChild(sub4);
-          XmlElement sub5 = xmlDocument.CreateElement("Created"); sub5.InnerText = "0001-01-01T00:00:00";
+          XmlElement sub5 = xmlDocument.CreateElement("Created"); sub5.InnerText = DateTime.UtcNow.ToString("u", null);
           childElement.AppendChild(sub5);
           XmlElement sub6 = xmlDocument.CreateElement("isFolder"); sub6.InnerText = "true";
           childElement.AppendChild(sub6);
@@ -226,7 +226,7 @@ namespace BrowseTheWeb
           childElement.AppendChild(sub3);
           XmlElement sub4 = xmlDocument.CreateElement("LastVisited"); sub4.InnerText = "0001-01-01T00:00:00";
           childElement.AppendChild(sub4);
-          XmlElement sub5 = xmlDocument.CreateElement("Created"); sub5.InnerText = "0001-01-01T00:00:00";
+          XmlElement sub5 = xmlDocument.CreateElement("Created"); sub5.InnerText = DateTime.UtcNow.ToString("u", null);
           childElement.AppendChild(sub5);
           XmlElement sub6 = xmlDocument.CreateElement("isFolder"); sub6.InnerText = "false";
           childElement.AppendChild(sub6);
@@ -405,7 +405,7 @@ namespace BrowseTheWeb
     }
     public static void InitCachePath()
     {
-      if(!Directory.Exists(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb"))
+      if (!Directory.Exists(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb"))
         Directory.CreateDirectory(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb");
     }
   }

@@ -1,4 +1,4 @@
-﻿#region Copyright (C) 2005-2010 Team MediaPortal
+#region Copyright (C) 2005-2010 Team MediaPortal
 
 /* 
  *	Copyright (C) 2005-2010 Team MediaPortal
@@ -464,6 +464,7 @@ namespace BrowseTheWeb
               addBkm.Name = get.SelectedName;
               addBkm.Url = get.SelectedUrl;
               addBkm.isSubFolder = true;
+              addBkm.Created = DateTime.Now;
               add.Tag = addBkm;
 
               node.ExpandAll();
@@ -475,6 +476,7 @@ namespace BrowseTheWeb
               Bookmark addBkm = new Bookmark();
               addBkm.Name = get.SelectedName;
               addBkm.Url = get.SelectedUrl;
+              addBkm.Created = DateTime.Now;
               add.Tag = addBkm;
 
               node.Parent.ExpandAll();
@@ -487,6 +489,7 @@ namespace BrowseTheWeb
             Bookmark addBkm = new Bookmark();
             addBkm.Name = get.SelectedName;
             addBkm.Url = get.SelectedUrl;
+            addBkm.Created = DateTime.Now;
             add.Tag = addBkm;
 
             treeView1.Nodes[0].ExpandAll();
@@ -597,7 +600,7 @@ namespace BrowseTheWeb
       {
         chkHome.Checked = xmlreader.GetValueAsBool("btWeb", "usehome", true);
         txtHome.Text = xmlreader.GetValueAsString("btWeb", "homepage", "http://team-mediaportal.com");
-        trkRemote.Value = xmlreader.GetValueAsInt("btWeb", "remote", 25);
+        trkRemote.Value = xmlreader.GetValueAsInt("btWeb", "remotetime", 25);
         txtName.Text = xmlreader.GetValueAsString("btWeb", "name", "Browse Web");
         chkBlank.Checked = xmlreader.GetValueAsBool("btWeb", "blank", false);
         chkStatus.Checked = xmlreader.GetValueAsBool("btWeb", "status", false);
@@ -629,7 +632,7 @@ namespace BrowseTheWeb
       {
         xmlwriter.SetValueAsBool("btWeb", "usehome", chkHome.Checked);
         xmlwriter.SetValue("btWeb", "homepage", txtHome.Text);
-        xmlwriter.SetValue("btWeb", "remote", trkRemote.Value);
+        xmlwriter.SetValue("btWeb", "remotetime", trkRemote.Value);
         xmlwriter.SetValue("btWeb", "name", txtName.Text);
         xmlwriter.SetValueAsBool("btWeb", "blank", chkBlank.Checked);
         xmlwriter.SetValueAsBool("btWeb", "status", chkStatus.Checked);
@@ -719,6 +722,98 @@ namespace BrowseTheWeb
     private void chkProxy_CheckedChanged(object sender, EventArgs e)
     {
       TrySetProxy();
+    }
+
+    private void btnImportIE_Click(object sender, EventArgs e)
+    {
+      if (!Bookmark.Exists(treeView1, "Import IE"))
+      {
+        TreeNode newNode = treeView1.Nodes[0].Nodes.Add("Import IE");
+        newNode.ImageIndex = 1;
+        newNode.SelectedImageIndex = 1;
+
+        Bookmark bkm = new Bookmark();
+        bkm.Name = "Import IE";
+        bkm.isFolder = true;
+        newNode.Tag = bkm;
+
+        treeView1.Nodes[0].ExpandAll();
+      }
+
+      ImportIE import = new ImportIE();
+      import.ShowDialog();
+
+      int max = import.EntryList.Count;
+      int imported = 0;
+
+      TreeNode node = null;
+      foreach (TreeNode n in treeView1.Nodes[0].Nodes)
+      {
+        if (n.Text == "Import IE")
+        {
+          node = n;
+          break;
+        }
+      }
+
+      if (node != null)
+      {
+        foreach (Bookmark bkm in import.EntryList)
+        {
+          if (!Bookmark.Exists(treeView1, bkm.Name))
+          {
+            if (!Bookmark.isValidUrl(bkm.Url))
+            {
+              DialogResult res = MessageBox.Show("The url seems not to be valid !\nContinue anyway ?", "Error home page address", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+              //if (res != DialogResult.Yes) break;
+            }
+
+            if (chkUseThumbs.Checked)
+            {
+              GetThumb thumb = new GetThumb();
+              thumb.SelectedUrl = bkm.Url;
+              thumb.ShowDialog();
+            }
+
+            TreeNode add = node.Nodes.Add(bkm.Url, bkm.Name);
+
+            Bookmark addBkm = new Bookmark();
+            addBkm.Name = bkm.Name;
+            addBkm.Url = bkm.Url;
+            addBkm.isSubFolder = true;
+            add.Tag = addBkm;
+
+            node.ExpandAll();
+
+          }
+        }
+      }
+    }
+    private void btnImportFF_Click(object sender, EventArgs e)
+    {
+      SQLite db = new SQLite();
+
+      string path = @"C:\Users\mka\AppData\Roaming\Mozilla\Firefox\Profiles\wyhhe7f5.default\places.sqlite";
+
+      db.OpenDatabase(path);
+      //db.OpenDatabase(path);"Data Source=" + path + ";Version=3;New=True;Compress=True;"
+
+      //DataTable table = db.ExecuteQuery("select * from moz_places");
+      DataTable table = db.ExecuteQuery("SELECT moz_bookmarks.title,moz_places.url,moz_bookmarks.type FROM moz_bookmarks LEFT JOIN moz_places " +
+                                        "WHERE moz_bookmarks.fk = moz_places.id AND moz_bookmarks.title != 'null' AND moz_places.url LIKE '%http%';");
+
+
+      foreach (DataRow row in table.Rows)
+      {
+        string t = Convert.ToString(row["title"]);
+        string u = Convert.ToString(row["url"]);
+
+        System.Diagnostics.Debug.WriteLine("--------");
+        System.Diagnostics.Debug.WriteLine(t);
+        System.Diagnostics.Debug.WriteLine(u);
+      }
+
+      db.CloseDatabase();
     }
   }
 }

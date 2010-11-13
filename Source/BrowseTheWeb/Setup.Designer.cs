@@ -49,6 +49,7 @@
       this.tabControl1 = new System.Windows.Forms.TabControl();
       this.tabPage1 = new System.Windows.Forms.TabPage();
       this.groupBox5 = new System.Windows.Forms.GroupBox();
+      this.chkWindowed = new System.Windows.Forms.CheckBox();
       this.chkOSD = new System.Windows.Forms.CheckBox();
       this.chkStatus = new System.Windows.Forms.CheckBox();
       this.chkBlank = new System.Windows.Forms.CheckBox();
@@ -73,6 +74,8 @@
       this.txtZoom = new System.Windows.Forms.Label();
       this.trkZoom = new System.Windows.Forms.TrackBar();
       this.tabPage3 = new System.Windows.Forms.TabPage();
+      this.btnImportFF = new System.Windows.Forms.Button();
+      this.btnImportIE = new System.Windows.Forms.Button();
       this.label7 = new System.Windows.Forms.Label();
       this.label4 = new System.Windows.Forms.Label();
       this.label3 = new System.Windows.Forms.Label();
@@ -89,7 +92,6 @@
       this.comboBox1 = new System.Windows.Forms.ComboBox();
       this.chkRemote = new System.Windows.Forms.CheckBox();
       this.listBox1 = new System.Windows.Forms.ListBox();
-      this.chkWindowed = new System.Windows.Forms.CheckBox();
       this.contextMenuStrip1.SuspendLayout();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
@@ -297,6 +299,16 @@
       this.groupBox5.TabIndex = 19;
       this.groupBox5.TabStop = false;
       this.groupBox5.Text = "Other settings";
+      // 
+      // chkWindowed
+      // 
+      this.chkWindowed.AutoSize = true;
+      this.chkWindowed.Location = new System.Drawing.Point(19, 155);
+      this.chkWindowed.Name = "chkWindowed";
+      this.chkWindowed.Size = new System.Drawing.Size(223, 20);
+      this.chkWindowed.TabIndex = 5;
+      this.chkWindowed.Text = "use windowed mode in fullscreen";
+      this.chkWindowed.UseVisualStyleBackColor = true;
       // 
       // chkOSD
       // 
@@ -548,6 +560,8 @@
       // tabPage3
       // 
       this.tabPage3.BackColor = System.Drawing.SystemColors.Control;
+      this.tabPage3.Controls.Add(this.btnImportFF);
+      this.tabPage3.Controls.Add(this.btnImportIE);
       this.tabPage3.Controls.Add(this.label7);
       this.tabPage3.Controls.Add(this.label4);
       this.tabPage3.Controls.Add(this.label3);
@@ -560,6 +574,26 @@
       this.tabPage3.Size = new System.Drawing.Size(562, 476);
       this.tabPage3.TabIndex = 2;
       this.tabPage3.Text = "Bookmarks";
+      // 
+      // btnImportFF
+      // 
+      this.btnImportFF.Location = new System.Drawing.Point(87, 442);
+      this.btnImportFF.Name = "btnImportFF";
+      this.btnImportFF.Size = new System.Drawing.Size(75, 23);
+      this.btnImportFF.TabIndex = 19;
+      this.btnImportFF.Text = "Import FF";
+      this.btnImportFF.UseVisualStyleBackColor = true;
+      this.btnImportFF.Click += new System.EventHandler(this.btnImportFF_Click);
+      // 
+      // btnImportIE
+      // 
+      this.btnImportIE.Location = new System.Drawing.Point(6, 442);
+      this.btnImportIE.Name = "btnImportIE";
+      this.btnImportIE.Size = new System.Drawing.Size(75, 23);
+      this.btnImportIE.TabIndex = 18;
+      this.btnImportIE.Text = "Import IE";
+      this.btnImportIE.UseVisualStyleBackColor = true;
+      this.btnImportIE.Click += new System.EventHandler(this.btnImportIE_Click);
       // 
       // label7
       // 
@@ -724,16 +758,6 @@
       this.listBox1.Size = new System.Drawing.Size(550, 372);
       this.listBox1.TabIndex = 0;
       // 
-      // chkWindowed
-      // 
-      this.chkWindowed.AutoSize = true;
-      this.chkWindowed.Location = new System.Drawing.Point(19, 155);
-      this.chkWindowed.Name = "chkWindowed";
-      this.chkWindowed.Size = new System.Drawing.Size(223, 20);
-      this.chkWindowed.TabIndex = 5;
-      this.chkWindowed.Text = "use windowed mode in fullscreen";
-      this.chkWindowed.UseVisualStyleBackColor = true;
-      // 
       // Setup
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -845,5 +869,7 @@
     private System.Windows.Forms.Label label6;
     private System.Windows.Forms.Label label7;
     private System.Windows.Forms.CheckBox chkWindowed;
+    private System.Windows.Forms.Button btnImportIE;
+    private System.Windows.Forms.Button btnImportFF;
   }
 }
