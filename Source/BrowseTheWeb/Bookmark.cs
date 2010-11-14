@@ -346,6 +346,7 @@ namespace BrowseTheWeb
           filename = filename.Substring(x + 2);
           filename = filename.Replace("/", "_");
           filename = filename.Replace(".", "_");
+          filename = filename.Replace("?", "_");
           filename = filename + ".png";
 
           filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb\\" + filename;
@@ -370,6 +371,7 @@ namespace BrowseTheWeb
           filename = filename.Substring(x + 2);
           filename = filename.Replace("/", "_");
           filename = filename.Replace(".", "_");
+          filename = filename.Replace("?", "_");
           filename = filename + ".png";
 
           filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb\\" + filename;

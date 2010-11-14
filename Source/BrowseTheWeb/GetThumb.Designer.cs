@@ -31,7 +31,6 @@
       this.components = new System.ComponentModel.Container();
       this.chkUrl = new System.Windows.Forms.CheckBox();
       this.chkGetThumb = new System.Windows.Forms.CheckBox();
-      this.progressBar1 = new System.Windows.Forms.ProgressBar();
       this.button1 = new System.Windows.Forms.Button();
       this.txtUrl = new System.Windows.Forms.Label();
       this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -60,19 +59,11 @@
       this.chkGetThumb.Text = "Cache thumb";
       this.chkGetThumb.UseVisualStyleBackColor = true;
       // 
-      // progressBar1
-      // 
-      this.progressBar1.Location = new System.Drawing.Point(12, 116);
-      this.progressBar1.Name = "progressBar1";
-      this.progressBar1.Size = new System.Drawing.Size(295, 23);
-      this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-      this.progressBar1.TabIndex = 2;
-      // 
       // button1
       // 
-      this.button1.Location = new System.Drawing.Point(12, 145);
+      this.button1.Location = new System.Drawing.Point(12, 103);
       this.button1.Name = "button1";
-      this.button1.Size = new System.Drawing.Size(295, 23);
+      this.button1.Size = new System.Drawing.Size(295, 30);
       this.button1.TabIndex = 3;
       this.button1.Text = "Cancel";
       this.button1.UseVisualStyleBackColor = true;
@@ -109,11 +100,10 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(319, 183);
+      this.ClientSize = new System.Drawing.Size(319, 149);
       this.Controls.Add(this.chkWait);
       this.Controls.Add(this.txtUrl);
       this.Controls.Add(this.button1);
-      this.Controls.Add(this.progressBar1);
       this.Controls.Add(this.chkGetThumb);
       this.Controls.Add(this.chkUrl);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -130,7 +120,6 @@
 
     private System.Windows.Forms.CheckBox chkUrl;
     private System.Windows.Forms.CheckBox chkGetThumb;
-    private System.Windows.Forms.ProgressBar progressBar1;
     private System.Windows.Forms.Button button1;
     private System.Windows.Forms.Label txtUrl;
     private System.Windows.Forms.Timer timer1;

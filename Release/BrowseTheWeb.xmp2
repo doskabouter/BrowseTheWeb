@@ -268,13 +268,13 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <Version>
       <Major>0</Major>
       <Minor>2</Minor>
-      <Build>3</Build>
+      <Build>4</Build>
       <Revision>0</Revision>
     </Version>
     <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / " Webbrowser.
 
 </ExtensionDescription>
-    <VersionDescription>add force windowed mode</VersionDescription>
+    <VersionDescription>add import for IE and FF</VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
     <OnlineLocation>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.mpe1</OnlineLocation>
     <ReleaseDate>2010-11-06T15:09:04.5514802+01:00</ReleaseDate>
@@ -395,7 +395,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>..\Source\BrowseTheWeb\xulrunner.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{03576131-4705-4966-917b-ed60d4c7c6ec}-xulrunner.png</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{eb11fd4f-fcca-4943-a16d-c1f6f8f00ad5}-xulrunner.png</ZipFileName>
         <DestinationFilename />
       </FileItem>
     </Items>
