@@ -16,7 +16,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>..\..\..\..\Program Files\Team MediaPortal\MediaPortal\plugins\Windows\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -36,6 +36,11 @@
     <Reference Include="Core, Version=1.1.1.11854, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files\Team MediaPortal\MediaPortal\Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Databases, Version=1.1.1.11856, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files\Team MediaPortal\MediaPortal\Databases.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Dialogs, Version=1.1.1.11860, Culture=neutral, processorArchitecture=x86">
@@ -95,6 +100,12 @@
     <Compile Include="ImportIE.Designer.cs">
       <DependentUpon>ImportIE.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImportFF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportFF.Designer.cs">
+      <DependentUpon>ImportFF.cs</DependentUpon>
+    </Compile>
     <Compile Include="Mouse.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -120,7 +131,6 @@
     <Compile Include="Setup.Designer.cs">
       <DependentUpon>Setup.cs</DependentUpon>
     </Compile>
-    <Compile Include="SqlLite.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GetFolder.resx">
@@ -161,6 +171,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ImportIE.resx">
       <DependentUpon>ImportIE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportFF.resx">
+      <DependentUpon>ImportFF.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Mouse.resx">
       <DependentUpon>Mouse.cs</DependentUpon>

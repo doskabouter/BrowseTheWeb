@@ -209,6 +209,11 @@ namespace BrowseTheWeb
         webBrowser.Dock = System.Windows.Forms.DockStyle.None;
         webBrowser.Location = new System.Drawing.Point(0, 0);
 
+        MyLog.debug("Create eventhandler");
+
+        webBrowser.DocumentCompleted += new EventHandler(webBrowser_DocumentCompleted);
+        webBrowser.StatusTextChanged += new EventHandler(webBrowser_StatusTextChanged);
+
         if (statusBar)
           webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height - 100);
         else
@@ -216,11 +221,6 @@ namespace BrowseTheWeb
 
         webBrowser.Window.TextZoom = font;
         webBrowser.Zoom = zoom;
-
-        MyLog.debug("Create eventhandler");
-
-        webBrowser.DocumentCompleted += new EventHandler(webBrowser_DocumentCompleted);
-        webBrowser.StatusTextChanged += new EventHandler(webBrowser_StatusTextChanged);
 
         if (windowed)
         {

@@ -15,10 +15,10 @@ namespace BrowseTheWeb
     public string SelectedUrl = string.Empty;
     private GeckoWebBrowser browser;
     private Bitmap snap;
-    private int value;
 
     private bool received = false;
     private int time = 0;
+    private int cancel = 0;
 
     public GetThumb()
     {
@@ -54,7 +54,6 @@ namespace BrowseTheWeb
         Bookmark.SaveSnap(snap, SelectedUrl);
         received = true;
         chkGetThumb.Checked = true;
-
       }
     }
 
@@ -65,9 +64,8 @@ namespace BrowseTheWeb
 
     private void timer1_Tick(object sender, EventArgs e)
     {
-      value++;
-      if (value > 100) value = 1;
-      progressBar1.Value = value;
+      cancel++;
+      if (cancel > 30) this.Close();
 
       if (received)
       {
