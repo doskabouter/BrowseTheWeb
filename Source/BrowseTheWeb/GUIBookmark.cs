@@ -107,7 +107,7 @@ namespace BrowseTheWeb
           XmlNodeList col = xmlDocument.GetElementsByTagName("Entry");
           foreach (XmlNode node in col)
           {
-            Bookmark bkm = GetData(node);
+            BookmarkElement bkm = BookmarkXml.GetData(node);
 
             string name = bkm.Name.Replace(" ", "_");
             name = name.Replace(".", "_");
@@ -126,7 +126,7 @@ namespace BrowseTheWeb
               }
               else
               {
-                string file = Bookmark.GetSnapPath(bkm.Url);
+                string file = Bookmark.GetSnapPath(bkm.Id);
                 item.IconImage = file;
                 item.IconImageBig = file;
               }
@@ -151,7 +151,7 @@ namespace BrowseTheWeb
           XmlNodeList col = xmlDocument.GetElementsByTagName("Entry");
           foreach (XmlNode node in col)
           {
-            Bookmark bkm = GetData(node);
+            BookmarkElement bkm = BookmarkXml.GetData(node);
 
             if ((bkm.isFolder) || ((!bkm.isSubFolder && !bkm.isFolder))) found = false;
 
@@ -168,7 +168,7 @@ namespace BrowseTheWeb
                 item.Label = bkm.Name;
                 item.Path = bkm.Url;
 
-                string file = Bookmark.GetSnapPath(bkm.Url);
+                string file = Bookmark.GetSnapPath(bkm.Id);
                 item.IconImage = file;
                 item.IconImageBig = file;
 
@@ -181,22 +181,6 @@ namespace BrowseTheWeb
 
       }
       catch { }
-    }
-    private static Bookmark GetData(XmlNode Node)
-    {
-      Bookmark result = new Bookmark();
-
-      result.Name = Node.SelectSingleNode("Name").InnerText;
-      result.Url = Node.SelectSingleNode("URL").InnerText;
-
-      result.Visited = Convert.ToInt32(Node.SelectSingleNode("Visited").InnerText);
-      result.LastVisited = Convert.ToDateTime(Node.SelectSingleNode("LastVisited").InnerText);
-      result.Created = Convert.ToDateTime(Node.SelectSingleNode("Created").InnerText);
-
-      result.isFolder = Convert.ToBoolean(Node.SelectSingleNode("isFolder").InnerText);
-      result.isSubFolder = Convert.ToBoolean(Node.SelectSingleNode("isSubFolder").InnerText);
-
-      return result;
     }
   }
 }

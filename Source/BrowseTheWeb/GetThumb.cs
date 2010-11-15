@@ -13,6 +13,7 @@ namespace BrowseTheWeb
   public partial class GetThumb : Form
   {
     public string SelectedUrl = string.Empty;
+    private long id = 0;
     private GeckoWebBrowser browser;
     private Bitmap snap;
 
@@ -20,12 +21,14 @@ namespace BrowseTheWeb
     private int time = 0;
     private int cancel = 0;
 
-    public GetThumb()
+    public GetThumb(long ID)
     {
       InitializeComponent();
 
       browser = new GeckoWebBrowser();
       this.Controls.Add(browser);
+
+      id = ID;
     }
     private void GetThumb_Load(object sender, EventArgs e)
     {
@@ -34,7 +37,7 @@ namespace BrowseTheWeb
 
       txtUrl.Text = SelectedUrl;
 
-      browser.Size = new Size(600, 800);
+      browser.Size = new Size(800, 1024);
       browser.DocumentCompleted += new EventHandler(browser_DocumentCompleted);
       browser.Navigate(SelectedUrl);
     }
@@ -51,7 +54,7 @@ namespace BrowseTheWeb
         Graphics g = Graphics.FromImage((Image)snap);
         g.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(1, 1, snap.Width - 2, snap.Height - 2));
 
-        Bookmark.SaveSnap(snap, SelectedUrl);
+        Bookmark.SaveSnap(snap, id);
         received = true;
         chkGetThumb.Checked = true;
       }

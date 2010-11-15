@@ -72,6 +72,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bookmark.cs" />
+    <Compile Include="BookmarkElement.cs" />
+    <Compile Include="BookmarkXml.cs" />
     <Compile Include="GetFolder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -195,4 +197,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>copy $(TargetName).dll "C:\AAA\BrowseTheWeb\Release\Plugins\Windows\"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

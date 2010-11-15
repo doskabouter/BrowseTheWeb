@@ -83,7 +83,11 @@ namespace BrowseTheWeb
     private string lastDomain = string.Empty;
     private bool cacheThumbs = false;
     private bool remote = false;
-    private string remote_1 = string.Empty;
+    private string remote_confirm = string.Empty;
+    private string remote_bookmark = string.Empty;
+    private string remote_zoom_in = string.Empty;
+    private string remote_zoom_out = string.Empty;
+    private string remote_status = string.Empty;
 
     private bool useProxy = false;
     private string Server = string.Empty;
@@ -187,7 +191,8 @@ namespace BrowseTheWeb
       #endregion
 
       LoadSettings();
-      Bookmark.AddFolder(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml", "Saved by MP");
+      BookmarkXml.AddFolder(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) +
+                            "\\bookmarks.xml", "Saved by MP");
 
       return Load(GUIGraphicsContext.Skin + @"\BrowseTheWeb.xml");
     }
@@ -288,7 +293,14 @@ namespace BrowseTheWeb
         cacheThumbs = xmlreader.GetValueAsBool("btWeb", "cachethumbs", false);
 
         remote = xmlreader.GetValueAsBool("btWeb", "remote", false);
-        remote_1 = xmlreader.GetValueAsString("btWeb", "key_1", "REMOTE_1");
+
+        remote_confirm = xmlreader.GetValueAsString("btWeb", "key_1", "ACTION_SELECT_ITEM");
+        remote_bookmark = xmlreader.GetValueAsString("btWeb", "key_2", "ACTION_SHOW_INFO");
+        remote_zoom_in = xmlreader.GetValueAsString("btWeb", "key_3", "ACTION_PAGE_DOWN");
+        remote_zoom_out = xmlreader.GetValueAsString("btWeb", "key_4", "ACTION_PAGE_UP");
+        remote_status = xmlreader.GetValueAsString("btWeb", "key_5", "ACTION_SHOW_GUI");
+
+        Setup.actualID = Convert.ToInt64(xmlreader.GetValueAsString("btWeb", "actualID", "123"));
 
         useProxy = xmlreader.GetValueAsBool("btWeb", "proxy", false);
         Server = xmlreader.GetValueAsString("btWeb", "proxy_server", "127.0.0.1");
@@ -375,40 +387,66 @@ namespace BrowseTheWeb
 
     public override void OnAction(Action action)
     {
+      base.OnAction(action);
+
+      #region remote diagnostic
       if (remote)
       {
         if (action.wID != Action.ActionType.ACTION_KEY_PRESSED)
-          GUIPropertyManager.SetProperty("#btWeb.status", action.wID.ToString());
+          GUIPropertyManager.SetProperty("#btWeb.status", DateTime.Now.ToLongTimeString() + " : " +
+                                          action.wID.ToString());
         else
-          GUIPropertyManager.SetProperty("#btWeb.status", action.wID.ToString() + " / " + action.m_key.KeyChar.ToString());
+          GUIPropertyManager.SetProperty("#btWeb.status", DateTime.Now.ToLongTimeString() + " : " +
+                                          action.wID.ToString() + " / " + action.m_key.KeyChar.ToString());
       }
+      #endregion
 
       string strAction = action.wID.ToString();
-      if (strAction == remote_1)
+      #region selectable buttons
+      if (strAction == remote_confirm)
       {
         if (linkId != string.Empty)
         {
-          MyLog.debug("confirm2 link pressed");
+          MyLog.debug("confirm link pressed");
           OnLinkId(linkId);
         }
         else
         {
           MyLog.debug("confirm2 link pressed, no link present");
         }
+        return;
       }
+      if (strAction == remote_bookmark)
+      {
+        GUIWindowManager.ActivateWindow(54537688);
+        return;
+      }
+      if ((strAction == remote_zoom_in) ||
+          (action.wID == Action.ActionType.ACTION_MUSIC_FORWARD))
+      {
+        if (zoom < 2) zoom += 0.1f;
+        webBrowser.Zoom = zoom;
+        if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
+      }
+      if ((strAction == remote_zoom_out) ||
+          (action.wID == Action.ActionType.ACTION_MUSIC_REWIND))
+      {
+        if (zoom > 0.1f) zoom -= 0.1f;
+        webBrowser.Zoom = zoom;
+        if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
+      }
+      if (strAction == remote_status)
+      {
+        statusBar = !statusBar;
+        if (statusBar)
+          webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height - 100);
+        else
+          webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height);
+      }
+      #endregion
 
       switch (action.wID)
       {
-        case Action.ActionType.ACTION_VOLUME_MUTE:
-          /*
-           * test *
-          Cursor.Position = new Point(250, 350);
-
-          Cursor.Show();
-          mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, Cursor.Position.X, Cursor.Position.Y, 0, 0);
-          Cursor.Hide();
-          */
-          break;
         case Action.ActionType.ACTION_KEY_PRESSED:
           linkTime = 0;
           MyLog.debug("action key press=" + action.m_key.KeyChar);
@@ -451,7 +489,6 @@ namespace BrowseTheWeb
         case Action.ActionType.ACTION_PLAY:
         case Action.ActionType.ACTION_MUSIC_PLAY:
           webBrowser.Visible = false;
-
           string selectedUrl = "http://";
           if (ShowKeyboard(ref selectedUrl, false) == System.Windows.Forms.DialogResult.OK)
           {
@@ -468,78 +505,29 @@ namespace BrowseTheWeb
         case Action.ActionType.ACTION_PAUSE:
           webBrowser.Navigate(homepage);
           MyLog.debug("load home page " + homepage);
-          GUIPropertyManager.SetProperty("#btWeb.status", "go to homepage");
+          if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "go to homepage");
           break;
         case Action.ActionType.ACTION_STOP:
           webBrowser.Navigate("about:blank");
-          GUIPropertyManager.SetProperty("#btWeb.status", "Stop");
+          if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "Stop");
           break;
-        case Action.ActionType.ACTION_PARENT_DIR:
-        case Action.ActionType.ACTION_ASPECT_RATIO:
-          if (linkId != string.Empty)
-          {
-            MyLog.debug("confirm link pressed");
-            OnLinkId(linkId);
-          }
-          else
-          {
-            MyLog.debug("confirm link pressed, no link present");
-          }
-          break;
-        case Action.ActionType.ACTION_CONTEXT_MENU:
-        case Action.ActionType.ACTION_SHOW_INFO:
-          GUIWindowManager.ActivateWindow(54537688);
-          return;
         case Action.ActionType.ACTION_PREV_ITEM:
+        case Action.ActionType.ACTION_REWIND:
           webBrowser.GoBack();
-          GUIPropertyManager.SetProperty("#btWeb.status", "go backward");
+          if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "go backward");
           MyLog.debug("navigate go back");
           break;
         case Action.ActionType.ACTION_NEXT_ITEM:
+        case Action.ActionType.ACTION_FORWARD:
           webBrowser.GoForward();
-          GUIPropertyManager.SetProperty("#btWeb.status", "go forward");
+          if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "go forward");
           MyLog.debug("navigate go forward");
           break;
         case Action.ActionType.ACTION_RECORD:
-          string title = webBrowser.Document.Title;
-          string actualUrl = webBrowser.Document.Url.ToString();
-          title = title.Replace("\0", "");
-
-          webBrowser.Visible = false;
-
-          System.Windows.Forms.DialogResult result = ShowKeyboard(ref title, false);
-          if (result == System.Windows.Forms.DialogResult.OK)
-          {
-            bool hasSaved = Bookmark.SavaBookmark(title, actualUrl, Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml");
-            if (hasSaved)
-              ShowAlert("Bookmark has been saved !", "Title : " + title, "URL : " + actualUrl, "");
-            else
-              ShowAlert("Bookmark could not been saved !", "Title : " + title, "URL : " + actualUrl, "");
-          }
-
-          webBrowser.Visible = true;
-          break;
-        case Action.ActionType.ACTION_SHOW_GUI:
-          statusBar = !statusBar;
-          if (statusBar)
-            webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height - 100);
-          else
-            webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height);
+          OnAddBookmark();
           break;
 
-        #region zoom & move
-        case Action.ActionType.ACTION_ZOOM_IN:
-        case Action.ActionType.ACTION_PAGE_UP:
-          if (zoom < 2) zoom += 0.1f;
-          webBrowser.Zoom = zoom;
-          GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
-          break;
-        case Action.ActionType.ACTION_ZOOM_OUT:
-        case Action.ActionType.ACTION_PAGE_DOWN:
-          if (zoom > 0.1f) zoom -= 0.1f;
-          webBrowser.Zoom = zoom;
-          GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
-          break;
+        #region move
         case Action.ActionType.ACTION_MOVE_RIGHT:
           if (webBrowser.Window != null) ScrollTo(webBrowser.Window.ScrollX + 100, webBrowser.Window.ScrollY);
           break;
@@ -559,7 +547,63 @@ namespace BrowseTheWeb
       else
         GUIPropertyManager.SetProperty("#btWeb.linkid", linkId);
 
-      base.OnAction(action);
+
+    }
+    private void OnAddBookmark()
+    {
+      #region save snapshot
+
+      long id = Setup.actualID;
+
+      if (webBrowser.Url.ToString() != "about:blank")
+      {
+        int y = webBrowser.Height;
+        int x = y / 4 * 3;
+
+        int offset = (webBrowser.Width - x) / 2;
+
+        Bitmap snap = new Bitmap(webBrowser.Width, webBrowser.Height);
+        webBrowser.DrawToBitmap(snap, new Rectangle(0, 0, webBrowser.Width, webBrowser.Height));
+
+        snap = CopyBitmap(snap, new Rectangle(offset, 0, x, y));
+
+        snap = MediaPortal.Util.BitmapResize.Resize(ref snap, 300, 400, false, true);
+
+        Graphics g = Graphics.FromImage((Image)snap);
+        g.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(1, 1, snap.Width - 2, snap.Height - 2));
+
+        Bookmark.SaveSnap(snap, id);
+        Setup.IncAndSaveID();
+      }
+      #endregion
+
+      webBrowser.Visible = false;
+
+      string title = webBrowser.Document.Title;
+      string actualUrl = webBrowser.Document.Url.ToString();
+
+      title = title.Replace("\0", "");
+
+      System.Windows.Forms.DialogResult result = ShowKeyboard(ref title, false);
+      if (result == System.Windows.Forms.DialogResult.OK)
+      {
+        bool hasSaved = BookmarkXml.AddBookmark(title, actualUrl, Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml", id);
+        if (hasSaved)
+          ShowAlert("Bookmark has been saved !", "Title : " + title, "URL : " + actualUrl, "");
+        else
+          ShowAlert("Bookmark could not been saved !", "Title : " + title, "URL : " + actualUrl, "");
+      }
+      webBrowser.Visible = true;
+    }
+    private Bitmap CopyBitmap(Bitmap srcBitmap, Rectangle section)
+    {
+      Bitmap bmp = new Bitmap(section.Width, section.Height);
+      Graphics g = Graphics.FromImage(bmp);
+
+      g.DrawImage(srcBitmap, 0, 0, section, GraphicsUnit.Pixel);
+      g.Dispose();
+
+      return bmp;
     }
 
     private void ScrollTo(int x, int y)
@@ -729,25 +773,6 @@ namespace BrowseTheWeb
             }
           }
           lastDomain = webBrowser.Document.Domain;
-        }
-        #endregion
-
-        #region save snapshot
-
-        if (webBrowser.Url.ToString() != "about:blank")
-        {
-          if (cacheThumbs)
-          {
-            Bitmap snap = new Bitmap(webBrowser.Width, webBrowser.Height);
-            webBrowser.DrawToBitmap(snap, new Rectangle(0, 0, webBrowser.Width, webBrowser.Height));
-
-            snap = MediaPortal.Util.BitmapResize.Resize(ref snap, 300, 400, false, true);
-
-            Graphics g = Graphics.FromImage((Image)snap);
-            g.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(1, 1, snap.Width - 2, snap.Height - 2));
-
-            Bookmark.SaveSnap(snap, webBrowser.Url.ToString());
-          }
         }
         #endregion
       }
