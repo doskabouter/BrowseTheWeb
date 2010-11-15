@@ -269,12 +269,12 @@ Click Next to continue or Cancel to exit Setup.</Value>
       <Major>0</Major>
       <Minor>2</Minor>
       <Build>4</Build>
-      <Revision>1</Revision>
+      <Revision>2</Revision>
     </Version>
     <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / " Webbrowser.
 
 </ExtensionDescription>
-    <VersionDescription>time OSD fixed</VersionDescription>
+    <VersionDescription>time OSD fixed AND file added</VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
     <OnlineLocation>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.mpe1</OnlineLocation>
     <ReleaseDate>2010-11-06T15:09:04.5514802+01:00</ReleaseDate>
@@ -395,7 +395,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>..\Source\BrowseTheWeb\xulrunner.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{821cca7b-a756-4778-9877-df3bf6602bcd}-xulrunner.png</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{d910f133-7a92-4258-8585-71c44208d78f}-xulrunner.png</ZipFileName>
         <DestinationFilename />
       </FileItem>
     </Items>
