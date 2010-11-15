@@ -343,7 +343,7 @@ namespace BrowseTheWeb
         osd_linkID.Visible = false;
       }
 
-      if (linkTime > 15)
+      if (linkTime > remoteTime)
       {
         linkId = string.Empty;
         linkTime = 0;
