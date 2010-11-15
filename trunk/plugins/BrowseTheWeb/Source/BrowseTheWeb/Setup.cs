@@ -43,10 +43,13 @@ namespace BrowseTheWeb
     #region declare vars
     private TreeNode sourceNode;
 
-    private string remote_1 = string.Empty;
-    private string remote_2 = string.Empty;
-    private string remote_3 = string.Empty;
-    private string remote_4 = string.Empty;
+    private string remote_confirm = string.Empty;
+    private string remote_bookmark = string.Empty;
+    private string remote_zoom_in = string.Empty;
+    private string remote_zoom_out = string.Empty;
+    private string remote_status = string.Empty;
+
+    public static long actualID = 0;
 
     #endregion
 
@@ -92,25 +95,75 @@ namespace BrowseTheWeb
 
       LoadSettings();
 
-      #region test for remote setup
+      #region prepare remote setup
       foreach (MediaPortal.GUI.Library.Action.ActionType
               val in Enum.GetValues(typeof(MediaPortal.GUI.Library.Action.ActionType)))
       {
-        comboBox1.Items.Add(val);
+        int iVal = (int)val;
+
+        if ((iVal > 4) && (iVal != 12) && (iVal != 13) && //  up/down/left/right, Pause, Stop
+            (iVal != 14) && (iVal != 15) && (iVal != 16) && (iVal != 17) && // Next/Prev Item, Forward/Rewind
+            (iVal != 68) && (iVal != 79) && (iVal != 89) // Play , Musik Play, Record
+          )
+        {
+          cmbShowBookmarks.Items.Add(val);
+          cmbConfirmLink.Items.Add(val);
+          cmbStatusBar.Items.Add(val);
+          cmbZoomIn.Items.Add(val);
+          cmbZoomOut.Items.Add(val);
+        }
       }
 
-      foreach (Object obj in comboBox1.Items)
+      foreach (Object obj in cmbConfirmLink.Items)
       {
         string act = obj.ToString();
-        if (act == remote_1)
+        if (act == remote_confirm)
         {
-          comboBox1.SelectedItem = obj;
+          cmbConfirmLink.SelectedItem = obj;
+          break;
+        }
+      }
+      foreach (Object obj in cmbShowBookmarks.Items)
+      {
+        string act = obj.ToString();
+        if (act == remote_bookmark)
+        {
+          cmbShowBookmarks.SelectedItem = obj;
+          break;
+        }
+      }
+      foreach (Object obj in cmbZoomIn.Items)
+      {
+        string act = obj.ToString();
+        if (act == remote_zoom_in)
+        {
+          cmbZoomIn.SelectedItem = obj;
+          break;
+        }
+      }
+      foreach (Object obj in cmbZoomOut.Items)
+      {
+        string act = obj.ToString();
+        if (act == remote_zoom_out)
+        {
+          cmbZoomOut.SelectedItem = obj;
+          break;
+        }
+      }
+      foreach (Object obj in cmbStatusBar.Items)
+      {
+        string act = obj.ToString();
+        if (act == remote_status)
+        {
+          cmbStatusBar.SelectedItem = obj;
           break;
         }
       }
       #endregion
 
       #region add info for keyboard
+
+      /*
       listBox1.Items.Add("Keyboard\t\tRemote\t\tFunction");
       listBox1.Items.Add("--------------------------------------------------------------------------------------------------");
       listBox1.Items.Add("P\t\tPlay\t\tselect a url");
@@ -129,6 +182,7 @@ namespace BrowseTheWeb
       listBox1.Items.Add("left\t\tleft\t\tmove left");
       listBox1.Items.Add("right\t\tright\t\tmove right");
       listBox1.Items.Add("X\t\tRed\t\ttoggle statusbar");
+      */
       #endregion
     }
 
@@ -159,7 +213,7 @@ namespace BrowseTheWeb
     private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
     {
       TreeNode n = (TreeNode)e.Node;
-      Bookmark bkm = (Bookmark)n.Tag;
+      BookmarkElement bkm = (BookmarkElement)n.Tag;
 
       if (bkm != null)
       {
@@ -171,7 +225,7 @@ namespace BrowseTheWeb
         else
         {
           txtLink.Text = bkm.Url;
-          pictureBox1.Image = Bookmark.GetSnap(bkm.Url);
+          pictureBox1.Image = Bookmark.GetSnap(bkm.Id);
         }
       }
       else
@@ -238,7 +292,7 @@ namespace BrowseTheWeb
       TreeNode targetNode = treeView1.GetNodeAt(pos);
 
       TreeNode nodeCopy = new TreeNode(sourceNode.Text, sourceNode.ImageIndex, sourceNode.SelectedImageIndex);
-      Bookmark sourceBkm = (Bookmark)sourceNode.Tag;
+      BookmarkElement sourceBkm = (BookmarkElement)sourceNode.Tag;
       nodeCopy.Tag = sourceBkm;
 
       foreach (TreeNode n in sourceNode.Nodes)
@@ -250,13 +304,13 @@ namespace BrowseTheWeb
       if (targetNode != null)
       {
         int level = targetNode.Level;
-        Bookmark targetBkm = (Bookmark)targetNode.Tag;
-        Bookmark bkm;
+        BookmarkElement targetBkm = (BookmarkElement)targetNode.Tag;
+        BookmarkElement bkm;
 
         switch (level)
         {
           case 0: // copy to root
-            bkm = (Bookmark)nodeCopy.Tag;
+            bkm = (BookmarkElement)nodeCopy.Tag;
             bkm.isSubFolder = false;
 
             treeView1.Nodes[0].Nodes.Add(nodeCopy);
@@ -267,7 +321,7 @@ namespace BrowseTheWeb
           case 1: // main level      
             if (targetBkm.isFolder) // if target folder
             {
-              bkm = (Bookmark)nodeCopy.Tag;
+              bkm = (BookmarkElement)nodeCopy.Tag;
               bkm.isSubFolder = false;
 
               if (sourceBkm.isFolder) // move folder
@@ -287,7 +341,7 @@ namespace BrowseTheWeb
               }
               else
               { // move item
-                bkm = (Bookmark)nodeCopy.Tag;
+                bkm = (BookmarkElement)nodeCopy.Tag;
                 bkm.isSubFolder = true;
 
                 targetNode.Nodes.Add(nodeCopy);
@@ -302,7 +356,7 @@ namespace BrowseTheWeb
             { // if target item
               if (sourceNode.Index > targetNode.Index)
               {
-                bkm = (Bookmark)nodeCopy.Tag;
+                bkm = (BookmarkElement)nodeCopy.Tag;
                 bkm.isSubFolder = false;
 
                 targetNode.Parent.Nodes.Insert(targetNode.Index, nodeCopy);
@@ -311,7 +365,7 @@ namespace BrowseTheWeb
               }
               else
               {
-                bkm = (Bookmark)nodeCopy.Tag;
+                bkm = (BookmarkElement)nodeCopy.Tag;
                 bkm.isSubFolder = false;
 
                 targetNode.Parent.Nodes.Insert(targetNode.Index + 1, nodeCopy);
@@ -326,7 +380,7 @@ namespace BrowseTheWeb
               {
                 if (sourceNode.Index > targetNode.Index)
                 {
-                  bkm = (Bookmark)nodeCopy.Tag;
+                  bkm = (BookmarkElement)nodeCopy.Tag;
                   bkm.isSubFolder = true;
 
                   targetNode.Parent.Nodes.Insert(targetNode.Index, nodeCopy);
@@ -336,7 +390,7 @@ namespace BrowseTheWeb
                 }
                 else
                 {
-                  bkm = (Bookmark)nodeCopy.Tag;
+                  bkm = (BookmarkElement)nodeCopy.Tag;
                   bkm.isSubFolder = true;
 
                   targetNode.Parent.Nodes.Insert(targetNode.Index + 1, nodeCopy);
@@ -353,7 +407,7 @@ namespace BrowseTheWeb
         // no target
         if (!sourceBkm.isFolder) // no folder
         {
-          Bookmark bkm = (Bookmark)nodeCopy.Tag;
+          BookmarkElement bkm = (BookmarkElement)nodeCopy.Tag;
           bkm.isSubFolder = false;
 
           treeView1.Nodes[0].Nodes.Add(nodeCopy);
@@ -394,7 +448,7 @@ namespace BrowseTheWeb
             newNode.ImageIndex = 1;
             newNode.SelectedImageIndex = 1;
 
-            Bookmark bkm = new Bookmark();
+            BookmarkElement bkm = new BookmarkElement();
             bkm.Name = get.SelectedFolderName;
             bkm.isFolder = true;
             newNode.Tag = bkm;
@@ -410,7 +464,7 @@ namespace BrowseTheWeb
               newNode.ImageIndex = 1;
               newNode.SelectedImageIndex = 1;
 
-              Bookmark bkm = new Bookmark();
+              BookmarkElement bkm = new BookmarkElement();
               bkm.Name = get.SelectedFolderName;
               bkm.isFolder = true;
               newNode.Tag = bkm;
@@ -427,7 +481,7 @@ namespace BrowseTheWeb
       TreeNode node = treeView1.SelectedNode;
       if (node != null)
       {
-        Bookmark bkm = (Bookmark)node.Tag;
+        BookmarkElement bkm = (BookmarkElement)node.Tag;
 
         GetUrl get = new GetUrl();
         get.SelectedName = "new bookmark";
@@ -447,9 +501,12 @@ namespace BrowseTheWeb
             if (res != DialogResult.Yes) return;
           }
 
+          long id = actualID;
+          IncAndSaveID();
+
           if (chkUseThumbs.Checked)
           {
-            GetThumb thumb = new GetThumb();
+            GetThumb thumb = new GetThumb(actualID);
             thumb.SelectedUrl = get.SelectedUrl;
             thumb.ShowDialog();
           }
@@ -460,11 +517,12 @@ namespace BrowseTheWeb
             {
               TreeNode add = node.Nodes.Add(get.SelectedUrl, get.SelectedName);
 
-              Bookmark addBkm = new Bookmark();
+              BookmarkElement addBkm = new BookmarkElement();
               addBkm.Name = get.SelectedName;
               addBkm.Url = get.SelectedUrl;
               addBkm.isSubFolder = true;
               addBkm.Created = DateTime.Now;
+              addBkm.Id = id;
               add.Tag = addBkm;
 
               node.ExpandAll();
@@ -473,10 +531,11 @@ namespace BrowseTheWeb
             {
               TreeNode add = node.Parent.Nodes.Add(get.SelectedUrl, get.SelectedName);
 
-              Bookmark addBkm = new Bookmark();
+              BookmarkElement addBkm = new BookmarkElement();
               addBkm.Name = get.SelectedName;
               addBkm.Url = get.SelectedUrl;
               addBkm.Created = DateTime.Now;
+              addBkm.Id = id;
               add.Tag = addBkm;
 
               node.Parent.ExpandAll();
@@ -486,10 +545,11 @@ namespace BrowseTheWeb
           { // root
             TreeNode add = treeView1.Nodes[0].Nodes.Add(get.SelectedUrl, get.SelectedName);
 
-            Bookmark addBkm = new Bookmark();
+            BookmarkElement addBkm = new BookmarkElement();
             addBkm.Name = get.SelectedName;
             addBkm.Url = get.SelectedUrl;
             addBkm.Created = DateTime.Now;
+            addBkm.Id = id;
             add.Tag = addBkm;
 
             treeView1.Nodes[0].ExpandAll();
@@ -502,7 +562,7 @@ namespace BrowseTheWeb
       TreeNode node = treeView1.SelectedNode;
       if (node != null)
       {
-        Bookmark bkm = (Bookmark)node.Tag;
+        BookmarkElement bkm = (BookmarkElement)node.Tag;
         if (!bkm.isFolder)
         {
           DialogResult res = MessageBox.Show("Do you really want to remove entry\n" + node.Text + "?", "Confirm ?", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
@@ -528,7 +588,7 @@ namespace BrowseTheWeb
       TreeNode node = treeView1.SelectedNode;
       if (node != null)
       {
-        Bookmark bkm = (Bookmark)node.Tag;
+        BookmarkElement bkm = (BookmarkElement)node.Tag;
         if (bkm.isFolder)
         {
           GetFolder get = new GetFolder();
@@ -616,7 +676,13 @@ namespace BrowseTheWeb
         chkThumbsOnVisit.Checked = xmlreader.GetValueAsBool("btWeb", "cachethumbs", false);
 
         chkRemote.Checked = xmlreader.GetValueAsBool("btWeb", "remote", false);
-        remote_1 = xmlreader.GetValueAsString("btWeb", "key_1", "REMOTE_1");
+        remote_confirm = xmlreader.GetValueAsString("btWeb", "key_1", "ACTION_PARENT_DIR");
+        remote_bookmark = xmlreader.GetValueAsString("btWeb", "key_2", "ACTION_SHOW_INFO");
+        remote_zoom_in = xmlreader.GetValueAsString("btWeb", "key_3", "ACTION_PAGE_UP");
+        remote_zoom_out = xmlreader.GetValueAsString("btWeb", "key_4", "ACTION_PAGE_DOWN");
+        remote_status = xmlreader.GetValueAsString("btWeb", "key_5", "ACTION_SHOW_GUI");
+
+        actualID = Convert.ToInt64(xmlreader.GetValueAsString("btWeb", "actualID", "123"));
 
         chkProxy.Checked = xmlreader.GetValueAsBool("btWeb", "proxy", false);
         txtHttpServer.Text = xmlreader.GetValueAsString("btWeb", "proxy_server", "127.0.0.1");
@@ -648,12 +714,27 @@ namespace BrowseTheWeb
         xmlwriter.SetValueAsBool("btWeb", "cachethumbs", chkThumbsOnVisit.Checked);
 
         xmlwriter.SetValueAsBool("btWeb", "remote", chkRemote.Checked);
-        xmlwriter.SetValue("btWeb", "key_1", comboBox1.SelectedItem.ToString());
+        xmlwriter.SetValue("btWeb", "key_1", cmbConfirmLink.SelectedItem.ToString());
+        xmlwriter.SetValue("btWeb", "key_2", cmbShowBookmarks.SelectedItem.ToString());
+        xmlwriter.SetValue("btWeb", "key_3", cmbZoomIn.SelectedItem.ToString());
+        xmlwriter.SetValue("btWeb", "key_4", cmbZoomOut.SelectedItem.ToString());
+        xmlwriter.SetValue("btWeb", "key_5", cmbStatusBar.SelectedItem.ToString());
 
         xmlwriter.SetValueAsBool("btWeb", "proxy", chkProxy.Checked);
         xmlwriter.SetValue("btWeb", "proxy_server", txtHttpServer.Text);
         xmlwriter.SetValue("btWeb", "proxy_port", txtHttpPort.Text);
       }
+    }
+    public static void IncAndSaveID()
+    {
+      actualID++;
+
+      string dir = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config);
+      using (MediaPortal.Profile.Settings xmlwriter = new MediaPortal.Profile.Settings(dir + "\\MediaPortal.xml"))
+      {
+        xmlwriter.SetValue("btWeb", "actualID", actualID.ToString());
+      }
+
     }
 
     #region zoom & font
@@ -674,17 +755,25 @@ namespace BrowseTheWeb
     private void pictureBox1_DoubleClick(object sender, EventArgs e)
     {
       TreeNode n = treeView1.SelectedNode;
-      Bookmark bkm = (Bookmark)n.Tag;
+      BookmarkElement bkm = (BookmarkElement)n.Tag;
 
       if (bkm != null)
       {
         if (!bkm.isFolder)
         {
-          GetThumb thumb = new GetThumb();
+          //if (bkm.Id == 0)
+          {
+            bkm.Id = Setup.actualID;
+            IncAndSaveID();
+          }
+
+          pictureBox1.Image = null;
+          GetThumb thumb = new GetThumb(bkm.Id);
           thumb.SelectedUrl = bkm.Url;
 
           thumb.ShowDialog();
-          pictureBox1.Image = Bookmark.GetSnap(bkm.Url);
+
+          pictureBox1.Image = Bookmark.GetSnap(bkm.Id);
         }
       }
     }
@@ -733,7 +822,7 @@ namespace BrowseTheWeb
         newNode.ImageIndex = 1;
         newNode.SelectedImageIndex = 1;
 
-        Bookmark bkm = new Bookmark();
+        BookmarkElement bkm = new BookmarkElement();
         bkm.Name = "Import IE";
         bkm.isFolder = true;
         newNode.Tag = bkm;
@@ -756,7 +845,7 @@ namespace BrowseTheWeb
         newNode.ImageIndex = 1;
         newNode.SelectedImageIndex = 1;
 
-        Bookmark bkm = new Bookmark();
+        BookmarkElement bkm = new BookmarkElement();
         bkm.Name = "Import FF";
         bkm.isFolder = true;
         newNode.Tag = bkm;
@@ -770,5 +859,15 @@ namespace BrowseTheWeb
 
       treeView1.Invalidate();
     }
+
+    private void btnDefault_Click(object sender, EventArgs e)
+    {
+      cmbConfirmLink.SelectedItem = MediaPortal.GUI.Library.Action.ActionType.ACTION_PARENT_DIR;
+      cmbShowBookmarks.SelectedItem = MediaPortal.GUI.Library.Action.ActionType.ACTION_SHOW_INFO;
+      cmbZoomIn.SelectedItem = MediaPortal.GUI.Library.Action.ActionType.ACTION_PAGE_UP;
+      cmbZoomOut.SelectedItem = MediaPortal.GUI.Library.Action.ActionType.ACTION_PAGE_DOWN;
+      cmbStatusBar.SelectedItem = MediaPortal.GUI.Library.Action.ActionType.ACTION_SHOW_GUI;
+    }
+
   }
 }

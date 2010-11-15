@@ -38,7 +38,7 @@ namespace BrowseTheWeb
 {
   public partial class ImportFF : Form
   {
-    private List<Bookmark> EntryList = new List<Bookmark>();
+    private List<BookmarkElement> EntryList = new List<BookmarkElement>();
     private TreeView tree;
     private bool select = true;
 
@@ -79,7 +79,7 @@ namespace BrowseTheWeb
           prgState.Value = (counter * 100 / max);
 
           string name = (string)item;
-          Bookmark bkm = GetBookmark(name);
+          BookmarkElement bkm = GetBookmark(name);
 
           if (bkm != null)
           {
@@ -87,17 +87,21 @@ namespace BrowseTheWeb
             {
               imported++;
 
+              long id = Setup.actualID;
+              Setup.IncAndSaveID();
+
               TreeNode add = node.Nodes.Add(bkm.Url, bkm.Name);
 
-              Bookmark addBkm = new Bookmark();
+              BookmarkElement addBkm = new BookmarkElement();
               addBkm.Name = bkm.Name;
               addBkm.Url = bkm.Url;
               addBkm.isSubFolder = true;
+              addBkm.Id = id;
               add.Tag = addBkm;
 
               if (chkThumbs.Checked)
               {
-                GetThumb thumb = new GetThumb();
+                GetThumb thumb = new GetThumb(id);
                 thumb.SelectedUrl = bkm.Url;
                 thumb.ShowDialog();
               }
@@ -148,7 +152,7 @@ namespace BrowseTheWeb
               string title = row.fields[0].ToString();
               string url = row.fields[1].ToString();
 
-              Bookmark bkm = new Bookmark();
+              BookmarkElement bkm = new BookmarkElement();
               bkm.Url = url;
               bkm.Name = title;
 
@@ -168,9 +172,9 @@ namespace BrowseTheWeb
       }
     }
 
-    private Bookmark GetBookmark(string Name)
+    private BookmarkElement GetBookmark(string Name)
     {
-      foreach (Bookmark bkm in EntryList)
+      foreach (BookmarkElement bkm in EntryList)
       {
         if (bkm.Name == Name) return bkm;
       }
