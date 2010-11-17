@@ -130,6 +130,7 @@
       this.label22 = new System.Windows.Forms.Label();
       this.comboBox4 = new System.Windows.Forms.ComboBox();
       this.checkBox1 = new System.Windows.Forms.CheckBox();
+      this.chkMouse = new System.Windows.Forms.CheckBox();
       this.contextMenuStrip1.SuspendLayout();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
@@ -328,6 +329,7 @@
       // 
       // groupBox5
       // 
+      this.groupBox5.Controls.Add(this.chkMouse);
       this.groupBox5.Controls.Add(this.chkWindowed);
       this.groupBox5.Controls.Add(this.chkOSD);
       this.groupBox5.Controls.Add(this.chkStatus);
@@ -589,7 +591,7 @@
       // 
       this.trkZoom.LargeChange = 10;
       this.trkZoom.Location = new System.Drawing.Point(6, 21);
-      this.trkZoom.Maximum = 200;
+      this.trkZoom.Maximum = 300;
       this.trkZoom.Minimum = 10;
       this.trkZoom.Name = "trkZoom";
       this.trkZoom.Size = new System.Drawing.Size(525, 45);
@@ -1165,6 +1167,16 @@
       this.checkBox1.Text = "Show diagnose on status bar";
       this.checkBox1.UseVisualStyleBackColor = true;
       // 
+      // chkMouse
+      // 
+      this.chkMouse.AutoSize = true;
+      this.chkMouse.Location = new System.Drawing.Point(19, 181);
+      this.chkMouse.Name = "chkMouse";
+      this.chkMouse.Size = new System.Drawing.Size(154, 20);
+      this.chkMouse.TabIndex = 6;
+      this.chkMouse.Text = "use mouse to browse";
+      this.chkMouse.UseVisualStyleBackColor = true;
+      // 
       // Setup
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1322,5 +1334,6 @@
     private System.Windows.Forms.Button btnDefault;
     private System.Windows.Forms.Label label35;
     private System.Windows.Forms.ComboBox cmbShowBookmarks;
+    private System.Windows.Forms.CheckBox chkMouse;
   }
 }

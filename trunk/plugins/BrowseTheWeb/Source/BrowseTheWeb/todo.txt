@@ -17,7 +17,9 @@ v0.2.4 import from IE and FF, some bug fix
 v0.2.4.2 fixed remote link id time
 
 todo:
-better thumb support via id
+better thumb support via id ?
+save thumb by saving bookmark
+mouseless / mouse browsing
 
 planed:
 better alternate OSD

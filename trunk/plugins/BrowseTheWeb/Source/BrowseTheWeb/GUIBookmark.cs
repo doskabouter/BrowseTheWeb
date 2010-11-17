@@ -126,7 +126,7 @@ namespace BrowseTheWeb
               }
               else
               {
-                string file = Bookmark.GetSnapPath(bkm.Id);
+                string file = Bookmark.GetSnapPath(bkm.Url);
                 item.IconImage = file;
                 item.IconImageBig = file;
               }
@@ -168,7 +168,7 @@ namespace BrowseTheWeb
                 item.Label = bkm.Name;
                 item.Path = bkm.Url;
 
-                string file = Bookmark.GetSnapPath(bkm.Id);
+                string file = Bookmark.GetSnapPath(bkm.Url);
                 item.IconImage = file;
                 item.IconImageBig = file;
 
