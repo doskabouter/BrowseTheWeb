@@ -232,6 +232,7 @@ namespace BrowseTheWeb
         webBrowser.DocumentCompleted += new EventHandler(webBrowser_DocumentCompleted);
         webBrowser.StatusTextChanged += new EventHandler(webBrowser_StatusTextChanged);
         webBrowser.DomKeyDown += new GeckoDomKeyEventHandler(webBrowser_DomKeyDown);
+        webBrowser.DomClick += new GeckoDomEventHandler(webBrowser_DomClick);
 
         if (statusBar)
           webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height - 100);
@@ -286,6 +287,7 @@ namespace BrowseTheWeb
 
       base.OnPageLoad();
     }
+
     protected override void OnPageDestroy(int new_windowId)
     {
       if (new_windowId != 54537688)
@@ -297,8 +299,8 @@ namespace BrowseTheWeb
         }
       }
 
+      webBrowser.Visible = false;
       GUIGraphicsContext.form.Focus();
-      webBrowser.Hide();
 
       osd_linkID.Visible = false;
 
@@ -601,7 +603,6 @@ namespace BrowseTheWeb
 
         if (e.KeyCode == (uint)Keys.Escape)
           GUIWindowManager.ShowPreviousWindow();
-        System.Diagnostics.Debug.WriteLine(e.KeyCode.ToString());
 
         if (e.KeyCode == (uint)Keys.PageUp) OnZoomIn();
         if (e.KeyCode == (uint)Keys.PageDown) OnZoomOut();
@@ -612,6 +613,11 @@ namespace BrowseTheWeb
         if (e.KeyCode == (uint)Keys.Right) OnMoveRight();
 
         if (e.KeyCode == (uint)Keys.R) OnAddBookmark();
+
+        if (e.KeyCode == (uint)Keys.F3) GUIWindowManager.ActivateWindow(54537688);
+
+        if (e.KeyCode == (uint)Keys.F7) webBrowser.GoBack();
+        if (e.KeyCode == (uint)Keys.F8) webBrowser.GoForward();
 
         if (e.CtrlKey == true)
         {
@@ -626,6 +632,29 @@ namespace BrowseTheWeb
           }
         }
 
+      }
+    }
+    void webBrowser_DomClick(object sender, GeckoDomEventArgs e)
+    {
+      if (useMouse)
+      {
+        GeckoWebBrowser g = (GeckoWebBrowser)sender;
+        string dom = g.Document.Url.AbsoluteUri.ToString();
+
+        string parent = e.Target.Parent.InnerHtml;
+
+        int x = parent.IndexOf("a href=");
+        if (x >= 0)
+        {
+          int y = parent.IndexOf("\"", x + 8);
+          if (y >= 0)
+          {
+            string link = parent.Substring(x + 7, y - x - 6);
+            link = link.Replace("\"", "");
+            if (link.Contains("http"))
+              g.Navigate(link);
+          }
+        }
       }
     }
 
