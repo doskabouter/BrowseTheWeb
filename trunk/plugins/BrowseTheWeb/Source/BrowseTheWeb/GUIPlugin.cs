@@ -731,7 +731,7 @@ namespace BrowseTheWeb
     }
     private void OnZoomIn()
     {
-      if (zoom < 2) zoom += 0.1f;
+      if (zoom < 3) zoom += 0.1f;
       webBrowser.Zoom = zoom;
       if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
     }
