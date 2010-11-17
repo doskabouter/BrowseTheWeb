@@ -87,21 +87,17 @@ namespace BrowseTheWeb
             {
               imported++;
 
-              long id = Setup.actualID;
-              Setup.IncAndSaveID();
-
               TreeNode add = node.Nodes.Add(bkm.Url, bkm.Name);
 
               BookmarkElement addBkm = new BookmarkElement();
               addBkm.Name = bkm.Name;
               addBkm.Url = bkm.Url;
               addBkm.isSubFolder = true;
-              addBkm.Id = id;
               add.Tag = addBkm;
 
               if (chkThumbs.Checked)
               {
-                GetThumb thumb = new GetThumb(id);
+                GetThumb thumb = new GetThumb();
                 thumb.SelectedUrl = bkm.Url;
                 thumb.ShowDialog();
               }

@@ -32,7 +32,6 @@ namespace BrowseTheWeb
   {
     public string Name = string.Empty;
     public string Url = string.Empty;
-    public Int64 Id = 0;
 
     public int Visited = 0;
     public DateTime LastVisited;

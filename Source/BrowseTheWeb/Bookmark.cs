@@ -136,10 +136,6 @@ namespace BrowseTheWeb
       textWriter.WriteValue(bkm.Url);
       textWriter.WriteEndElement();
 
-      textWriter.WriteStartElement("ID");
-      textWriter.WriteValue(bkm.Id);
-      textWriter.WriteEndElement();
-
       textWriter.WriteStartElement("Visited");
       textWriter.WriteValue(bkm.Visited);
       textWriter.WriteEndElement();
@@ -198,39 +194,40 @@ namespace BrowseTheWeb
       return true;
     }
 
-    public static void SaveSnap(Bitmap Snap, long ID)
+    public static void SaveSnap(Bitmap Snap, string Url)
     {
       try
       {
-        string filename = ID.ToString() + ".png";
-
+        string filename = GetThumbString(Url);
         filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb\\" + filename;
+
         Snap.Save(filename);
       }
       catch { }
     }
-    public static Bitmap GetSnap(long ID)
+    public static Bitmap GetSnap(string Url)
     {
       Bitmap snap = null;
 
       try
       {
-        string filename = ID.ToString() + ".png";
-
+        string filename = GetThumbString(Url);
         filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb\\" + filename;
-        if (File.Exists(filename))
-          snap = (Bitmap)Bitmap.FromFile(filename);
 
-        return snap;
+        if (File.Exists(filename))
+        {
+          snap = (Bitmap)Bitmap.FromFile(filename);
+          return snap;
+        }
       }
       catch { }
 
       return snap;
     }
 
-    public static string GetSnapPath(long ID)
+    public static string GetSnapPath(string Url)
     {
-      string filename = ID.ToString() + ".png";
+      string filename = GetThumbString(Url);
       filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb\\" + filename;
 
       return filename;
@@ -239,6 +236,26 @@ namespace BrowseTheWeb
     {
       if (!Directory.Exists(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb"))
         Directory.CreateDirectory(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb");
+    }
+
+    private static string GetThumbString(string Name)
+    {
+      string result = Name;
+
+      if (result.EndsWith("/")) result = result.Substring(0, result.Length - 1);
+
+      int x = result.IndexOf("//");
+      if (x > 0)
+      {
+        result = result.Substring(x + 2);
+      }
+
+      result = result.Replace("/", "_");
+      result = result.Replace(".", "_");
+      result = result.Replace("?", "_");
+      result = result + ".png";
+
+      return result;
     }
   }
 }

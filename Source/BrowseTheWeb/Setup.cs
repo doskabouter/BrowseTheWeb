@@ -49,8 +49,6 @@ namespace BrowseTheWeb
     private string remote_zoom_out = string.Empty;
     private string remote_status = string.Empty;
 
-    public static long actualID = 0;
-
     #endregion
 
     public Setup()
@@ -225,7 +223,7 @@ namespace BrowseTheWeb
         else
         {
           txtLink.Text = bkm.Url;
-          pictureBox1.Image = Bookmark.GetSnap(bkm.Id);
+          pictureBox1.Image = Bookmark.GetSnap(bkm.Url);
         }
       }
       else
@@ -501,12 +499,9 @@ namespace BrowseTheWeb
             if (res != DialogResult.Yes) return;
           }
 
-          long id = actualID;
-          IncAndSaveID();
-
           if (chkUseThumbs.Checked)
           {
-            GetThumb thumb = new GetThumb(actualID);
+            GetThumb thumb = new GetThumb();
             thumb.SelectedUrl = get.SelectedUrl;
             thumb.ShowDialog();
           }
@@ -522,7 +517,6 @@ namespace BrowseTheWeb
               addBkm.Url = get.SelectedUrl;
               addBkm.isSubFolder = true;
               addBkm.Created = DateTime.Now;
-              addBkm.Id = id;
               add.Tag = addBkm;
 
               node.ExpandAll();
@@ -535,7 +529,6 @@ namespace BrowseTheWeb
               addBkm.Name = get.SelectedName;
               addBkm.Url = get.SelectedUrl;
               addBkm.Created = DateTime.Now;
-              addBkm.Id = id;
               add.Tag = addBkm;
 
               node.Parent.ExpandAll();
@@ -549,7 +542,6 @@ namespace BrowseTheWeb
             addBkm.Name = get.SelectedName;
             addBkm.Url = get.SelectedUrl;
             addBkm.Created = DateTime.Now;
-            addBkm.Id = id;
             add.Tag = addBkm;
 
             treeView1.Nodes[0].ExpandAll();
@@ -666,6 +658,7 @@ namespace BrowseTheWeb
         chkStatus.Checked = xmlreader.GetValueAsBool("btWeb", "status", false);
         chkOSD.Checked = xmlreader.GetValueAsBool("btWeb", "osd", true);
         chkWindowed.Checked = xmlreader.GetValueAsBool("btWeb", "window", false);
+        chkMouse.Checked = xmlreader.GetValueAsBool("btWeb", "mouse", false);
 
         trkZoom.Value = xmlreader.GetValueAsInt("btWeb", "zoom", 100);
         trkFont.Value = xmlreader.GetValueAsInt("btWeb", "font", 100);
@@ -681,8 +674,6 @@ namespace BrowseTheWeb
         remote_zoom_in = xmlreader.GetValueAsString("btWeb", "key_3", "ACTION_PAGE_UP");
         remote_zoom_out = xmlreader.GetValueAsString("btWeb", "key_4", "ACTION_PAGE_DOWN");
         remote_status = xmlreader.GetValueAsString("btWeb", "key_5", "ACTION_SHOW_GUI");
-
-        actualID = Convert.ToInt64(xmlreader.GetValueAsString("btWeb", "actualID", "123"));
 
         chkProxy.Checked = xmlreader.GetValueAsBool("btWeb", "proxy", false);
         txtHttpServer.Text = xmlreader.GetValueAsString("btWeb", "proxy_server", "127.0.0.1");
@@ -704,6 +695,7 @@ namespace BrowseTheWeb
         xmlwriter.SetValueAsBool("btWeb", "status", chkStatus.Checked);
         xmlwriter.SetValueAsBool("btWeb", "osd", chkOSD.Checked);
         xmlwriter.SetValueAsBool("btWeb", "window", chkWindowed.Checked);
+        xmlwriter.SetValueAsBool("btWeb", "mouse", chkMouse.Checked);
 
         xmlwriter.SetValue("btWeb", "zoom", trkZoom.Value);
         xmlwriter.SetValue("btWeb", "font", trkFont.Value);
@@ -724,17 +716,6 @@ namespace BrowseTheWeb
         xmlwriter.SetValue("btWeb", "proxy_server", txtHttpServer.Text);
         xmlwriter.SetValue("btWeb", "proxy_port", txtHttpPort.Text);
       }
-    }
-    public static void IncAndSaveID()
-    {
-      actualID++;
-
-      string dir = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config);
-      using (MediaPortal.Profile.Settings xmlwriter = new MediaPortal.Profile.Settings(dir + "\\MediaPortal.xml"))
-      {
-        xmlwriter.SetValue("btWeb", "actualID", actualID.ToString());
-      }
-
     }
 
     #region zoom & font
@@ -761,19 +742,13 @@ namespace BrowseTheWeb
       {
         if (!bkm.isFolder)
         {
-          //if (bkm.Id == 0)
-          {
-            bkm.Id = Setup.actualID;
-            IncAndSaveID();
-          }
-
           pictureBox1.Image = null;
-          GetThumb thumb = new GetThumb(bkm.Id);
+          GetThumb thumb = new GetThumb();
           thumb.SelectedUrl = bkm.Url;
 
           thumb.ShowDialog();
 
-          pictureBox1.Image = Bookmark.GetSnap(bkm.Id);
+          pictureBox1.Image = Bookmark.GetSnap(bkm.Url);
         }
       }
     }

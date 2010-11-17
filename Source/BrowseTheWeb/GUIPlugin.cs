@@ -78,6 +78,7 @@ namespace BrowseTheWeb
     private bool statusBar = true;
     private bool osd = false;
     private bool windowed = false;
+    private bool useMouse = false;
     private bool zoomPage = false;
     private bool zoomDomain = false;
     private string lastDomain = string.Empty;
@@ -178,7 +179,11 @@ namespace BrowseTheWeb
 
       #region add forms
       webBrowser = new GeckoWebBrowser();
+      webBrowser.Name = "BrowseTheWeb";
+      webBrowser.NoDefaultContextMenu = true;
       GUIGraphicsContext.form.Controls.Add(webBrowser);
+
+      webBrowser.Enabled = false;
       webBrowser.Visible = false;
 
       osd_linkID = new OSD_LinkId();
@@ -207,9 +212,17 @@ namespace BrowseTheWeb
         GUIPropertyManager.SetProperty("#btWeb.linkid", "");
         linkId = string.Empty;
 
+        if (useMouse)
+        {
+          MyLog.debug("Mouse support is enabled");
+          GUIGraphicsContext.MouseSupport = true;
+        }
+
         #region init browser
         webBrowser.Visible = true;
-        webBrowser.Enabled = false;
+
+        if (!useMouse) webBrowser.Enabled = false;
+        else webBrowser.Enabled = true;
 
         webBrowser.Dock = System.Windows.Forms.DockStyle.None;
         webBrowser.Location = new System.Drawing.Point(0, 0);
@@ -218,6 +231,7 @@ namespace BrowseTheWeb
 
         webBrowser.DocumentCompleted += new EventHandler(webBrowser_DocumentCompleted);
         webBrowser.StatusTextChanged += new EventHandler(webBrowser_StatusTextChanged);
+        webBrowser.DomKeyDown += new GeckoDomKeyEventHandler(webBrowser_DomKeyDown);
 
         if (statusBar)
           webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height - 100);
@@ -260,6 +274,9 @@ namespace BrowseTheWeb
         timer.Interval = 100;
         timer.Tick += new EventHandler(timer_Tick);
         timer.Start();
+
+        if (useMouse)
+          GUIGraphicsContext.form.Controls["BrowseTheWeb"].Select();
       }
       catch (Exception ex)
       {
@@ -268,6 +285,31 @@ namespace BrowseTheWeb
       }
 
       base.OnPageLoad();
+    }
+    protected override void OnPageDestroy(int new_windowId)
+    {
+      if (new_windowId != 54537688)
+      { // not if you got favs
+        if (blankBrowser)
+        {
+          webBrowser.Navigate("about:blank");
+          MyLog.debug("blank on destroy");
+        }
+      }
+
+      GUIGraphicsContext.form.Focus();
+      webBrowser.Hide();
+
+      osd_linkID.Visible = false;
+
+      webBrowser.DocumentCompleted -= new EventHandler(webBrowser_DocumentCompleted);
+      webBrowser.StatusTextChanged -= new EventHandler(webBrowser_StatusTextChanged);
+      webBrowser.DomKeyDown -= new GeckoDomKeyEventHandler(webBrowser_DomKeyDown);
+
+      timer.Tick -= new EventHandler(timer_Tick);
+      timer.Stop();
+
+      base.OnPageDestroy(new_windowId);
     }
 
     private void LoadSettings()
@@ -283,6 +325,7 @@ namespace BrowseTheWeb
         statusBar = xmlreader.GetValueAsBool("btWeb", "status", true);
         osd = xmlreader.GetValueAsBool("btWeb", "osd", true);
         windowed = xmlreader.GetValueAsBool("btWeb", "window", false);
+        useMouse = xmlreader.GetValueAsBool("btWeb", "mouse", false);
 
         defaultZoom = (float)xmlreader.GetValueAsInt("btWeb", "zoom", 100) / 100;
         zoom = defaultZoom;
@@ -299,8 +342,6 @@ namespace BrowseTheWeb
         remote_zoom_in = xmlreader.GetValueAsString("btWeb", "key_3", "ACTION_PAGE_DOWN");
         remote_zoom_out = xmlreader.GetValueAsString("btWeb", "key_4", "ACTION_PAGE_UP");
         remote_status = xmlreader.GetValueAsString("btWeb", "key_5", "ACTION_SHOW_GUI");
-
-        Setup.actualID = Convert.ToInt64(xmlreader.GetValueAsString("btWeb", "actualID", "123"));
 
         useProxy = xmlreader.GetValueAsBool("btWeb", "proxy", false);
         Server = xmlreader.GetValueAsString("btWeb", "proxy_server", "127.0.0.1");
@@ -340,6 +381,9 @@ namespace BrowseTheWeb
 
     private void timer_Tick(object sender, EventArgs e)
     {
+      if (useMouse)
+        Cursor.Show();
+
       if (linkId != string.Empty)
       {
         if (osd)
@@ -363,27 +407,6 @@ namespace BrowseTheWeb
         GUIPropertyManager.SetProperty("#btWeb.linkid", linkId);
       }
     }
-    protected override void OnPageDestroy(int new_windowId)
-    {
-      if (new_windowId != 54537688)
-      { // not if you got favs
-        if (blankBrowser)
-        {
-          webBrowser.Navigate("about:blank");
-          MyLog.debug("blank on destroy");
-        }
-      }
-      webBrowser.Visible = false;
-      osd_linkID.Visible = false;
-
-      webBrowser.DocumentCompleted -= new EventHandler(webBrowser_DocumentCompleted);
-      webBrowser.StatusTextChanged -= new EventHandler(webBrowser_StatusTextChanged);
-
-      timer.Tick -= new EventHandler(timer_Tick);
-      timer.Stop();
-
-      base.OnPageDestroy(new_windowId);
-    }
 
     public override void OnAction(Action action)
     {
@@ -405,16 +428,18 @@ namespace BrowseTheWeb
       #region selectable buttons
       if (strAction == remote_confirm)
       {
-        if (linkId != string.Empty)
+        if (!useMouse)
         {
-          MyLog.debug("confirm link pressed");
-          OnLinkId(linkId);
+          if (linkId != string.Empty)
+          {
+            MyLog.debug("confirm link pressed");
+            OnLinkId(linkId);
+          }
+          else
+          {
+            MyLog.debug("confirm2 link pressed, no link present");
+          }
         }
-        else
-        {
-          MyLog.debug("confirm2 link pressed, no link present");
-        }
-        return;
       }
       if (strAction == remote_bookmark)
       {
@@ -424,16 +449,12 @@ namespace BrowseTheWeb
       if ((strAction == remote_zoom_in) ||
           (action.wID == Action.ActionType.ACTION_MUSIC_FORWARD))
       {
-        if (zoom < 2) zoom += 0.1f;
-        webBrowser.Zoom = zoom;
-        if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
+        OnZoomIn();
       }
       if ((strAction == remote_zoom_out) ||
           (action.wID == Action.ActionType.ACTION_MUSIC_REWIND))
       {
-        if (zoom > 0.1f) zoom -= 0.1f;
-        webBrowser.Zoom = zoom;
-        if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
+        OnZoomOut();
       }
       if (strAction == remote_status)
       {
@@ -447,60 +468,74 @@ namespace BrowseTheWeb
 
       switch (action.wID)
       {
-        case Action.ActionType.ACTION_KEY_PRESSED:
-          linkTime = 0;
-          MyLog.debug("action key press=" + action.m_key.KeyChar);
-          switch (action.m_key.KeyChar)
+        case Action.ActionType.ACTION_MOUSE_CLICK:
           {
-            #region 0..9
-            case '1':
-              linkId += "1";
-              break;
-            case '2':
-              linkId += "2";
-              break;
-            case '3':
-              linkId += "3";
-              break;
-            case '4':
-              linkId += "4";
-              break;
-            case '5':
-              linkId += "5";
-              break;
-            case '6':
-              linkId += "6";
-              break;
-            case '7':
-              linkId += "7";
-              break;
-            case '8':
-              linkId += "8";
-              break;
-            case '9':
-              linkId += "9";
-              break;
-            case '0':
-              linkId += "0";
-              break;
-            #endregion
+            break;
+          }
+        case Action.ActionType.ACTION_MOUSE_MOVE:
+          if (useMouse)
+          {
+
+          }
+          break;
+        case Action.ActionType.ACTION_SHOW_SUBTITLES:
+          if (mouse.Visible)
+          {
+            mouse.Visible = false;
+
+          }
+          else
+          {
+            //mouse.Visible = true;
+            //mouse.BringToFront();
+          }
+          break;
+        case Action.ActionType.ACTION_KEY_PRESSED:
+          if (!useMouse)
+          {
+            linkTime = 0;
+            MyLog.debug("action key press=" + action.m_key.KeyChar);
+            switch (action.m_key.KeyChar)
+            {
+              #region 0..9
+              case '1':
+                linkId += "1";
+                break;
+              case '2':
+                linkId += "2";
+                break;
+              case '3':
+                linkId += "3";
+                break;
+              case '4':
+                linkId += "4";
+                break;
+              case '5':
+                linkId += "5";
+                break;
+              case '6':
+                linkId += "6";
+                break;
+              case '7':
+                linkId += "7";
+                break;
+              case '8':
+                linkId += "8";
+                break;
+              case '9':
+                linkId += "9";
+                break;
+              case '0':
+                linkId += "0";
+                break;
+              #endregion
+            }
+            if (linkId.Length > 4) linkId = linkId.Substring(0, 1);
           }
           break;
         case Action.ActionType.ACTION_PLAY:
         case Action.ActionType.ACTION_MUSIC_PLAY:
-          webBrowser.Visible = false;
-          string selectedUrl = "http://";
-          if (ShowKeyboard(ref selectedUrl, false) == System.Windows.Forms.DialogResult.OK)
-          {
-            if (Bookmark.isValidUrl(selectedUrl))
-            {
-              webBrowser.Navigate(selectedUrl);
-              MyLog.debug("navigate to " + selectedUrl);
-            }
-            else
-              ShowAlert("Wrong link ?", " The link you entered seems to be not valid.", "Input:", selectedUrl);
-          }
-          webBrowser.Visible = true;
+          OnEnterNewLink();
           break;
         case Action.ActionType.ACTION_PAUSE:
           webBrowser.Navigate(homepage);
@@ -529,16 +564,25 @@ namespace BrowseTheWeb
 
         #region move
         case Action.ActionType.ACTION_MOVE_RIGHT:
-          if (webBrowser.Window != null) ScrollTo(webBrowser.Window.ScrollX + 100, webBrowser.Window.ScrollY);
+          OnMoveRight();
           break;
         case Action.ActionType.ACTION_MOVE_LEFT:
-          if (webBrowser.Window != null) ScrollTo(webBrowser.Window.ScrollX - 100, webBrowser.Window.ScrollY);
+          OnMoveLeft();
           break;
         case Action.ActionType.ACTION_MOVE_UP:
-          if (webBrowser.Window != null) ScrollTo(webBrowser.Window.ScrollX, webBrowser.Window.ScrollY - 100);
+          OnMoveUp();
           break;
         case Action.ActionType.ACTION_MOVE_DOWN:
-          if (webBrowser.Window != null) ScrollTo(webBrowser.Window.ScrollX, webBrowser.Window.ScrollY + 100);
+          OnMoveDown();
+          break;
+        case Action.ActionType.ACTION_SELECT_ITEM:
+          if (mouse.Visible)
+          {
+            //System.Windows.Forms.Cursor.Show();
+            int x = GUIGraphicsContext.form.Location.X + mouse.Location.X + 20;
+            int y = GUIGraphicsContext.form.Location.Y + mouse.Location.Y + 50;
+            System.Windows.Forms.Cursor.Position = new Point(x, y);
+          }
           break;
         #endregion
       }
@@ -549,35 +593,68 @@ namespace BrowseTheWeb
 
 
     }
+    private void webBrowser_DomKeyDown(object sender, GeckoDomKeyEventArgs e)
+    {
+      if (useMouse)
+      {
+        System.Diagnostics.Debug.WriteLine("DOM " + e.KeyCode.ToString());
+
+        if (e.KeyCode == (uint)Keys.Escape)
+          GUIWindowManager.ShowPreviousWindow();
+        System.Diagnostics.Debug.WriteLine(e.KeyCode.ToString());
+
+        if (e.KeyCode == (uint)Keys.PageUp) OnZoomIn();
+        if (e.KeyCode == (uint)Keys.PageDown) OnZoomOut();
+
+        if (e.KeyCode == (uint)Keys.Down) OnMoveDown();
+        if (e.KeyCode == (uint)Keys.Up) OnMoveUp();
+        if (e.KeyCode == (uint)Keys.Left) OnMoveLeft();
+        if (e.KeyCode == (uint)Keys.Right) OnMoveRight();
+
+        if (e.KeyCode == (uint)Keys.R) OnAddBookmark();
+
+        if (e.CtrlKey == true)
+        {
+          if (e.KeyCode == (uint)Keys.P)
+          {
+            OnEnterNewLink();
+
+          }
+          if (e.KeyCode == (uint)Keys.B)
+          {
+            webBrowser.Navigate("about:blank");
+          }
+        }
+
+      }
+    }
+
+    private void OnEnterNewLink()
+    {
+      webBrowser.Visible = false;
+      GUIGraphicsContext.form.Focus();
+
+      string selectedUrl = "http://";
+      if (ShowKeyboard(ref selectedUrl, false) == System.Windows.Forms.DialogResult.OK)
+      {
+        if (Bookmark.isValidUrl(selectedUrl))
+        {
+          webBrowser.Navigate(selectedUrl);
+          MyLog.debug("navigate to " + selectedUrl);
+        }
+        else
+          ShowAlert("Wrong link ?", " The link you entered seems to be not valid.", "Input:", selectedUrl);
+      }
+
+      webBrowser.Visible = true;
+      if (useMouse)
+        GUIGraphicsContext.form.Controls["BrowseTheWeb"].Select();
+
+    }
     private void OnAddBookmark()
     {
-      #region save snapshot
-
-      long id = Setup.actualID;
-
-      if (webBrowser.Url.ToString() != "about:blank")
-      {
-        int y = webBrowser.Height;
-        int x = y / 4 * 3;
-
-        int offset = (webBrowser.Width - x) / 2;
-
-        Bitmap snap = new Bitmap(webBrowser.Width, webBrowser.Height);
-        webBrowser.DrawToBitmap(snap, new Rectangle(0, 0, webBrowser.Width, webBrowser.Height));
-
-        snap = CopyBitmap(snap, new Rectangle(offset, 0, x, y));
-
-        snap = MediaPortal.Util.BitmapResize.Resize(ref snap, 300, 400, false, true);
-
-        Graphics g = Graphics.FromImage((Image)snap);
-        g.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(1, 1, snap.Width - 2, snap.Height - 2));
-
-        Bookmark.SaveSnap(snap, id);
-        Setup.IncAndSaveID();
-      }
-      #endregion
-
       webBrowser.Visible = false;
+      GUIGraphicsContext.form.Focus();
 
       string title = webBrowser.Document.Title;
       string actualUrl = webBrowser.Document.Url.ToString();
@@ -587,14 +664,99 @@ namespace BrowseTheWeb
       System.Windows.Forms.DialogResult result = ShowKeyboard(ref title, false);
       if (result == System.Windows.Forms.DialogResult.OK)
       {
-        bool hasSaved = BookmarkXml.AddBookmark(title, actualUrl, Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml", id);
+        bool hasSaved = BookmarkXml.AddBookmark(title, actualUrl, Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml", 0);
         if (hasSaved)
+        {
           ShowAlert("Bookmark has been saved !", "Title : " + title, "URL : " + actualUrl, "");
+          #region save snapshot
+
+          if (webBrowser.Url.ToString() != "about:blank")
+          {
+            int y = webBrowser.Height;
+            int x = y / 4 * 3;
+
+            int offset = (webBrowser.Width - x) / 2;
+
+            Bitmap snap = new Bitmap(webBrowser.Width, webBrowser.Height);
+            webBrowser.DrawToBitmap(snap, new Rectangle(0, 0, webBrowser.Width, webBrowser.Height));
+
+            snap = CopyBitmap(snap, new Rectangle(offset, 0, x, y));
+
+            snap = MediaPortal.Util.BitmapResize.Resize(ref snap, 300, 400, false, true);
+
+            Graphics g = Graphics.FromImage((Image)snap);
+            g.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(1, 1, snap.Width - 2, snap.Height - 2));
+
+            Bookmark.SaveSnap(snap, actualUrl);
+          }
+          #endregion
+
+        }
         else
           ShowAlert("Bookmark could not been saved !", "Title : " + title, "URL : " + actualUrl, "");
       }
+
       webBrowser.Visible = true;
+      if (useMouse)
+        GUIGraphicsContext.form.Controls["BrowseTheWeb"].Select();
     }
+    private void OnZoomIn()
+    {
+      if (zoom < 2) zoom += 0.1f;
+      webBrowser.Zoom = zoom;
+      if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
+    }
+    private void OnZoomOut()
+    {
+      if (zoom > 0.1f) zoom -= 0.1f;
+      webBrowser.Zoom = zoom;
+      if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
+    }
+    private void OnMoveLeft()
+    {
+      if (!mouse.Visible)
+      {
+        if (webBrowser.Window != null) ScrollTo(webBrowser.Window.ScrollX - 100, webBrowser.Window.ScrollY);
+      }
+      else
+      {
+        mouse.Location = new Point(mouse.Location.X - 20, mouse.Location.Y);
+      }
+    }
+    private void OnMoveRight()
+    {
+      if (!mouse.Visible)
+      {
+        if (webBrowser.Window != null) ScrollTo(webBrowser.Window.ScrollX + 100, webBrowser.Window.ScrollY);
+      }
+      else
+      {
+        mouse.Location = new Point(mouse.Location.X + 20, mouse.Location.Y);
+      }
+    }
+    private void OnMoveUp()
+    {
+      if (!mouse.Visible)
+      {
+        if (webBrowser.Window != null) ScrollTo(webBrowser.Window.ScrollX, webBrowser.Window.ScrollY - 100);
+      }
+      else
+      {
+        mouse.Location = new Point(mouse.Location.X, mouse.Location.Y - 20);
+      }
+    }
+    private void OnMoveDown()
+    {
+      if (!mouse.Visible)
+      {
+        if (webBrowser.Window != null) ScrollTo(webBrowser.Window.ScrollX, webBrowser.Window.ScrollY + 100);
+      }
+      else
+      {
+        mouse.Location = new Point(mouse.Location.X, mouse.Location.Y + 20);
+      }
+    }
+
     private Bitmap CopyBitmap(Bitmap srcBitmap, Rectangle section)
     {
       Bitmap bmp = new Bitmap(section.Width, section.Height);
@@ -637,60 +799,98 @@ namespace BrowseTheWeb
         GUIPropertyManager.SetProperty("#btWeb.status", str);
         #endregion
 
-        #region add links to page
-        _htmlLinkNumbers = new List<HtmlLinkNumber>();
-
-        _links = webBrowser.Document.Links;
-        int i = 1;
-
-        MyLog.debug("page links cnt : " + _links.Count);
-
-        foreach (GeckoElement element in _links)
+        if (!useMouse)
         {
-          string link = element.GetAttribute("href");
+          #region add links to page
+          _htmlLinkNumbers = new List<HtmlLinkNumber>();
 
-          if (!link.StartsWith("javascript:"))
+          _links = webBrowser.Document.Links;
+          int i = 1;
+
+          MyLog.debug("page links cnt : " + _links.Count);
+
+          foreach (GeckoElement element in _links)
           {
-            if (!element.InnerHtml.Contains("gecko_id"))
-            {
-              element.InnerHtml += string.Format(_span, i, "", "LINK");
-            }
+            string link = element.GetAttribute("href");
 
-            string gb = element.GetAttribute("gb");
-            string id = element.GetAttribute("id");
-            string name = element.GetAttribute("name");
-            if (string.IsNullOrEmpty(gb))
+            if (!link.StartsWith("javascript:"))
             {
-              element.SetAttribute("gb", "gecko_link" + i);
-            }
-            if (string.IsNullOrEmpty(id))
-            {
-              element.SetAttribute("id", "gb" + i);
-              id = "gb" + i;
-            }
-            _htmlLinkNumbers.Add(new HtmlLinkNumber(i, id, name, link, HtmlInputType.Link));
-            i++;
-          }
-        }
-
-        _forms = webBrowser.Document.GetElementsByTagName("form");
-        HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
-
-        MyLog.debug("page forms cnt : " + _forms.Count);
-
-        foreach (GeckoElement element in _forms)
-        {
-          string action = element.GetAttribute("action");
-          doc.LoadHtml(element.InnerHtml);
-          foreach (HtmlAgilityPack.HtmlNode link in doc.DocumentNode.SelectNodes("//*"))
-          {
-            if (link.OriginalName == "input")
-            {
-              if (link.Attributes["type"] != null)
+              if (!element.InnerHtml.Contains("gecko_id"))
               {
-                if (link.Attributes["type"].Value != "hidden")
-                {
+                element.InnerHtml += string.Format(_span, i, "", "LINK");
+              }
 
+              string gb = element.GetAttribute("gb");
+              string id = element.GetAttribute("id");
+              string name = element.GetAttribute("name");
+              if (string.IsNullOrEmpty(gb))
+              {
+                element.SetAttribute("gb", "gecko_link" + i);
+              }
+              if (string.IsNullOrEmpty(id))
+              {
+                element.SetAttribute("id", "gb" + i);
+                id = "gb" + i;
+              }
+              _htmlLinkNumbers.Add(new HtmlLinkNumber(i, id, name, link, HtmlInputType.Link));
+              i++;
+            }
+          }
+
+          _forms = webBrowser.Document.GetElementsByTagName("form");
+          HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+
+          MyLog.debug("page forms cnt : " + _forms.Count);
+
+          foreach (GeckoElement element in _forms)
+          {
+            string action = element.GetAttribute("action");
+            doc.LoadHtml(element.InnerHtml);
+            foreach (HtmlAgilityPack.HtmlNode link in doc.DocumentNode.SelectNodes("//*"))
+            {
+              if (link.OriginalName == "input")
+              {
+                if (link.Attributes["type"] != null)
+                {
+                  if (link.Attributes["type"].Value != "hidden")
+                  {
+
+                    string gb = link.GetAttributeValue("gb", "");
+                    string id = link.GetAttributeValue("id", "");
+                    string name = link.GetAttributeValue("name", "");
+                    string outerHtml = link.OuterHtml;
+                    if (string.IsNullOrEmpty(gb))
+                    {
+                      link.SetAttributeValue("gb", "gecko_link" + i);
+                    }
+                    if (string.IsNullOrEmpty(id))
+                    {
+                      link.SetAttributeValue("id", "gb" + i);
+                      id = "gb" + i;
+                    }
+
+                    if (!element.InnerHtml.Contains("gecko_id=\"" + i + "\""))
+                    {
+                      string newLink = link.OuterHtml + string.Format(_span, i, action, "INPUT");
+                      element.InnerHtml = element.InnerHtml.Replace(outerHtml, newLink);
+                    }
+                    if (link.Attributes["type"].Value == "submit" ||
+                        link.Attributes["type"].Value == "reset" ||
+                        link.Attributes["type"].Value == "radio" ||
+                        link.Attributes["type"].Value == "image" ||
+                        link.Attributes["type"].Value == "checkbox")
+                    {
+                      _htmlLinkNumbers.Add(new HtmlLinkNumber(i, id, name, action, HtmlInputType.Action));
+                    }
+                    else
+                    {
+                      _htmlLinkNumbers.Add(new HtmlLinkNumber(i, id, name, action, HtmlInputType.Input));
+                    }
+                    i++;
+                  }
+                }
+                else
+                {
                   string gb = link.GetAttributeValue("gb", "");
                   string id = link.GetAttributeValue("id", "");
                   string name = link.GetAttributeValue("name", "");
@@ -710,51 +910,15 @@ namespace BrowseTheWeb
                     string newLink = link.OuterHtml + string.Format(_span, i, action, "INPUT");
                     element.InnerHtml = element.InnerHtml.Replace(outerHtml, newLink);
                   }
-                  if (link.Attributes["type"].Value == "submit" ||
-                      link.Attributes["type"].Value == "reset" ||
-                      link.Attributes["type"].Value == "radio" ||
-                      link.Attributes["type"].Value == "image" ||
-                      link.Attributes["type"].Value == "checkbox")
-                  {
-                    _htmlLinkNumbers.Add(new HtmlLinkNumber(i, id, name, action, HtmlInputType.Action));
-                  }
-                  else
-                  {
-                    _htmlLinkNumbers.Add(new HtmlLinkNumber(i, id, name, action, HtmlInputType.Input));
-                  }
+
+                  _htmlLinkNumbers.Add(new HtmlLinkNumber(i, id, name, action, HtmlInputType.Input));
                   i++;
                 }
               }
-              else
-              {
-                string gb = link.GetAttributeValue("gb", "");
-                string id = link.GetAttributeValue("id", "");
-                string name = link.GetAttributeValue("name", "");
-                string outerHtml = link.OuterHtml;
-                if (string.IsNullOrEmpty(gb))
-                {
-                  link.SetAttributeValue("gb", "gecko_link" + i);
-                }
-                if (string.IsNullOrEmpty(id))
-                {
-                  link.SetAttributeValue("id", "gb" + i);
-                  id = "gb" + i;
-                }
-
-                if (!element.InnerHtml.Contains("gecko_id=\"" + i + "\""))
-                {
-                  string newLink = link.OuterHtml + string.Format(_span, i, action, "INPUT");
-                  element.InnerHtml = element.InnerHtml.Replace(outerHtml, newLink);
-                }
-
-                _htmlLinkNumbers.Add(new HtmlLinkNumber(i, id, name, action, HtmlInputType.Input));
-                i++;
-              }
             }
           }
+          #endregion
         }
-        #endregion
-
         #region reset zoom
         if (zoomPage)
         {

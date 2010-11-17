@@ -74,11 +74,6 @@ namespace BrowseTheWeb
 
       result.Name = Node.SelectSingleNode("Name").InnerText;
       result.Url = Node.SelectSingleNode("URL").InnerText;
-      try
-      {
-        result.Id = Convert.ToInt64(Node.SelectSingleNode("ID").InnerText);
-      }
-      catch { }
 
       result.Visited = Convert.ToInt32(Node.SelectSingleNode("Visited").InnerText);
       result.LastVisited = Convert.ToDateTime(Node.SelectSingleNode("LastVisited").InnerText);
@@ -117,16 +112,18 @@ namespace BrowseTheWeb
           childElement.AppendChild(sub1);
           XmlElement sub2 = xmlDocument.CreateElement("URL"); sub2.InnerText = string.Empty;
           childElement.AppendChild(sub2);
-          XmlElement sub3 = xmlDocument.CreateElement("Visited"); sub3.InnerText = "0";
+          XmlElement sub3 = xmlDocument.CreateElement("ID"); sub3.InnerText = "0";
           childElement.AppendChild(sub3);
-          XmlElement sub4 = xmlDocument.CreateElement("LastVisited"); sub4.InnerText = "0001-01-01T00:00:00";
+          XmlElement sub4 = xmlDocument.CreateElement("Visited"); sub4.InnerText = "0";
           childElement.AppendChild(sub4);
-          XmlElement sub5 = xmlDocument.CreateElement("Created"); sub5.InnerText = DateTime.UtcNow.ToString("u", null);
+          XmlElement sub5 = xmlDocument.CreateElement("LastVisited"); sub5.InnerText = "0001-01-01T00:00:00";
           childElement.AppendChild(sub5);
-          XmlElement sub6 = xmlDocument.CreateElement("isFolder"); sub6.InnerText = "true";
+          XmlElement sub6 = xmlDocument.CreateElement("Created"); sub6.InnerText = DateTime.UtcNow.ToString("u", null);
           childElement.AppendChild(sub6);
-          XmlElement sub7 = xmlDocument.CreateElement("isSubFolder"); sub7.InnerText = "false";
+          XmlElement sub7 = xmlDocument.CreateElement("isFolder"); sub7.InnerText = "true";
           childElement.AppendChild(sub7);
+          XmlElement sub8 = xmlDocument.CreateElement("isSubFolder"); sub8.InnerText = "false";
+          childElement.AppendChild(sub8);
 
           XmlNode parentNode = xmlDocument.SelectSingleNode("Bookmarks");
           parentNode.InsertBefore(childElement, parentNode.FirstChild);
