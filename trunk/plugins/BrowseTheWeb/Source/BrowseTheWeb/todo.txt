@@ -16,13 +16,18 @@ V0.2.3 add force windowed mode
 v0.2.4 import from IE and FF, some bug fix
 v0.2.4.2 fixed remote link id time
 
+v0.2.5
+remote is now configurable
+zoom max 300%
+add mouse support
+start work on alternate mouse support
+save thumb if a bookmark is added inside the MP
+
+
 todo:
-better thumb support via id ?
-save thumb by saving bookmark
 mouseless / mouse browsing
 
 planed:
 better alternate OSD
 speed up (if possible), partly done
 add statistics and sort functions
-mouse support for e.g. flash content
