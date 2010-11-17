@@ -395,7 +395,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>..\Source\BrowseTheWeb\xulrunner.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{278ba7f9-5f46-461f-92af-0baaeb2b081c}-xulrunner.png</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{8d94308d-c71d-48c4-b821-50a3a2fe9eaf}-xulrunner.png</ZipFileName>
         <DestinationFilename />
       </FileItem>
     </Items>

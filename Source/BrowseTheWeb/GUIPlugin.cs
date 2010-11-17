@@ -599,7 +599,7 @@ namespace BrowseTheWeb
     {
       if (useMouse)
       {
-        System.Diagnostics.Debug.WriteLine("DOM " + e.KeyCode.ToString());
+        //System.Diagnostics.Debug.WriteLine("DOM " + e.KeyCode.ToString());
 
         if (e.KeyCode == (uint)Keys.Escape)
           GUIWindowManager.ShowPreviousWindow();
@@ -612,8 +612,6 @@ namespace BrowseTheWeb
         if (e.KeyCode == (uint)Keys.Left) OnMoveLeft();
         if (e.KeyCode == (uint)Keys.Right) OnMoveRight();
 
-        if (e.KeyCode == (uint)Keys.R) OnAddBookmark();
-
         if (e.KeyCode == (uint)Keys.F3) GUIWindowManager.ActivateWindow(54537688);
 
         if (e.KeyCode == (uint)Keys.F7) webBrowser.GoBack();
@@ -621,15 +619,9 @@ namespace BrowseTheWeb
 
         if (e.CtrlKey == true)
         {
-          if (e.KeyCode == (uint)Keys.P)
-          {
-            OnEnterNewLink();
-
-          }
-          if (e.KeyCode == (uint)Keys.B)
-          {
-            webBrowser.Navigate("about:blank");
-          }
+          if (e.KeyCode == (uint)Keys.R) OnAddBookmark();
+          if (e.KeyCode == (uint)Keys.P) OnEnterNewLink();
+          if (e.KeyCode == (uint)Keys.B) webBrowser.Navigate("about:blank");
         }
 
       }
@@ -638,21 +630,24 @@ namespace BrowseTheWeb
     {
       if (useMouse)
       {
+        // this is a workarround until i know what wrong on the links...
         GeckoWebBrowser g = (GeckoWebBrowser)sender;
         string dom = g.Document.Url.AbsoluteUri.ToString();
-
         string parent = e.Target.Parent.InnerHtml;
 
-        int x = parent.IndexOf("a href=");
-        if (x >= 0)
+        if (!parent.Contains("shockwave"))
         {
-          int y = parent.IndexOf("\"", x + 8);
-          if (y >= 0)
+          int x = parent.IndexOf("a href=");
+          if (x >= 0)
           {
-            string link = parent.Substring(x + 7, y - x - 6);
-            link = link.Replace("\"", "");
-            if (link.Contains("http"))
-              g.Navigate(link);
+            int y = parent.IndexOf("\"", x + 8);
+            if (y >= 0)
+            {
+              string link = parent.Substring(x + 7, y - x - 6);
+              link = link.Replace("\"", "");
+              if (link.Contains("http"))
+                g.Navigate(link);
+            }
           }
         }
       }
