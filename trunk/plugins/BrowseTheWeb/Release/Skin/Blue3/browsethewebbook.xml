@@ -8,27 +8,54 @@
   <controls>
 
     <import>common.time.xml</import>
-
+    <import>common.window.xml</import>
+    
     <control>
-      <description>background image</description>
-      <type>image</type>
-      <id>1</id>
-      <width>720</width>
-      <height>576</height>
+      <type>actiongroup</type>
+      <description>action menu</description>
+      <defaultcontrol>2</defaultcontrol>
+      <onexit>50</onexit>
+      <buttonX>0</buttonX>
+      <buttonY>0</buttonY>
+      <buttonwidth>60</buttonwidth>
+      <buttonheight>576</buttonheight>
+      <textureFocus>Action_focus.png</textureFocus>
+      <textureNoFocus>Action_nofocus.png</textureNoFocus>
+      <width>320</width>
+      <height>720</height>
+      <dimColor>00ffffff</dimColor>
+      <control>
+        <type>image</type>
+        <posX>15</posX>
+        <posY>63</posY>
+        <width>263</width>
+        <height>473</height>
+        <texture>Backslide.png</texture>
+        <colorDiffuse>fffffffff</colorDiffuse>
+        <visible>!Control.HasFocus(50)</visible>
+        <animation effect="slide" time="450" start="-300,0" reversible="false">visible</animation>
+        <animation effect="slide" time="450" end="-300,0" reversible="false">hidden</animation>
+      </control>
+      <control>
+        <description>group element</description>
+        <type>group</type>
+        <animation effect="slide" time="450" start="-300,0" reversible="false">visible</animation>
+        <animation effect="slide" time="450" end="-300,0" reversible="false">hidden</animation>
+        <posX>40</posX>
+        <posY>97</posY>
+        <layout>StackLayout</layout>
+        <visible>!Control.HasFocus(50)</visible>
+        <control>
+          <description>View-As</description>
+          <type>button</type>
+          <id>2</id>
+          <label>100</label>
+          <onright>50</onright>
+          <onup>17</onup>
+        </control>
+      </control>
     </control>
- 
-    <control>
-      <description>Selected item Label</description>
-      <type>fadelabel</type>
-      <id>1</id>
-      <posX>700</posX>
-      <posY>70</posY>
-      <width>355</width>
-      <align>right</align>
-      <label>#selecteditem</label>
-      <font>font14</font>
-    </control>
- 
+           
     <control>
       <description>group element</description>
       <type>group</type>
@@ -40,8 +67,8 @@
           <description>listcontrol</description>
           <type>listcontrol</type>
           <id>50</id>
-          <onleft>50</onleft>
-          <onright>50</onright>
+          <onleft>2</onleft>
+          <onright>2</onright>
           <scrollOffset>2</scrollOffset>
         </control>
         <control>

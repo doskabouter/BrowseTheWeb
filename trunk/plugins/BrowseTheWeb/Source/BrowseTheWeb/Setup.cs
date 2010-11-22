@@ -91,6 +91,10 @@ namespace BrowseTheWeb
       Bookmark.Load(treeView1, Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml");
       treeView1.ExpandAll();
 
+      cmbBookmarkView.Items.Add("Small icons");
+      cmbBookmarkView.Items.Add("Large icons");
+      cmbBookmarkView.Items.Add("List view");
+
       LoadSettings();
 
       #region prepare remote setup
@@ -675,6 +679,8 @@ namespace BrowseTheWeb
         remote_zoom_out = xmlreader.GetValueAsString("btWeb", "key_4", "ACTION_PAGE_DOWN");
         remote_status = xmlreader.GetValueAsString("btWeb", "key_5", "ACTION_SHOW_GUI");
 
+        cmbBookmarkView.SelectedItem = xmlreader.GetValueAsString("btWeb", "bookmark", "Large icons");
+
         chkProxy.Checked = xmlreader.GetValueAsBool("btWeb", "proxy", false);
         txtHttpServer.Text = xmlreader.GetValueAsString("btWeb", "proxy_server", "127.0.0.1");
         txtHttpPort.Text = xmlreader.GetValueAsInt("btWeb", "proxy_port", 8888).ToString();
@@ -711,6 +717,8 @@ namespace BrowseTheWeb
         xmlwriter.SetValue("btWeb", "key_3", cmbZoomIn.SelectedItem.ToString());
         xmlwriter.SetValue("btWeb", "key_4", cmbZoomOut.SelectedItem.ToString());
         xmlwriter.SetValue("btWeb", "key_5", cmbStatusBar.SelectedItem.ToString());
+
+        xmlwriter.SetValue("btWeb", "bookmark", (string)cmbBookmarkView.SelectedItem);
 
         xmlwriter.SetValueAsBool("btWeb", "proxy", chkProxy.Checked);
         xmlwriter.SetValue("btWeb", "proxy_server", txtHttpServer.Text);
