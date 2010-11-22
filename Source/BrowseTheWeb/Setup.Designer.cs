@@ -49,6 +49,7 @@
       this.tabControl1 = new System.Windows.Forms.TabControl();
       this.tabPage1 = new System.Windows.Forms.TabPage();
       this.groupBox5 = new System.Windows.Forms.GroupBox();
+      this.chkMouse = new System.Windows.Forms.CheckBox();
       this.chkWindowed = new System.Windows.Forms.CheckBox();
       this.chkOSD = new System.Windows.Forms.CheckBox();
       this.chkStatus = new System.Windows.Forms.CheckBox();
@@ -130,7 +131,8 @@
       this.label22 = new System.Windows.Forms.Label();
       this.comboBox4 = new System.Windows.Forms.ComboBox();
       this.checkBox1 = new System.Windows.Forms.CheckBox();
-      this.chkMouse = new System.Windows.Forms.CheckBox();
+      this.groupBox12 = new System.Windows.Forms.GroupBox();
+      this.cmbBookmarkView = new System.Windows.Forms.ComboBox();
       this.contextMenuStrip1.SuspendLayout();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
@@ -153,6 +155,7 @@
       this.groupBox11.SuspendLayout();
       this.groupBox10.SuspendLayout();
       this.groupBox9.SuspendLayout();
+      this.groupBox12.SuspendLayout();
       this.SuspendLayout();
       // 
       // treeView1
@@ -343,6 +346,16 @@
       this.groupBox5.TabStop = false;
       this.groupBox5.Text = "Other settings";
       // 
+      // chkMouse
+      // 
+      this.chkMouse.AutoSize = true;
+      this.chkMouse.Location = new System.Drawing.Point(19, 181);
+      this.chkMouse.Name = "chkMouse";
+      this.chkMouse.Size = new System.Drawing.Size(154, 20);
+      this.chkMouse.TabIndex = 6;
+      this.chkMouse.Text = "use mouse to browse";
+      this.chkMouse.UseVisualStyleBackColor = true;
+      // 
       // chkWindowed
       // 
       this.chkWindowed.AutoSize = true;
@@ -446,6 +459,7 @@
       // tabPage2
       // 
       this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+      this.tabPage2.Controls.Add(this.groupBox12);
       this.tabPage2.Controls.Add(this.groupBox7);
       this.tabPage2.Controls.Add(this.groupBox6);
       this.tabPage2.Controls.Add(this.groupBox2);
@@ -461,9 +475,9 @@
       // 
       this.groupBox7.Controls.Add(this.chkThumbsOnVisit);
       this.groupBox7.Controls.Add(this.chkUseThumbs);
-      this.groupBox7.Location = new System.Drawing.Point(22, 382);
+      this.groupBox7.Location = new System.Drawing.Point(6, 303);
       this.groupBox7.Name = "groupBox7";
-      this.groupBox7.Size = new System.Drawing.Size(534, 88);
+      this.groupBox7.Size = new System.Drawing.Size(550, 82);
       this.groupBox7.TabIndex = 21;
       this.groupBox7.TabStop = false;
       this.groupBox7.Text = "Thumbs caching";
@@ -494,9 +508,9 @@
       this.groupBox6.Controls.Add(this.optNoZoom);
       this.groupBox6.Controls.Add(this.optZoomDomain);
       this.groupBox6.Controls.Add(this.optZoomPage);
-      this.groupBox6.Location = new System.Drawing.Point(22, 239);
+      this.groupBox6.Location = new System.Drawing.Point(6, 191);
       this.groupBox6.Name = "groupBox6";
-      this.groupBox6.Size = new System.Drawing.Size(534, 137);
+      this.groupBox6.Size = new System.Drawing.Size(550, 106);
       this.groupBox6.TabIndex = 20;
       this.groupBox6.TabStop = false;
       this.groupBox6.Text = "Zoom settings";
@@ -505,7 +519,7 @@
       // 
       this.optNoZoom.AutoSize = true;
       this.optNoZoom.Checked = true;
-      this.optNoZoom.Location = new System.Drawing.Point(26, 95);
+      this.optNoZoom.Location = new System.Drawing.Point(26, 73);
       this.optNoZoom.Name = "optNoZoom";
       this.optNoZoom.Size = new System.Drawing.Size(132, 20);
       this.optNoZoom.TabIndex = 2;
@@ -516,7 +530,7 @@
       // optZoomDomain
       // 
       this.optZoomDomain.AutoSize = true;
-      this.optZoomDomain.Location = new System.Drawing.Point(26, 69);
+      this.optZoomDomain.Location = new System.Drawing.Point(26, 47);
       this.optZoomDomain.Name = "optZoomDomain";
       this.optZoomDomain.Size = new System.Drawing.Size(206, 20);
       this.optZoomDomain.TabIndex = 1;
@@ -526,7 +540,7 @@
       // optZoomPage
       // 
       this.optZoomPage.AutoSize = true;
-      this.optZoomPage.Location = new System.Drawing.Point(26, 43);
+      this.optZoomPage.Location = new System.Drawing.Point(26, 21);
       this.optZoomPage.Name = "optZoomPage";
       this.optZoomPage.Size = new System.Drawing.Size(193, 20);
       this.optZoomPage.TabIndex = 0;
@@ -537,9 +551,9 @@
       // 
       this.groupBox2.Controls.Add(this.txtFont);
       this.groupBox2.Controls.Add(this.trkFont);
-      this.groupBox2.Location = new System.Drawing.Point(22, 130);
+      this.groupBox2.Location = new System.Drawing.Point(6, 97);
       this.groupBox2.Name = "groupBox2";
-      this.groupBox2.Size = new System.Drawing.Size(534, 97);
+      this.groupBox2.Size = new System.Drawing.Size(550, 88);
       this.groupBox2.TabIndex = 2;
       this.groupBox2.TabStop = false;
       this.groupBox2.Text = "Font";
@@ -560,7 +574,7 @@
       this.trkFont.Maximum = 200;
       this.trkFont.Minimum = 10;
       this.trkFont.Name = "trkFont";
-      this.trkFont.Size = new System.Drawing.Size(525, 45);
+      this.trkFont.Size = new System.Drawing.Size(538, 45);
       this.trkFont.SmallChange = 10;
       this.trkFont.TabIndex = 0;
       this.trkFont.TickFrequency = 10;
@@ -571,9 +585,9 @@
       // 
       this.groupBox1.Controls.Add(this.txtZoom);
       this.groupBox1.Controls.Add(this.trkZoom);
-      this.groupBox1.Location = new System.Drawing.Point(19, 27);
+      this.groupBox1.Location = new System.Drawing.Point(6, 6);
       this.groupBox1.Name = "groupBox1";
-      this.groupBox1.Size = new System.Drawing.Size(537, 97);
+      this.groupBox1.Size = new System.Drawing.Size(550, 85);
       this.groupBox1.TabIndex = 1;
       this.groupBox1.TabStop = false;
       this.groupBox1.Text = "Zoom";
@@ -594,7 +608,7 @@
       this.trkZoom.Maximum = 300;
       this.trkZoom.Minimum = 10;
       this.trkZoom.Name = "trkZoom";
-      this.trkZoom.Size = new System.Drawing.Size(525, 45);
+      this.trkZoom.Size = new System.Drawing.Size(538, 45);
       this.trkZoom.SmallChange = 10;
       this.trkZoom.TabIndex = 0;
       this.trkZoom.TickFrequency = 10;
@@ -1167,15 +1181,23 @@
       this.checkBox1.Text = "Show diagnose on status bar";
       this.checkBox1.UseVisualStyleBackColor = true;
       // 
-      // chkMouse
+      // groupBox12
       // 
-      this.chkMouse.AutoSize = true;
-      this.chkMouse.Location = new System.Drawing.Point(19, 181);
-      this.chkMouse.Name = "chkMouse";
-      this.chkMouse.Size = new System.Drawing.Size(154, 20);
-      this.chkMouse.TabIndex = 6;
-      this.chkMouse.Text = "use mouse to browse";
-      this.chkMouse.UseVisualStyleBackColor = true;
+      this.groupBox12.Controls.Add(this.cmbBookmarkView);
+      this.groupBox12.Location = new System.Drawing.Point(6, 391);
+      this.groupBox12.Name = "groupBox12";
+      this.groupBox12.Size = new System.Drawing.Size(550, 79);
+      this.groupBox12.TabIndex = 22;
+      this.groupBox12.TabStop = false;
+      this.groupBox12.Text = "Bookmarks view";
+      // 
+      // cmbBookmarkView
+      // 
+      this.cmbBookmarkView.FormattingEnabled = true;
+      this.cmbBookmarkView.Location = new System.Drawing.Point(26, 37);
+      this.cmbBookmarkView.Name = "cmbBookmarkView";
+      this.cmbBookmarkView.Size = new System.Drawing.Size(145, 24);
+      this.cmbBookmarkView.TabIndex = 0;
       // 
       // Setup
       // 
@@ -1228,6 +1250,7 @@
       this.groupBox10.PerformLayout();
       this.groupBox9.ResumeLayout(false);
       this.groupBox9.PerformLayout();
+      this.groupBox12.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -1335,5 +1358,7 @@
     private System.Windows.Forms.Label label35;
     private System.Windows.Forms.ComboBox cmbShowBookmarks;
     private System.Windows.Forms.CheckBox chkMouse;
+    private System.Windows.Forms.GroupBox groupBox12;
+    private System.Windows.Forms.ComboBox cmbBookmarkView;
   }
 }

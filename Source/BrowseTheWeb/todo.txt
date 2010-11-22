@@ -23,6 +23,9 @@ add mouse support
 start work on alternate mouse support
 save thumb if a bookmark is added inside the MP
 
+0.2.6
+add #currentmodule on pageload
+add selector for view bookmarks
 
 todo:
 mouseless / mouse browsing

@@ -204,6 +204,8 @@ namespace BrowseTheWeb
 
     protected override void OnPageLoad()
     {
+      GUIPropertyManager.SetProperty("#currentmodule", pluginName);
+
       try
       {
         MyLog.debug("Init browser");
