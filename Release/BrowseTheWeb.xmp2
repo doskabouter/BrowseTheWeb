@@ -268,13 +268,13 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <Version>
       <Major>0</Major>
       <Minor>2</Minor>
-      <Build>6</Build>
+      <Build>7</Build>
       <Revision>0</Revision>
     </Version>
     <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / " Webbrowser.
 
 </ExtensionDescription>
-    <VersionDescription>add selector bookmark view</VersionDescription>
+    <VersionDescription>moved dir to thumbs</VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
     <OnlineLocation>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.mpe1</OnlineLocation>
     <ReleaseDate>2010-11-06T15:09:04.5514802+01:00</ReleaseDate>
@@ -395,7 +395,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>..\Source\BrowseTheWeb\xulrunner.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{1cdd8220-5287-482f-a29a-cf42224692a2}-xulrunner.png</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{9b38eb10-4fb2-45fd-a4c1-4d77e7de92b6}-xulrunner.png</ZipFileName>
         <DestinationFilename />
       </FileItem>
     </Items>
