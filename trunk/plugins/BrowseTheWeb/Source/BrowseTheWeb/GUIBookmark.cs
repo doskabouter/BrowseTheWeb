@@ -147,8 +147,6 @@ namespace BrowseTheWeb
 
     public void LoadFacade(string Path, string Folder)
     {
-      string dirCache = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb";
-
       switch (view)
       {
         case "Small icons":

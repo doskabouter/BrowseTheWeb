@@ -199,7 +199,7 @@ namespace BrowseTheWeb
       try
       {
         string filename = GetThumbString(Url);
-        filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb\\" + filename;
+        filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb\\" + filename;
 
         Snap.Save(filename);
       }
@@ -212,7 +212,7 @@ namespace BrowseTheWeb
       try
       {
         string filename = GetThumbString(Url);
-        filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb\\" + filename;
+        filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb\\" + filename;
 
         if (File.Exists(filename))
         {
@@ -228,14 +228,25 @@ namespace BrowseTheWeb
     public static string GetSnapPath(string Url)
     {
       string filename = GetThumbString(Url);
-      filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb\\" + filename;
+      filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb\\" + filename;
 
       return filename;
     }
     public static void InitCachePath()
     {
-      if (!Directory.Exists(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb"))
-        Directory.CreateDirectory(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb");
+      if (!Directory.Exists(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb"))
+        Directory.CreateDirectory(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb");
+
+
+      if (Directory.Exists(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb"))
+      {
+        string[] files = Directory.GetFiles(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb", "*.*");
+        foreach (string f in files)
+        {
+          File.Move(f, Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb\\" + Path.GetFileName(f));
+        }
+      }
+
     }
 
     private static string GetThumbString(string Name)
