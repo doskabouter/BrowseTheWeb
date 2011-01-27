@@ -1,7 +1,7 @@
-﻿#region Copyright (C) 2005-2010 Team MediaPortal
+﻿#region Copyright (C) 2005-2011 Team MediaPortal
 
 /* 
- *	Copyright (C) 2005-2010 Team MediaPortal
+ *	Copyright (C) 2005-2011 Team MediaPortal
  *	http://www.team-mediaportal.com
  *
  *  This Program is free software; you can redistribute it and/or modify
@@ -175,7 +175,15 @@ namespace BrowseTheWeb
 
     public override bool Init()
     {
-      Xpcom.Initialize(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\xulrunner");
+      try
+      {
+        Xpcom.Initialize(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\xulrunner");
+      }
+      catch (Exception ex)
+      {
+        MyLog.debug("Could not find xulrunner under : " + Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\xulrunner");
+        MyLog.debug("Reason : " + ex.Message);
+      }
 
       #region add forms
       webBrowser = new GeckoWebBrowser();
@@ -412,9 +420,18 @@ namespace BrowseTheWeb
       }
     }
 
+    public override bool OnMessage(GUIMessage message)
+    {
+      Console.WriteLine("message :" + message.Label);
+      return base.OnMessage(message);
+    }
+
     public override void OnAction(Action action)
     {
-      base.OnAction(action);
+      if (linkId != string.Empty)
+        GUIPropertyManager.SetProperty("#btWeb.linkid", "Link ID = " + linkId);
+      else
+        GUIPropertyManager.SetProperty("#btWeb.linkid", linkId);
 
       #region remote diagnostic
       if (remote)
@@ -540,45 +557,44 @@ namespace BrowseTheWeb
         case Action.ActionType.ACTION_PLAY:
         case Action.ActionType.ACTION_MUSIC_PLAY:
           OnEnterNewLink();
-          break;
+          return;
         case Action.ActionType.ACTION_PAUSE:
           webBrowser.Navigate(homepage);
           MyLog.debug("load home page " + homepage);
           if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "go to homepage");
-          break;
+          return;
         case Action.ActionType.ACTION_STOP:
           webBrowser.Navigate("about:blank");
           if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "Stop");
-          break;
+          return;
         case Action.ActionType.ACTION_PREV_ITEM:
         case Action.ActionType.ACTION_REWIND:
           webBrowser.GoBack();
           if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "go backward");
           MyLog.debug("navigate go back");
-          break;
+          return;
         case Action.ActionType.ACTION_NEXT_ITEM:
         case Action.ActionType.ACTION_FORWARD:
           webBrowser.GoForward();
           if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "go forward");
           MyLog.debug("navigate go forward");
-          break;
+          return;
         case Action.ActionType.ACTION_RECORD:
           OnAddBookmark();
-          break;
+          return;
 
         #region move
         case Action.ActionType.ACTION_MOVE_RIGHT:
           OnMoveRight();
-          break;
+          return;
         case Action.ActionType.ACTION_MOVE_LEFT:
           OnMoveLeft();
-          break;
+          return;
         case Action.ActionType.ACTION_MOVE_UP:
           OnMoveUp();
-          break;
+          return;
         case Action.ActionType.ACTION_MOVE_DOWN:
-          OnMoveDown();
-          break;
+          return;
         case Action.ActionType.ACTION_SELECT_ITEM:
           if (mouse.Visible)
           {
@@ -587,16 +603,11 @@ namespace BrowseTheWeb
             int y = GUIGraphicsContext.form.Location.Y + mouse.Location.Y + 50;
             System.Windows.Forms.Cursor.Position = new Point(x, y);
           }
-          break;
+          return;
         #endregion
       }
-      if (linkId != string.Empty)
-        GUIPropertyManager.SetProperty("#btWeb.linkid", "Link ID = " + linkId);
-      else
-        GUIPropertyManager.SetProperty("#btWeb.linkid", linkId);
-
-
     }
+
     private void webBrowser_DomKeyDown(object sender, GeckoDomKeyEventArgs e)
     {
       if (useMouse)
@@ -945,6 +956,7 @@ namespace BrowseTheWeb
           }
           #endregion
         }
+
         #region reset zoom
         if (zoomPage)
         {

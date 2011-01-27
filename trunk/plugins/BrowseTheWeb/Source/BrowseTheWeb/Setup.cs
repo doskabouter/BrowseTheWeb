@@ -1,7 +1,7 @@
-#region Copyright (C) 2005-2010 Team MediaPortal
+#region Copyright (C) 2005-2011 Team MediaPortal
 
 /* 
- *	Copyright (C) 2005-2010 Team MediaPortal
+ *	Copyright (C) 2005-2011 Team MediaPortal
  *	http://www.team-mediaportal.com
  *
  *  This Program is free software; you can redistribute it and/or modify
@@ -34,7 +34,10 @@ using System.Reflection;
 using System.IO;
 
 using Skybound.Gecko;
+using Ionic.Zip;
+
 using MediaPortal.Configuration;
+using MediaPortal.GUI.Library;
 
 namespace BrowseTheWeb
 {
@@ -56,33 +59,48 @@ namespace BrowseTheWeb
       InitializeComponent();
 
       #region create xulrunner if needed
-      string dir = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\xulrunner";
-      string dirCache = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache);
+
+      string zipToUnpack = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\xulrunner.zip";
+      string unpackDirectory = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config);
+
+      if (File.Exists(zipToUnpack))
+      {
+        Log.Debug("BrowseTheWeb | zip found : " + zipToUnpack, new object[0]);
+        try
+        {
+          using (ZipFile zip1 = ZipFile.Read(zipToUnpack))
+          {
+            foreach (ZipEntry e in zip1)
+            {
+              e.Extract(unpackDirectory, true);
+            }
+          }
+          Log.Debug("BrowseTheWeb | unpack finished to " + unpackDirectory, new object[0]);
+        }
+        catch (Exception ex)
+        {
+          Log.Debug("BrowseTheWeb | Exception : " + ex.Message, new object[0]);
+        }
+      }
+
+      #endregion
+
+      string plugins = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Plugins);
+
+      FileInfo info = new FileInfo(plugins + "\\Windows\\HtmlAgilityPack.dll");
+      Log.Debug("BrowseTheWeb | HtmlAgilityPack: " + info.CreationTime);
+
+      info = new FileInfo(plugins + "\\Windows\\Skybound.Gecko.dll.dll");
+      Log.Debug("BrowseTheWeb | Skybound.Gecko.dll: " + info.CreationTime);
 
       try
       {
-        if (!Directory.Exists(dir))
-        {
-          System.Diagnostics.ProcessStartInfo procStartInfo =
-            new System.Diagnostics.ProcessStartInfo("cmd", "/c unzip.exe -o xulrunner -d ../");
-          procStartInfo.WorkingDirectory = dirCache;
-
-          procStartInfo.RedirectStandardOutput = true;
-          procStartInfo.UseShellExecute = false;
-
-          procStartInfo.CreateNoWindow = true;
-
-          System.Diagnostics.Process proc = new System.Diagnostics.Process();
-          proc.StartInfo = procStartInfo;
-          proc.Start();
-
-          string result = proc.StandardOutput.ReadToEnd();
-        }
+        Xpcom.Initialize(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\xulrunner");
       }
-      catch { }
-      #endregion
-
-      Xpcom.Initialize(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\xulrunner");
+      catch (Exception ex)
+      {
+        Log.Debug("BrowseTheWeb | Exception on init Xpcom : " + ex.Message, new object[0]);
+      }
     }
 
     private void Setup_Load(object sender, EventArgs e)
