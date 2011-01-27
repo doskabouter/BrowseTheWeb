@@ -53,6 +53,11 @@
       <HintPath>..\..\..\..\Program Files\Team MediaPortal\MediaPortal\plugins\Windows\HtmlAgilityPack.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Ionic.Zip, Version=1.7.2.18, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files\Team MediaPortal\MediaPortal\Ionic.Zip.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Skybound.Gecko, Version=1.9.1.1, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files\Team MediaPortal\MediaPortal\plugins\Windows\Skybound.Gecko.dll</HintPath>
