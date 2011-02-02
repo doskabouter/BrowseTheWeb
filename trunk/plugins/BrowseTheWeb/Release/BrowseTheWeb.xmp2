@@ -17,13 +17,6 @@
               <ZipFileName>Installer{CopyFile}\{c9cda48b-d308-439e-9997-5d29e02e898d}-xulrunner.zip</ZipFileName>
               <DestinationFilename>%Cache%\xulrunner.zip</DestinationFilename>
             </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\unzip.exe</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{f8239056-5461-4664-99ae-baedfed8cc25}-unzip.exe</ZipFileName>
-              <DestinationFilename>%Cache%\unzip.exe</DestinationFilename>
-            </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
@@ -268,13 +261,13 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <Version>
       <Major>0</Major>
       <Minor>2</Minor>
-      <Build>7</Build>
+      <Build>8</Build>
       <Revision>0</Revision>
     </Version>
     <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / " Webbrowser.
 
 </ExtensionDescription>
-    <VersionDescription>moved dir to thumbs</VersionDescription>
+    <VersionDescription>used Ionic.ZIP for extract xulrunner</VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
     <OnlineLocation>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.mpe1</OnlineLocation>
     <ReleaseDate>2010-11-06T15:09:04.5514802+01:00</ReleaseDate>
@@ -320,13 +313,6 @@ Click Next to continue or Cancel to exit Setup.</Value>
         <LocalFileName>Files\xulrunner.zip</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{c9cda48b-d308-439e-9997-5d29e02e898d}-xulrunner.zip</ZipFileName>
         <DestinationFilename>%Cache%\xulrunner.zip</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\unzip.exe</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{f8239056-5461-4664-99ae-baedfed8cc25}-unzip.exe</ZipFileName>
-        <DestinationFilename>%Cache%\unzip.exe</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
@@ -395,7 +381,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>..\Source\BrowseTheWeb\xulrunner.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{9b38eb10-4fb2-45fd-a4c1-4d77e7de92b6}-xulrunner.png</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{69d2dbe3-4672-4700-8c8f-a915eebcf953}-xulrunner.png</ZipFileName>
         <DestinationFilename />
       </FileItem>
     </Items>

@@ -189,6 +189,7 @@ namespace BrowseTheWeb
       webBrowser = new GeckoWebBrowser();
       webBrowser.Name = "BrowseTheWeb";
       webBrowser.NoDefaultContextMenu = true;
+
       GUIGraphicsContext.form.Controls.Add(webBrowser);
 
       webBrowser.Enabled = false;
@@ -554,6 +555,9 @@ namespace BrowseTheWeb
             if (linkId.Length > 4) linkId = linkId.Substring(0, 1);
           }
           break;
+        case Action.ActionType.ACTION_PREVIOUS_MENU:
+          linkId = string.Empty;
+          break;
         case Action.ActionType.ACTION_PLAY:
         case Action.ActionType.ACTION_MUSIC_PLAY:
           OnEnterNewLink();
@@ -594,6 +598,7 @@ namespace BrowseTheWeb
           OnMoveUp();
           return;
         case Action.ActionType.ACTION_MOVE_DOWN:
+          OnMoveDown();
           return;
         case Action.ActionType.ACTION_SELECT_ITEM:
           if (mouse.Visible)
@@ -817,8 +822,12 @@ namespace BrowseTheWeb
       {
         string str = DateTime.Now.ToLongTimeString();
         str += " ";
-        str += web.StatusText.Substring(0, 50);
-        if (web.StatusText.Length > 50) str += "...";
+
+        int l = web.StatusText.Length;
+        if (l > 50) l = 47;
+
+        str += web.StatusText.Substring(0, l);
+        if (l > 50) str += "...";
 
         GUIPropertyManager.SetProperty("#btWeb.status", str);
       }
@@ -1021,6 +1030,21 @@ namespace BrowseTheWeb
             {
               case HtmlInputType.Link:
                 {
+                  if (!id.Link.StartsWith("http://") && !id.Link.StartsWith("https://") && !id.Link.StartsWith("ftp://") && !id.Link.StartsWith("ftps://"))
+                  {
+                    string result = webBrowser.Url.Scheme + "://" + webBrowser.Url.Host + webBrowser.Url.AbsolutePath + id.Link;
+                    id.Link = result;
+                    hln = id;
+                    return true;
+                  }
+                  else
+                  {
+                    hln = id;
+                    return true;
+                  }
+                  /* old code fails sometimes
+                   * http://www.ftd.de/finanzen/maerkte/marktberichte/:boersenausblick-hoffnung-auf-jahresendrally-schwindet/50199183.html#utm_source=rss2&amp;utm_medium=rss_feed&amp;utm_campaign=
+                   * 
                   Uri uri;
                   if (Uri.TryCreate(webBrowser.Url, id.Link, out uri))
                   {
@@ -1028,6 +1052,7 @@ namespace BrowseTheWeb
                     hln = id;
                     return true;
                   }
+                  */
                 }
                 break;
               case HtmlInputType.Input:

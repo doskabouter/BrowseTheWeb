@@ -4,6 +4,6 @@
     <StartProgram>C:\Program Files\Team MediaPortal\MediaPortal\MediaPortal.exe</StartProgram>
   </PropertyGroup>
   <PropertyGroup>
-    <ProjectView>ProjectFiles</ProjectView>
+    <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
 </Project>
