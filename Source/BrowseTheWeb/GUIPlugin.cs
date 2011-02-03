@@ -1032,7 +1032,11 @@ namespace BrowseTheWeb
                 {
                   if (!id.Link.StartsWith("http://") && !id.Link.StartsWith("https://") && !id.Link.StartsWith("ftp://") && !id.Link.StartsWith("ftps://"))
                   {
-                    string result = webBrowser.Url.Scheme + "://" + webBrowser.Url.Host + webBrowser.Url.AbsolutePath + id.Link;
+                    string result = webBrowser.Url.Scheme + "://" + webBrowser.Url.Host;
+                    if (webBrowser.Url.AbsolutePath != "/")
+                      result += webBrowser.Url.AbsolutePath;
+                    result  += id.Link;
+
                     id.Link = result;
                     hln = id;
                     return true;
