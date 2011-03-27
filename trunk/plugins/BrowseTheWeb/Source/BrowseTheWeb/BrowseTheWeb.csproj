@@ -22,7 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -113,6 +113,12 @@
     <Compile Include="ImportFF.Designer.cs">
       <DependentUpon>ImportFF.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImportChrome.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportChrome.Designer.cs">
+      <DependentUpon>ImportChrome.cs</DependentUpon>
+    </Compile>
     <Compile Include="Mouse.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -181,6 +187,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ImportFF.resx">
       <DependentUpon>ImportFF.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportChrome.resx">
+      <DependentUpon>ImportChrome.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Mouse.resx">

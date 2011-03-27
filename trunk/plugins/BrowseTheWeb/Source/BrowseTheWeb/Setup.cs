@@ -860,6 +860,29 @@ namespace BrowseTheWeb
 
       treeView1.Invalidate();
     }
+    private void btnImportChr_Click(object sender, EventArgs e)
+    {
+      #region generate folder
+      if (!Bookmark.Exists(treeView1, "Import Chrome"))
+      {
+        TreeNode newNode = treeView1.Nodes[0].Nodes.Add("Import Chrome");
+        newNode.ImageIndex = 1;
+        newNode.SelectedImageIndex = 1;
+
+        BookmarkElement bkm = new BookmarkElement();
+        bkm.Name = "Import Chrome";
+        bkm.isFolder = true;
+        newNode.Tag = bkm;
+
+        treeView1.Nodes[0].ExpandAll();
+      }
+      #endregion
+
+      ImportChrome import = new ImportChrome(treeView1);
+      import.ShowDialog();
+
+      treeView1.Invalidate();
+    }
 
     private void btnDefault_Click(object sender, EventArgs e)
     {
