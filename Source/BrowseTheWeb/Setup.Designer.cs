@@ -61,6 +61,8 @@
       this.trkRemote = new System.Windows.Forms.TrackBar();
       this.groupBox3 = new System.Windows.Forms.GroupBox();
       this.tabPage2 = new System.Windows.Forms.TabPage();
+      this.groupBox12 = new System.Windows.Forms.GroupBox();
+      this.cmbBookmarkView = new System.Windows.Forms.ComboBox();
       this.groupBox7 = new System.Windows.Forms.GroupBox();
       this.chkThumbsOnVisit = new System.Windows.Forms.CheckBox();
       this.chkUseThumbs = new System.Windows.Forms.CheckBox();
@@ -131,8 +133,7 @@
       this.label22 = new System.Windows.Forms.Label();
       this.comboBox4 = new System.Windows.Forms.ComboBox();
       this.checkBox1 = new System.Windows.Forms.CheckBox();
-      this.groupBox12 = new System.Windows.Forms.GroupBox();
-      this.cmbBookmarkView = new System.Windows.Forms.ComboBox();
+      this.btnImportChr = new System.Windows.Forms.Button();
       this.contextMenuStrip1.SuspendLayout();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
@@ -141,6 +142,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.trkRemote)).BeginInit();
       this.groupBox3.SuspendLayout();
       this.tabPage2.SuspendLayout();
+      this.groupBox12.SuspendLayout();
       this.groupBox7.SuspendLayout();
       this.groupBox6.SuspendLayout();
       this.groupBox2.SuspendLayout();
@@ -155,7 +157,6 @@
       this.groupBox11.SuspendLayout();
       this.groupBox10.SuspendLayout();
       this.groupBox9.SuspendLayout();
-      this.groupBox12.SuspendLayout();
       this.SuspendLayout();
       // 
       // treeView1
@@ -471,6 +472,24 @@
       this.tabPage2.TabIndex = 1;
       this.tabPage2.Text = "Appeareance";
       // 
+      // groupBox12
+      // 
+      this.groupBox12.Controls.Add(this.cmbBookmarkView);
+      this.groupBox12.Location = new System.Drawing.Point(6, 391);
+      this.groupBox12.Name = "groupBox12";
+      this.groupBox12.Size = new System.Drawing.Size(550, 79);
+      this.groupBox12.TabIndex = 22;
+      this.groupBox12.TabStop = false;
+      this.groupBox12.Text = "Bookmarks view";
+      // 
+      // cmbBookmarkView
+      // 
+      this.cmbBookmarkView.FormattingEnabled = true;
+      this.cmbBookmarkView.Location = new System.Drawing.Point(26, 37);
+      this.cmbBookmarkView.Name = "cmbBookmarkView";
+      this.cmbBookmarkView.Size = new System.Drawing.Size(145, 24);
+      this.cmbBookmarkView.TabIndex = 0;
+      // 
       // groupBox7
       // 
       this.groupBox7.Controls.Add(this.chkThumbsOnVisit);
@@ -618,6 +637,7 @@
       // tabPage3
       // 
       this.tabPage3.BackColor = System.Drawing.SystemColors.Control;
+      this.tabPage3.Controls.Add(this.btnImportChr);
       this.tabPage3.Controls.Add(this.btnImportFF);
       this.tabPage3.Controls.Add(this.btnImportIE);
       this.tabPage3.Controls.Add(this.label7);
@@ -1181,23 +1201,15 @@
       this.checkBox1.Text = "Show diagnose on status bar";
       this.checkBox1.UseVisualStyleBackColor = true;
       // 
-      // groupBox12
+      // btnImportChr
       // 
-      this.groupBox12.Controls.Add(this.cmbBookmarkView);
-      this.groupBox12.Location = new System.Drawing.Point(6, 391);
-      this.groupBox12.Name = "groupBox12";
-      this.groupBox12.Size = new System.Drawing.Size(550, 79);
-      this.groupBox12.TabIndex = 22;
-      this.groupBox12.TabStop = false;
-      this.groupBox12.Text = "Bookmarks view";
-      // 
-      // cmbBookmarkView
-      // 
-      this.cmbBookmarkView.FormattingEnabled = true;
-      this.cmbBookmarkView.Location = new System.Drawing.Point(26, 37);
-      this.cmbBookmarkView.Name = "cmbBookmarkView";
-      this.cmbBookmarkView.Size = new System.Drawing.Size(145, 24);
-      this.cmbBookmarkView.TabIndex = 0;
+      this.btnImportChr.Location = new System.Drawing.Point(168, 442);
+      this.btnImportChr.Name = "btnImportChr";
+      this.btnImportChr.Size = new System.Drawing.Size(79, 23);
+      this.btnImportChr.TabIndex = 20;
+      this.btnImportChr.Text = "Import Chr";
+      this.btnImportChr.UseVisualStyleBackColor = true;
+      this.btnImportChr.Click += new System.EventHandler(this.btnImportChr_Click);
       // 
       // Setup
       // 
@@ -1226,6 +1238,7 @@
       this.groupBox3.ResumeLayout(false);
       this.groupBox3.PerformLayout();
       this.tabPage2.ResumeLayout(false);
+      this.groupBox12.ResumeLayout(false);
       this.groupBox7.ResumeLayout(false);
       this.groupBox7.PerformLayout();
       this.groupBox6.ResumeLayout(false);
@@ -1250,7 +1263,6 @@
       this.groupBox10.PerformLayout();
       this.groupBox9.ResumeLayout(false);
       this.groupBox9.PerformLayout();
-      this.groupBox12.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -1360,5 +1372,6 @@
     private System.Windows.Forms.CheckBox chkMouse;
     private System.Windows.Forms.GroupBox groupBox12;
     private System.Windows.Forms.ComboBox cmbBookmarkView;
+    private System.Windows.Forms.Button btnImportChr;
   }
 }
