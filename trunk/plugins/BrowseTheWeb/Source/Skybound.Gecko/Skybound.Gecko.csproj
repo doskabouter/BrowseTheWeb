@@ -39,7 +39,7 @@
     <DefineConstants>TRACE;GECKO_1_9_1 GECKO_1_9</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <DocumentationFile>bin\Release\Skybound.Gecko.xml</DocumentationFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
