@@ -100,6 +100,8 @@ namespace BrowseTheWeb
 
     public static string loadFav = string.Empty;
 
+    private string lastUrl = string.Empty;
+
     #endregion
 
     #region ISetupForm Member
@@ -364,10 +366,20 @@ namespace BrowseTheWeb
         remote_zoom_out = xmlreader.GetValueAsString("btWeb", "key_4", "ACTION_PAGE_UP");
         remote_status = xmlreader.GetValueAsString("btWeb", "key_5", "ACTION_SHOW_GUI");
 
+        lastUrl = xmlreader.GetValueAsString("btWeb", "lastUrl", string.Empty);
+
         useProxy = xmlreader.GetValueAsBool("btWeb", "proxy", false);
         Server = xmlreader.GetValueAsString("btWeb", "proxy_server", "127.0.0.1");
         Port = xmlreader.GetValueAsInt("btWeb", "proxy_port", 8888);
         TrySetProxy();
+      }
+    }
+    private void SaveSettings()
+    {
+      string dir = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config);
+      using (MediaPortal.Profile.Settings xmlwriter = new MediaPortal.Profile.Settings(dir + "\\MediaPortal.xml"))
+      {
+        xmlwriter.SetValue("btWeb", "lastUrl", lastUrl);
       }
     }
 
@@ -585,6 +597,20 @@ namespace BrowseTheWeb
                 break;
               #endregion
             }
+            if ((int)action.m_key.KeyChar == 27)
+            {
+              // escape
+              if (!osd_linkID.Visible)
+              {
+                GUIWindowManager.ShowPreviousWindow();
+              }
+              else
+              {
+                linkId = string.Empty;
+                osd_linkID.Visible = false;
+                Application.DoEvents();
+              }
+            }
             if (linkId.Length > 4) linkId = linkId.Substring(0, 1);
           }
           break;
@@ -710,12 +736,20 @@ namespace BrowseTheWeb
       GUIGraphicsContext.form.Focus();
 
       string selectedUrl = "http://";
+      if (lastUrl != string.Empty)
+      {
+        selectedUrl = lastUrl;
+      }
+
       if (ShowKeyboard(ref selectedUrl, false) == System.Windows.Forms.DialogResult.OK)
       {
         if (Bookmark.isValidUrl(selectedUrl))
         {
           webBrowser.Navigate(selectedUrl);
           MyLog.debug("navigate to " + selectedUrl);
+
+          lastUrl = selectedUrl;
+          SaveSettings();
         }
         else
           ShowAlert("Wrong link ?", " The link you entered seems to be not valid.", "Input:", selectedUrl);
@@ -1070,8 +1104,8 @@ namespace BrowseTheWeb
                   if (!id.Link.StartsWith("http://") && !id.Link.StartsWith("https://") && !id.Link.StartsWith("ftp://") && !id.Link.StartsWith("ftps://"))
                   {
                     string result = webBrowser.Url.Scheme + "://" + webBrowser.Url.Host;
-                    if (webBrowser.Url.AbsolutePath != "/")
-                      result += webBrowser.Url.AbsolutePath;
+                    //if (webBrowser.Url.AbsolutePath != "/")
+                    //  result += webBrowser.Url.AbsolutePath;
                     result += id.Link;
 
                     id.Link = result;
