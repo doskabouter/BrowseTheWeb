@@ -175,6 +175,8 @@ namespace BrowseTheWeb
 
     public override bool Init()
     {
+      MyLog.debug("Init Browse the web");
+
       try
       {
         Xpcom.Initialize(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\xulrunner");
@@ -207,6 +209,8 @@ namespace BrowseTheWeb
       LoadSettings();
       BookmarkXml.AddFolder(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) +
                             "\\bookmarks.xml", "Saved by MP");
+
+      MyLog.debug("Init Browse the web finished");
 
       return Load(GUIGraphicsContext.Skin + @"\BrowseTheWeb.xml");
     }
@@ -242,6 +246,8 @@ namespace BrowseTheWeb
 
         webBrowser.DocumentCompleted += new EventHandler(webBrowser_DocumentCompleted);
         webBrowser.StatusTextChanged += new EventHandler(webBrowser_StatusTextChanged);
+
+        MyLog.debug("Create dom eventhandler");
         webBrowser.DomKeyDown += new GeckoDomKeyEventHandler(webBrowser_DomKeyDown);
         webBrowser.DomClick += new GeckoDomEventHandler(webBrowser_DomClick);
 
@@ -249,6 +255,8 @@ namespace BrowseTheWeb
           webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height - 100);
         else
           webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height);
+
+        MyLog.debug("set zoom size to " + font + "/" + zoom);
 
         webBrowser.Window.TextZoom = font;
         webBrowser.Zoom = zoom;
@@ -450,17 +458,40 @@ namespace BrowseTheWeb
       #region selectable buttons
       if (strAction == remote_confirm)
       {
-        if (!useMouse)
+        if (!mouse.Visible)
         {
-          if (linkId != string.Empty)
+          if (!useMouse)
           {
-            MyLog.debug("confirm link pressed");
-            OnLinkId(linkId);
+
+            if (linkId != string.Empty)
+            {
+              MyLog.debug("confirm link pressed");
+              OnLinkId(linkId);
+            }
+            else
+            {
+              MyLog.debug("confirm2 link pressed, no link present");
+            }
           }
-          else
-          {
-            MyLog.debug("confirm2 link pressed, no link present");
-          }
+        }
+        else
+        {
+          webBrowser.Enabled = true;
+          webBrowser.BringToFront();
+
+          Cursor.Show();
+          System.Threading.Thread.Sleep(200);
+
+
+          int X = Cursor.Position.X;
+          int Y = Cursor.Position.Y;
+          mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, X, Y, 0, 0);
+
+          Cursor.Hide();
+          //webBrowser.Enabled = false;
+
+          GUIGraphicsContext.form.BringToFront();
+          mouse.BringToFront();
         }
       }
       if (strAction == remote_bookmark)
@@ -500,7 +531,7 @@ namespace BrowseTheWeb
 
           }
           break;
-        case Action.ActionType.ACTION_SHOW_SUBTITLES:
+        case Action.ActionType.ACTION_NEXT_SUBTITLE:
           if (mouse.Visible)
           {
             mouse.Visible = false;
@@ -508,8 +539,10 @@ namespace BrowseTheWeb
           }
           else
           {
-            //mouse.Visible = true;
-            //mouse.BringToFront();
+            Point x = Cursor.Position;
+            mouse.Location = x;
+            mouse.Visible = true;
+            mouse.BringToFront();
           }
           break;
         case Action.ActionType.ACTION_KEY_PRESSED:
@@ -763,6 +796,7 @@ namespace BrowseTheWeb
       else
       {
         mouse.Location = new Point(mouse.Location.X - 20, mouse.Location.Y);
+        Cursor.Position = new Point(mouse.Location.X, mouse.Location.Y);
       }
     }
     private void OnMoveRight()
@@ -774,6 +808,7 @@ namespace BrowseTheWeb
       else
       {
         mouse.Location = new Point(mouse.Location.X + 20, mouse.Location.Y);
+        Cursor.Position = new Point(mouse.Location.X, mouse.Location.Y);
       }
     }
     private void OnMoveUp()
@@ -785,6 +820,7 @@ namespace BrowseTheWeb
       else
       {
         mouse.Location = new Point(mouse.Location.X, mouse.Location.Y - 20);
+        Cursor.Position = new Point(mouse.Location.X, mouse.Location.Y);
       }
     }
     private void OnMoveDown()
@@ -796,6 +832,7 @@ namespace BrowseTheWeb
       else
       {
         mouse.Location = new Point(mouse.Location.X, mouse.Location.Y + 20);
+        Cursor.Position = new Point(mouse.Location.X, mouse.Location.Y);
       }
     }
 
@@ -1035,7 +1072,7 @@ namespace BrowseTheWeb
                     string result = webBrowser.Url.Scheme + "://" + webBrowser.Url.Host;
                     if (webBrowser.Url.AbsolutePath != "/")
                       result += webBrowser.Url.AbsolutePath;
-                    result  += id.Link;
+                    result += id.Link;
 
                     id.Link = result;
                     hln = id;
@@ -1110,7 +1147,6 @@ namespace BrowseTheWeb
       vk.Reset();
       vk.Password = PasswordInput;
       vk.Text = DefaultText;
-      vk.Name = "";
       vk.DoModal(GUIWindowManager.ActiveWindow);
 
       if (vk.IsConfirmed)

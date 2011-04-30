@@ -33,6 +33,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Utils, Version=1.1.7.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files\Team MediaPortal\MediaPortal\Common.Utils.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Core, Version=1.1.1.11854, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files\Team MediaPortal\MediaPortal\Core.dll</HintPath>
