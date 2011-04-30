@@ -129,15 +129,15 @@ namespace BrowseTheWeb
         switch (view)
         {
           case "Small icons":
-            facade.View = GUIFacadeControl.ViewMode.SmallIcons;
+            facade.CurrentLayout = GUIFacadeControl.Layout.SmallIcons;
             strLine = GUILocalizeStrings.Get(100);
             break;
           case "Large icons":
-            facade.View = GUIFacadeControl.ViewMode.LargeIcons;
+            facade.CurrentLayout = GUIFacadeControl.Layout.LargeIcons;
             strLine = GUILocalizeStrings.Get(417);
             break;
           case "List view":
-            facade.View = GUIFacadeControl.ViewMode.List;
+            facade.CurrentLayout = GUIFacadeControl.Layout.List;
             strLine = GUILocalizeStrings.Get(101);
             break;
         }
@@ -150,13 +150,13 @@ namespace BrowseTheWeb
       switch (view)
       {
         case "Small icons":
-          facade.View = GUIFacadeControl.ViewMode.SmallIcons;
+          facade.CurrentLayout = GUIFacadeControl.Layout.SmallIcons;
           break;
         case "Large icons":
-          facade.View = GUIFacadeControl.ViewMode.LargeIcons;
+          facade.CurrentLayout = GUIFacadeControl.Layout.LargeIcons;
           break;
         case "List view":
-          facade.View = GUIFacadeControl.ViewMode.List;
+          facade.CurrentLayout = GUIFacadeControl.Layout.List;
           break;
       }
       facade.Clear();

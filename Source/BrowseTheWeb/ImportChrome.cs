@@ -134,7 +134,7 @@ namespace BrowseTheWeb
             string line = sr.ReadToEnd();
             sr.Close();
 
-            MyLog.debug("Read " + line.Length +  " bytes");
+            MyLog.debug("Read " + line.Length + " bytes");
 
             int x = 0;
             int secNo = 1;
@@ -203,7 +203,7 @@ namespace BrowseTheWeb
 
 
           }
-          
+
         }
       }
       catch (Exception ex)
