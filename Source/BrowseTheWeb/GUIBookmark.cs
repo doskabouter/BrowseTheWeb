@@ -245,6 +245,7 @@ namespace BrowseTheWeb
         }
 
         GUIPropertyManager.SetProperty("#itemcount", facade.Count.ToString());
+        facade.SelectedListItemIndex = 0;
       }
       catch { }
     }

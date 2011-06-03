@@ -98,6 +98,9 @@ namespace BrowseTheWeb
     private float zoom = 1.0f;
     private float font = 1.0f;
 
+    public static bool ParameterSupported = false;
+    public static string Parameter = string.Empty;
+
     public static string loadFav = string.Empty;
 
     private string lastUrl = string.Empty;
@@ -167,9 +170,17 @@ namespace BrowseTheWeb
     {
       get
       {
-        string value = GUIPropertyManager.GetProperty("#btWeb.startup.link");
+        string value = Parameter;
         if (null != value && !string.IsNullOrEmpty(value.Trim()))
+        {
           return value.Trim();
+        }
+        else
+        {
+          value = GUIPropertyManager.GetProperty("#btWeb.startup.link");
+          if (null != value && !string.IsNullOrEmpty(value.Trim()))
+            return value.Trim();
+        }
         return string.Empty;
       }
       set { GUIPropertyManager.SetProperty("#btWeb.startup.link", string.IsNullOrEmpty(value) ? " " : value.Trim()); }
@@ -179,6 +190,29 @@ namespace BrowseTheWeb
     {
       MyLog.debug("Init Browse the web");
 
+      AddFormsDelegate d = AddForms;
+      GUIGraphicsContext.form.Invoke(d);
+
+      #region parameters test
+      ParameterSupported = false;
+      if (typeof(GUIWindow).GetField("_loadParameter", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance) != null)
+      {
+        ParameterSupported = true;
+      } 
+      #endregion
+
+      LoadSettings();
+      BookmarkXml.AddFolder(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) +
+                            "\\bookmarks.xml", "Saved by MP");
+
+      MyLog.debug("Init Browse the web finished");
+
+      return Load(GUIGraphicsContext.Skin + @"\BrowseTheWeb.xml");
+    }
+
+    private delegate void AddFormsDelegate();
+
+    private void AddForms() {
       try
       {
         Xpcom.Initialize(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\xulrunner");
@@ -195,7 +229,6 @@ namespace BrowseTheWeb
       webBrowser.NoDefaultContextMenu = true;
 
       GUIGraphicsContext.form.Controls.Add(webBrowser);
-
       webBrowser.Enabled = false;
       webBrowser.Visible = false;
 
@@ -207,14 +240,6 @@ namespace BrowseTheWeb
       GUIGraphicsContext.form.Controls.Add(mouse);
       mouse.Visible = false;
       #endregion
-
-      LoadSettings();
-      BookmarkXml.AddFolder(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) +
-                            "\\bookmarks.xml", "Saved by MP");
-
-      MyLog.debug("Init Browse the web finished");
-
-      return Load(GUIGraphicsContext.Skin + @"\BrowseTheWeb.xml");
     }
 
     protected override void OnPageLoad()
@@ -233,6 +258,12 @@ namespace BrowseTheWeb
         {
           MyLog.debug("Mouse support is enabled");
           GUIGraphicsContext.MouseSupport = true;
+        }
+
+        Parameter = null;
+        if (ParameterSupported)
+        {
+          Parameter = _loadParameter;
         }
 
         #region init browser
@@ -443,7 +474,7 @@ namespace BrowseTheWeb
 
     public override bool OnMessage(GUIMessage message)
     {
-      Console.WriteLine("message :" + message.Label);
+      //Console.WriteLine("message :" + message.Label);
       return base.OnMessage(message);
     }
 
@@ -602,7 +633,7 @@ namespace BrowseTheWeb
               // escape
               if (!osd_linkID.Visible)
               {
-                GUIWindowManager.ShowPreviousWindow();
+                //GUIWindowManager.ShowPreviousWindow();
               }
               else
               {
@@ -670,6 +701,7 @@ namespace BrowseTheWeb
           return;
         #endregion
       }
+      base.OnAction(action);
     }
 
     private void webBrowser_DomKeyDown(object sender, GeckoDomKeyEventArgs e)
