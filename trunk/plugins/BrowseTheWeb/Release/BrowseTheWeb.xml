@@ -37,6 +37,9 @@
       <Dependencies>
         <Items />
       </Dependencies>
+      <PluginDependencies>
+        <Items />
+      </PluginDependencies>
       <GeneralInfo>
         <Name>Browse The Web</Name>
         <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
@@ -97,6 +100,7 @@
       <ProjectSettings>
         <FolderGroups />
       </ProjectSettings>
+      <IsSkin>false</IsSkin>
     </PackageClass>
     <PackageClass>
       <Version>2.0</Version>
@@ -134,6 +138,9 @@
       <Dependencies>
         <Items />
       </Dependencies>
+      <PluginDependencies>
+        <Items />
+      </PluginDependencies>
       <GeneralInfo>
         <Name>Browse The Web</Name>
         <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
@@ -196,6 +203,7 @@ skin changes for bookmarks</VersionDescription>
       <ProjectSettings>
         <FolderGroups />
       </ProjectSettings>
+      <IsSkin>false</IsSkin>
     </PackageClass>
     <PackageClass>
       <Version>2.0</Version>
@@ -233,6 +241,9 @@ skin changes for bookmarks</VersionDescription>
       <Dependencies>
         <Items />
       </Dependencies>
+      <PluginDependencies>
+        <Items />
+      </PluginDependencies>
       <GeneralInfo>
         <Name>Browse The Web</Name>
         <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
@@ -293,6 +304,7 @@ skin changes for bookmarks</VersionDescription>
       <ProjectSettings>
         <FolderGroups />
       </ProjectSettings>
+      <IsSkin>false</IsSkin>
     </PackageClass>
     <PackageClass>
       <Version>2.0</Version>
@@ -330,6 +342,9 @@ skin changes for bookmarks</VersionDescription>
       <Dependencies>
         <Items />
       </Dependencies>
+      <PluginDependencies>
+        <Items />
+      </PluginDependencies>
       <GeneralInfo>
         <Name>Browse The Web</Name>
         <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
@@ -390,6 +405,7 @@ skin changes for bookmarks</VersionDescription>
       <ProjectSettings>
         <FolderGroups />
       </ProjectSettings>
+      <IsSkin>false</IsSkin>
     </PackageClass>
     <PackageClass>
       <Version>2.0</Version>
@@ -427,6 +443,9 @@ skin changes for bookmarks</VersionDescription>
       <Dependencies>
         <Items />
       </Dependencies>
+      <PluginDependencies>
+        <Items />
+      </PluginDependencies>
       <GeneralInfo>
         <Name>Browse The Web</Name>
         <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
@@ -487,6 +506,7 @@ skin changes for bookmarks</VersionDescription>
       <ProjectSettings>
         <FolderGroups />
       </ProjectSettings>
+      <IsSkin>false</IsSkin>
     </PackageClass>
     <PackageClass>
       <Version>2.0</Version>
@@ -524,6 +544,9 @@ skin changes for bookmarks</VersionDescription>
       <Dependencies>
         <Items />
       </Dependencies>
+      <PluginDependencies>
+        <Items />
+      </PluginDependencies>
       <GeneralInfo>
         <Name>Browse The Web</Name>
         <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
@@ -584,6 +607,7 @@ skin changes for bookmarks</VersionDescription>
       <ProjectSettings>
         <FolderGroups />
       </ProjectSettings>
+      <IsSkin>false</IsSkin>
     </PackageClass>
     <PackageClass>
       <Version>2.0</Version>
@@ -621,6 +645,9 @@ skin changes for bookmarks</VersionDescription>
       <Dependencies>
         <Items />
       </Dependencies>
+      <PluginDependencies>
+        <Items />
+      </PluginDependencies>
       <GeneralInfo>
         <Name>Browse The Web</Name>
         <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
@@ -681,6 +708,7 @@ skin changes for bookmarks</VersionDescription>
       <ProjectSettings>
         <FolderGroups />
       </ProjectSettings>
+      <IsSkin>false</IsSkin>
     </PackageClass>
     <PackageClass>
       <Version>2.0</Version>
@@ -718,6 +746,9 @@ skin changes for bookmarks</VersionDescription>
       <Dependencies>
         <Items />
       </Dependencies>
+      <PluginDependencies>
+        <Items />
+      </PluginDependencies>
       <GeneralInfo>
         <Name>Browse The Web</Name>
         <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
@@ -778,6 +809,7 @@ skin changes for bookmarks</VersionDescription>
       <ProjectSettings>
         <FolderGroups />
       </ProjectSettings>
+      <IsSkin>false</IsSkin>
     </PackageClass>
     <PackageClass>
       <Version>2.0</Version>
@@ -815,6 +847,9 @@ skin changes for bookmarks</VersionDescription>
       <Dependencies>
         <Items />
       </Dependencies>
+      <PluginDependencies>
+        <Items />
+      </PluginDependencies>
       <GeneralInfo>
         <Name>Browse The Web</Name>
         <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
@@ -875,6 +910,7 @@ skin changes for bookmarks</VersionDescription>
       <ProjectSettings>
         <FolderGroups />
       </ProjectSettings>
+      <IsSkin>false</IsSkin>
     </PackageClass>
     <PackageClass>
       <Version>2.0</Version>
@@ -912,6 +948,9 @@ skin changes for bookmarks</VersionDescription>
       <Dependencies>
         <Items />
       </Dependencies>
+      <PluginDependencies>
+        <Items />
+      </PluginDependencies>
       <GeneralInfo>
         <Name>Browse The Web</Name>
         <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
@@ -972,6 +1011,7 @@ skin changes for bookmarks</VersionDescription>
       <ProjectSettings>
         <FolderGroups />
       </ProjectSettings>
+      <IsSkin>false</IsSkin>
     </PackageClass>
     <PackageClass>
       <Version>2.0</Version>
@@ -1009,6 +1049,9 @@ skin changes for bookmarks</VersionDescription>
       <Dependencies>
         <Items />
       </Dependencies>
+      <PluginDependencies>
+        <Items />
+      </PluginDependencies>
       <GeneralInfo>
         <Name>Browse The Web</Name>
         <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
@@ -1069,6 +1112,7 @@ skin changes for bookmarks</VersionDescription>
       <ProjectSettings>
         <FolderGroups />
       </ProjectSettings>
+      <IsSkin>false</IsSkin>
     </PackageClass>
     <PackageClass>
       <Version>2.0</Version>
@@ -1106,6 +1150,9 @@ skin changes for bookmarks</VersionDescription>
       <Dependencies>
         <Items />
       </Dependencies>
+      <PluginDependencies>
+        <Items />
+      </PluginDependencies>
       <GeneralInfo>
         <Name>Browse The Web</Name>
         <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
@@ -1167,6 +1214,139 @@ new for the beta 1.2</VersionDescription>
       <ProjectSettings>
         <FolderGroups />
       </ProjectSettings>
+      <IsSkin>false</IsSkin>
+    </PackageClass>
+    <PackageClass>
+      <Version>2.0</Version>
+      <Groups>
+        <Items>
+          <GroupItem Name="Default">
+            <DisplayName>Default</DisplayName>
+            <DefaulChecked>true</DefaulChecked>
+            <Description>Default</Description>
+            <Files>
+              <Items />
+            </Files>
+          </GroupItem>
+          <GroupItem Name="Blue3">
+            <DisplayName>Blue3</DisplayName>
+            <DefaulChecked>true</DefaulChecked>
+            <Description>Blue3</Description>
+            <Files>
+              <Items />
+            </Files>
+          </GroupItem>
+          <GroupItem Name="Blue3wide">
+            <DisplayName>Blue3wide</DisplayName>
+            <DefaulChecked>true</DefaulChecked>
+            <Description>Blue3wide</Description>
+            <Files>
+              <Items />
+            </Files>
+          </GroupItem>
+        </Items>
+      </Groups>
+      <Sections>
+        <Items />
+      </Sections>
+      <Dependencies>
+        <Items>
+          <DependencyItem>
+            <Type>MediaPortal</Type>
+            <Id />
+            <MinVersion>
+              <Major>1</Major>
+              <Minor>1</Minor>
+              <Build>6</Build>
+              <Revision>27644</Revision>
+            </MinVersion>
+            <MaxVersion>
+              <Major>1</Major>
+              <Minor>1</Minor>
+              <Build>6</Build>
+              <Revision>27644</Revision>
+            </MaxVersion>
+            <WarnOnly>false</WarnOnly>
+            <Message>requires MediaPortal version 1.1.6.27644 to 1.1.6.27644.</Message>
+            <Name>MediaPortal</Name>
+          </DependencyItem>
+        </Items>
+      </Dependencies>
+      <PluginDependencies>
+        <Items>
+          <PluginDependencyItem AssemblyName="BrowseTheWeb.dll">
+            <CompatibleVersion>
+              <Items>
+                <CompatibleVersionItem>
+                  <MinRequiredVersion>1.1.7.0</MinRequiredVersion>
+                  <DesignedForVersion>1.1.7.0</DesignedForVersion>
+                </CompatibleVersionItem>
+              </Items>
+            </CompatibleVersion>
+            <SubSystemsUsed>
+              <Items>
+                <SubSystemItem Name="MP.SkinEngine" />
+                <SubSystemItem Name="MP.Config" />
+                <SubSystemItem Name="MP.DB" />
+              </Items>
+            </SubSystemsUsed>
+          </PluginDependencyItem>
+        </Items>
+      </PluginDependencies>
+      <GeneralInfo>
+        <Name>Browse The Web</Name>
+        <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
+        <Author>Mark Koenig (kroko) 2010</Author>
+        <HomePage>http://www.team-mediaportal.com</HomePage>
+        <ForumPage>http://forum.team-mediaportal.com/threads/plugin-browse-the-web-webbrowser.89101/</ForumPage>
+        <UpdateUrl>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
+        <Version>
+          <Major>0</Major>
+          <Minor>3</Minor>
+          <Build>3</Build>
+          <Revision>0</Revision>
+        </Version>
+        <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / " Webbrowser.</ExtensionDescription>
+        <VersionDescription>Bugfixes</VersionDescription>
+        <DevelopmentStatus>Stable</DevelopmentStatus>
+        <OnlineLocation>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.mpe1</OnlineLocation>
+        <ReleaseDate>2012-03-12T22:36:51.145233+01:00</ReleaseDate>
+        <Tags>webbrowser, internet, web</Tags>
+        <Location>..\..\BrowseTheWeb.mpe1</Location>
+        <Params>
+          <Items>
+            <SectionParam Name="Online Icon">
+              <Value />
+              <ValueType>String</ValueType>
+              <Description>The icon file of the package stored online (jpg,png,bmp)</Description>
+            </SectionParam>
+            <SectionParam Name="Configuration file">
+              <Value />
+              <ValueType>Template</ValueType>
+              <Description>The file used to configure the extension.
+If have .exe extension the will be executed
+If have .dll extension used like MP plugin configuration</Description>
+            </SectionParam>
+            <SectionParam Name="Online Screenshots">
+              <Value>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/browser1.jpg;https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/setup3.jpg</Value>
+              <ValueType>String</ValueType>
+              <Description>Online stored screenshot urls separated by ; </Description>
+            </SectionParam>
+            <SectionParam Name="Force to uninstall on update">
+              <Value>YES</Value>
+              <ValueType>Bool</ValueType>
+              <Description>Show dialog and force to uninstall previous version when updating an extension. Should only be disabled if you are using an NSIS/MSI installer.</Description>
+            </SectionParam>
+          </Items>
+        </Params>
+      </GeneralInfo>
+      <UniqueFileList>
+        <Items />
+      </UniqueFileList>
+      <ProjectSettings>
+        <FolderGroups />
+      </ProjectSettings>
+      <IsSkin>false</IsSkin>
     </PackageClass>
   </Items>
 </ExtensionCollection>
