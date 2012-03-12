@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrowseTheWeb", "BrowseTheWeb\BrowseTheWeb.csproj", "{70ECF0E8-19B6-43A9-B3B5-B1BB13F6E241}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skybound.Gecko", "Skybound.Gecko\Skybound.Gecko.csproj", "{877D1A24-2D5E-4C46-A933-FCF11EA0403B}"

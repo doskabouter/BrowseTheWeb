@@ -37,217 +37,217 @@ using System.Xml;
 
 namespace BrowseTheWeb
 {
-  public class GUIBookmark : GUIWindow
-  {
-    [SkinControlAttribute(50)]
-    private GUIFacadeControl facade = null;
-    [SkinControlAttribute(2)]
-    protected GUIButtonControl btnViewAs = null;
-    [SkinControlAttribute(3)]
-    protected GUISortButtonControl btnSortBy = null;
-
-    private static string view = string.Empty;
-
-    public override int GetID
+    public class GUIBookmark : GUIWindow
     {
-      get
-      {
-        return 54537688;
-      }
-      set
-      {
-        base.GetID = value;
-      }
-    }
-    public override bool Init()
-    {
-      bool result = Load(GUIGraphicsContext.Skin + @"\BrowseTheWebBook.xml");
-      return result;
-    }
+        [SkinControlAttribute(50)]
+        private GUIFacadeControl facade = null;
+        [SkinControlAttribute(2)]
+        protected GUIButtonControl btnViewAs = null;
+        [SkinControlAttribute(3)]
+        protected GUISortButtonControl btnSortBy = null;
 
-    protected override void OnPageLoad()
-    {
-      string dir = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config);
+        private static string view = string.Empty;
 
-      view = "Large icons";
-      using (MediaPortal.Profile.Settings xmlreader = new MediaPortal.Profile.Settings(dir + "\\MediaPortal.xml"))
-      {
-        view = xmlreader.GetValueAsString("btWeb", "bookmark", "Large icons");
-      }
-
-      LoadFacade(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml", "");
-      Bookmark.InitCachePath();
-      base.OnPageLoad();
-    }
-    protected override void OnPageDestroy(int new_windowId)
-    {
-      string dir = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config);
-      using (MediaPortal.Profile.Settings xmlwriter = new MediaPortal.Profile.Settings(dir + "\\MediaPortal.xml"))
-      {
-        xmlwriter.SetValue("btWeb", "bookmark", view);
-      }
-      base.OnPageDestroy(new_windowId);
-    }
-    protected override void OnClicked(int controlId, GUIControl control, Action.ActionType actionType)
-    {
-      if (actionType == Action.ActionType.ACTION_SELECT_ITEM)
-      {
-        GUIListItem item = facade.SelectedListItem;
-        if (item != null)
+        public override int GetID
         {
-          if (item.IsFolder)
-          {
-            if (item.Label == "..")
-              LoadFacade(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml", "");
-            else
-              LoadFacade(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml", item.Label);
-          }
-          else
-          {
-            GUIPlugin.StartupLink = item.Path;
-            GUIWindowManager.ActivateWindow(54537689);
-          }
+            get
+            {
+                return 54537688;
+            }
+            set
+            {
+                base.GetID = value;
+            }
         }
-      }
-
-      if (control == btnViewAs)
-      {
-        switch (view)
+        public override bool Init()
         {
-          case "Small icons":
+            bool result = Load(GUIGraphicsContext.Skin + @"\BrowseTheWebBook.xml");
+            return result;
+        }
+
+        protected override void OnPageLoad()
+        {
+            string dir = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config);
+
             view = "Large icons";
-            break;
-          case "Large icons":
-            view = "List view";
-            break;
-          case "List view":
-            view = "Small icons";
-            break;
+            using (MediaPortal.Profile.Settings xmlreader = new MediaPortal.Profile.Settings(dir + "\\MediaPortal.xml"))
+            {
+                view = xmlreader.GetValueAsString("btWeb", "bookmark", "Large icons");
+            }
+
+            LoadFacade(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml", "");
+            Bookmark.InitCachePath();
+            base.OnPageLoad();
+        }
+        protected override void OnPageDestroy(int new_windowId)
+        {
+            string dir = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config);
+            using (MediaPortal.Profile.Settings xmlwriter = new MediaPortal.Profile.Settings(dir + "\\MediaPortal.xml"))
+            {
+                xmlwriter.SetValue("btWeb", "bookmark", view);
+            }
+            base.OnPageDestroy(new_windowId);
+        }
+        protected override void OnClicked(int controlId, GUIControl control, MediaPortal.GUI.Library.Action.ActionType actionType)
+        {
+            if (actionType == MediaPortal.GUI.Library.Action.ActionType.ACTION_SELECT_ITEM)
+            {
+                GUIListItem item = facade.SelectedListItem;
+                if (item != null)
+                {
+                    if (item.IsFolder)
+                    {
+                        if (item.Label == "..")
+                            LoadFacade(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml", "");
+                        else
+                            LoadFacade(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml", item.Label);
+                    }
+                    else
+                    {
+                        GUIPlugin.StartupLink = item.Path;
+                        GUIWindowManager.ActivateWindow(54537689);
+                    }
+                }
+            }
+
+            if (control == btnViewAs)
+            {
+                switch (view)
+                {
+                    case "Small icons":
+                        view = "Large icons";
+                        break;
+                    case "Large icons":
+                        view = "List view";
+                        break;
+                    case "List view":
+                        view = "Small icons";
+                        break;
+                }
+
+                string strLine = string.Empty;
+                switch (view)
+                {
+                    case "Small icons":
+                        facade.CurrentLayout = GUIFacadeControl.Layout.SmallIcons;
+                        strLine = GUILocalizeStrings.Get(100);
+                        break;
+                    case "Large icons":
+                        facade.CurrentLayout = GUIFacadeControl.Layout.LargeIcons;
+                        strLine = GUILocalizeStrings.Get(417);
+                        break;
+                    case "List view":
+                        facade.CurrentLayout = GUIFacadeControl.Layout.List;
+                        strLine = GUILocalizeStrings.Get(101);
+                        break;
+                }
+                btnViewAs.Label = strLine;
+            }
         }
 
-        string strLine = string.Empty;
-        switch (view)
+        public void LoadFacade(string Path, string Folder)
         {
-          case "Small icons":
-            facade.CurrentLayout = GUIFacadeControl.Layout.SmallIcons;
-            strLine = GUILocalizeStrings.Get(100);
-            break;
-          case "Large icons":
-            facade.CurrentLayout = GUIFacadeControl.Layout.LargeIcons;
-            strLine = GUILocalizeStrings.Get(417);
-            break;
-          case "List view":
-            facade.CurrentLayout = GUIFacadeControl.Layout.List;
-            strLine = GUILocalizeStrings.Get(101);
-            break;
+            switch (view)
+            {
+                case "Small icons":
+                    facade.CurrentLayout = GUIFacadeControl.Layout.SmallIcons;
+                    break;
+                case "Large icons":
+                    facade.CurrentLayout = GUIFacadeControl.Layout.LargeIcons;
+                    break;
+                case "List view":
+                    facade.CurrentLayout = GUIFacadeControl.Layout.List;
+                    break;
+            }
+            facade.Clear();
+
+            GUIListItem item = new GUIListItem();
+
+            try
+            {
+                XmlDocument xmlDocument = new XmlDocument();
+                xmlDocument.Load(Path);
+
+                if (Folder == string.Empty)
+                {
+                    XmlNodeList col = xmlDocument.GetElementsByTagName("Entry");
+                    foreach (XmlNode node in col)
+                    {
+                        BookmarkElement bkm = BookmarkXml.GetData(node);
+
+                        string name = bkm.Name.Replace(" ", "_");
+                        name = name.Replace(".", "_");
+
+                        if ((bkm.isFolder) ||
+                            (!bkm.isFolder) && (!bkm.isSubFolder))
+                        {
+                            item = new GUIListItem();
+                            item.IsFolder = bkm.isFolder;
+                            item.Label = bkm.Name;
+                            item.Path = bkm.Url;
+                            if (item.IsFolder)
+                            {
+                                item.IconImage = "defaultFolder.png";
+                                item.IconImageBig = "defaultFolderBig.png";
+                            }
+                            else
+                            {
+                                string file = Bookmark.GetSnapPath(bkm.Url);
+                                item.IconImage = file;
+                                item.IconImageBig = file;
+                            }
+
+                            facade.Add(item);
+                        }
+                    }
+                }
+
+                if (Folder != string.Empty)
+                {
+                    item = new GUIListItem();
+                    item.IsFolder = true;
+                    item.Label = "..";
+                    item.Path = "..";
+                    item.IconImage = "defaultFolderBack.png";
+                    item.IconImageBig = "defaultFolderBackBig.png";
+                    facade.Add(item);
+
+                    bool found = false;
+
+                    XmlNodeList col = xmlDocument.GetElementsByTagName("Entry");
+                    foreach (XmlNode node in col)
+                    {
+                        BookmarkElement bkm = BookmarkXml.GetData(node);
+
+                        if ((bkm.isFolder) || ((!bkm.isSubFolder && !bkm.isFolder))) found = false;
+
+                        if (Folder == bkm.Name)
+                        {
+                            found = true;
+                        }
+                        if (found)
+                        {
+                            if (bkm.isSubFolder)
+                            {
+                                item = new GUIListItem();
+                                item.IsFolder = bkm.isFolder;
+                                item.Label = bkm.Name;
+                                item.Path = bkm.Url;
+
+                                string file = Bookmark.GetSnapPath(bkm.Url);
+                                item.IconImage = file;
+                                item.IconImageBig = file;
+
+                                facade.Add(item);
+                            }
+                        }
+                    }
+                }
+
+                GUIPropertyManager.SetProperty("#itemcount", facade.Count.ToString());
+                facade.SelectedListItemIndex = 0;
+            }
+            catch { }
         }
-        btnViewAs.Label = strLine;
-      }
     }
-
-    public void LoadFacade(string Path, string Folder)
-    {
-      switch (view)
-      {
-        case "Small icons":
-          facade.CurrentLayout = GUIFacadeControl.Layout.SmallIcons;
-          break;
-        case "Large icons":
-          facade.CurrentLayout = GUIFacadeControl.Layout.LargeIcons;
-          break;
-        case "List view":
-          facade.CurrentLayout = GUIFacadeControl.Layout.List;
-          break;
-      }
-      facade.Clear();
-
-      GUIListItem item = new GUIListItem();
-
-      try
-      {
-        XmlDocument xmlDocument = new XmlDocument();
-        xmlDocument.Load(Path);
-
-        if (Folder == string.Empty)
-        {
-          XmlNodeList col = xmlDocument.GetElementsByTagName("Entry");
-          foreach (XmlNode node in col)
-          {
-            BookmarkElement bkm = BookmarkXml.GetData(node);
-
-            string name = bkm.Name.Replace(" ", "_");
-            name = name.Replace(".", "_");
-
-            if ((bkm.isFolder) ||
-                (!bkm.isFolder) && (!bkm.isSubFolder))
-            {
-              item = new GUIListItem();
-              item.IsFolder = bkm.isFolder;
-              item.Label = bkm.Name;
-              item.Path = bkm.Url;
-              if (item.IsFolder)
-              {
-                item.IconImage = "defaultFolder.png";
-                item.IconImageBig = "defaultFolderBig.png";
-              }
-              else
-              {
-                string file = Bookmark.GetSnapPath(bkm.Url);
-                item.IconImage = file;
-                item.IconImageBig = file;
-              }
-
-              facade.Add(item);
-            }
-          }
-        }
-
-        if (Folder != string.Empty)
-        {
-          item = new GUIListItem();
-          item.IsFolder = true;
-          item.Label = "..";
-          item.Path = "..";
-          item.IconImage = "defaultFolderBack.png";
-          item.IconImageBig = "defaultFolderBackBig.png";
-          facade.Add(item);
-
-          bool found = false;
-
-          XmlNodeList col = xmlDocument.GetElementsByTagName("Entry");
-          foreach (XmlNode node in col)
-          {
-            BookmarkElement bkm = BookmarkXml.GetData(node);
-
-            if ((bkm.isFolder) || ((!bkm.isSubFolder && !bkm.isFolder))) found = false;
-
-            if (Folder == bkm.Name)
-            {
-              found = true;
-            }
-            if (found)
-            {
-              if (bkm.isSubFolder)
-              {
-                item = new GUIListItem();
-                item.IsFolder = bkm.isFolder;
-                item.Label = bkm.Name;
-                item.Path = bkm.Url;
-
-                string file = Bookmark.GetSnapPath(bkm.Url);
-                item.IconImage = file;
-                item.IconImageBig = file;
-
-                facade.Add(item);
-              }
-            }
-          }
-        }
-
-        GUIPropertyManager.SetProperty("#itemcount", facade.Count.ToString());
-        facade.SelectedListItemIndex = 0;
-      }
-      catch { }
-    }
-  }
 }
