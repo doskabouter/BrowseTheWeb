@@ -594,42 +594,7 @@ namespace BrowseTheWeb
                     {
                         linkTime = 0;
                         MyLog.debug("action key press=" + action.m_key.KeyChar);
-                        switch (action.m_key.KeyChar)
-                        {
-                            #region 0..9
-                            case '1':
-                                linkId += "1";
-                                break;
-                            case '2':
-                                linkId += "2";
-                                break;
-                            case '3':
-                                linkId += "3";
-                                break;
-                            case '4':
-                                linkId += "4";
-                                break;
-                            case '5':
-                                linkId += "5";
-                                break;
-                            case '6':
-                                linkId += "6";
-                                break;
-                            case '7':
-                                linkId += "7";
-                                break;
-                            case '8':
-                                linkId += "8";
-                                break;
-                            case '9':
-                                linkId += "9";
-                                break;
-                            case '0':
-                                linkId += "0";
-                                break;
-                            #endregion
-                        }
-                        if ((int)action.m_key.KeyChar == 27)
+                        if (action.m_key.KeyChar == 27)
                         {
                             // escape
                             if (!osd_linkID.Visible)
@@ -643,6 +608,9 @@ namespace BrowseTheWeb
                                 Application.DoEvents();
                             }
                         }
+                        else
+                            if (action.m_key.KeyChar >= '0' && action.m_key.KeyChar <= '9')
+                                linkId += (char)action.m_key.KeyChar;
                         if (linkId.Length > 4) linkId = linkId.Substring(0, 1);
                     }
                     break;
