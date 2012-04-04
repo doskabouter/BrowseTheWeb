@@ -70,40 +70,15 @@ namespace BrowseTheWeb
         private int linkTime = 0;
         private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
-        private bool usehome = false;
-        private string homepage = string.Empty;
-        private int remoteTime = 0;
-        private string pluginName = "Browse Web";
-        private bool blankBrowser = false;
-        private bool statusBar = true;
-        private bool osd = false;
-        private bool windowed = false;
-        private bool useMouse = false;
-        private bool zoomPage = false;
-        private bool zoomDomain = false;
         private string lastDomain = string.Empty;
-        private bool cacheThumbs = false;
-        private bool remote = false;
-        private string remote_confirm = string.Empty;
-        private string remote_bookmark = string.Empty;
-        private string remote_zoom_in = string.Empty;
-        private string remote_zoom_out = string.Empty;
-        private string remote_status = string.Empty;
-
-        private bool useProxy = false;
-        private string Server = string.Empty;
-        private int Port = 8080;
-
-        private float defaultZoom = 1.0f;
         private float zoom = 1.0f;
-        private float font = 1.0f;
+        private Settings settings = Settings.Instance;
 
         public static bool ParameterSupported = false;
         public static string Parameter = string.Empty;
 
         public static string loadFav = string.Empty;
 
-        private string lastUrl = string.Empty;
 
         #endregion
 
@@ -127,7 +102,7 @@ namespace BrowseTheWeb
         }
         public bool GetHome(out string strButtonText, out string strButtonImage, out string strButtonImageFocus, out string strPictureImage)
         {
-            strButtonText = pluginName;
+            strButtonText = settings.PluginName;
             strButtonImage = String.Empty;
             strButtonImageFocus = String.Empty;
             strPictureImage = @"hover_browsetheweb.png";
@@ -201,7 +176,7 @@ namespace BrowseTheWeb
             }
             #endregion
 
-            LoadSettings();
+            TrySetProxy();
             BookmarkXml.AddFolder(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) +
                                   "\\bookmarks.xml", "Saved by MP");
 
@@ -245,7 +220,7 @@ namespace BrowseTheWeb
 
         protected override void OnPageLoad()
         {
-            GUIPropertyManager.SetProperty("#currentmodule", pluginName);
+            GUIPropertyManager.SetProperty("#currentmodule", settings.PluginName);
 
             try
             {
@@ -255,7 +230,7 @@ namespace BrowseTheWeb
                 GUIPropertyManager.SetProperty("#btWeb.linkid", "");
                 linkId = string.Empty;
 
-                if (useMouse)
+                if (settings.UseMouse)
                 {
                     MyLog.debug("Mouse support is enabled");
                     GUIGraphicsContext.MouseSupport = true;
@@ -270,7 +245,7 @@ namespace BrowseTheWeb
                 #region init browser
                 webBrowser.Visible = true;
 
-                if (!useMouse) webBrowser.Enabled = false;
+                if (!settings.UseMouse) webBrowser.Enabled = false;
                 else webBrowser.Enabled = true;
 
                 webBrowser.Dock = System.Windows.Forms.DockStyle.None;
@@ -285,17 +260,17 @@ namespace BrowseTheWeb
                 webBrowser.DomKeyDown += new GeckoDomKeyEventHandler(webBrowser_DomKeyDown);
                 webBrowser.DomClick += new GeckoDomEventHandler(webBrowser_DomClick);
 
-                if (statusBar)
+                if (settings.StatusBar)
                     webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height - 100);
                 else
                     webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height);
 
-                MyLog.debug("set zoom size to " + font + "/" + zoom);
+                MyLog.debug("set zoom size to " + settings.FontZoom + "/" + zoom);
 
-                webBrowser.Window.TextZoom = font;
+                webBrowser.Window.TextZoom = settings.FontZoom;
                 webBrowser.Zoom = zoom;
 
-                if (windowed)
+                if (settings.Windowed)
                 {
                     MyLog.debug("switch to windowed fullscreen mode");
                     GUIMessage msg = new GUIMessage(GUIMessage.MessageType.GUI_MSG_SWITCH_FULL_WINDOWED, 0, 0, 0, 0, 0, null);
@@ -306,10 +281,10 @@ namespace BrowseTheWeb
 
                 if (webBrowser.Document.Domain == string.Empty)
                 {
-                    if ((usehome) && (string.IsNullOrEmpty(loadFav)))
+                    if ((settings.UseHome) && (string.IsNullOrEmpty(loadFav)))
                     {
-                        webBrowser.Navigate(homepage);
-                        MyLog.debug("load home page " + homepage);
+                        webBrowser.Navigate(settings.HomePage);
+                        MyLog.debug("load home page " + settings.HomePage);
                     }
                 }
 
@@ -329,7 +304,7 @@ namespace BrowseTheWeb
                 timer.Tick += new EventHandler(timer_Tick);
                 timer.Start();
 
-                if (useMouse)
+                if (settings.UseMouse)
                     GUIGraphicsContext.form.Controls["BrowseTheWeb"].Select();
             }
             catch (Exception ex)
@@ -345,12 +320,13 @@ namespace BrowseTheWeb
         {
             if (new_windowId != 54537688)
             { // not if you got favs
-                if (blankBrowser)
+                if (settings.BlankBrowser)
                 {
                     webBrowser.Navigate("about:blank");
                     MyLog.debug("blank on destroy");
                 }
             }
+            settings.SaveToXml(false);
 
             webBrowser.Visible = false;
             GUIGraphicsContext.form.Focus();
@@ -367,64 +343,16 @@ namespace BrowseTheWeb
             base.OnPageDestroy(new_windowId);
         }
 
-        private void LoadSettings()
-        {
-            string dir = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config);
-            using (MediaPortal.Profile.Settings xmlreader = new MediaPortal.Profile.Settings(dir + "\\MediaPortal.xml"))
-            {
-                usehome = xmlreader.GetValueAsBool("btWeb", "usehome", true);
-                homepage = xmlreader.GetValueAsString("btWeb", "homepage", "http://team-mediaportal.com");
-                remoteTime = xmlreader.GetValueAsInt("btWeb", "remotetime", 15);
-                pluginName = xmlreader.GetValueAsString("btWeb", "name", "Browse Web");
-                blankBrowser = xmlreader.GetValueAsBool("btWeb", "blank", false);
-                statusBar = xmlreader.GetValueAsBool("btWeb", "status", true);
-                osd = xmlreader.GetValueAsBool("btWeb", "osd", true);
-                windowed = xmlreader.GetValueAsBool("btWeb", "window", false);
-                useMouse = xmlreader.GetValueAsBool("btWeb", "mouse", false);
-
-                defaultZoom = (float)xmlreader.GetValueAsInt("btWeb", "zoom", 100) / 100;
-                zoom = defaultZoom;
-                font = (float)xmlreader.GetValueAsInt("btWeb", "font", 100) / 100;
-                zoomPage = xmlreader.GetValueAsBool("btWeb", "page", true);
-                zoomDomain = xmlreader.GetValueAsBool("btWeb", "domain", false);
-
-                cacheThumbs = xmlreader.GetValueAsBool("btWeb", "cachethumbs", false);
-
-                remote = xmlreader.GetValueAsBool("btWeb", "remote", false);
-
-                remote_confirm = xmlreader.GetValueAsString("btWeb", "key_1", "ACTION_SELECT_ITEM");
-                remote_bookmark = xmlreader.GetValueAsString("btWeb", "key_2", "ACTION_SHOW_INFO");
-                remote_zoom_in = xmlreader.GetValueAsString("btWeb", "key_3", "ACTION_PAGE_DOWN");
-                remote_zoom_out = xmlreader.GetValueAsString("btWeb", "key_4", "ACTION_PAGE_UP");
-                remote_status = xmlreader.GetValueAsString("btWeb", "key_5", "ACTION_SHOW_GUI");
-
-                lastUrl = xmlreader.GetValueAsString("btWeb", "lastUrl", string.Empty);
-
-                useProxy = xmlreader.GetValueAsBool("btWeb", "proxy", false);
-                Server = xmlreader.GetValueAsString("btWeb", "proxy_server", "127.0.0.1");
-                Port = xmlreader.GetValueAsInt("btWeb", "proxy_port", 8888);
-                TrySetProxy();
-            }
-        }
-        private void SaveSettings()
-        {
-            string dir = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config);
-            using (MediaPortal.Profile.Settings xmlwriter = new MediaPortal.Profile.Settings(dir + "\\MediaPortal.xml"))
-            {
-                xmlwriter.SetValue("btWeb", "lastUrl", lastUrl);
-            }
-        }
-
         private void TrySetProxy()
         {
             try
             {
-                if (useProxy)
+                if (settings.UseProxy)
                     MyLog.debug("use proxy settings");
                 else
                     MyLog.debug("no proxy selected");
 
-                SetProxy(Server, Port, useProxy);
+                SetProxy(settings.Server, settings.Port, settings.UseProxy);
             }
             catch (Exception ex)
             {
@@ -446,12 +374,12 @@ namespace BrowseTheWeb
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            if (useMouse)
+            if (settings.UseMouse)
                 Cursor.Show();
 
             if (linkId != string.Empty)
             {
-                if (osd)
+                if (settings.OSD)
                 {
                     osd_linkID.Visible = true;
                     osd_linkID.BringToFront();
@@ -464,7 +392,7 @@ namespace BrowseTheWeb
                 osd_linkID.Visible = false;
             }
 
-            if (linkTime > remoteTime)
+            if (linkTime > settings.RemoteTime)
             {
                 linkId = string.Empty;
                 linkTime = 0;
@@ -487,7 +415,7 @@ namespace BrowseTheWeb
                 GUIPropertyManager.SetProperty("#btWeb.linkid", linkId);
 
             #region remote diagnostic
-            if (remote)
+            if (settings.Remote)
             {
                 if (action.wID != MediaPortal.GUI.Library.Action.ActionType.ACTION_KEY_PRESSED)
                     GUIPropertyManager.SetProperty("#btWeb.status", DateTime.Now.ToLongTimeString() + " : " +
@@ -498,13 +426,12 @@ namespace BrowseTheWeb
             }
             #endregion
 
-            string strAction = action.wID.ToString();
             #region selectable buttons
-            if (strAction == remote_confirm)
+            if (action.wID == settings.Remote_Confirm)
             {
                 if (!mouse.Visible)
                 {
-                    if (!useMouse)
+                    if (!settings.UseMouse)
                     {
 
                         if (linkId != string.Empty)
@@ -538,28 +465,36 @@ namespace BrowseTheWeb
                     mouse.BringToFront();
                 }
             }
-            if (strAction == remote_bookmark)
+            if (action.wID == settings.Remote_Bookmark)
             {
                 GUIWindowManager.ActivateWindow(54537688);
                 return;
             }
-            if ((strAction == remote_zoom_in) ||
+            if ((action.wID == settings.Remote_Zoom_In) ||
                 (action.wID == MediaPortal.GUI.Library.Action.ActionType.ACTION_MUSIC_FORWARD))
             {
                 OnZoomIn();
             }
-            if ((strAction == remote_zoom_out) ||
+            if ((action.wID == settings.Remote_Zoom_Out) ||
                 (action.wID == MediaPortal.GUI.Library.Action.ActionType.ACTION_MUSIC_REWIND))
             {
                 OnZoomOut();
             }
-            if (strAction == remote_status)
+            if (action.wID == settings.Remote_Status)
             {
-                statusBar = !statusBar;
-                if (statusBar)
+                settings.StatusBar = !settings.StatusBar;
+                if (settings.StatusBar)
                     webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height - 100);
                 else
                     webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height);
+            }
+            if (action.wID == settings.Remote_PageUp)
+            {
+                OnPageUp();
+            }
+            if (action.wID == settings.Remote_PageDown)
+            {
+                OnPageDown();
             }
             #endregion
 
@@ -570,7 +505,7 @@ namespace BrowseTheWeb
                         break;
                     }
                 case MediaPortal.GUI.Library.Action.ActionType.ACTION_MOUSE_MOVE:
-                    if (useMouse)
+                    if (settings.UseMouse)
                     {
 
                     }
@@ -590,7 +525,7 @@ namespace BrowseTheWeb
                     }
                     break;
                 case MediaPortal.GUI.Library.Action.ActionType.ACTION_KEY_PRESSED:
-                    if (!useMouse)
+                    if (!settings.UseMouse)
                     {
                         linkTime = 0;
                         MyLog.debug("action key press=" + action.m_key.KeyChar);
@@ -622,24 +557,24 @@ namespace BrowseTheWeb
                     OnEnterNewLink();
                     return;
                 case MediaPortal.GUI.Library.Action.ActionType.ACTION_PAUSE:
-                    webBrowser.Navigate(homepage);
-                    MyLog.debug("load home page " + homepage);
-                    if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "go to homepage");
+                    webBrowser.Navigate(settings.HomePage);
+                    MyLog.debug("load home page " + settings.HomePage);
+                    if (!settings.Remote) GUIPropertyManager.SetProperty("#btWeb.status", "go to homepage");
                     return;
                 case MediaPortal.GUI.Library.Action.ActionType.ACTION_STOP:
                     webBrowser.Navigate("about:blank");
-                    if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "Stop");
+                    if (!settings.Remote) GUIPropertyManager.SetProperty("#btWeb.status", "Stop");
                     return;
                 case MediaPortal.GUI.Library.Action.ActionType.ACTION_PREV_ITEM:
                 case MediaPortal.GUI.Library.Action.ActionType.ACTION_REWIND:
                     webBrowser.GoBack();
-                    if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "go backward");
+                    if (!settings.Remote) GUIPropertyManager.SetProperty("#btWeb.status", "go backward");
                     MyLog.debug("navigate go back");
                     return;
                 case MediaPortal.GUI.Library.Action.ActionType.ACTION_NEXT_ITEM:
                 case MediaPortal.GUI.Library.Action.ActionType.ACTION_FORWARD:
                     webBrowser.GoForward();
-                    if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "go forward");
+                    if (!settings.Remote) GUIPropertyManager.SetProperty("#btWeb.status", "go forward");
                     MyLog.debug("navigate go forward");
                     return;
                 case MediaPortal.GUI.Library.Action.ActionType.ACTION_RECORD:
@@ -675,7 +610,7 @@ namespace BrowseTheWeb
 
         private void webBrowser_DomKeyDown(object sender, GeckoDomKeyEventArgs e)
         {
-            if (useMouse)
+            if (settings.UseMouse)
             {
                 //System.Diagnostics.Debug.WriteLine("DOM " + e.KeyCode.ToString());
 
@@ -706,7 +641,7 @@ namespace BrowseTheWeb
         }
         void webBrowser_DomClick(object sender, GeckoDomEventArgs e)
         {
-            if (useMouse)
+            if (settings.UseMouse)
             {
                 // this is a workarround until i know what wrong on the links...
                 GeckoWebBrowser g = (GeckoWebBrowser)sender;
@@ -737,9 +672,9 @@ namespace BrowseTheWeb
             GUIGraphicsContext.form.Focus();
 
             string selectedUrl = "http://";
-            if (lastUrl != string.Empty)
+            if (settings.LastUrl != string.Empty)
             {
-                selectedUrl = lastUrl;
+                selectedUrl = settings.LastUrl;
             }
 
             if (ShowKeyboard(ref selectedUrl, false) == System.Windows.Forms.DialogResult.OK)
@@ -749,15 +684,14 @@ namespace BrowseTheWeb
                     webBrowser.Navigate(selectedUrl);
                     MyLog.debug("navigate to " + selectedUrl);
 
-                    lastUrl = selectedUrl;
-                    SaveSettings();
+                    settings.LastUrl = selectedUrl;
                 }
                 else
                     ShowAlert("Wrong link ?", " The link you entered seems to be not valid.", "Input:", selectedUrl);
             }
 
             webBrowser.Visible = true;
-            if (useMouse)
+            if (settings.UseMouse)
                 GUIGraphicsContext.form.Controls["BrowseTheWeb"].Select();
 
         }
@@ -807,20 +741,20 @@ namespace BrowseTheWeb
             }
 
             webBrowser.Visible = true;
-            if (useMouse)
+            if (settings.UseMouse)
                 GUIGraphicsContext.form.Controls["BrowseTheWeb"].Select();
         }
         private void OnZoomIn()
         {
             if (zoom < 3) zoom += 0.1f;
             webBrowser.Zoom = zoom;
-            if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
+            if (!settings.Remote) GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
         }
         private void OnZoomOut()
         {
             if (zoom > 0.1f) zoom -= 0.1f;
             webBrowser.Zoom = zoom;
-            if (!remote) GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
+            if (!settings.Remote) GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
         }
         private void OnMoveLeft()
         {
@@ -867,6 +801,34 @@ namespace BrowseTheWeb
             else
             {
                 mouse.Location = new Point(mouse.Location.X, mouse.Location.Y + 20);
+                Cursor.Position = new Point(mouse.Location.X, mouse.Location.Y);
+            }
+        }
+        private void OnPageUp()
+        {
+            if (!mouse.Visible)
+            {
+                int height = webBrowser.Size.Height;
+                if (webBrowser.Window != null) ScrollTo(webBrowser.Window.ScrollX, webBrowser.Window.ScrollY - height + 100);
+            }
+            else
+            {
+                //not yet tested
+                mouse.Location = new Point(mouse.Location.X, mouse.Location.Y - 20);
+                Cursor.Position = new Point(mouse.Location.X, mouse.Location.Y);
+            }
+        }
+        private void OnPageDown()
+        {
+            if (!mouse.Visible)
+            {
+                int height = webBrowser.Size.Height;
+                if (webBrowser.Window != null) ScrollTo(webBrowser.Window.ScrollX, webBrowser.Window.ScrollY + height - 100);
+            }
+            else
+            {
+                //not yet tested
+                mouse.Location = new Point(mouse.Location.X, mouse.Location.Y - 20);
                 Cursor.Position = new Point(mouse.Location.X, mouse.Location.Y);
             }
         }
@@ -917,7 +879,7 @@ namespace BrowseTheWeb
                 GUIPropertyManager.SetProperty("#btWeb.status", str);
                 #endregion
 
-                if (!useMouse)
+                if (!settings.UseMouse)
                 {
                     #region add links to page
                     _htmlLinkNumbers.Clear();
@@ -1039,19 +1001,19 @@ namespace BrowseTheWeb
                 }
 
                 #region reset zoom
-                if (zoomPage)
+                if (settings.ZoomPage)
                 {
-                    webBrowser.Zoom = defaultZoom;
-                    zoom = defaultZoom;
+                    webBrowser.Zoom = settings.DefaultZoom;
+                    zoom = settings.DefaultZoom;
                     GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
                 }
-                if (zoomDomain)
+                if (settings.ZoomDomain)
                 {
                     if (lastDomain != webBrowser.Document.Domain)
                     {
                         {
-                            webBrowser.Zoom = defaultZoom;
-                            zoom = defaultZoom;
+                            webBrowser.Zoom = settings.DefaultZoom;
+                            zoom = settings.DefaultZoom;
                             GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
                         }
                     }
