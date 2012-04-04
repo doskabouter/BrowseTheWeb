@@ -46,8 +46,6 @@ namespace BrowseTheWeb
         [SkinControlAttribute(3)]
         protected GUISortButtonControl btnSortBy = null;
 
-        private static string view = string.Empty;
-
         public override int GetID
         {
             get
@@ -67,26 +65,9 @@ namespace BrowseTheWeb
 
         protected override void OnPageLoad()
         {
-            string dir = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config);
-
-            view = "Large icons";
-            using (MediaPortal.Profile.Settings xmlreader = new MediaPortal.Profile.Settings(dir + "\\MediaPortal.xml"))
-            {
-                view = xmlreader.GetValueAsString("btWeb", "bookmark", "Large icons");
-            }
-
             LoadFacade(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml", "");
             Bookmark.InitCachePath();
             base.OnPageLoad();
-        }
-        protected override void OnPageDestroy(int new_windowId)
-        {
-            string dir = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config);
-            using (MediaPortal.Profile.Settings xmlwriter = new MediaPortal.Profile.Settings(dir + "\\MediaPortal.xml"))
-            {
-                xmlwriter.SetValue("btWeb", "bookmark", view);
-            }
-            base.OnPageDestroy(new_windowId);
         }
         protected override void OnClicked(int controlId, GUIControl control, MediaPortal.GUI.Library.Action.ActionType actionType)
         {
@@ -112,32 +93,21 @@ namespace BrowseTheWeb
 
             if (control == btnViewAs)
             {
-                switch (view)
-                {
-                    case "Small icons":
-                        view = "Large icons";
-                        break;
-                    case "Large icons":
-                        view = "List view";
-                        break;
-                    case "List view":
-                        view = "Small icons";
-                        break;
-                }
+                Settings.Instance.View++;
+                if (Settings.Instance.View > GUIFacadeControl.Layout.LargeIcons)
+                    Settings.Instance.View = GUIFacadeControl.Layout.List;
 
                 string strLine = string.Empty;
-                switch (view)
+                facade.CurrentLayout = Settings.Instance.View;
+                switch (Settings.Instance.View)
                 {
-                    case "Small icons":
-                        facade.CurrentLayout = GUIFacadeControl.Layout.SmallIcons;
+                    case GUIFacadeControl.Layout.SmallIcons:
                         strLine = GUILocalizeStrings.Get(100);
                         break;
-                    case "Large icons":
-                        facade.CurrentLayout = GUIFacadeControl.Layout.LargeIcons;
+                    case GUIFacadeControl.Layout.LargeIcons:
                         strLine = GUILocalizeStrings.Get(417);
                         break;
-                    case "List view":
-                        facade.CurrentLayout = GUIFacadeControl.Layout.List;
+                    case GUIFacadeControl.Layout.List:
                         strLine = GUILocalizeStrings.Get(101);
                         break;
                 }
@@ -147,18 +117,7 @@ namespace BrowseTheWeb
 
         public void LoadFacade(string Path, string Folder)
         {
-            switch (view)
-            {
-                case "Small icons":
-                    facade.CurrentLayout = GUIFacadeControl.Layout.SmallIcons;
-                    break;
-                case "Large icons":
-                    facade.CurrentLayout = GUIFacadeControl.Layout.LargeIcons;
-                    break;
-                case "List view":
-                    facade.CurrentLayout = GUIFacadeControl.Layout.List;
-                    break;
-            }
+            facade.CurrentLayout = Settings.Instance.View;
             facade.Clear();
 
             GUIListItem item = new GUIListItem();
