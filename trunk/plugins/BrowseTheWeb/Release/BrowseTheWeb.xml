@@ -1442,7 +1442,7 @@ If have .dll extension used like MP plugin configuration</Description>
         <VersionDescription>Configuration code cleanup, fixed missing thumbs of bookmarks, fixed zooming issue, added pageup/pagedown</VersionDescription>
         <DevelopmentStatus>Stable</DevelopmentStatus>
         <OnlineLocation>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.mpe1</OnlineLocation>
-        <ReleaseDate>2012-04-08T17:31:45.084097+02:00</ReleaseDate>
+        <ReleaseDate>2012-04-08T17:51:46.7830145+02:00</ReleaseDate>
         <Tags>webbrowser, internet, web</Tags>
         <Location>..\..\BrowseTheWeb.mpe1</Location>
         <Params>
