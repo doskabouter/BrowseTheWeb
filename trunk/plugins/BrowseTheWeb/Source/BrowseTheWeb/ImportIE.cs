@@ -24,193 +24,188 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using MediaPortal.Configuration;
 
 namespace BrowseTheWeb
 {
-  public partial class ImportIE : Form
-  {
-    private List<BookmarkElement> EntryList = new List<BookmarkElement>();
-    private TreeView tree;
-    private bool select = true;
-
-    public ImportIE(TreeView SetupTreeview)
+    public partial class ImportIE : Form
     {
-      InitializeComponent();
-      tree = SetupTreeview;
-    }
+        private List<BookmarkElement> EntryList = new List<BookmarkElement>();
+        private TreeView tree;
+        private bool select = true;
 
-    private void btnImport_Click(object sender, EventArgs e)
-    {
-      btnImport.Visible = false;
-      btnSelect.Visible = false;
-      prgState.Visible = true;
-      chkThumbs.Enabled = false;
-
-      int max = listBox1.SelectedItems.Count;
-      int imported = 0;
-      int counter = 1;
-
-      #region get parent
-      TreeNode node = null;
-      foreach (TreeNode n in tree.Nodes[0].Nodes)
-      {
-        if (n.Text == "Import IE")
+        public ImportIE(TreeView SetupTreeview)
         {
-          node = n;
-          break;
+            InitializeComponent();
+            tree = SetupTreeview;
         }
-      }
-      #endregion
 
-      if (node != null)
-      {
-        foreach (Object item in listBox1.SelectedItems)
+        private void btnImport_Click(object sender, EventArgs e)
         {
-          Application.DoEvents();
-          prgState.Value = (counter * 100 / max);
+            btnImport.Visible = false;
+            btnSelect.Visible = false;
+            prgState.Visible = true;
+            chkThumbs.Enabled = false;
 
-          string name = (string)item;
-          BookmarkElement bkm = GetBookmark(name);
+            int max = listBox1.SelectedItems.Count;
+            int imported = 0;
+            int counter = 1;
 
-          if (bkm != null)
-          {
-            if (!Bookmark.Exists(tree, bkm.Name))
+            #region get parent
+            TreeNode node = null;
+            foreach (TreeNode n in tree.Nodes[0].Nodes)
             {
-              imported++;
-
-              TreeNode add = node.Nodes.Add(bkm.Url, bkm.Name);
-
-              BookmarkElement addBkm = new BookmarkElement();
-              addBkm.Name = bkm.Name;
-              addBkm.Url = bkm.Url;
-              addBkm.isSubFolder = true;
-              add.Tag = addBkm;
-
-              if (chkThumbs.Checked)
-              {
-                GetThumb thumb = new GetThumb();
-                thumb.SelectedUrl = bkm.Url;
-                thumb.ShowDialog();
-              }
-
-              node.ExpandAll();
+                if (n.Text == "Import IE")
+                {
+                    node = n;
+                    break;
+                }
             }
-          }
-          counter++;
-        }
-      }
+            #endregion
 
-      MessageBox.Show("Import is done. Imported " + imported.ToString() + " links.");
-      this.Close();
-    }
-    private void btnCancel_Click(object sender, EventArgs e)
-    {
-      this.Close();
-    }
-
-    private void ImportIE_Load(object sender, EventArgs e)
-    {
-      string favPath = Environment.GetFolderPath(Environment.SpecialFolder.Favorites);
-      string[] favFiles;
-
-      MyLog.debug("Import folder is " + favPath);
-
-      if (Directory.Exists(favPath))
-      {
-        string[] favDirs = Directory.GetDirectories(favPath);
-        MyLog.debug("Found " + favDirs.Length.ToString() + " folder");
-
-        foreach (string folder in favDirs)
-        {
-          MyLog.debug("Work on folder '" + Path.GetFileName(folder) + "'");
-
-          favFiles = Directory.GetFiles(folder, "*.url", SearchOption.TopDirectoryOnly);
-          MyLog.debug(favFiles.Length.ToString() + " files to import");
-
-          foreach (string s in favFiles)
-          {
-            FileInfo f = new FileInfo(s);
-            string name = Path.GetFileNameWithoutExtension(f.Name);
-
-            string url = GetUrlFile(s);
-
-            if (url != null)
+            if (node != null)
             {
-              BookmarkElement bkm = new BookmarkElement();
-              bkm.Url = url;
-              bkm.Name = name;
+                foreach (Object item in listBox1.SelectedItems)
+                {
+                    Application.DoEvents();
+                    prgState.Value = (counter * 100 / max);
 
-              EntryList.Add(bkm);
-              listBox1.Items.Add(bkm.Name);
+                    string name = (string)item;
+                    BookmarkElement bkm = GetBookmark(name);
+
+                    if (bkm != null)
+                    {
+                        if (!Bookmark.Exists(tree, bkm.Name))
+                        {
+                            imported++;
+
+                            TreeNode add = node.Nodes.Add(bkm.Url, bkm.Name);
+
+                            BookmarkElement addBkm = new BookmarkElement();
+                            addBkm.Name = bkm.Name;
+                            addBkm.Url = bkm.Url;
+                            addBkm.isSubFolder = true;
+                            add.Tag = addBkm;
+
+                            if (chkThumbs.Checked)
+                            {
+                                GetThumb thumb = new GetThumb();
+                                thumb.SelectedUrl = bkm.Url;
+                                thumb.ShowDialog();
+                            }
+
+                            node.ExpandAll();
+                        }
+                    }
+                    counter++;
+                }
             }
-          }
+
+            MessageBox.Show("Import is done. Imported " + imported.ToString() + " links.");
+            this.Close();
         }
-
-        MyLog.debug("Reading root folder");
-
-        favFiles = Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.Favorites), "*.url", SearchOption.TopDirectoryOnly);
-        MyLog.debug(favFiles.Length.ToString() + " files to import");
-
-        foreach (string s in favFiles)
+        private void btnCancel_Click(object sender, EventArgs e)
         {
-          FileInfo f = new FileInfo(s);
-          string name = Path.GetFileNameWithoutExtension(f.Name);
-
-          string url = GetUrlFile(s);
-
-          if (url != null)
-          {
-            BookmarkElement bkm = new BookmarkElement();
-            bkm.Url = url;
-            bkm.Name = name;
-
-            EntryList.Add(bkm);
-            listBox1.Items.Add(bkm.Name);
-          }
+            this.Close();
         }
-        MyLog.debug("Reading finished. Found " + EntryList.Count + " bookmarks");
-      }
-      else
-      {
-        MyLog.debug("Directory does not exist.");
-      }
-    }
-    private string GetUrlFile(string File)
-    {
-      using (StreamReader sr = new StreamReader(File))
-      {
-        while (!sr.EndOfStream)
+
+        private void ImportIE_Load(object sender, EventArgs e)
         {
-          string line = sr.ReadLine();
-          if (line.StartsWith("URL="))
-            return line.Substring(4);
-        }
-      }
-      return null;
-    }
-    private BookmarkElement GetBookmark(string Name)
-    {
-      foreach (BookmarkElement bkm in EntryList)
-      {
-        if (bkm.Name == Name) return bkm;
-      }
-      return null;
-    }
+            string favPath = Environment.GetFolderPath(Environment.SpecialFolder.Favorites);
+            string[] favFiles;
 
-    private void btnSelect_Click(object sender, EventArgs e)
-    {
-      for (int i = 0; i < listBox1.Items.Count; i++)
-      {
-        listBox1.SetSelected(i, select);
-      }
-      select = !select;
+            MyLog.debug("Import folder is " + favPath);
+
+            if (Directory.Exists(favPath))
+            {
+                string[] favDirs = Directory.GetDirectories(favPath);
+                MyLog.debug("Found " + favDirs.Length.ToString() + " folder");
+
+                foreach (string folder in favDirs)
+                {
+                    MyLog.debug("Work on folder '" + Path.GetFileName(folder) + "'");
+
+                    favFiles = Directory.GetFiles(folder, "*.url", SearchOption.TopDirectoryOnly);
+                    MyLog.debug(favFiles.Length.ToString() + " files to import");
+
+                    foreach (string s in favFiles)
+                    {
+                        FileInfo f = new FileInfo(s);
+                        string name = Path.GetFileNameWithoutExtension(f.Name);
+
+                        string url = GetUrlFile(s);
+
+                        if (url != null)
+                        {
+                            BookmarkElement bkm = new BookmarkElement();
+                            bkm.Url = url;
+                            bkm.Name = name;
+
+                            EntryList.Add(bkm);
+                            listBox1.Items.Add(bkm.Name);
+                        }
+                    }
+                }
+
+                MyLog.debug("Reading root folder");
+
+                favFiles = Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.Favorites), "*.url", SearchOption.TopDirectoryOnly);
+                MyLog.debug(favFiles.Length.ToString() + " files to import");
+
+                foreach (string s in favFiles)
+                {
+                    FileInfo f = new FileInfo(s);
+                    string name = Path.GetFileNameWithoutExtension(f.Name);
+
+                    string url = GetUrlFile(s);
+
+                    if (url != null)
+                    {
+                        BookmarkElement bkm = new BookmarkElement();
+                        bkm.Url = url;
+                        bkm.Name = name;
+
+                        EntryList.Add(bkm);
+                        listBox1.Items.Add(bkm.Name);
+                    }
+                }
+                MyLog.debug("Reading finished. Found " + EntryList.Count + " bookmarks");
+            }
+            else
+            {
+                MyLog.debug("Directory does not exist.");
+            }
+        }
+        private string GetUrlFile(string File)
+        {
+            using (StreamReader sr = new StreamReader(File))
+            {
+                while (!sr.EndOfStream)
+                {
+                    string line = sr.ReadLine();
+                    if (line.StartsWith("URL="))
+                        return line.Substring(4);
+                }
+            }
+            return null;
+        }
+        private BookmarkElement GetBookmark(string Name)
+        {
+            foreach (BookmarkElement bkm in EntryList)
+            {
+                if (bkm.Name == Name) return bkm;
+            }
+            return null;
+        }
+
+        private void btnSelect_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < listBox1.Items.Count; i++)
+            {
+                listBox1.SetSelected(i, select);
+            }
+            select = !select;
+        }
     }
-  }
 }

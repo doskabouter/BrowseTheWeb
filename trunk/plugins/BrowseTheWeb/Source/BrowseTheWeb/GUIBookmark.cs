@@ -22,15 +22,8 @@
  */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using System.Drawing;
 
 using MediaPortal.GUI.Library;
-using MediaPortal.Dialogs;
-using MediaPortal.Util;
 using MediaPortal.Configuration;
 
 using System.Xml;
