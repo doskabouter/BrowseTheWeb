@@ -54,7 +54,7 @@ namespace BrowseTheWeb
         public int Port { get; set; }
         public GUIFacadeControl.Layout View { get; set; }
 
-        private const string section = "btweb";
+        private const string section = "btWeb";
 
         #region Singleton
         private static Settings _Instance = null;
