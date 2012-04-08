@@ -304,14 +304,14 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <Version>
       <Major>0</Major>
       <Minor>3</Minor>
-      <Build>4</Build>
+      <Build>5</Build>
       <Revision>0</Revision>
     </Version>
     <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / " Webbrowser.</ExtensionDescription>
-    <VersionDescription>Configuration code cleanup, fixed missing thumbs of bookmarks, fixed zooming issue, added pageup/pagedown</VersionDescription>
+    <VersionDescription>Fixed initial defaultzoom, Fixed crash in configuration</VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
     <OnlineLocation>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.mpe1</OnlineLocation>
-    <ReleaseDate>2012-04-08T18:29:34.428053+02:00</ReleaseDate>
+    <ReleaseDate>2012-04-08T20:35:02.246943+02:00</ReleaseDate>
     <Tags>webbrowser, internet, web</Tags>
     <Location>..\..\BrowseTheWeb.mpe1</Location>
     <Params>
