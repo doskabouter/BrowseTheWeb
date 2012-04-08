@@ -109,7 +109,14 @@ namespace BrowseTheWeb
                 Port = xmlreader.GetValueAsInt(section, "proxy_port", 8888);
                 string tmp = xmlreader.GetValueAsString(section, "bookmark", GUIFacadeControl.Layout.LargeIcons.ToString());
                 tmp = tmp.Replace(" ", String.Empty);// for backwards compatibility
-                View = (GUIFacadeControl.Layout)Enum.Parse(typeof(GUIFacadeControl.Layout), tmp, true);
+                try
+                {
+                    View = (GUIFacadeControl.Layout)Enum.Parse(typeof(GUIFacadeControl.Layout), tmp, true);
+                }
+                catch
+                {
+                    View = GUIFacadeControl.Layout.LargeIcons;
+                }
             }
         }
 
