@@ -71,7 +71,7 @@ namespace BrowseTheWeb
         private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
         private string lastDomain = string.Empty;
-        private float zoom = 1.0f;
+        private float zoom = Settings.Instance.DefaultZoom;
         private Settings settings = Settings.Instance;
 
         public static bool ParameterSupported = false;
