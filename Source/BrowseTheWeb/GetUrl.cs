@@ -23,71 +23,66 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace BrowseTheWeb
 {
-  public partial class GetUrl : Form
-  {
-    public string SelectedName = string.Empty;
-    public string SelectedUrl = string.Empty;
+    public partial class GetUrl : Form
+    {
+        public string SelectedName = string.Empty;
+        public string SelectedUrl = string.Empty;
 
-    public GetUrl()
-    {
-      InitializeComponent();
-      this.DialogResult = DialogResult.Cancel;
-    }
-    private void GetUrl_Load(object sender, EventArgs e)
-    {
-      txtName.Text = SelectedName;
-      txtUrl.Text = SelectedUrl;
-    }
-
-    private void btnCancel_Click(object sender, EventArgs e)
-    {
-      this.DialogResult = DialogResult.Cancel;
-      this.Close();
-    }
-    private void btnOK_Click(object sender, EventArgs e)
-    {
-      try
-      {
-        Uri u = new Uri(txtUrl.Text);
-        if (SelectedName != string.Empty)
+        public GetUrl()
         {
-          SelectedName = txtName.Text;
-          SelectedUrl = txtUrl.Text;
-
-          if (SelectedName.EndsWith("/")) SelectedName = SelectedName.Substring(0, SelectedName.Length - 1);
-
-          this.DialogResult = DialogResult.OK;
-          this.Close();
+            InitializeComponent();
+            this.DialogResult = DialogResult.Cancel;
         }
-      }
-      catch
-      {
-        MessageBox.Show("Wrong URL !!!");
-      }
-    }
+        private void GetUrl_Load(object sender, EventArgs e)
+        {
+            txtName.Text = SelectedName;
+            txtUrl.Text = SelectedUrl;
+        }
 
-    private void txtUrl_KeyDown(object sender, KeyEventArgs e)
-    {
-      if (e.KeyCode == Keys.Enter)
-      {
-        btnOK_Click(this, new EventArgs());
-      }
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Uri u = new Uri(txtUrl.Text);
+                if (SelectedName != string.Empty)
+                {
+                    SelectedName = txtName.Text;
+                    SelectedUrl = txtUrl.Text;
+
+                    if (SelectedName.EndsWith("/")) SelectedName = SelectedName.Substring(0, SelectedName.Length - 1);
+
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Wrong URL !!!");
+            }
+        }
+
+        private void txtUrl_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnOK_Click(this, new EventArgs());
+            }
+        }
+        private void txtName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txtUrl.Focus();
+            }
+        }
     }
-    private void txtName_KeyDown(object sender, KeyEventArgs e)
-    {
-      if (e.KeyCode == Keys.Enter)
-      {
-        txtUrl.Focus();
-      }
-    }
-  }
 }

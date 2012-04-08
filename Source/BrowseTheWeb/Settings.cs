@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MediaPortal.GUI.Library;
-using MediaPortal.Dialogs;
-using MediaPortal.Util;
 using MediaPortal.Configuration;
 using Action = MediaPortal.GUI.Library.Action;
 

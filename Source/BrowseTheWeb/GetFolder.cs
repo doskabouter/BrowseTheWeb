@@ -23,52 +23,47 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace BrowseTheWeb
 {
-  public partial class GetFolder : Form
-  {
-    public string SelectedFolderName = string.Empty;
+    public partial class GetFolder : Form
+    {
+        public string SelectedFolderName = string.Empty;
 
-    public GetFolder()
-    {
-      InitializeComponent();
-      this.DialogResult = DialogResult.Cancel;
-    }
-    private void GetFolder_Load(object sender, EventArgs e)
-    {
-      txtName.Text = SelectedFolderName;
-    }
+        public GetFolder()
+        {
+            InitializeComponent();
+            this.DialogResult = DialogResult.Cancel;
+        }
+        private void GetFolder_Load(object sender, EventArgs e)
+        {
+            txtName.Text = SelectedFolderName;
+        }
 
-    private void btnOK_Click(object sender, EventArgs e)
-    {
-      if (txtName.Text != string.Empty)
-      {
-        this.DialogResult = DialogResult.OK;
-        SelectedFolderName = txtName.Text;
-        Close();
-      }
-    }
-    private void btnCancel_Click(object sender, EventArgs e)
-    {
-      this.DialogResult = DialogResult.Cancel;
-      Close();
-    }
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            if (txtName.Text != string.Empty)
+            {
+                this.DialogResult = DialogResult.OK;
+                SelectedFolderName = txtName.Text;
+                Close();
+            }
+        }
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            Close();
+        }
 
-    private void txtName_KeyDown(object sender, KeyEventArgs e)
-    {
-      if (e.KeyCode == Keys.Enter)
-      {
-        btnOK_Click(this, new EventArgs());
-      }
-    }
+        private void txtName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnOK_Click(this, new EventArgs());
+            }
+        }
 
-    
-  }
+
+    }
 }

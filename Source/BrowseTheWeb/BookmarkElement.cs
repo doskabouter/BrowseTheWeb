@@ -23,21 +23,19 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BrowseTheWeb
 {
-  public class BookmarkElement
-  {
-    public string Name = string.Empty;
-    public string Url = string.Empty;
+    public class BookmarkElement
+    {
+        public string Name = string.Empty;
+        public string Url = string.Empty;
 
-    public int Visited = 0;
-    public DateTime LastVisited;
-    public DateTime Created = DateTime.Now;
+        public int Visited = 0;
+        public DateTime LastVisited;
+        public DateTime Created = DateTime.Now;
 
-    public bool isFolder = false;
-    public bool isSubFolder = false;
-  }
+        public bool isFolder = false;
+        public bool isSubFolder = false;
+    }
 }

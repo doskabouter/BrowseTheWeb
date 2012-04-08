@@ -22,30 +22,24 @@
  */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
 
 namespace BrowseTheWeb
 {
-  public partial class OSD_LinkId : UserControl
-  {
-    public OSD_LinkId()
+    public partial class OSD_LinkId : UserControl
     {
-      InitializeComponent();
-    }
+        public OSD_LinkId()
+        {
+            InitializeComponent();
+        }
 
-    public string ID
-    {
-      set
-      {
-        txtId.Text = value;
-        this.Invalidate();
-      }
+        public string ID
+        {
+            set
+            {
+                txtId.Text = value;
+                this.Invalidate();
+            }
+        }
     }
-  }
 }

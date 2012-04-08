@@ -22,28 +22,25 @@
  */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BrowseTheWeb
 {
-  public class HtmlLinkNumber
-  {
-    public HtmlLinkNumber(int number, string id, string name, string link, HtmlInputType type)
+    public class HtmlLinkNumber
     {
-      Type = type;
-      Number = number;
-      Name = name;
-      Id = id;
-      Link = link;
+        public HtmlLinkNumber(int number, string id, string name, string link, HtmlInputType type)
+        {
+            Type = type;
+            Number = number;
+            Name = name;
+            Id = id;
+            Link = link;
 
+        }
+
+        public int Number { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public HtmlInputType Type { get; set; }
+        public string Link { get; set; }
     }
-
-    public int Number { get; set; }
-    public string Id { get; set; }
-    public string Name { get; set; }
-    public HtmlInputType Type { get; set; }
-    public string Link { get; set; }
-  }
 }

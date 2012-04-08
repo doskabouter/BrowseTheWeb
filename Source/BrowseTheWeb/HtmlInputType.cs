@@ -22,16 +22,13 @@
  */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BrowseTheWeb
 {
-   public enum HtmlInputType
+    public enum HtmlInputType
     {
-       Input,
-       Link,
-       Action
+        Input,
+        Link,
+        Action
     }
 }
