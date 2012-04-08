@@ -84,8 +84,8 @@ namespace BrowseTheWeb
                 Windowed = xmlreader.GetValueAsBool(section, "window", false);
                 UseMouse = xmlreader.GetValueAsBool(section, "mouse", false);
 
-                DefaultZoom_percentage = xmlreader.GetValueAsInt(section, "zoom", 100); // /100
-                FontZoom_percentage = xmlreader.GetValueAsInt(section, "font", 100);// /100
+                DefaultZoom_percentage = xmlreader.GetValueAsInt(section, "zoom", 100);
+                FontZoom_percentage = xmlreader.GetValueAsInt(section, "font", 100);
                 ZoomPage = xmlreader.GetValueAsBool(section, "page", true);
                 ZoomDomain = xmlreader.GetValueAsBool(section, "domain", false);
 
@@ -108,14 +108,19 @@ namespace BrowseTheWeb
                 Server = xmlreader.GetValueAsString(section, "proxy_server", "127.0.0.1");
                 Port = xmlreader.GetValueAsInt(section, "proxy_port", 8888);
                 string tmp = xmlreader.GetValueAsString(section, "bookmark", GUIFacadeControl.Layout.LargeIcons.ToString());
-                tmp = tmp.Replace(" ", String.Empty);// for backwards compatibility
-                try
+                if (tmp == "List view") // for backwards compatibility
+                    View = GUIFacadeControl.Layout.List;
+                else
                 {
-                    View = (GUIFacadeControl.Layout)Enum.Parse(typeof(GUIFacadeControl.Layout), tmp, true);
-                }
-                catch
-                {
-                    View = GUIFacadeControl.Layout.LargeIcons;
+                    tmp = tmp.Replace(" ", String.Empty);// for backwards compatibility
+                    try
+                    {
+                        View = (GUIFacadeControl.Layout)Enum.Parse(typeof(GUIFacadeControl.Layout), tmp, true);
+                    }
+                    catch
+                    {
+                        View = GUIFacadeControl.Layout.List;
+                    }
                 }
             }
         }
