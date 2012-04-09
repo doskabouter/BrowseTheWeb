@@ -19,8 +19,8 @@ namespace BrowseTheWeb
 
         public int DefaultZoom_percentage { get; set; }
         public int FontZoom_percentage { get; set; }
-        public float FontZoom { get { return FontZoom_percentage / 100; } }
-        public float DefaultZoom { get { return DefaultZoom_percentage / 100; } }
+        public float FontZoom { get { return (float)FontZoom_percentage / 100; } }
+        public float DefaultZoom { get { return (float)DefaultZoom_percentage / 100; } }
 
         public bool ZoomPage { get; set; }
         public bool ZoomDomain { get; set; }
