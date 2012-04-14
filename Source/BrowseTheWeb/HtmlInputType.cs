@@ -28,6 +28,7 @@ namespace BrowseTheWeb
     public enum HtmlInputType
     {
         Input,
+        InputPassword,
         Link,
         Action
     }
