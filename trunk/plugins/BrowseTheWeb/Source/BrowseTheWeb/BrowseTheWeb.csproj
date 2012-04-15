@@ -66,9 +66,6 @@
     <Reference Include="Dialogs">
       <HintPath>C:\Program Files\Team MediaPortal\MediaPortal\plugins\Windows\Dialogs.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack">
-      <HintPath>C:\Program Files\Team MediaPortal\MediaPortal\plugins\Windows\HtmlAgilityPack.dll</HintPath>
-    </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>C:\Program Files\Team MediaPortal\MediaPortal\Ionic.Zip.dll</HintPath>
     </Reference>

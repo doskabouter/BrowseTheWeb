@@ -48,13 +48,14 @@ namespace BrowseTheWeb
         private const int MOUSEEVENTF_LEFTUP = 0x04;
         private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
         private const int MOUSEEVENTF_RIGHTUP = 0x10;
+        private const bool logHtml = false;
 
         #region Links
         private Dictionary<int, HtmlLinkNumber> _htmlLinkNumbers = new Dictionary<int, HtmlLinkNumber>();
         #endregion
 
         #region Constants
-        private const string _span = "<span style=\"font-family: arial,sans-serif; font-size: 12px ! important; line-height: 130% ! important; border-width: 1px ! important; border-style: solid ! important; -moz-border-radius: 2px 2px 2px 2px ! important; padding: 0px 2px ! important; margin-left: 2px; max-width: 20px; max-height: 10px ! important; overflow: visible ! important; float: none ! important; display: inline;\" gecko_id=\"{0}\" gecko_action=\"{1}\" gecko_type=\"{2}\" class=\"{3}\">{0}</span>";
+        private const string _spanstyle = "font-family: arial,sans-serif; font-size: 12px ! important; line-height: 130% ! important; border-width: 1px ! important; border-style: solid ! important; -moz-border-radius: 2px 2px 2px 2px ! important; padding: 0px 2px ! important; margin-left: 2px; max-width: 20px; max-height: 10px ! important; overflow: visible ! important; float: none ! important; display: inline;";
         #endregion
 
         #region declare vars
@@ -859,9 +860,44 @@ namespace BrowseTheWeb
                 GUIPropertyManager.SetProperty("#btWeb.status", str);
             }
         }
+
+        private void AddElements(List<GeckoElement> list, GeckoNode parent, string elName)
+        {
+            if (parent is GeckoElement && ((GeckoElement)parent).TagName.ToLowerInvariant() == elName)
+                list.Add((GeckoElement)parent);
+            foreach (GeckoNode child in parent.ChildNodes)
+                AddElements(list, child, elName);
+        }
+
+        private List<GeckoElement> getElements(GeckoNode parent, string elName)
+        {
+            List<GeckoElement> res = new List<GeckoElement>();
+            AddElements(res, parent, elName);
+            return res;
+        }
+
+        private GeckoElement insertSpan(int geckoId, string geckoAction, string geckoType, string className, GeckoNode after)
+        {
+            if (after == null)
+                throw new ArgumentNullException("after");
+            GeckoElement newChild = after.OwnerDocument.CreateElement("span");
+            newChild.SetAttribute("style", _spanstyle);
+            newChild.SetAttribute("gecko_id", geckoId.ToString());
+            newChild.SetAttribute("gecko_action", geckoAction);
+            newChild.SetAttribute("gecko_type", geckoType);
+            newChild.InnerHtml = geckoId.ToString();
+            if (!String.IsNullOrEmpty(className))
+                newChild.SetAttribute("class", className);
+            if (after.NextSibling != null)
+                after.ParentNode.InsertBefore(newChild, after.NextSibling);
+            else
+                after.ParentNode.AppendChild(newChild);
+            return newChild;
+        }
+
         private void webBrowser_DocumentCompleted(object sender, EventArgs e)
         {
-            MyLog.debug("page completetd : " + webBrowser.Url.ToString());
+            MyLog.debug("page completed : " + webBrowser.Url.ToString());
 
             try
             {
@@ -900,7 +936,8 @@ namespace BrowseTheWeb
                             };
                             if (!element.InnerHtml.Contains("gecko_id"))
                             {
-                                element.InnerHtml += string.Format(_span, i, "", "LINK", lastSpan.ClassName);
+                                insertSpan(i, String.Empty, "LINK", lastSpan.ClassName,
+                                    element.LastChild == null ? element : element.LastChild);
                             }
 
                             string gb = element.GetAttribute("gb");
@@ -921,85 +958,78 @@ namespace BrowseTheWeb
                     }
 
                     GeckoElementCollection forms = webBrowser.Document.GetElementsByTagName("form");
-                    HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
 
                     MyLog.debug("page forms cnt : " + forms.Count);
 
                     foreach (GeckoElement element in forms)
                     {
+                        List<GeckoElement> inps = getElements(element, "input");
                         string action = element.GetAttribute("action");
-                        doc.LoadHtml(element.InnerHtml);
-                        foreach (HtmlAgilityPack.HtmlNode link in doc.DocumentNode.SelectNodes("//*"))
+                        foreach (GeckoElement link in inps)
                         {
-                            if (link.OriginalName == "input")
+                            string linkType = link.GetAttribute("type");
+                            if (!String.IsNullOrEmpty(linkType))
                             {
-                                if (link.Attributes["type"] != null)
+                                if (linkType != "hidden")
                                 {
-                                    if (link.Attributes["type"].Value != "hidden")
-                                    {
 
-                                        string gb = link.GetAttributeValue("gb", "");
-                                        string id = link.GetAttributeValue("id", "");
-                                        string name = link.GetAttributeValue("name", "");
-                                        string outerHtml = link.OuterHtml;
-                                        if (string.IsNullOrEmpty(gb))
-                                        {
-                                            link.SetAttributeValue("gb", "gecko_link" + i);
-                                        }
-                                        if (string.IsNullOrEmpty(id))
-                                        {
-                                            link.SetAttributeValue("id", "gb" + i);
-                                            id = "gb" + i;
-                                        }
-
-                                        if (!element.InnerHtml.Contains("gecko_id=\"" + i + "\""))
-                                        {
-                                            string newLink = link.OuterHtml + string.Format(_span, i, action, "INPUT", "");
-                                            element.InnerHtml = element.InnerHtml.Replace(outerHtml, newLink);
-                                        }
-                                        if (link.Attributes["type"].Value == "submit" ||
-                                            link.Attributes["type"].Value == "reset" ||
-                                            link.Attributes["type"].Value == "radio" ||
-                                            link.Attributes["type"].Value == "image" ||
-                                            link.Attributes["type"].Value == "checkbox")
-                                        {
-                                            _htmlLinkNumbers.Add(i, new HtmlLinkNumber(i, id, name, action, HtmlInputType.Action));
-                                        }
-                                        else
-                                        {
-                                            if (link.Attributes["type"].Value == "password")
-                                                _htmlLinkNumbers.Add(i, new HtmlLinkNumber(i, id, name, action, HtmlInputType.InputPassword));
-                                            else
-                                                _htmlLinkNumbers.Add(i, new HtmlLinkNumber(i, id, name, action, HtmlInputType.Input));
-                                        }
-                                        i++;
-                                    }
-                                }
-                                else
-                                {
-                                    string gb = link.GetAttributeValue("gb", "");
-                                    string id = link.GetAttributeValue("id", "");
-                                    string name = link.GetAttributeValue("name", "");
-                                    string outerHtml = link.OuterHtml;
+                                    string gb = link.GetAttribute("gb");
+                                    string id = link.GetAttribute("id");
+                                    string name = link.GetAttribute("name");
                                     if (string.IsNullOrEmpty(gb))
                                     {
-                                        link.SetAttributeValue("gb", "gecko_link" + i);
+                                        link.SetAttribute("gb", "gecko_link" + i);
                                     }
                                     if (string.IsNullOrEmpty(id))
                                     {
-                                        link.SetAttributeValue("id", "gb" + i);
+                                        link.SetAttribute("id", "gb" + i);
                                         id = "gb" + i;
                                     }
 
                                     if (!element.InnerHtml.Contains("gecko_id=\"" + i + "\""))
                                     {
-                                        string newLink = link.OuterHtml + string.Format(_span, i, action, "INPUT", "");
-                                        element.InnerHtml = element.InnerHtml.Replace(outerHtml, newLink);
+                                        insertSpan(i, action, "INPUT", null, link);
                                     }
-
-                                    _htmlLinkNumbers.Add(i, new HtmlLinkNumber(i, id, name, action, HtmlInputType.Input));
+                                    if (linkType == "submit" ||
+                                        linkType == "reset" ||
+                                        linkType == "radio" ||
+                                        linkType == "image" ||
+                                        linkType == "checkbox")
+                                    {
+                                        _htmlLinkNumbers.Add(i, new HtmlLinkNumber(i, id, name, action, HtmlInputType.Action));
+                                    }
+                                    else
+                                    {
+                                        if (linkType == "password")
+                                            _htmlLinkNumbers.Add(i, new HtmlLinkNumber(i, id, name, action, HtmlInputType.InputPassword));
+                                        else
+                                            _htmlLinkNumbers.Add(i, new HtmlLinkNumber(i, id, name, action, HtmlInputType.Input));
+                                    }
                                     i++;
                                 }
+                            }
+                            else
+                            {
+                                string gb = link.GetAttribute("gb");
+                                string id = link.GetAttribute("id");
+                                string name = link.GetAttribute("name");
+                                if (string.IsNullOrEmpty(gb))
+                                {
+                                    link.SetAttribute("gb", "gecko_link" + i);
+                                }
+                                if (string.IsNullOrEmpty(id))
+                                {
+                                    link.SetAttribute("id", "gb" + i);
+                                    id = "gb" + i;
+                                }
+
+                                if (!element.InnerHtml.Contains("gecko_id=\"" + i + "\""))
+                                {
+                                    insertSpan(i, action, "INPUT", null, link);
+                                }
+
+                                _htmlLinkNumbers.Add(i, new HtmlLinkNumber(i, id, name, action, HtmlInputType.Input));
+                                i++;
                             }
                         }
                     }
@@ -1026,6 +1056,13 @@ namespace BrowseTheWeb
                     lastDomain = webBrowser.Document.Domain;
                 }
                 #endregion
+                if (logHtml)
+                {
+                    using (System.IO.StreamWriter tw = new System.IO.StreamWriter(@"e:\last.html"))
+                    {
+                        tw.WriteLine(webBrowser.Document.DocumentElement.InnerHtml);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -1105,27 +1142,27 @@ namespace BrowseTheWeb
             string result = string.Empty;
             if (ShowKeyboard(ref result, id.Type == HtmlInputType.InputPassword) == DialogResult.OK)
             {
-                SetInputFieldText(id.Number, result);
+                SetInputElementValue(webBrowser.Document, id.Number, result);
             }
             webBrowser.Visible = true;
         }
-        public void SetInputFieldText(int id, string text)
-        {
-            HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
-            doc.LoadHtml(webBrowser.Document.Body.InnerHtml);
 
-            foreach (HtmlAgilityPack.HtmlNode element in doc.DocumentNode.SelectNodes("//input"))
+        private bool SetInputElementValue(GeckoNode parent, int geckoId, string text)
+        {
+            GeckoElement el = parent as GeckoElement;
+            if (el != null && el.TagName.ToLowerInvariant() == "input" && el.GetAttribute("gb") == "gecko_link" + geckoId)
             {
-                string name = element.GetAttributeValue("gb", "");
-                if (!string.IsNullOrEmpty(name))
+                el.SetAttribute("value", text);
+                return true;
+            }
+            else
+            {
+                foreach (GeckoNode child in parent.ChildNodes)
                 {
-                    if (name == "gecko_link" + id)
-                    {
-                        element.SetAttributeValue("value", text);
-                        webBrowser.Document.Body.InnerHtml = doc.DocumentNode.InnerHtml;
-                        break;
-                    }
+                    if (SetInputElementValue(child, geckoId, text))
+                        return true;
                 }
+                return false;
             }
         }
 
