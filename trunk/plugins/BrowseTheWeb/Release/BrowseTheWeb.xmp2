@@ -298,8 +298,8 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <Name>Browse The Web</Name>
     <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
     <Author>Mark Koenig (kroko) 2010</Author>
-    <HomePage>http://www.team-mediaportal.com</HomePage>
-    <ForumPage>http://forum.team-mediaportal.com/threads/plugin-browse-the-web-webbrowser.89101/</ForumPage>
+    <HomePage>http://www.team-mediaportal.com/extensions/news-info/browse-the-web-webbrowser</HomePage>
+    <ForumPage>http://forum.team-mediaportal.com/threads/browse-the-web-webbrowser.107285/</ForumPage>
     <UpdateUrl>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
     <Version>
       <Major>0</Major>
