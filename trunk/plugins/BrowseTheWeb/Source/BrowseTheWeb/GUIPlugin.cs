@@ -55,7 +55,7 @@ namespace BrowseTheWeb
         #endregion
 
         #region Constants
-        private const string _spanstyle = "font-family: arial,sans-serif; font-size: 12px ! important; line-height: 130% ! important; border-width: 1px ! important; border-style: solid ! important; -moz-border-radius: 2px 2px 2px 2px ! important; padding: 0px 2px ! important; margin-left: 2px; max-width: 20px; max-height: 10px ! important; overflow: visible ! important; float: none ! important; display: inline;";
+        private const string _spanstyle = "font-family: arial,sans-serif; font-size: 12px ! important; line-height: 130% ! important; border-width: 1px ! important; border-style: solid ! important; -moz-border-radius: 2px 2px 2px 2px ! important; padding: 0px 2px ! important; margin-right: 2px; max-width: 20px; max-height: 10px ! important; overflow: visible ! important; float: none ! important; display: inline;";
         #endregion
 
         #region declare vars
@@ -417,7 +417,7 @@ namespace BrowseTheWeb
                 else
                     GUIPropertyManager.SetProperty("#btWeb.status", DateTime.Now.ToLongTimeString() + " : " +
                                                     action.wID.ToString() + " / " + action.m_key.KeyChar.ToString());
-            }
+                }
             #endregion
 
             #region selectable buttons
@@ -508,7 +508,6 @@ namespace BrowseTheWeb
                     if (mouse.Visible)
                     {
                         mouse.Visible = false;
-
                     }
                     else
                     {
@@ -888,11 +887,27 @@ namespace BrowseTheWeb
             newChild.InnerHtml = geckoId.ToString();
             if (!String.IsNullOrEmpty(className))
                 newChild.SetAttribute("class", className);
-            if (after.NextSibling != null)
-                after.ParentNode.InsertBefore(newChild, after.NextSibling);
+            if (after.FirstChild == null)
+                after.AppendChild(newChild);
             else
-                after.ParentNode.AppendChild(newChild);
+                after.InsertBefore(newChild, after.FirstChild);
             return newChild;
+        }
+
+        private void SetLinkAttributes(GeckoElement link, int linkNumber, out string id, out string name)
+        {
+            string gb = link.GetAttribute("gb");
+            id = link.GetAttribute("id");
+            name = link.GetAttribute("name");
+            if (string.IsNullOrEmpty(gb))
+            {
+                link.SetAttribute("gb", "gecko_link" + linkNumber);
+            }
+            if (string.IsNullOrEmpty(id))
+            {
+                link.SetAttribute("id", "gb" + linkNumber);
+                id = "gb" + linkNumber;
+            }
         }
 
         private void webBrowser_DocumentCompleted(object sender, EventArgs e)
@@ -936,22 +951,15 @@ namespace BrowseTheWeb
                             };
                             if (!element.InnerHtml.Contains("gecko_id"))
                             {
+                                GeckoElement ls = element;
+                                while (ls.LastChild != null && ls.LastChild is GeckoElement && !String.IsNullOrEmpty(ls.LastChild.TextContent))
+                                    ls = (GeckoElement)ls.LastChild;
                                 insertSpan(i, String.Empty, "LINK", lastSpan.ClassName,
-                                    element.LastChild == null ? element : element.LastChild);
+                                    ls);
                             }
 
-                            string gb = element.GetAttribute("gb");
-                            string id = element.GetAttribute("id");
-                            string name = element.GetAttribute("name");
-                            if (string.IsNullOrEmpty(gb))
-                            {
-                                element.SetAttribute("gb", "gecko_link" + i);
-                            }
-                            if (string.IsNullOrEmpty(id))
-                            {
-                                element.SetAttribute("id", "gb" + i);
-                                id = "gb" + i;
-                            }
+                            string id, name;
+                            SetLinkAttributes(element, i, out id, out name);
                             _htmlLinkNumbers.Add(i, new HtmlLinkNumber(i, id, name, link, HtmlInputType.Link));
                             i++;
                         }
@@ -972,23 +980,12 @@ namespace BrowseTheWeb
                             {
                                 if (linkType != "hidden")
                                 {
-
-                                    string gb = link.GetAttribute("gb");
-                                    string id = link.GetAttribute("id");
-                                    string name = link.GetAttribute("name");
-                                    if (string.IsNullOrEmpty(gb))
-                                    {
-                                        link.SetAttribute("gb", "gecko_link" + i);
-                                    }
-                                    if (string.IsNullOrEmpty(id))
-                                    {
-                                        link.SetAttribute("id", "gb" + i);
-                                        id = "gb" + i;
-                                    }
+                                    string id, name;
+                                    SetLinkAttributes(link, i, out id, out name);
 
                                     if (!element.InnerHtml.Contains("gecko_id=\"" + i + "\""))
                                     {
-                                        insertSpan(i, action, "INPUT", null, link);
+                                        insertSpan(i, action, "INPUT", null, link.Parent);
                                     }
                                     if (linkType == "submit" ||
                                         linkType == "reset" ||
@@ -1010,22 +1007,12 @@ namespace BrowseTheWeb
                             }
                             else
                             {
-                                string gb = link.GetAttribute("gb");
-                                string id = link.GetAttribute("id");
-                                string name = link.GetAttribute("name");
-                                if (string.IsNullOrEmpty(gb))
-                                {
-                                    link.SetAttribute("gb", "gecko_link" + i);
-                                }
-                                if (string.IsNullOrEmpty(id))
-                                {
-                                    link.SetAttribute("id", "gb" + i);
-                                    id = "gb" + i;
-                                }
+                                string id, name;
+                                SetLinkAttributes(link, i, out id, out name);
 
                                 if (!element.InnerHtml.Contains("gecko_id=\"" + i + "\""))
                                 {
-                                    insertSpan(i, action, "INPUT", null, link);
+                                    insertSpan(i, action, "INPUT", null, link.Parent);
                                 }
 
                                 _htmlLinkNumbers.Add(i, new HtmlLinkNumber(i, id, name, action, HtmlInputType.Input));
