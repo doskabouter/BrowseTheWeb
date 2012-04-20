@@ -74,7 +74,7 @@ namespace BrowseTheWeb
         public static string Parameter = string.Empty;
 
         public static string loadFav = string.Empty;
-
+        private bool originalMouseSupport;
 
         #endregion
 
@@ -229,6 +229,7 @@ namespace BrowseTheWeb
                 if (settings.UseMouse)
                 {
                     MyLog.debug("Mouse support is enabled");
+                    originalMouseSupport = GUIGraphicsContext.MouseSupport;
                     GUIGraphicsContext.MouseSupport = true;
                     Cursor.Show();
                 }
@@ -332,11 +333,15 @@ namespace BrowseTheWeb
             webBrowser.DocumentCompleted -= new EventHandler(webBrowser_DocumentCompleted);
             webBrowser.StatusTextChanged -= new EventHandler(webBrowser_StatusTextChanged);
             webBrowser.DomKeyDown -= new GeckoDomKeyEventHandler(webBrowser_DomKeyDown);
+            webBrowser.DomClick -= new GeckoDomEventHandler(webBrowser_DomClick);
 
             timer.Tick -= new EventHandler(timer_Tick);
             timer.Stop();
             if (settings.UseMouse)
+            {
                 Cursor.Hide();
+                GUIGraphicsContext.MouseSupport = originalMouseSupport;
+            }
             base.OnPageDestroy(new_windowId);
         }
 
@@ -417,7 +422,7 @@ namespace BrowseTheWeb
                 else
                     GUIPropertyManager.SetProperty("#btWeb.status", DateTime.Now.ToLongTimeString() + " : " +
                                                     action.wID.ToString() + " / " + action.m_key.KeyChar.ToString());
-                }
+            }
             #endregion
 
             #region selectable buttons
