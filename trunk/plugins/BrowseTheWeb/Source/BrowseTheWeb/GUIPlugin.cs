@@ -49,6 +49,7 @@ namespace BrowseTheWeb
         private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
         private const int MOUSEEVENTF_RIGHTUP = 0x10;
         private const bool logHtml = false;
+        private bool mouseVisible = false;
 
         #region Links
         private Dictionary<int, HtmlLinkNumber> _htmlLinkNumbers = new Dictionary<int, HtmlLinkNumber>();
@@ -61,7 +62,6 @@ namespace BrowseTheWeb
         #region declare vars
         private GeckoWebBrowser webBrowser;
         private OSD_LinkId osd_linkID;
-        private Mouse mouse;
         private string linkId = string.Empty;
         private int linkTime = 0;
         private Timer timer = new Timer();
@@ -208,9 +208,6 @@ namespace BrowseTheWeb
             GUIGraphicsContext.form.Controls.Add(osd_linkID);
             osd_linkID.Visible = false;
 
-            mouse = new Mouse();
-            GUIGraphicsContext.form.Controls.Add(mouse);
-            mouse.Visible = false;
             #endregion
         }
 
@@ -302,7 +299,7 @@ namespace BrowseTheWeb
                 timer.Start();
 
                 if (settings.UseMouse)
-                    GUIGraphicsContext.form.Controls["BrowseTheWeb"].Select();
+                    webBrowser.Select();
             }
             catch (Exception ex)
             {
@@ -408,11 +405,7 @@ namespace BrowseTheWeb
 
         public override void OnAction(MediaPortal.GUI.Library.Action action)
         {
-            if (linkId != string.Empty)
-                GUIPropertyManager.SetProperty("#btWeb.linkid", "Link ID = " + linkId);
-            else
-                GUIPropertyManager.SetProperty("#btWeb.linkid", linkId);
-
+            GUIPropertyManager.SetProperty("#btWeb.linkid", String.IsNullOrEmpty(linkId) ? String.Empty : "Link ID = " + linkId);
             #region remote diagnostic
             if (settings.Remote)
             {
@@ -428,7 +421,7 @@ namespace BrowseTheWeb
             #region selectable buttons
             if (action.wID == settings.Remote_Confirm)
             {
-                if (!mouse.Visible)
+                if (!mouseVisible)
                 {
                     if (!settings.UseMouse)
                     {
@@ -461,7 +454,7 @@ namespace BrowseTheWeb
                     //webBrowser.Enabled = false;
 
                     GUIGraphicsContext.form.BringToFront();
-                    mouse.BringToFront();
+                    //mouse.BringToFront();
                 }
             }
             if (action.wID == settings.Remote_Bookmark)
@@ -510,17 +503,17 @@ namespace BrowseTheWeb
                     }
                     break;
                 case MediaPortal.GUI.Library.Action.ActionType.ACTION_NEXT_SUBTITLE:
-                    if (mouse.Visible)
+                    if (mouseVisible)
                     {
-                        mouse.Visible = false;
+                        mouseVisible = false;
                     }
                     else
                     {
                         Point x = Cursor.Position;
-                        mouse.Location = x;
-                        mouse.Visible = true;
-                        mouse.BringToFront();
-                    }
+                        //mouse.Location = x;
+                        mouseVisible = true;
+                        //mouse.BringToFront();
+                        }
                     break;
                 case MediaPortal.GUI.Library.Action.ActionType.ACTION_KEY_PRESSED:
                     if (!settings.UseMouse)
@@ -593,13 +586,6 @@ namespace BrowseTheWeb
                     OnMoveDown();
                     return;
                 case MediaPortal.GUI.Library.Action.ActionType.ACTION_SELECT_ITEM:
-                    if (mouse.Visible)
-                    {
-                        //Cursor.Show();
-                        int x = GUIGraphicsContext.form.Location.X + mouse.Location.X + 20;
-                        int y = GUIGraphicsContext.form.Location.Y + mouse.Location.Y + 50;
-                        Cursor.Position = new Point(x, y);
-                    }
                     return;
                 #endregion
             }
@@ -608,7 +594,7 @@ namespace BrowseTheWeb
 
         private void webBrowser_DomKeyDown(object sender, GeckoDomKeyEventArgs e)
         {
-            if (settings.UseMouse)
+            if (settings.UseMouse || mouseVisible)
             {
                 //System.Diagnostics.Debug.WriteLine("DOM " + e.KeyCode.ToString());
 
@@ -690,7 +676,7 @@ namespace BrowseTheWeb
 
             webBrowser.Visible = true;
             if (settings.UseMouse)
-                GUIGraphicsContext.form.Controls["BrowseTheWeb"].Select();
+                webBrowser.Select();
 
         }
         private void OnAddBookmark()
@@ -740,7 +726,7 @@ namespace BrowseTheWeb
 
             webBrowser.Visible = true;
             if (settings.UseMouse)
-                GUIGraphicsContext.form.Controls["BrowseTheWeb"].Select();
+                webBrowser.Select();
         }
         private void OnZoomIn()
         {
@@ -756,55 +742,51 @@ namespace BrowseTheWeb
         }
         private void OnMoveLeft()
         {
-            if (!mouse.Visible)
+            if (!mouseVisible)
             {
                 if (webBrowser.Window != null) ScrollTo(webBrowser.Window.ScrollX - 100, webBrowser.Window.ScrollY);
             }
             else
             {
-                mouse.Location = new Point(mouse.Location.X - 20, mouse.Location.Y);
-                Cursor.Position = new Point(mouse.Location.X, mouse.Location.Y);
+                Cursor.Position = new Point(Cursor.Position.X - 20, Cursor.Position.Y);
             }
         }
         private void OnMoveRight()
         {
-            if (!mouse.Visible)
+            if (!mouseVisible)
             {
                 if (webBrowser.Window != null) ScrollTo(webBrowser.Window.ScrollX + 100, webBrowser.Window.ScrollY);
             }
             else
             {
-                mouse.Location = new Point(mouse.Location.X + 20, mouse.Location.Y);
-                Cursor.Position = new Point(mouse.Location.X, mouse.Location.Y);
+                Cursor.Position = new Point(Cursor.Position.X + 20, Cursor.Position.Y);
             }
         }
         private void OnMoveUp()
         {
-            if (!mouse.Visible)
+            if (!mouseVisible)
             {
                 if (webBrowser.Window != null) ScrollTo(webBrowser.Window.ScrollX, webBrowser.Window.ScrollY - 100);
             }
             else
             {
-                mouse.Location = new Point(mouse.Location.X, mouse.Location.Y - 20);
-                Cursor.Position = new Point(mouse.Location.X, mouse.Location.Y);
+                Cursor.Position = new Point(Cursor.Position.X, Cursor.Position.Y - 20);
             }
         }
         private void OnMoveDown()
         {
-            if (!mouse.Visible)
+            if (!mouseVisible)
             {
                 if (webBrowser.Window != null) ScrollTo(webBrowser.Window.ScrollX, webBrowser.Window.ScrollY + 100);
             }
             else
             {
-                mouse.Location = new Point(mouse.Location.X, mouse.Location.Y + 20);
-                Cursor.Position = new Point(mouse.Location.X, mouse.Location.Y);
+                Cursor.Position = new Point(Cursor.Position.X, Cursor.Position.Y + 20);
             }
         }
         private void OnPageUp()
         {
-            if (!mouse.Visible)
+            if (!mouseVisible)
             {
                 int height = webBrowser.Size.Height;
                 if (webBrowser.Window != null) ScrollTo(webBrowser.Window.ScrollX, webBrowser.Window.ScrollY - height + 100);
@@ -812,13 +794,12 @@ namespace BrowseTheWeb
             else
             {
                 //not yet tested
-                mouse.Location = new Point(mouse.Location.X, mouse.Location.Y - 20);
-                Cursor.Position = new Point(mouse.Location.X, mouse.Location.Y);
+                Cursor.Position = new Point(Cursor.Position.X, Cursor.Position.Y - 20);
             }
         }
         private void OnPageDown()
         {
-            if (!mouse.Visible)
+            if (!mouseVisible)
             {
                 int height = webBrowser.Size.Height;
                 if (webBrowser.Window != null) ScrollTo(webBrowser.Window.ScrollX, webBrowser.Window.ScrollY + height - 100);
@@ -826,8 +807,7 @@ namespace BrowseTheWeb
             else
             {
                 //not yet tested
-                mouse.Location = new Point(mouse.Location.X, mouse.Location.Y - 20);
-                Cursor.Position = new Point(mouse.Location.X, mouse.Location.Y);
+                Cursor.Position = new Point(Cursor.Position.X, Cursor.Position.Y + 20);
             }
         }
 
@@ -919,6 +899,7 @@ namespace BrowseTheWeb
         {
             MyLog.debug("page completed : " + webBrowser.Url.ToString());
 
+            GUIPropertyManager.SetProperty("#btWeb.linkid", webBrowser.Url.ToString());
             try
             {
                 #region MP gui stuff
