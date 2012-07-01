@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 using MediaPortal.Common.Utils;
-[assembly: CompatibleVersion("1.1.7.0")]
+[assembly: CompatibleVersion("1.2.100.0", "1.1.7.0")]
 [assembly: UsesSubsystem("MP.SkinEngine")]
 [assembly: UsesSubsystem("MP.Config")]
 [assembly: UsesSubsystem("MP.DB")]
