@@ -175,6 +175,7 @@
   <ItemGroup>
     <None Include="res\edit-icon.png" />
     <Content Include="res\fav-b-icon.png" />
+    <Content Include="res\MouseCursor.cur" />
     <Content Include="todo.txt" />
     <EmbeddedResource Include="GetThumb.resx">
       <DependentUpon>GetThumb.cs</DependentUpon>

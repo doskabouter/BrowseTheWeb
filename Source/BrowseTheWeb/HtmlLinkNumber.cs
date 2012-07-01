@@ -27,13 +27,13 @@ namespace BrowseTheWeb
 {
     public class HtmlLinkNumber
     {
-        public HtmlLinkNumber(int number, string id, string name, string link, HtmlInputType type)
+        public HtmlLinkNumber(int number, string id, string name, object obj, HtmlInputType type)
         {
             Type = type;
             Number = number;
             Name = name;
             Id = id;
-            Link = link;
+            Obj =obj;
 
         }
 
@@ -41,6 +41,6 @@ namespace BrowseTheWeb
         public string Id { get; set; }
         public string Name { get; set; }
         public HtmlInputType Type { get; set; }
-        public string Link { get; set; }
+        public object Obj { get; set; }
     }
 }
