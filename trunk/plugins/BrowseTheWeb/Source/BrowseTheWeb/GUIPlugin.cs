@@ -25,6 +25,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 
 using MediaPortal.GUI.Library;
 using MediaPortal.Dialogs;
@@ -43,6 +44,8 @@ namespace BrowseTheWeb
     {
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern void mouse_event(long dwFlags, long dx, long dy, long cButtons, long dwExtraInfo);
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern int ShowCursor(bool bShow);
 
         private const int MOUSEEVENTF_LEFTDOWN = 0x02;
         private const int MOUSEEVENTF_LEFTUP = 0x04;
@@ -50,6 +53,7 @@ namespace BrowseTheWeb
         private const int MOUSEEVENTF_RIGHTUP = 0x10;
         private const bool logHtml = false;
         private bool mouseVisible = false;
+        private bool clickFromPlugin = false;
 
         #region Links
         private Dictionary<int, HtmlLinkNumber> _htmlLinkNumbers = new Dictionary<int, HtmlLinkNumber>();
@@ -440,21 +444,11 @@ namespace BrowseTheWeb
                 else
                 {
                     webBrowser.Enabled = true;
-                    webBrowser.BringToFront();
-
-                    Cursor.Show();
                     System.Threading.Thread.Sleep(200);
-
-
+                    clickFromPlugin = true;
                     int X = Cursor.Position.X;
                     int Y = Cursor.Position.Y;
-                    mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, X, Y, 0, 0);
-
-                    Cursor.Hide();
-                    //webBrowser.Enabled = false;
-
-                    GUIGraphicsContext.form.BringToFront();
-                    //mouse.BringToFront();
+                    mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
                 }
             }
             if (action.wID == settings.Remote_Bookmark)
@@ -503,17 +497,23 @@ namespace BrowseTheWeb
                     }
                     break;
                 case MediaPortal.GUI.Library.Action.ActionType.ACTION_NEXT_SUBTITLE:
-                    if (mouseVisible)
+                    if (!settings.UseMouse)
                     {
-                        mouseVisible = false;
-                    }
-                    else
-                    {
-                        Point x = Cursor.Position;
-                        //mouse.Location = x;
-                        mouseVisible = true;
-                        //mouse.BringToFront();
+                        if (mouseVisible)
+                        {
+                            mouseVisible = false;
+                            Cursor.Hide();
                         }
+                        else
+                        {
+                            using (MemoryStream memoryStream = new MemoryStream(Properties.Resources.MouseCursor))
+                            {
+                                GUIGraphicsContext.form.Cursor = new Cursor(memoryStream);
+                            }
+                            mouseVisible = true;
+                            while (ShowCursor(true) < 0) ;
+                        }
+                    }
                     break;
                 case MediaPortal.GUI.Library.Action.ActionType.ACTION_KEY_PRESSED:
                     if (!settings.UseMouse)
@@ -647,6 +647,13 @@ namespace BrowseTheWeb
                         }
                     }
                 }
+            }
+
+            if (clickFromPlugin) // click succeeded, so focus can safely be reset
+            {
+                clickFromPlugin = false;
+                webBrowser.Enabled = false;
+                GUIGraphicsContext.form.Focus();
             }
         }
 
@@ -951,6 +958,25 @@ namespace BrowseTheWeb
                         }
                     }
 
+                    GeckoElementCollection objects = webBrowser.Document.GetElementsByTagName("object");
+                    MyLog.debug("page objects cnt : " + objects.Count);
+                    foreach (GeckoElement element in objects)
+                        if (element.GetAttribute("type") == "application/x-shockwave-flash")
+                        {
+                            string id, name;
+                            GeckoElement element2 = element.Parent;
+                            SetLinkAttributes(element2, i, out id, out name);
+
+                            if (!element2.InnerHtml.Contains("gecko_id=\"" + i + "\""))
+                            {
+                                insertSpan(i, String.Empty, "LINK", null, element2);
+                            }
+                            RectangleF rect = element2.BoundingClientRect;
+                            Point p = new Point(Convert.ToInt32(rect.Left + rect.Width / 2), Convert.ToInt32(rect.Top + rect.Height / 2));
+                            _htmlLinkNumbers.Add(i, new HtmlLinkNumber(i, id, name, p, HtmlInputType.FlashObject));
+                            i++;
+                        }
+
                     GeckoElementCollection forms = webBrowser.Document.GetElementsByTagName("form");
 
                     MyLog.debug("page forms cnt : " + forms.Count);
@@ -1055,8 +1081,9 @@ namespace BrowseTheWeb
                 switch (hln.Type)
                 {
                     case HtmlInputType.Link:
-                        webBrowser.Navigate(hln.Link);
-                        MyLog.debug("navigate to linkid=" + LinkId + " URL=" + hln.Link);
+                        string link = (string)hln.Obj;
+                        webBrowser.Navigate(link);
+                        MyLog.debug("navigate to linkid=" + LinkId + " URL=" + link);
                         break;
                     case HtmlInputType.Input:
                     case HtmlInputType.InputPassword:
@@ -1065,6 +1092,18 @@ namespace BrowseTheWeb
                     case HtmlInputType.Action:
                         webBrowser.Navigate("javascript:document.getElementById(\"" + hln.Id + "\").click()");
                         MyLog.debug("action linkid=" + LinkId);
+                        break;
+                    case HtmlInputType.FlashObject:
+                        MyLog.debug("flash click on " + Cursor.Position.ToString());
+                        Point p = (Point)hln.Obj;
+                        webBrowser.Enabled = true;
+
+                        System.Threading.Thread.Sleep(200);
+                        Cursor.Position = webBrowser.PointToScreen(p);
+                        int X = Cursor.Position.X;
+                        int Y = Cursor.Position.Y;
+                        clickFromPlugin = true;
+                        mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
                         break;
                 }
             }
@@ -1078,7 +1117,8 @@ namespace BrowseTheWeb
                 {
                     case HtmlInputType.Link:
                         {
-                            if (!Uri.IsWellFormedUriString(id.Link, UriKind.Absolute))
+                            string link = (string)id.Obj;
+                            if (!Uri.IsWellFormedUriString(link, UriKind.Absolute))
                             {
                                 Uri baseUri = webBrowser.Url;
 
@@ -1089,11 +1129,12 @@ namespace BrowseTheWeb
                                     if (gn != null && !String.IsNullOrEmpty(gn.NodeValue))
                                         baseUri = new Uri(gn.NodeValue);
                                 }
-                                id.Link = new Uri(baseUri, id.Link).AbsoluteUri;
+                                id.Obj = new Uri(baseUri, link).AbsoluteUri;
                             }
                             hln = id;
                             return true;
                         }
+                    case HtmlInputType.FlashObject:
                     case HtmlInputType.Input:
                     case HtmlInputType.InputPassword:
                     case HtmlInputType.Action:

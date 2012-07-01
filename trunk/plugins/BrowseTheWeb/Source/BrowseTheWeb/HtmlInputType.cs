@@ -30,6 +30,7 @@ namespace BrowseTheWeb
         Input,
         InputPassword,
         Link,
-        Action
+        Action,
+        FlashObject
     }
 }

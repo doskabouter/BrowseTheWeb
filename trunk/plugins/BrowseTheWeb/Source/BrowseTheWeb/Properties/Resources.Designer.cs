@@ -87,5 +87,12 @@ namespace BrowseTheWeb.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static byte[] MouseCursor {
+            get {
+                object obj = ResourceManager.GetObject("MouseCursor", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
