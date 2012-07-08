@@ -795,7 +795,7 @@ namespace BrowseTheWeb
         {
             if (!mouseVisible)
             {
-                int height = webBrowser.Size.Height;
+                int height = Convert.ToInt32((float)webBrowser.Size.Height / zoom);
                 if (webBrowser.Window != null) ScrollTo(webBrowser.Window.ScrollX, webBrowser.Window.ScrollY - height + 100);
             }
             else
@@ -808,7 +808,7 @@ namespace BrowseTheWeb
         {
             if (!mouseVisible)
             {
-                int height = webBrowser.Size.Height;
+                int height = Convert.ToInt32((float)webBrowser.Size.Height / zoom);
                 if (webBrowser.Window != null) ScrollTo(webBrowser.Window.ScrollX, webBrowser.Window.ScrollY + height - 100);
             }
             else
