@@ -3,11 +3,11 @@
   <Version>2.0</Version>
   <Groups>
     <Items>
-      <GroupItem Name="Default">
+      <GroupItem Name="Common">
         <ParentGroup />
-        <DisplayName>Default</DisplayName>
+        <DisplayName>Common</DisplayName>
         <DefaulChecked>true</DefaulChecked>
-        <Description>Default</Description>
+        <Description>Common files</Description>
         <Files>
           <Items>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
@@ -41,62 +41,62 @@
           </Items>
         </Files>
       </GroupItem>
-      <GroupItem Name="Blue3">
+      <GroupItem Name="Default">
         <ParentGroup />
         <DisplayName>Default</DisplayName>
         <DefaulChecked>true</DefaulChecked>
-        <Description>Default</Description>
+        <Description>Default skin</Description>
         <Files>
           <Items>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Skin\Blue3\browsetheweb.xml</LocalFileName>
+              <LocalFileName>Skin\Default\browsetheweb.xml</LocalFileName>
               <ZipFileName>Installer{CopyFile}\{f5702498-f4fe-4d93-a3e4-147b4259f022}-browsetheweb.xml</ZipFileName>
               <DestinationFilename>%Skin%\Default\browsetheweb.xml</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Skin\Blue3\browsethewebbook.xml</LocalFileName>
+              <LocalFileName>Skin\Default\browsethewebbook.xml</LocalFileName>
               <ZipFileName>Installer{CopyFile}\{ff6dcc58-3934-4b17-9304-ba0969411580}-browsethewebbook.xml</ZipFileName>
               <DestinationFilename>%Skin%\Default\browsethewebbook.xml</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Skin\Blue3\Media\hover_browsetheweb.png</LocalFileName>
+              <LocalFileName>Skin\Default\Media\hover_browsetheweb.png</LocalFileName>
               <ZipFileName>Installer{CopyFile}\{a8509fba-5a4e-45c8-ad6c-5c6a50931b30}-hover_browsetheweb.png</ZipFileName>
               <DestinationFilename>%Skin%\Default\Media\hover_browsetheweb.png</DestinationFilename>
             </FileItem>
           </Items>
         </Files>
       </GroupItem>
-      <GroupItem Name="Blue3wide">
+      <GroupItem Name="DefaultWide">
         <ParentGroup />
         <DisplayName>DefaultWide</DisplayName>
         <DefaulChecked>true</DefaulChecked>
-        <Description>DefaultWide</Description>
+        <Description>DefaultWide skin</Description>
         <Files>
           <Items>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Skin\Blue3wide\browsetheweb.xml</LocalFileName>
+              <LocalFileName>Skin\DefaultWide\browsetheweb.xml</LocalFileName>
               <ZipFileName>Installer{CopyFile}\{682a1fa4-16db-4bc3-961f-e05e59ce1787}-browsetheweb.xml</ZipFileName>
               <DestinationFilename>%Skin%\DefaultWide\browsetheweb.xml</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Skin\Blue3wide\browsethewebbook.xml</LocalFileName>
+              <LocalFileName>Skin\DefaultWide\browsethewebbook.xml</LocalFileName>
               <ZipFileName>Installer{CopyFile}\{d4d67df8-81ad-4d73-b98e-350693b4644b}-browsethewebbook.xml</ZipFileName>
               <DestinationFilename>%Skin%\DefaultWide\browsethewebbook.xml</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Skin\Blue3wide\Media\hover_browsetheweb.png</LocalFileName>
+              <LocalFileName>Skin\DefaultWide\Media\hover_browsetheweb.png</LocalFileName>
               <ZipFileName>Installer{CopyFile}\{261f9f9e-cace-4e95-b709-c1db6c350606}-hover_browsetheweb.png</ZipFileName>
               <DestinationFilename>%Skin%\DefaultWide\Media\hover_browsetheweb.png</DestinationFilename>
             </FileItem>
@@ -163,7 +163,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
         </Params>
         <Actions>
           <Items>
-            <ActionItem Name="InstallFiles" ActionType="InstallFiles" ConditionGroup="Default">
+            <ActionItem Name="InstallFiles" ActionType="InstallFiles" ConditionGroup="Common">
               <Params>
                 <Items />
               </Params>
@@ -197,7 +197,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
         </Params>
         <Actions>
           <Items>
-            <ActionItem Name="ConfigurePlugin" ActionType="ConfigurePlugin" ConditionGroup="Default">
+            <ActionItem Name="ConfigurePlugin" ActionType="ConfigurePlugin" ConditionGroup="Common">
               <Params>
                 <Items>
                   <SectionParam Name="Path to plugin">
@@ -307,7 +307,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
       <Build>7</Build>
       <Revision>0</Revision>
     </Version>
-    <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / " Webbrowser.</ExtensionDescription>
+    <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / Webbrowser.</ExtensionDescription>
     <VersionDescription>Fixed toggle mouse option, added linkid to flash objects (performs a click in the middle of the object), added compatibility with MP 1.3.0 Alpha</VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
     <OnlineLocation>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.mpe1</OnlineLocation>
@@ -379,42 +379,42 @@ If have .dll extension used like MP plugin configuration</Description>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Skin\Blue3\browsetheweb.xml</LocalFileName>
+        <LocalFileName>Skin\Default\browsetheweb.xml</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{f5702498-f4fe-4d93-a3e4-147b4259f022}-browsetheweb.xml</ZipFileName>
         <DestinationFilename>%Skin%\Default\browsetheweb.xml</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Skin\Blue3\browsethewebbook.xml</LocalFileName>
+        <LocalFileName>Skin\Default\browsethewebbook.xml</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{ff6dcc58-3934-4b17-9304-ba0969411580}-browsethewebbook.xml</ZipFileName>
         <DestinationFilename>%Skin%\Default\browsethewebbook.xml</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Skin\Blue3\Media\hover_browsetheweb.png</LocalFileName>
+        <LocalFileName>Skin\Default\Media\hover_browsetheweb.png</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{a8509fba-5a4e-45c8-ad6c-5c6a50931b30}-hover_browsetheweb.png</ZipFileName>
         <DestinationFilename>%Skin%\Default\Media\hover_browsetheweb.png</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Skin\Blue3wide\browsetheweb.xml</LocalFileName>
+        <LocalFileName>Skin\DefaultWide\browsetheweb.xml</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{682a1fa4-16db-4bc3-961f-e05e59ce1787}-browsetheweb.xml</ZipFileName>
         <DestinationFilename>%Skin%\DefaultWide\browsetheweb.xml</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Skin\Blue3wide\browsethewebbook.xml</LocalFileName>
+        <LocalFileName>Skin\DefaultWide\browsethewebbook.xml</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{d4d67df8-81ad-4d73-b98e-350693b4644b}-browsethewebbook.xml</ZipFileName>
         <DestinationFilename>%Skin%\DefaultWide\browsethewebbook.xml</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Skin\Blue3wide\Media\hover_browsetheweb.png</LocalFileName>
+        <LocalFileName>Skin\DefaultWide\Media\hover_browsetheweb.png</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{261f9f9e-cace-4e95-b709-c1db6c350606}-hover_browsetheweb.png</ZipFileName>
         <DestinationFilename>%Skin%\DefaultWide\Media\hover_browsetheweb.png</DestinationFilename>
       </FileItem>
