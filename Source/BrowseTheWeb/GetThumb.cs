@@ -26,7 +26,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-using Skybound.Gecko;
+using Gecko;
 
 namespace BrowseTheWeb
 {

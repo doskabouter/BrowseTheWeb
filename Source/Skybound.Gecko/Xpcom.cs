@@ -38,37 +38,176 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Runtime.CompilerServices;
+using GeckoFX.Microsoft;
+using System.Threading;
 
-namespace Skybound.Gecko
+
+// XpCom function are declared like
+//XPCOM_API(nsresult)
+//NS_InitXPCOM2(nsIServiceManager* *result, 
+//              nsIFile* binDirectory,
+//              nsIDirectoryServiceProvider* appFileLocationProvider);
+
+// XPCOM_API(type) is EXPORT_XPCOM_API(type)
+
+// #define EXPORT_XPCOM_API(type) is NS_EXTERN_C NS_EXPORT type NS_FROZENCALL
+
+//NS_FROZENCALL is __cdecl
+
+// so all XPCOM_API functions MUST BE Cdecl
+
+namespace Gecko
 {
 	/// <summary>
 	/// Provides low-level access to XPCOM.
 	/// </summary>
 	public static class Xpcom
 	{
-		#region Native Methods
-		[DllImport("xpcom", CharSet = CharSet.Ansi)]
-		static extern int NS_InitXPCOM2(out IntPtr serviceManager, [MarshalAs(UnmanagedType.IUnknown)] object binDirectory, nsIDirectoryServiceProvider appFileLocationProvider);
-		
-		[DllImport("xpcom", CharSet = CharSet.Ansi)]
+		#region XpCom Methods
+		/// <summary>
+		/// Declaration in nsXPCOM.h
+		/// XPCOM_API(nsresult) NS_InitXPCOM2(nsIServiceManager* *result, nsIFile* binDirectory, nsIDirectoryServiceProvider* appFileLocationProvider);
+		/// </summary>
+		/// <param name="serviceManager"></param>
+		/// <param name="binDirectory"></param>
+		/// <param name="appFileLocationProvider"></param>
+		/// <returns></returns>
+		[DllImport("xpcom", CharSet = CharSet.Ansi,CallingConvention = CallingConvention.Cdecl)]
+		static extern int NS_InitXPCOM2([MarshalAs(UnmanagedType.Interface)] out nsIServiceManager serviceManager, [MarshalAs(UnmanagedType.IUnknown)] object binDirectory, nsIDirectoryServiceProvider appFileLocationProvider);
+
+		/// <summary>
+		/// Shutdown XPCOM. You must call this method after you are finished
+		/// using xpcom.
+		/// 
+		/// Declaration in nsXPCOM.h
+		/// XPCOM_API(nsresult) NS_ShutdownXPCOM(nsIServiceManager* servMgr);
+		/// </summary>
+		/// <param name="serviceManager"></param>
+		/// <returns></returns>
+		[DllImport("xpcom", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+		static extern int NS_ShutdownXPCOM([MarshalAs(UnmanagedType.Interface)] nsIServiceManager serviceManager);
+
+		/// <summary>
+		/// Declaration in nsXPCOM.h
+		/// XPCOM_API(nsresult) NS_NewNativeLocalFile(const nsACString &path, bool followLinks, nsILocalFile* *result);
+		/// </summary>
+		/// <param name="path"></param>
+		/// <param name="followLinks"></param>
+		/// <param name="result"></param>
+		/// <returns></returns>
+		[DllImport("xpcom", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
 		static extern int NS_NewNativeLocalFile(nsACString path, bool followLinks, [MarshalAs(UnmanagedType.IUnknown)] out object result);
-		
-		[DllImport("xpcom", CharSet = CharSet.Ansi)]
-		static extern int NS_GetComponentManager(out nsInterfaces componentManager);
-		
-		[DllImport("xpcom", CharSet = CharSet.Ansi)]
-		static extern int NS_GetComponentRegistrar(out nsIComponentRegistrar componentRegistrar);
-		
-		[DllImport("xpcom", EntryPoint="NS_Alloc")]
+
+		/// <summary>
+		/// Declaration in nsXPCOM.h
+		/// XPCOM_API(nsresult) NS_GetComponentManager(nsIComponentManager* *result);
+		/// </summary>
+		/// <param name="componentManager"></param>
+		/// <returns></returns>
+		[DllImport("xpcom", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+		static extern int NS_GetComponentManager([MarshalAs(UnmanagedType.Interface)]out nsIComponentManager componentManager);
+
+		/// <summary>
+		/// Declaration in nsXPCOM.h
+		/// XPCOM_API(nsresult) NS_GetComponentRegistrar(nsIComponentRegistrar* *result);
+		/// </summary>
+		/// <param name="componentRegistrar"></param>
+		/// <returns></returns>
+		[DllImport("xpcom", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+		static extern int NS_GetComponentRegistrar([MarshalAs(UnmanagedType.Interface)] out nsIComponentRegistrar componentRegistrar);
+
+		/// <summary>
+		/// XPCOM_API(void*) NS_Alloc(PRSize size);
+		/// </summary>
+		/// <param name="size"></param>
+		/// <returns></returns>
+		[DllImport("xpcom", EntryPoint = "NS_Alloc", CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr Alloc(int size);
-		
-		[DllImport("xpcom", EntryPoint="NS_Realloc")]
+
+		/// <summary>
+		/// XPCOM_API(void*) NS_Realloc(void* ptr, PRSize size);
+		/// </summary>
+		/// <param name="ptr"></param>
+		/// <param name="size"></param>
+		/// <returns></returns>
+		[DllImport("xpcom", EntryPoint = "NS_Realloc", CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr Realloc(IntPtr ptr, int size);
-		
-		[DllImport("xpcom", EntryPoint="NS_Free")]
+
+		/// <summary>
+		/// XPCOM_API(void) NS_Free(void* ptr)
+		/// </summary>
+		/// <param name="ptr"></param>
+		[DllImport("xpcom", EntryPoint = "NS_Free", CallingConvention = CallingConvention.Cdecl)]
 		public static extern void Free(IntPtr ptr);
 		#endregion
-		
+
+		#region Fields
+		static bool? m_isMono;
+		static bool _IsInitialized;
+		static string _ProfileDirectory;
+		static int _XpcomThreadId;
+		private static string _xulrunnerVersion;
+		#endregion
+
+		#region CLR runtime
+		/// <summary>
+		/// GeckoFX is running on Linux
+		/// </summary>
+		public static bool IsLinux
+		{
+			get { return Environment.OSVersion.Platform == PlatformID.Unix; }
+		}
+
+		/// <summary>
+		/// GeckoFX is running on Windows
+		/// </summary>
+		public static bool IsWindows
+		{
+			get { return !IsLinux; }
+		}
+
+		/// <summary>
+		/// GeckoFX is running on Mono CLR implementation
+		/// </summary>
+		public static bool IsMono
+		{
+			get
+			{
+				if (m_isMono == null)
+					m_isMono = Type.GetType("Mono.Runtime") != null;
+
+				return (bool)m_isMono;
+			}
+		}
+
+		/// <summary>
+		///  GeckoFX is running on Microsoft CLR implementation (.NET Framework)
+		/// </summary>
+		public static bool IsDotNet
+		{
+			get { return !IsMono; }
+		}
+		#endregion
+
+		public static bool IsInitialized
+		{
+			get { return _IsInitialized; }
+		}
+
+		/// <summary>
+		/// Current Xulrunner version
+		/// </summary>
+		public static string XulRunnerVersion
+		{
+			get { return _xulrunnerVersion; }
+		}
+
+		public static nsIComponentManager ComponentManager;
+		public static nsIComponentRegistrar ComponentRegistrar;
+		public static nsIServiceManager ServiceManager;
+
+		#region Init & shudown
 		/// <summary>
 		/// Initializes XPCOM using the current directory as the XPCOM directory.
 		/// </summary>
@@ -76,7 +215,7 @@ namespace Skybound.Gecko
 		{
 			Initialize(null);
 		}
-		
+
 		/// <summary>
 		/// Initializes XPCOM using the specified directory.
 		/// </summary>
@@ -85,9 +224,14 @@ namespace Skybound.Gecko
 		{
 			if (_IsInitialized)
 				return;
+
+			Interlocked.Exchange(ref _XpcomThreadId, Thread.CurrentThread.ManagedThreadId);
+
+			if (IsWindows)
+				Kernel32.SetDllDirectory(binDirectory);
 			
 			string folder = binDirectory ?? Environment.CurrentDirectory;
-			string xpcomPath = Path.Combine(folder, "xpcom.dll");
+			string xpcomPath = Path.Combine(folder, IsLinux ? "libxpcom.so" : "xpcom.dll");
 			
 			if (Debugger.IsAttached)
 			{
@@ -98,19 +242,25 @@ namespace Skybound.Gecko
 						"If you do not have XULRunner installed, click Yes to open the download page.  Otherwise, click No, and update your application startup code.",
 							"XULRunner Not Found", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
 					{
-						#if GECKO_1_9_1
 						Process.Start("http://releases.mozilla.org/pub/mozilla.org/xulrunner/releases/1.9.1.2/runtimes/xulrunner-1.9.1.2.en-US.win32.zip");
-						#elif GECKO_1_9
-						Process.Start("http://releases.mozilla.org/pub/mozilla.org/xulrunner/releases/1.9.0.13/runtimes/xulrunner-1.9.0.13.en-US.win32.zip");
-						#elif GECKO_1_8
-						Process.Start("http://releases.mozilla.org/pub/mozilla.org/xulrunner/releases/1.8.1.3/contrib/win32");
-						#endif
 					}
 					
 					Environment.Exit(0);
 				}
 			}
+
+			try
+			{
+				// works on windows
+				// but some classes can be not exist on mono (may be)
+				// so make it in another function(stack allocation is making on function start)
+				ReadXulrunnerVersion(xpcomPath);
+			}
+			catch ( Exception )
+			{
+			}
 			
+
 			if (binDirectory != null)
 			{
 				Environment.SetEnvironmentVariable("path",
@@ -132,8 +282,14 @@ namespace Skybound.Gecko
 			String oldCurrent = Environment.CurrentDirectory;
 			Environment.CurrentDirectory = folder;
 			
-			IntPtr serviceManagerPtr;
+			nsIServiceManager serviceManagerPtr;
 			//int res = NS_InitXPCOM2(out serviceManagerPtr, mreAppDir, new DirectoryServiceProvider());
+
+
+			//Note: the error box that this can generate can't be prevented with try/catch, and res is 0 even if it fails
+			//REVIEW: how else can we determine what happened and give a more useful answer, to help new GeckoFX users,
+			//Telling them that probably the version of firefox or xulrunner didn't match this library version?
+			
 			int res = NS_InitXPCOM2(out serviceManagerPtr, mreAppDir, null);
 			
 			// change back
@@ -144,27 +300,46 @@ namespace Skybound.Gecko
 				throw new Exception("Failed on NS_InitXPCOM2");
 			}
 			
-			ServiceManager = (nsIServiceManager)Marshal.GetObjectForIUnknown(serviceManagerPtr);
+			ServiceManager = (nsIServiceManager)serviceManagerPtr;
 			
 			// get some global objects we will need later
 			NS_GetComponentManager(out ComponentManager);
 			NS_GetComponentRegistrar(out ComponentRegistrar);
 			
-			// a bug in Mozilla 1.8 (https://bugzilla.mozilla.org/show_bug.cgi?id=309877) causes the PSM to
-			// crash when loading a site over HTTPS.  in order to work around this bug, we must register an nsIDirectoryServiceProvider
-			// which will provide the location of a profile
+			// RegisterProvider is neccessary to get link styles etc.
 			nsIDirectoryService directoryService = GetService<nsIDirectoryService>("@mozilla.org/file/directory_service;1");
-			directoryService.RegisterProvider(new ProfileProvider());
+			if (directoryService != null)
+				directoryService.RegisterProvider(new ProfileProvider());
+
+			if (UseCustomPrompt)
+				PromptFactoryFactory.Register();
 			
 			_IsInitialized = true;
 		}
-		
-		static bool _IsInitialized;
-		
-		static nsInterfaces ComponentManager;
-		static nsIComponentRegistrar ComponentRegistrar;
-		static nsIServiceManager ServiceManager;
-		
+
+		private static void ReadXulrunnerVersion(string xulDll)
+		{
+			FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo( xulDll );
+			_xulrunnerVersion = fileVersionInfo.FileVersion;
+		}
+
+		public static void Shutdown()
+		{
+			Marshal.ReleaseComObject(ComponentRegistrar);
+			Marshal.ReleaseComObject(ComponentManager);
+			NS_ShutdownXPCOM(ServiceManager);
+			_IsInitialized = false;
+		}
+
+		public static void AssertCorrectThread()
+		{
+			if (Thread.CurrentThread.ManagedThreadId != _XpcomThreadId)
+			{
+				throw new InvalidOperationException("Xpcom must run on own thread");
+			}
+		}
+		#endregion
+
 		/// <summary>
 		/// Gets or sets the path to the directory which contains the user profile.
 		/// The default directory is Geckofx\DefaultProfile in the user's local application data directory.
@@ -175,11 +350,8 @@ namespace Skybound.Gecko
 			{
 				if (_ProfileDirectory == null)
 				{
-					#if GECKO_1_9
-					string directory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Geckofx\1.9\DefaultProfile");
-					#elif GECKO_1_8
-					string directory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Geckofx\1.8\DefaultProfile");
-					#endif
+					string directory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Path.Combine("Geckofx", "DefaultProfile"));
+
 					if (!Directory.Exists(directory))
 					{
 						Directory.CreateDirectory(directory);
@@ -190,7 +362,7 @@ namespace Skybound.Gecko
 			}
 			set
 			{
-				if (!string.IsNullOrEmpty(value))
+				if (!String.IsNullOrEmpty(value))
 				{
 					if (!Directory.Exists(value))
 					{
@@ -200,24 +372,14 @@ namespace Skybound.Gecko
 				_ProfileDirectory = value;
 			}
 		}
-		static string _ProfileDirectory;
-		
-		/// <summary>
-		/// A simple nsIDirectoryServiceProvider which provides the profile directory.
-		/// </summary>
-		class ProfileProvider : nsIDirectoryServiceProvider
+
+		public static bool UseCustomPrompt
 		{
-			public nsIFile GetFile(string prop, out bool persistent)
-			{
-				persistent = false;
-				
-				if (prop == "ProfD")
-				{
-					return (nsIFile)NewNativeLocalFile(ProfileDirectory ?? "");
-				}
-				return null;
-			}
+			get;
+			set;
 		}
+
+		#region External Methods
 		
 		public static object NewNativeLocalFile(string filename)
 		{
@@ -229,35 +391,42 @@ namespace Skybound.Gecko
 			
 			return null;
 		}
+
+		#region CreateInstance
+		//public static object CreateInstance(Guid classIID)
+		//{
+		//	Guid iid = typeof(nsISupports).GUID;
+		//	return ComponentManager.CreateInstance(ref classIID, null, ref iid);
+		//}
 		
-		public static object CreateInstance(Guid classIID)
-		{
-			Guid iid = typeof(nsISupports).GUID;
-			return ComponentManager.CreateInstance(ref classIID, null, ref iid);
-		}
-		
-		public static object CreateInstance(string contractID)
-		{
-			return CreateInstance<nsISupports>(contractID);
-		}
+		//public static object CreateInstance(string contractID)
+		//{
+		//	return CreateInstance<nsISupports>(contractID);
+		//}
 		
 		public static TInterfaceType CreateInstance<TInterfaceType>(string contractID)
 		{
 			Guid iid = typeof(TInterfaceType).GUID;
-			return (TInterfaceType)ComponentManager.CreateInstanceByContractID(contractID, null, ref iid);
+			IntPtr ptr = ComponentManager.CreateInstanceByContractID(contractID, null, ref iid);
+			return (TInterfaceType)Xpcom.GetObjectForIUnknown(ptr);
 		}
+		#endregion
+
+		#region QueryInterface
 		
 		public static TInterfaceType QueryInterface<TInterfaceType>(object obj)
 		{
 			return (TInterfaceType)QueryInterface(obj, typeof(TInterfaceType).GUID);
 		}
-		
+
 		public static object QueryInterface(object obj, Guid iid)
 		{
+			AssertCorrectThread();
+
 			if (obj == null)
 				return null;
-			
-			// get an nsISupports (aka IUnknown) pointer from the objection
+
+			// get an nsISupports (aka IUnknown) pointer from the object
 			IntPtr pUnk = Marshal.GetIUnknownForObject(obj);
 			if (pUnk == IntPtr.Zero)
 				return null;
@@ -278,18 +447,27 @@ namespace Skybound.Gecko
 				if (pInterfaceRequestor != IntPtr.Zero)
 				{
 					// convert it to a managed interface
-					QI_nsIInterfaceRequestor req = (QI_nsIInterfaceRequestor)Marshal.GetObjectForIUnknown(pInterfaceRequestor);
+					QI_nsIInterfaceRequestor req = (QI_nsIInterfaceRequestor)Xpcom.GetObjectForIUnknown(pInterfaceRequestor);
 					
-					// try to get the requested interface
-					req.GetInterface(ref iid, out ppv);
+					if (req != null)
+					{
 					
-					// clean up
-					Marshal.ReleaseComObject(req);
+						try
+						{
+							req.GetInterface(ref iid, out ppv);
+							// clean up
+							Marshal.ReleaseComObject(req);
+						}
+						catch(NullReferenceException e)
+						{
+							Debug.WriteLine("NullRefException from native code.");
+						}
+					}
 					Marshal.Release(pInterfaceRequestor);
 				}
 			}
 			
-			object result = (ppv != IntPtr.Zero) ? Marshal.GetObjectForIUnknown(ppv) : null;
+			object result = (ppv != IntPtr.Zero) ? Xpcom.GetObjectForIUnknown(ppv) : null;
 			
 			Marshal.Release(pUnk);
 			if (ppv != IntPtr.Zero)
@@ -297,34 +475,31 @@ namespace Skybound.Gecko
 			
 			return result;
 		}
-		
-		/// <summary>
-		/// A special declaration of nsIInterfaceRequestor used only for QueryInterface, using PreserveSig
-		/// to prevent .NET from throwing an exception when the interface doesn't exist.
-		/// </summary>
-		[Guid("033a1470-8b2a-11d3-af88-00a024ffc08c"), ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-		interface QI_nsIInterfaceRequestor
-		{
-			[PreserveSig] int GetInterface(ref Guid uuid, out IntPtr pUnk);
-		}
-		
+		#endregion
+
+		#region GetService
 		public static object GetService(Guid classIID)
 		{
+			AssertCorrectThread();
+
 			Guid iid = typeof(nsISupports).GUID;
 			return ServiceManager.GetService(ref classIID, ref iid);
 		}
 		
-		public static object GetService(string contractID)
-		{
-			return GetService<nsISupports>(contractID);
-		}
+		//public static object GetService(string contractID)
+		//{
+		//    return GetService<nsISupports>(contractID);
+		//}
 		
 		public static TInterfaceType GetService<TInterfaceType>(string contractID)
 		{
+			AssertCorrectThread();
+
 			Guid iid = typeof(TInterfaceType).GUID;
-			return (TInterfaceType)ServiceManager.GetServiceByContractID(contractID, ref iid);
+			IntPtr ptr = ServiceManager.GetServiceByContractID(contractID, ref iid);
+			return (TInterfaceType)Xpcom.GetObjectForIUnknown(ptr);
 		}
-		
+		#endregion
 		/// <summary>
 		/// Registers a factory to be used to instantiate a particular class identified by ClassID, and creates an association of class name and ContractID with the class.
 		/// </summary>
@@ -336,5 +511,83 @@ namespace Skybound.Gecko
 		{
 			ComponentRegistrar.RegisterFactory(ref classID, className, contractID, factory);
 		}
+
+		
+		#endregion
+
+		///	<summary>
+		/// Helper method for WeakReference
+		///	</summary>
+		internal static IntPtr QueryReferent(object obj, ref Guid uuid )
+		{		
+			Xpcom.AssertCorrectThread();
+
+			IntPtr ppv, pUnk = Marshal.GetIUnknownForObject(obj);
+
+			Marshal.QueryInterface(pUnk, ref uuid, out ppv);
+
+			Marshal.Release(pUnk);
+
+			return ppv;
+   
+		}
+		
+		public static object GetObjectForIUnknown(IntPtr ptr)
+		{
+			if (ptr == IntPtr.Zero)
+				return null;
+			
+			int startRef = 0, endRef = 0;
+			
+			// Mono bug : Marshal.GetObjectForIUnknown is decrementing the COM objects ref count not incrementing in.
+			if (IsMono)			
+				startRef = Marshal.AddRef(ptr);			
+			
+			object ret = Marshal.GetObjectForIUnknown(ptr);
+			
+			if (IsMono)
+			{
+				endRef = Marshal.AddRef(ptr);
+				if (endRef > startRef + 1)
+					Debug.WriteLine("mono GetObjectForIUknown bug has been fixed! Please delete this fix.");
+			}
+			
+			return ret;
+				
+		}
+
+		#region Internal class & interface declarations
+		#region QI_nsIInterfaceRequestor	
+		/// <summary>
+		/// A special declaration of nsIInterfaceRequestor used only for QueryInterface, using PreserveSig
+		/// to prevent .NET from throwing an exception when the interface doesn't exist.
+		/// </summary>
+		[Guid("033a1470-8b2a-11d3-af88-00a024ffc08c"), ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+		interface QI_nsIInterfaceRequestor
+		{
+
+			[MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
+			[PreserveSig]
+			int GetInterface(ref Guid uuid, out IntPtr pUnk);
+		}
+		#endregion
+
+		#region ProfileProvider
+		/// <summary>
+		/// A simple nsIDirectoryServiceProvider which provides the profile directory.
+		/// </summary>
+		class ProfileProvider : nsIDirectoryServiceProvider
+		{
+			public nsIFile GetFile(string prop, ref bool persistent)
+			{
+				if (prop == "ProfD")
+				{
+					return (nsIFile)NewNativeLocalFile(ProfileDirectory ?? "");
+				}
+				return null;
+			}
+		}
+		#endregion
+		#endregion
 	}
 }

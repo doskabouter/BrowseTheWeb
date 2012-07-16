@@ -38,37 +38,48 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Skybound.Gecko
-{
-	#if !NO_CUSTOM_PROMPT_SERVICE
+namespace Gecko
+{	
 	[Guid("8E4AABE2-B832-4cff-B213-2174DE2B818D")]
-	class PromptServiceFactory : nsIFactory
+	[ContractID(PromptServiceFactory.ContractID)]
+	class PromptServiceFactory
+		: GenericOneClassNsFactory<PromptServiceFactory, PromptService>
 	{
-		public static void Register()
+		public const string ContractID ="@mozilla.org/embedcomp/prompt-service;1";
+	}
+
+	[ContractID(PromptFactoryFactory.ContractID)]
+	class PromptFactoryFactory
+		: GenericOneClassNsFactory<PromptFactoryFactory, PromptFactory>
+	{
+		public const string ContractID = "@mozilla.org/prompter;1";
+	}
+
+	public class PromptFactory
+		:nsIPromptFactory
+	{
+		static PromptFactory()
 		{
-			if (!_IsRegistered)
-			{
-				Xpcom.RegisterFactory(typeof(PromptServiceFactory).GUID, "Skybound.Gecko.PromptServiceFactory", "@mozilla.org/embedcomp/prompt-service;1", new PromptServiceFactory());
-				_IsRegistered = true;
-			}
+			PromptServiceCreator = () => new PromptService();
 		}
-		static bool _IsRegistered;
-		
-		void nsIFactory.CreateInstance(nsISupports aOuter, ref Guid iid, out object result)
+
+		/// <summary>
+		/// Allow injecting different PromptService implementations into PromptFactory.
+		/// </summary>
+		public static Func<nsIPromptService2> PromptServiceCreator { get; set; }
+
+		public IntPtr GetPrompt( nsIDOMWindow aParent, ref Guid iid )
 		{
-			result = new PromptService();
-		}
-		
-		void nsIFactory.LockFactory(bool @lock)
-		{
+			IntPtr result = IntPtr.Zero;
+			IntPtr iUnknownForObject = Marshal.GetIUnknownForObject(PromptServiceCreator());
+			Marshal.QueryInterface(iUnknownForObject, ref iid, out result);
+			Marshal.Release(iUnknownForObject);
+			return result;
 		}
 	}
 	
-	#if GECKO_1_8
-	class PromptService : nsIPromptService, nsINonBlockingAlertService
-	#elif GECKO_1_9
-	class PromptService : nsIPromptService2, nsINonBlockingAlertService
-	#endif
+
+	public class PromptService : nsIPromptService2,nsIPrompt
 	{
 		public void Alert(nsIDOMWindow aParent, string aDialogTitle, string aText)
 		{
@@ -102,7 +113,7 @@ namespace Skybound.Gecko
 			return (result == (DialogResult)1);
 		}
 
-		public int ConfirmEx(nsIDOMWindow aParent, string aDialogTitle, string aText, uint aButtonFlags, string aButton0Title, string aButton1Title, string aButton2Title, string aCheckMsg, out bool aCheckState)
+		public int ConfirmEx(nsIDOMWindow aParent, string aDialogTitle, string aText, uint aButtonFlags, string aButton0Title, string aButton1Title, string aButton2Title, string aCheckMsg, ref bool aCheckState)
 		{
 			string [] buttons = new String[3];
 			string [] titles = { aButton0Title, aButton1Title, aButton2Title };
@@ -141,7 +152,7 @@ namespace Skybound.Gecko
 			return 0;
 		}
 		
-		public bool Prompt(nsIDOMWindow aParent, string aDialogTitle, string aText, ref string aValue, string aCheckMsg, IntPtr aCheckState)
+		public bool Prompt(nsIDOMWindow aParent, string aDialogTitle, string aText, ref string aValue, string aCheckMsg, ref bool aCheckState)
 		{
 		      PromptDialog dialog = new PromptDialog(aDialogTitle, aText, aValue, aCheckMsg);
 			
@@ -151,18 +162,16 @@ namespace Skybound.Gecko
 		            aValue = dialog.Result;
 		      }
 			
-		      // passing aCheckState as an IntPtr instead of a bool [] fixes the prompts in about:config
-		      if (aCheckState != IntPtr.Zero)
-		            Marshal.WriteIntPtr(aCheckState, dialog.IsChecked ? new IntPtr(-1) : new IntPtr(0));
+			  aCheckState = dialog.IsChecked;
 			
 		      return (result == DialogResult.OK);
 		}
 		
-		public bool PromptUsernameAndPassword(nsIDOMWindow aParent, string aDialogTitle, string aText, ref string aUsername, ref string aPassword, string aCheckMsg, IntPtr aCheckState)
+		public bool PromptUsernameAndPassword(nsIDOMWindow aParent, string aDialogTitle, string aText, ref string aUsername, ref string aPassword, string aCheckMsg, ref bool aCheckState)
 		{
 			//test: http://tools.dynamicdrive.com/password/example/
 			
-			bool checkState = (aCheckState == IntPtr.Zero) ? false : (Marshal.ReadIntPtr(aCheckState) != IntPtr.Zero);
+			bool checkState = aCheckState;
 			
 			PasswordDialog dialog = new PasswordDialog(aDialogTitle, aText, aUsername, aPassword, aCheckMsg, checkState);
 			if (dialog.ShowDialog() == DialogResult.OK)
@@ -170,9 +179,7 @@ namespace Skybound.Gecko
 			      aUsername = dialog.UserName;
 			      aPassword = dialog.Password;
 				
-				// passing aCheckState as an IntPtr instead of a bool [] fixes the some prompts
-				if (aCheckState != IntPtr.Zero)
-					Marshal.WriteIntPtr(aCheckState, dialog.IsChecked ? new IntPtr(-1) : new IntPtr(0));
+				  aCheckState = dialog.IsChecked;
 				
 			      return true;
 			}
@@ -180,27 +187,24 @@ namespace Skybound.Gecko
 			return false;
 		}
 
-		public bool PromptPassword(nsIDOMWindow aParent, string aDialogTitle, string aText, ref string aPassword, string aCheckMsg, IntPtr aCheckState)
+		public bool PromptPassword(nsIDOMWindow aParent, string aDialogTitle, string aText, ref string aPassword, string aCheckMsg, ref System.Boolean aCheckState)
 		{
-			bool checkState = (aCheckState == IntPtr.Zero) ? false : (Marshal.ReadIntPtr(aCheckState) != IntPtr.Zero);
+			bool checkState = aCheckState;
 			
 			PasswordDialog dialog = new PasswordDialog(aDialogTitle, aText, "", aPassword, aCheckMsg, checkState);
 			dialog.DisableUserName();
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
 				aPassword = dialog.Password;
-				if (aCheckState != IntPtr.Zero)
-					Marshal.WriteIntPtr(aCheckState, dialog.IsChecked ? new IntPtr(-1) : new IntPtr(0));
+				aCheckState = dialog.IsChecked;
 				return true;
 			}
 			
 			return false;
 		}
 		
-		public bool Select(nsIDOMWindow aParent, string aDialogTitle, string aText, uint aCount, IntPtr aSelectList, out int aOutSelection)
-		{
-			//throw new NotImplementedException();
-			aOutSelection = 0;
+		public bool Select(nsIDOMWindow aParent, string aDialogTitle, string aText, uint aCount, System.IntPtr[] aSelectList, ref int aOutSelection)
+		{			
 			return false;
 		}
 		
@@ -208,36 +212,85 @@ namespace Skybound.Gecko
 		{
 		      ConfirmDialog dialog = new ConfirmDialog(aText, aDialogTitle, "OK", null, null, null);
 		      dialog.Show();
-		}
-		
-		#region nsIPromptService2 Members
-		#if GECKO_1_9
-		
-		public bool PromptAuth(nsIDOMWindow aParent, IntPtr aChannel, int level, nsIAuthInformation authInfo, string checkboxLabel, IntPtr aCheckValue)
+        }
+
+        #region nsIPromptService2 Members
+		public bool PromptAuth(nsIDOMWindow aParent, nsIChannel aChannel, uint level, nsIAuthInformation authInfo, string checkboxLabel, ref System.Boolean aCheckValue)
+        {
+            string userName = nsString.Get(authInfo.GetUsernameAttribute);
+			string password = nsString.Get(authInfo.GetPasswordAttribute);
+
+			string realm = nsString.Get(authInfo.GetRealmAttribute);
+
+            if (PromptUsernameAndPassword(aParent, "Server Authentication", "The server '" + realm + "' requires a user name and password.", ref userName, ref password, checkboxLabel, ref aCheckValue))
+            {
+				nsString.Set(authInfo.SetUsernameAttribute, userName);
+				nsString.Set(authInfo.SetPasswordAttribute, password);
+                return true;
+            }
+
+            return false;
+        }
+
+        public nsICancelable AsyncPromptAuth(nsIDOMWindow aParent, nsIChannel aChannel, nsIAuthPromptCallback aCallback, nsISupports aContext, uint level, nsIAuthInformation authInfo, string checkboxLabel, ref bool checkValue)
+        {
+            //throw new NotImplementedException();
+            return null;
+        }
+
+        #endregion
+
+		public void Alert( string dialogTitle, string text )
 		{
-			string userName = nsString.Get(authInfo.GetUsername);
-			string password = nsString.Get(authInfo.GetPassword);
-			
-			string realm = nsString.Get(authInfo.GetRealm);
-			
-			if (PromptUsernameAndPassword(aParent, "Server Authentication", "The server '"  + realm + "' requires a user name and password.", ref userName, ref password, checkboxLabel, aCheckValue))
-			{
-				nsString.Set(authInfo.SetUsername, userName);
-				nsString.Set(authInfo.SetPassword, password);
-				return true;
-			}
-			
- 			return false;
+			Alert( null, dialogTitle, text );
 		}
 
-		public nsICancelable AsyncPromptAuth(nsIDOMWindow aParent, IntPtr aChannel, nsIAuthPromptCallback aCallback, nsISupports aContext, uint level, nsIAuthInformation authInfo, string checkboxLabel, IntPtr checkValue)
+		public void AlertCheck( string dialogTitle, string text, string checkMsg, ref bool checkValue )
 		{
-			//throw new NotImplementedException();
- 			return null;
+			AlertCheck( null, dialogTitle, text, checkMsg, ref checkValue );
 		}
-		#endif
-		
-		#endregion
-	}
-	#endif
+
+		public bool Confirm( string dialogTitle, string text )
+		{
+			return Confirm( null, dialogTitle, text );
+		}
+
+		public bool ConfirmCheck( string dialogTitle, string text, string checkMsg, ref bool checkValue )
+		{
+			return ConfirmCheck( null, dialogTitle, text, checkMsg, ref checkValue );
+		}
+
+		public int ConfirmEx( string dialogTitle, string text, uint buttonFlags, string button0Title, string button1Title, string button2Title, string checkMsg, ref bool checkValue )
+		{
+			return ConfirmEx( null,
+			                  dialogTitle,
+			                  text,
+			                  buttonFlags,
+			                  button0Title,
+			                  button1Title,
+			                  button2Title,
+			                  checkMsg,
+			                  ref checkValue );
+		}
+
+		public bool Prompt( string dialogTitle, string text, ref string value, string checkMsg, ref bool checkValue )
+		{
+			return Prompt( null, dialogTitle, text, ref value, checkMsg, ref checkValue );
+		}
+
+		public bool PromptPassword( string dialogTitle, string text, ref string password, string checkMsg, ref bool checkValue )
+		{
+			return PromptPassword( null, dialogTitle, text, ref password, checkMsg, ref checkValue );
+		}
+
+		public bool PromptUsernameAndPassword( string dialogTitle, string text, ref string username, ref string password, string checkMsg, ref bool checkValue )
+		{
+			return PromptUsernameAndPassword( null,dialogTitle, text, ref username, ref password, checkMsg, ref checkValue );
+		}
+
+		public bool Select( string dialogTitle, string text, uint count, IntPtr[] selectList, ref int outSelection )
+		{
+			return Select( null, dialogTitle, text, count, selectList, ref outSelection );
+		}
+	}	
 }

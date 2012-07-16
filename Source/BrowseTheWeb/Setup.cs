@@ -27,7 +27,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 
-using Skybound.Gecko;
+using Gecko;
 using Ionic.Zip;
 
 using MediaPortal.Configuration;
@@ -82,8 +82,8 @@ namespace BrowseTheWeb
             FileInfo info = new FileInfo(plugins + "\\Windows\\HtmlAgilityPack.dll");
             Log.Debug("BrowseTheWeb | HtmlAgilityPack: " + info.CreationTime);
 
-            info = new FileInfo(plugins + "\\Windows\\Skybound.Gecko.dll");
-            Log.Debug("BrowseTheWeb | Skybound.Gecko.dll: " + info.CreationTime);
+            info = new FileInfo(plugins + "\\Windows\\geckofx-13.dll");
+            Log.Debug("BrowseTheWeb | geckofx-13.dll: " + info.CreationTime);
 
             try
             {

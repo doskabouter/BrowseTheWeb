@@ -2,112 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 
-namespace Skybound.Gecko
+namespace Gecko
 {
 	/// <summary>
 	/// Represents a response to a Gecko web request.
 	/// </summary>
 	public class GeckoResponse
-	{
-		#region Gecko Interfaces
-		[Guid("c63a055a-a676-4e71-bf3c-6cfa11082018"), ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-		interface nsIChannel : nsIRequest
-		{
-			// nsIRequest:
-			new void GetName(nsACString aName);
-			new bool IsPending();
-			new int GetStatus();
-			new void Cancel(int aStatus);
-			new void Suspend();
-			new void Resume();
-			new IntPtr GetLoadGroup(); // nsILoadGroup
-			new void SetLoadGroup(IntPtr aLoadGroup);
-			new int GetLoadFlags();
-			new void SetLoadFlags(int aLoadFlags);
-			
-			// nsIChannel:
-			nsIURI GetOriginalURI();
-			void SetOriginalURI(nsIURI aOriginalURI);
-			nsIURI GetURI();
-			nsISupports GetOwner();
-			void SetOwner(nsISupports aOwner);
-			nsIInterfaceRequestor GetNotificationCallbacks();
-			void SetNotificationCallbacks(nsIInterfaceRequestor aNotificationCallbacks);
-			nsISupports GetSecurityInfo();
-			void GetContentType(nsACString aContentType);
-			void SetContentType(nsACString aContentType);
-			void GetContentCharset(nsACString aContentCharset);
-			void SetContentCharset(nsACString aContentCharset);
-			int GetContentLength();
-			void SetContentLength(int aContentLength);
-			IntPtr Open(); // nsIInputStream
-			void AsyncOpen(IntPtr aListener, nsISupports aContext); // aListener=nsIStreamListener
-		}
-		
-		[Guid("9277fe09-f0cc-4cd9-bbce-581dd94b0260"), ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-		interface nsIHttpChannel : nsIChannel
-		{
-			// nsIRequest:
-			new void GetName(nsACString aName);
-			new bool IsPending();
-			new int GetStatus();
-			new void Cancel(int aStatus);
-			new void Suspend();
-			new void Resume();
-			new IntPtr GetLoadGroup(); // nsILoadGroup
-			new void SetLoadGroup(IntPtr aLoadGroup);
-			new int GetLoadFlags();
-			new void SetLoadFlags(int aLoadFlags);
-			
-			// nsIChannel:
-			new nsIURI GetOriginalURI();
-			new void SetOriginalURI(nsIURI aOriginalURI);
-			new nsIURI GetURI();
-			new nsISupports GetOwner();
-			new void SetOwner(nsISupports aOwner);
-			new nsIInterfaceRequestor GetNotificationCallbacks();
-			new void SetNotificationCallbacks(nsIInterfaceRequestor aNotificationCallbacks);
-			new nsISupports GetSecurityInfo();
-			new void GetContentType(nsACString aContentType);
-			new void SetContentType(nsACString aContentType);
-			new void GetContentCharset(nsACString aContentCharset);
-			new void SetContentCharset(nsACString aContentCharset);
-			new int GetContentLength();
-			new void SetContentLength(int aContentLength);
-			new IntPtr Open(); // nsIInputStream
-			new void AsyncOpen(IntPtr aListener, nsISupports aContext); // aListener=nsIStreamListener
-
-			// nsIHttpChannel:
-			void GetRequestMethod(nsACString aRequestMethod);
-			void SetRequestMethod(nsACString aRequestMethod);
-			nsIURI GetReferrer();
-			void SetReferrer(nsIURI aReferrer);
-			void GetRequestHeader(nsACString aHeader, nsACString _retval);
-			void SetRequestHeader(nsACString aHeader, nsACString aValue, bool aMerge);
-			void VisitRequestHeaders(IntPtr aVisitor); // nsIHttpHeaderVisitor
-			bool GetAllowPipelining();
-			void SetAllowPipelining(bool aAllowPipelining);
-			uint GetRedirectionLimit();
-			void SetRedirectionLimit(uint aRedirectionLimit);
-			int GetResponseStatus();
-			void GetResponseStatusText(nsACString aResponseStatusText);
-			bool GetRequestSucceeded();
-			void GetResponseHeader(nsACString header, nsACString _retval);
-			void SetResponseHeader(nsACString header, nsACString value, bool merge);
-			void VisitResponseHeaders(IntPtr aVisitor); // nsIHttpHeaderVisitor
-			bool IsNoStoreResponse();
-			bool IsNoCacheResponse();
-		}
-		
-		[Guid("0cf40717-d7c1-4a94-8c1e-d6c9734101bb"), ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-		interface nsIHttpHeaderVisitor
-		{
-			void VisitHeader(nsACString aHeader, nsACString aValue);
-		}
-		
-		#endregion
-		
+	{			
 		internal GeckoResponse(nsIRequest request)
 		{
 			Channel = Xpcom.QueryInterface<nsIChannel>(request);
@@ -122,7 +25,7 @@ namespace Skybound.Gecko
 		/// </summary>
 		public string ContentType
 		{
-			get { return nsString.Get(Channel.GetContentType); }
+			get { return nsString.Get(Channel.GetContentTypeAttribute); }
 		}
 		
 		/// <summary>
@@ -130,7 +33,7 @@ namespace Skybound.Gecko
 		/// </summary>
 		public string ContentCharset
 		{
-			get { return nsString.Get(Channel.GetContentCharset); }
+			get { return nsString.Get(Channel.GetContentCharsetAttribute); }
 		}
 		
 		/// <summary>
@@ -138,7 +41,7 @@ namespace Skybound.Gecko
 		/// </summary>
 		public int ContentLength
 		{
-			get { return Channel.GetContentLength(); }
+			get { return Channel.GetContentLengthAttribute(); }
 		}
 		
 		/// <summary>
@@ -146,7 +49,7 @@ namespace Skybound.Gecko
 		/// </summary>
 		public string HttpRequestMethod
 		{
-			get { return (HttpChannel == null) ? null : nsString.Get(HttpChannel.GetRequestMethod); }
+			get { return (HttpChannel == null) ? null : nsString.Get(HttpChannel.GetRequestMethodAttribute); }
 		}
 		
 		/// <summary>
@@ -155,7 +58,7 @@ namespace Skybound.Gecko
 		/// </summary>
 		public bool HttpRequestSucceeded
 		{
-			get { return (HttpChannel == null) ? true : HttpChannel.GetRequestSucceeded(); }
+			get { return (HttpChannel == null) || HttpChannel.GetRequestSucceededAttribute(); }
 		}
 		
 		/// <summary>
@@ -163,7 +66,7 @@ namespace Skybound.Gecko
 		/// </summary>
 		public int HttpResponseStatus
 		{
-			get { return (HttpChannel == null) ? 0 :HttpChannel.GetResponseStatus(); }
+			get { return (HttpChannel == null) ? 0 : (int)HttpChannel.GetResponseStatusAttribute(); }
 		}
 		
 		/// <summary>
@@ -171,7 +74,7 @@ namespace Skybound.Gecko
 		/// </summary>
 		public string HttpResponseStatusText
 		{
-			get { return (HttpChannel == null) ? null : nsString.Get(HttpChannel.GetResponseStatusText); }
+			get { return (HttpChannel == null) ? null : nsString.Get(HttpChannel.GetResponseStatusTextAttribute); }
 		}
 	}
 }
