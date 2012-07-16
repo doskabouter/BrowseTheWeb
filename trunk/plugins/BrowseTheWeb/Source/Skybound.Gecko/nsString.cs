@@ -37,95 +37,503 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Skybound.Gecko
+namespace Gecko
 {
 	/// <summary>
 	/// Provides helper methods to get and set string attributes on XPCOM interfaces.
 	/// </summary>
 	public static class nsString
 	{
-		public delegate void StringAttributeUtf8(nsAUTF8String str);
-		
-		public static string Get(StringAttributeUtf8 getter)
+		// functions that set one or more [gecko string]s and return void
+		#region Generic Setters
+		private static void GenericSet<TString>(Action<TString> setter, string value)
+			where TString : IString, IDisposable, new()
 		{
-			using (nsAUTF8String str = new nsAUTF8String())
-			{
-				getter(str);
-				return str.ToString();
-			}
-		}
-		
-		public static void Set(StringAttributeUtf8 setter, string value)
-		{
-			using (nsAUTF8String str = new nsAUTF8String())
+			using (var str = new TString())
 			{
 				if (!string.IsNullOrEmpty(value))
 					str.SetData(value);
-				
+
 				setter(str);
 			}
 		}
-		
-		public delegate void StringAttributeAnsi(nsACString str);
-		
-		public static string Get(StringAttributeAnsi getter)
+
+		private static void GenericSet<T,TString>(Action<T,TString> setter,T value, string stringValue)
+			where TString : IString, IDisposable, new()
 		{
-			using (nsACString str = new nsACString())
+			using (var native = new TString())
 			{
-				getter(str);
-				return str.ToString();
+				if (!string.IsNullOrEmpty(stringValue))
+					native.SetData(stringValue);
+
+				setter(value, native);
 			}
 		}
-		
-		public static void Set(StringAttributeAnsi setter, string value)
+
+		private static void GenericSet<TString>(Action<TString, TString> setter, string value1, string value2)
+			where TString : IString, IDisposable, new()
 		{
-			using (nsACString str = new nsACString())
+			using (TString native1 = new TString(), native2 = new TString())
+			{
+				if (!string.IsNullOrEmpty(value1))
+					native1.SetData(value1);
+
+				if (!string.IsNullOrEmpty(value2))
+					native2.SetData(value2);
+
+				setter( native1, native2 );
+			}
+		}
+
+		private static void GenericSet<TString>(Action<TString, TString, TString> setter, string value1, string value2, string value3)
+			where TString : IString, IDisposable, new()
+		{
+			using (TString native1 = new TString(),
+				native2 = new TString(),
+				native3 = new TString())
+			{
+				if (!string.IsNullOrEmpty(value1))
+					native1.SetData(value1);
+
+				if (!string.IsNullOrEmpty(value2))
+					native2.SetData(value2);
+
+				if (!string.IsNullOrEmpty(value3))
+					native3.SetData(value3);
+
+				setter( native1, native2, native3 );
+			}
+		}
+
+		private static void GenericSet<T1, T2, TString>(Action<T1, T2, TString> func, T1 value1, T2 value2, string stringValue)
+			where TString : IString, IDisposable, new()
+		{
+			using (var native = new TString())
+			{
+				if (!string.IsNullOrEmpty(stringValue))
+					native.SetData(stringValue);
+
+				func(value1, value2, native);
+			}
+		}
+
+		private static void GenericSet<T1, TString, T2>(Action<T1,TString, T2 > func, T1 value1,string stringValue, T2 value2)
+			where TString : IString, IDisposable, new()
+		{
+			using (var native = new TString())
+			{
+				if (!string.IsNullOrEmpty(stringValue))
+					native.SetData(stringValue);
+
+				func(value1, native, value2);
+			}
+		}
+		#endregion
+
+		// functions that get [gecko string]
+		#region Generic Getters
+		/// <summary>
+		/// Generic string getter
+		/// 1-st gecko string - OUTPUT
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="getter"></param>
+		/// <returns></returns>
+		private static string GenericGet<TString>(Action<TString> getter)
+			where TString : IString, IDisposable, new()
+		{
+			string ret;
+			using (var str = new TString())
+			{
+				getter(str);
+				ret= str.ToString();
+			}
+			return ret;
+		}
+
+		/// <summary>
+		/// Generic string getter
+		/// 1-st gecko string - INPUT
+		/// 2-nd gecko string - OUTPUT
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="getter"></param>
+		/// <param name="inValue">input value</param>
+		/// <returns></returns>
+		private static string GenericGet<TString>(Action<TString, TString> getter, string inValue)
+			where TString : IString, IDisposable, new()
+		{
+			string ret;
+			using (TString nativeIn = new TString(), nativeOut = new TString())
+			{
+				if (!string.IsNullOrEmpty(inValue))
+					nativeIn.SetData(inValue);
+				getter(nativeIn, nativeOut);
+				ret = nativeOut.ToString();
+			}
+			return ret;
+		}
+
+		/// <summary>
+		/// first parameter - INPUT
+		/// gecko string - OUTPUT
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="TString"></typeparam>
+		/// <param name="func"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		private static string GenericGet<T, TString>(Action<T, TString> func, T value)
+			where TString : IString, IDisposable, new()
+		{
+			string ret;
+			using (TString native = new TString())
+			{
+				func(value, native);
+				ret = native.ToString();
+			}
+			return ret;
+		}
+
+		/// <summary>
+		/// first and second parameters - INPUT
+		/// gecko string - OUTPUT
+		/// </summary>
+		/// <typeparam name="T1"></typeparam>
+		/// <typeparam name="T2"></typeparam>
+		/// <typeparam name="TString"></typeparam>
+		/// <param name="func"></param>
+		/// <param name="value1"></param>
+		/// <param name="value2"></param>
+		/// <returns></returns>
+		private static string GenericGet<T1,T2, TString>(Action<T1, T2, TString> func, T1 value1, T2 value2)
+			where TString : IString, IDisposable, new()
+		{
+			string ret;
+			using (var native = new TString())
+			{
+				func(value1,value2, native);
+				ret = native.ToString();
+			}
+			return ret;
+		}
+		#endregion
+
+		// functions that get [T value] and pass [gecko string]s and other arguments
+		#region Generic Passers
+		/// <summary>
+		/// input - gecko String
+		/// output - T
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="TString"></typeparam>
+		/// <param name="func"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		private static T GenericPass<T, TString>(Func<TString, T> func, string value)
+			where TString : IString, IDisposable, new()
+		{
+			T ret;
+			using (var str = new TString())
 			{
 				if (!string.IsNullOrEmpty(value))
 					str.SetData(value);
-				
-				setter(str);
+
+				ret = func(str);
 			}
+			return ret;
 		}
-		
-		public delegate void StringAttributeUnicode(nsAString str);
-		
-		public static string Get(StringAttributeUnicode getter)
+
+		/// <summary>
+		/// gecko string and T1 - INPUT
+		/// T2 - OUTPUT
+		/// </summary>
+		/// <typeparam name="T1"></typeparam>
+		/// <typeparam name="TString"></typeparam>
+		/// <typeparam name="T2"></typeparam>
+		/// <param name="func"></param>
+		/// <param name="value"></param>
+		/// <param name="stringValue"></param>
+		/// <returns></returns>
+		private static T2 GenericPass<T1, TString, T2>(Func<T1, TString, T2> func, T1 value, string stringValue)
+			where TString : IString, IDisposable, new()
 		{
-			using (nsAString str = new nsAString())
+			T2 ret;
+			using (TString native = new TString())
 			{
-				getter(str);
-				return str.ToString();
+				if (!string.IsNullOrEmpty(stringValue))
+					native.SetData(stringValue);
+
+				ret = func(value, native);
 			}
+			return ret;
+		}
+
+		/// <summary>
+		/// 2x gecko strings - INPUT
+		/// T - OUTPUT
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="TString"></typeparam>
+		/// <param name="func"></param>
+		/// <param name="value1"></param>
+		/// <param name="value2"></param>
+		/// <returns></returns>
+		private static T GenericPass<T, TString>(Func<TString, TString, T> func, string value1, string value2)
+			where TString : IString, IDisposable, new()
+		{
+			T ret;
+			using (TString str1 = new TString(), str2 =new TString())
+			{
+				if (!string.IsNullOrEmpty(value1))
+					str1.SetData(value1);
+				if (!string.IsNullOrEmpty(value2))
+					str2.SetData(value2);
+				ret = func(str1, str2);
+			}
+			return ret;
+		}
+		#endregion
+
+		#region nsAUTF8String
+		public static string Get(Action<nsAUTF8String> getter)
+		{
+			return GenericGet( getter );
+		}
+
+		public static string Get(Action<nsAUTF8String, nsAUTF8String> getter, string inValue)
+		{
+			return GenericGet( getter, inValue );
+		}
+
+		public static void Set(Action<nsAUTF8String> setter, string value)
+		{
+			GenericSet( setter, value );
+		}
+
+		/// <summary>
+		/// Passes <paramref name="value"/> to function and return value
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="func"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static T Pass<T>(Func<nsAUTF8String, T> func, string value)
+		{
+			return GenericPass( func, value );
+		}
+
+		public static T Pass<T,TW> (Func<TW,nsAUTF8String,T> func,TW value,string stringValue )
+		{
+			return GenericPass( func, value, stringValue );
+		}
+		#endregion
+
+		#region nsACString
+
+		public static string Get(Action<nsACString> getter)
+		{
+			return GenericGet( getter );
+		}
+
+		public static string Get(Action<nsACString,nsACString> getter,string inValue)
+		{
+			return GenericGet( getter, inValue );
+		}
+
+		public static string Get<T>(Action<T, nsACString> func, T value)
+		{
+			return GenericGet(func, value);
+		}
+
+		public static void Set(Action<nsACString> setter, string value)
+		{
+			GenericSet( setter, value );
+		}
+
+		public static void Set(Action<nsACString, nsACString> func, string value1, string value2)
+		{
+			GenericSet( func, value1, value2 );
+		}
+
+		/// <summary>
+		/// Passes <paramref name="value"/> to function and return value
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="func"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static T Pass<T>(Func<nsACString, T> func, string value)
+		{
+			return GenericPass(func, value);
+		}
+
+		/// <summary>
+		/// Passes <paramref name="value1"/> and <paramref name="value2"/> to function and return value
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="func"></param>
+		/// <param name="value1"></param>
+		/// <param name="value2"></param>
+		/// <returns></returns>
+		public static T Pass<T>(Func<nsACString, nsACString, T> func, string value1, string value2)
+		{
+			return GenericPass(func, value1, value2);
+		}
+		#endregion
+
+		#region nsAString
+
+		#region nsAString Getters
+		
+		public static string Get(Action<nsAString> getter)
+		{
+			return GenericGet(getter);
+		}
+
+		public static string Get(Action<nsAString, nsAString> getter, string inValue)
+		{
+			return GenericGet(getter, inValue);
+		}
+
+
+		public static string Get<T>(Action<T, nsAString> func, T value)
+		{
+			return GenericGet( func, value );
+		}
+
+		public static string Get<T1,T2>(Action<T1,T2,nsAString> func,T1 value1,T2 value2)
+		{
+			return GenericGet( func, value1, value2 );
+		}
+		#endregion
+
+		#region nsAString Setters
+
+		public static void Set(Action<nsAString> setter, string value)
+		{
+			GenericSet( setter, value );
+		}
+
+		public static void Set(Action<nsAString, nsAString> func, string value1, string value2)
+		{
+			GenericSet( func, value1, value2 );
+		}
+
+		public static void Set<T>(Action<T, nsAString> func, T value1, string value2)
+		{
+			GenericSet(func, value1, value2);
+		}
+
+		public static void Set(Action<nsAString,nsAString,nsAString>func, string value1, string value2,string value3)
+		{
+			GenericSet( func, value1, value2, value3 );
+		}
+
+		public static void Set<T1,T2>(Action<T1,T2,nsAString> func,T1 value1,T2 value2, string stringValue)
+		{
+			GenericSet( func, value1, value2, stringValue );
+		}
+
+		public static void Set<T1, T2>(Action<T1,nsACString, T2 > func, T1 value1,string stringValue, T2 value2 )
+		{
+			GenericSet( func, value1, stringValue, value2 );
+		}
+		#endregion
+
+		#region nsAString Passers
+		/// <summary>
+		/// Passes <paramref name="value"/> to function and return value
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="func"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static T Pass<T>(Func<nsAString,T> func,string value)
+		{
+			return GenericPass(func, value);
+		}
+
+		/// <summary>
+		/// Passes <paramref name="value1"/> and <paramref name="value2"/> to function and return value
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="func"></param>
+		/// <param name="value1"></param>
+		/// <param name="value2"></param>
+		/// <returns></returns>
+		public static T Pass<T>(Func<nsAString,nsAString, T> func, string value1,string value2)
+		{
+			return GenericPass( func, value1, value2 );
 		}
 		
-		public static void Set(StringAttributeUnicode setter, string value)
-		{
-			using (nsAString str = new nsAString())
-			{
-				if (!string.IsNullOrEmpty(value))
-					str.SetData(value);
-				
-				setter(str);
-			}
-		}
+		#endregion
+
+		#endregion
 	}
-	
-	[StructLayout(LayoutKind.Explicit, Size=16)]
-	public class nsAUTF8String : IDisposable
+
+	/// <summary>
+	/// Internal helper interface for generics
+	/// </summary>
+	internal interface IString
 	{
-		[DllImport("xpcom", CharSet = CharSet.Ansi)]
-		static extern int NS_CStringContainerInit(nsAUTF8String container);
-		
-		[DllImport("xpcom", CharSet = CharSet.Ansi)]
-		static extern int NS_CStringSetData(nsAUTF8String str, byte [] data, int length);
-		
-		[DllImport("xpcom", CharSet = CharSet.Ansi)]
-		static extern int NS_CStringGetData(nsAUTF8String str, out IntPtr data, IntPtr nullTerm);
-		
-		[DllImport("xpcom", CharSet = CharSet.Ansi)]
-		static extern int NS_CStringContainerFinish(nsAUTF8String container);
-		
+		void SetData( string value );
+	}
+
+	#region nsAUTF8String
+	[StructLayout(LayoutKind.Sequential)]
+	public class nsAUTF8StringBase
+		: IString
+	{
+		protected nsAUTF8StringBase() { }
+
+		[DllImport("xpcom", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+		protected static extern int NS_CStringContainerInit(nsAUTF8StringBase container);
+
+		[DllImport("xpcom", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+		protected static extern int NS_CStringSetData(nsAUTF8StringBase str, byte[] data, int length);
+
+		[DllImport("xpcom", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+		protected static extern int NS_CStringGetData(nsAUTF8StringBase str, out IntPtr data, IntPtr nullTerm);
+
+		[DllImport("xpcom", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+		protected static extern int NS_CStringContainerFinish(nsAUTF8StringBase container);
+
+		#region unused variables used to ensure struct is correct size on different platforms
+#pragma warning disable 169
+		IntPtr mData;
+		int mLength;
+		int mFlags;
+#pragma warning restore 169
+		#endregion
+
+		public virtual void SetData(string value)
+		{
+			byte[] utf8 = Encoding.UTF8.GetBytes(value ?? string.Empty);
+
+			NS_CStringSetData(this, utf8, utf8.Length);
+		}
+
+		public override string ToString()
+		{
+			IntPtr data;
+			int length = NS_CStringGetData(this, out data, IntPtr.Zero);
+
+			if (length > 0)
+			{
+				byte[] result = new byte[length];
+				Marshal.Copy(data, result, 0, length);
+				return Encoding.UTF8.GetString(result);
+			}
+			return string.Empty;
+		}
+
+	}
+
+	// TODO: see comments on class nsAString
+	[StructLayout(LayoutKind.Sequential)]
+	public class nsAUTF8String : nsAUTF8StringBase, IDisposable
+	{				
 		public nsAUTF8String()
 		{
 			NS_CStringContainerInit(this);
@@ -148,45 +556,81 @@ namespace Skybound.Gecko
 		{
 			NS_CStringContainerFinish(this);
 			GC.SuppressFinalize(this);
-		}
-		
+		}				
+	}
+	#endregion
+
+	#region nsACString
+	[StructLayout(LayoutKind.Sequential)]
+	public class nsACStringBase
+		: IString
+	{
+		protected nsACStringBase() { }
+
+		[DllImport("xpcom", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+		protected static extern int NS_CStringContainerInit(nsACStringBase container);
+
+		[DllImport("xpcom", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+		protected static extern int NS_CStringSetData(nsACStringBase str, string data, int length);
+
+		[DllImport("xpcom", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+		protected internal static extern int NS_CStringGetData(nsACStringBase str, out IntPtr data, IntPtr nullTerm);
+
+		[DllImport("xpcom", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+		protected static extern int NS_CStringContainerFinish(nsACStringBase container);
+
+		#region unused variables used to ensure struct is correct size on different platforms
+#pragma warning disable 169
+		IntPtr mData;
+		int mLength;
+		int mFlags;
+#pragma warning restore 169
+		#endregion
+
 		public virtual void SetData(string value)
 		{
-			byte [] utf8 = Encoding.UTF8.GetBytes(value ?? "");
-			
-			NS_CStringSetData(this, utf8, utf8.Length);
+			NS_CStringSetData(this, value, (value == null) ? 0 : value.Length);
 		}
-		
+
+		/// <summary>
+		/// nsACStringBase can be used in cryptographic functions
+		/// Example - nsICryptoHash::Finish
+		/// This function
+		/// </summary>
+		/// <returns></returns>
+		public byte[] GetRawData()
+		{
+			IntPtr data;
+			int length = NS_CStringGetData(this, out data, IntPtr.Zero);
+
+			var ret = new byte[length];
+
+			if (length > 0)
+			{
+				Marshal.Copy(data, ret, 0, length);
+			}
+
+			return ret;
+		}
+
 		public override string ToString()
 		{
 			IntPtr data;
 			int length = NS_CStringGetData(this, out data, IntPtr.Zero);
-			
+
 			if (length > 0)
 			{
-				byte [] result = new byte[length];
-				Marshal.Copy(data, result, 0, length);
-				return Encoding.UTF8.GetString(result);
+				return Marshal.PtrToStringAnsi(data, length);
 			}
-			return "";
+			return string.Empty;
 		}
 	}
-	
-	[StructLayout(LayoutKind.Explicit, Size=16)]
-	public class nsACString : IDisposable
-	{
-		[DllImport("xpcom", CharSet = CharSet.Ansi)]
-		static extern int NS_CStringContainerInit(nsACString container);
-		
-		[DllImport("xpcom", CharSet = CharSet.Ansi)]
-		static extern int NS_CStringSetData(nsACString str, string data, int length);
-		
-		[DllImport("xpcom", CharSet = CharSet.Ansi)]
-		internal static extern int NS_CStringGetData(nsACString str, out IntPtr data, IntPtr nullTerm);
-		
-		[DllImport("xpcom", CharSet = CharSet.Ansi)]
-		static extern int NS_CStringContainerFinish(nsACString container);
-		
+
+
+	// TODO: see comment on class nsAString
+	[StructLayout(LayoutKind.Sequential)]
+	public class nsACString : nsACStringBase, IDisposable
+	{		
 		public nsACString()
 		{
 			NS_CStringContainerInit(this);
@@ -209,41 +653,61 @@ namespace Skybound.Gecko
 		{
 			NS_CStringContainerFinish(this);
 			GC.SuppressFinalize(this);
-		}
-		
-		public virtual void SetData(string value)
+		}				
+	}
+	#endregion
+
+	#region nsAString
+	[StructLayout(LayoutKind.Sequential)]
+	public class nsAStringBase
+		: IString
+	{
+		protected nsAStringBase() { }
+
+		[DllImport("xpcom", CharSet = CharSet.Unicode,CallingConvention = CallingConvention.Cdecl)]
+		protected static extern int NS_StringContainerInit(nsAStringBase container);
+
+		[DllImport("xpcom", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+		protected static extern int NS_StringSetData(nsAStringBase str, string data, int length);
+
+		[DllImport("xpcom", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+		protected static extern int NS_StringGetData(nsAStringBase str, out IntPtr data, IntPtr nullTerm);
+
+		[DllImport("xpcom", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+		protected static extern int NS_StringContainerFinish(nsAStringBase container);
+
+		#region unused variables used to ensure struct is correct size on different platforms
+		#pragma warning disable 169
+		IntPtr mData;
+		int mLength;
+		int mFlags;
+		#pragma warning restore 169
+		#endregion
+
+		public void SetData(string value)
 		{
-			NS_CStringSetData(this, value, (value == null) ? 0 : value.Length);
+			NS_StringSetData(this, value, (value == null) ? 0 : value.Length);
 		}
-		
+
 		public override string ToString()
 		{
 			IntPtr data;
-			int length = NS_CStringGetData(this, out data, IntPtr.Zero);
-			
+			int length = NS_StringGetData(this, out data, IntPtr.Zero);
+
 			if (length > 0)
 			{
-				return Marshal.PtrToStringAnsi(data, length);
+				return Marshal.PtrToStringUni(data, length);
 			}
-			return "";
+			return string.Empty;
 		}
 	}
-	
-	[StructLayout(LayoutKind.Explicit, Size=16)]
-	public class nsAString : IDisposable
-	{
-		[DllImport("xpcom", CharSet = CharSet.Unicode)]
-		static extern int NS_StringContainerInit(nsAString container);
-		
-		[DllImport("xpcom", CharSet = CharSet.Unicode)]
-		static extern int NS_StringSetData(nsAString str, string data, int length);
-		
-		[DllImport("xpcom", CharSet = CharSet.Unicode)]
-		static extern int NS_StringGetData(nsAString str, out IntPtr data, IntPtr nullTerm);
-		
-		[DllImport("xpcom", CharSet = CharSet.Unicode)]
-		static extern int NS_StringContainerFinish(nsAString container);
-		
+
+	// TODO: internal nsAString is implementation dependant write some unit tests to ensure we at least notice if it breaks.
+	// On 32 bit Linux systems it will be 12 bytes
+	// On 64 bit Linux Systems it will be 16 bytes.
+	[StructLayout(LayoutKind.Sequential)]
+	public class nsAString : nsAStringBase, IDisposable
+	{					
 		public nsAString()
 		{
 			NS_StringContainerInit(this);
@@ -266,23 +730,7 @@ namespace Skybound.Gecko
 		{
 			NS_StringContainerFinish(this);
 			GC.SuppressFinalize(this);
-		}
-		
-		public void SetData(string value)
-		{
-			NS_StringSetData(this, value, (value == null) ? 0 : value.Length);
-		}
-		
-		public override string ToString()
-		{
-			IntPtr data;
-			int length = NS_StringGetData(this, out data, IntPtr.Zero);
-			
-			if (length > 0)
-			{
-				return Marshal.PtrToStringAuto(data, length);
-			}
-			return "";
-		}
+		}				
 	}
+	#endregion
 }

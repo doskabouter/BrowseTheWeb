@@ -40,7 +40,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 
-namespace Skybound.Gecko
+namespace Gecko
 {
 	partial class PropertiesDialog : Form
 	{
@@ -49,15 +49,16 @@ namespace Skybound.Gecko
 			InitializeComponent();
 		}
 		
-		public PropertiesDialog(nsIDOMHTMLDocument doc) : this()
+		public PropertiesDialog(nsIDOMDocument doc) : this()
 		{
-			txtTitle.Text = nsString.Get(doc.GetTitle);
-			txtAddress.Text = nsString.Get(doc.GetURL);
-			txtReferrer.Text = nsString.Get(doc.GetReferrer);
-			
-			nsIDOMDocumentType docType = doc.GetDoctype();
+			txtTitle.Text = nsString.Get(doc.GetTitleAttribute);
+
+			txtAddress.Text = nsString.Get(doc.GetDocumentURIAttribute);
+			txtReferrer.Text = nsString.Get(doc.GetReferrerAttribute);
+
+			nsIDOMDocumentType docType = doc.GetDoctypeAttribute();
 			if (docType != null)
-				lblDocType.Text = nsString.Get(docType.GetPublicId);
+				lblDocType.Text = nsString.Get(docType.GetPublicIdAttribute);
 			else
 				lblDocType.Text = "(none)";
 		}
@@ -68,8 +69,8 @@ namespace Skybound.Gecko
 			{
 				// display a simple about box when you press F1
 				string versionString = GetType().Assembly.GetName().Version.ToString();
-				
-				MessageBox.Show("Skybound GeckoFX v" + versionString + "\r\n\r\n(C) 2008 Skybound Software. All Rights Reserved.\r\nhttp://www.geckofx.org",
+
+				MessageBox.Show("GeckoFX v" + versionString + "\r\n\r\nhttp://bitbucket.org/geckofx/",
 					"About GeckoFX", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				return true;
 			}

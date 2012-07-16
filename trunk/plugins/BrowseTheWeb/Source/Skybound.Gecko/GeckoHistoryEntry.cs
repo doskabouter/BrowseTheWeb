@@ -38,52 +38,10 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Proxies;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
-namespace Skybound.Gecko
+namespace Gecko
 {
-	#region Unmanaged Interfaces
-	
-	#if GECKO_1_8
-	[Guid("7294fe9b-14d8-11d5-9882-00c04fa02f40"), ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-	interface nsISHistory
-	{
-		int GetCount();
-		int GetIndex();
-		int GetMaxLength();
-		void SetMaxLength(int aMaxLength);
-		nsIHistoryEntry GetEntryAtIndex(int index, bool modifyIndex);
-		void PurgeHistory(int numEntries);
-		void AddSHistoryListener(nsISHistoryListener aListener);
-		void RemoveSHistoryListener(nsISHistoryListener aListener);
-		nsISimpleEnumerator GetSHistoryEnumerator();
-	}
-	#elif GECKO_1_9
-	[Guid("9883609f-cdd8-4d83-9b55-868ff08ad433"), ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-	interface nsISHistory
-	{
-		int GetCount();
-		int GetIndex();
-		int GetRequestedIndex();
-		int GetMaxLength();
-		void SetMaxLength(int aMaxLength);
-		nsIHistoryEntry GetEntryAtIndex(int index, bool modifyIndex);
-		void PurgeHistory(int numEntries);
-		void AddSHistoryListener(nsISHistoryListener aListener);
-		void RemoveSHistoryListener(nsISHistoryListener aListener);
-		nsISimpleEnumerator GetSHistoryEnumerator();
-	}
-	#endif
-	
-	[Guid("a41661d4-1417-11d5-9882-00c04fa02f40"), ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-	interface nsIHistoryEntry
-	{
-		nsIURI GetURI();
-		[PreserveSig] int GetTitle(out IntPtr aTitle);
-		bool GetIsSubFrame();
-	}
-	
-	#endregion
-	
 	/// <summary>
 	/// Represents an entry in a <see cref="GeckoWebBrowser"/> session history.
 	/// </summary>
@@ -142,7 +100,7 @@ namespace Skybound.Gecko
 		internal GeckoSessionHistory(nsIWebNavigation webNav)
 		{
 			this.WebNav = webNav;
-			this.History = webNav.GetSessionHistory();
+			this.History = webNav.GetSessionHistoryAttribute();
 		}
 		
 		nsIWebNavigation WebNav;
@@ -160,8 +118,8 @@ namespace Skybound.Gecko
 			{
 				get
 				{
-					nsIURI uri = Entry.GetURI();
-					return (uri == null) ? null : new Uri(nsString.Get(uri.GetSpec));
+					nsIURI uri = Entry.GetURIAttribute();
+					return (uri == null) ? null : new Uri(nsString.Get(uri.GetSpecAttribute));
 				}
 			}
 			
@@ -169,16 +127,13 @@ namespace Skybound.Gecko
 			{
 				get
 				{
-					// for some reason normal marshalling doesn't work for this property, so we have to do it manually
-					IntPtr result;
-					Entry.GetTitle(out result);
-					return Marshal.PtrToStringUni(result);
+					return Entry.GetTitleAttribute();					
 				}
 			}
 			
 			public override bool IsSubFrame
 			{
-				get { return Entry.GetIsSubFrame(); }
+				get { return Entry.GetIsSubFrameAttribute(); }
 			}
 		}
 		
@@ -271,7 +226,7 @@ namespace Skybound.Gecko
 		/// </summary>
 		public int Count
 		{
-			get { return History.GetCount(); }
+			get { return History.GetCountAttribute(); }
 		}
 		
 		/// <summary>
@@ -279,8 +234,8 @@ namespace Skybound.Gecko
 		/// </summary>
 		public int MaxLength
 		{
-			get { return History.GetMaxLength(); }
-			set { History.SetMaxLength(value); }
+			get { return History.GetMaxLengthAttribute(); }
+			set { History.SetMaxLengthAttribute(value); }
 		}
 		
 		public bool IsReadOnly

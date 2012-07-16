@@ -34,8 +34,10 @@
 #endregion END LICENSE BLOCK
 
 using System;
+using System.Drawing;
+using System.Collections.Generic;
 
-namespace Skybound.Gecko
+namespace Gecko
 {
 	/// <summary>
 	/// Manipulates and queries the current selected range of nodes within the document.
@@ -44,6 +46,9 @@ namespace Skybound.Gecko
 	{
 		internal GeckoSelection(nsISelection selection)
 		{
+			if (selection == null)
+				throw new ArgumentException("selection");
+
 			this.Selection = selection;
 		}
 		
@@ -59,7 +64,7 @@ namespace Skybound.Gecko
 		/// </summary>
 		public GeckoNode AnchorNode
 		{
-			get { return GeckoNode.Create(Selection.GetAnchorNode()); }
+			get { return GeckoNode.Create(Selection.GetAnchorNodeAttribute()); }
 		}
 		
 		/// <summary>
@@ -67,7 +72,7 @@ namespace Skybound.Gecko
 		/// </summary>
 		public int AnchorOffset
 		{
-			get { return Selection.GetAnchorOffset(); }
+			get { return Selection.GetAnchorOffsetAttribute(); }
 		}
 		
 		/// <summary>
@@ -75,7 +80,7 @@ namespace Skybound.Gecko
 		/// </summary>
 		public GeckoNode FocusNode
 		{
-			get { return GeckoNode.Create(Selection.GetFocusNode()); }
+			get { return GeckoNode.Create(Selection.GetFocusNodeAttribute()); }
 		}
 		
 		/// <summary>
@@ -83,7 +88,7 @@ namespace Skybound.Gecko
 		/// </summary>
 		public int FocusOffset
 		{
-			get { return Selection.GetFocusOffset(); }
+			get { return Selection.GetFocusOffsetAttribute(); }
 		}
 		
 		/// <summary>
@@ -91,7 +96,7 @@ namespace Skybound.Gecko
 		/// </summary>
 		public bool IsCollapsed
 		{
-			get { return Selection.GetIsCollapsed(); }
+			get { return Selection.GetIsCollapsedAttribute(); }
 		}
 		
 		/// <summary>
@@ -99,7 +104,7 @@ namespace Skybound.Gecko
 		/// </summary>
 		public int RangeCount
 		{
-			get { return Selection.GetRangeCount(); }
+			get { return Selection.GetRangeCountAttribute(); }
 		}
 		
 		/// <summary>
@@ -189,7 +194,7 @@ namespace Skybound.Gecko
 		/// <summary>
 		/// Removes all ranges from the current selection.
 		/// </summary>
-		void RemoveAllRanges()
+		public void RemoveAllRanges()
 		{
 			Selection.RemoveAllRanges();
 		}
@@ -197,7 +202,7 @@ namespace Skybound.Gecko
 		/// <summary>
 		/// Deletes this selection from the document.
 		/// </summary>
-		void DeleteFromDocument()
+		public void DeleteFromDocument()
 		{
 			Selection.DeleteFromDocument();
 		}
@@ -206,11 +211,64 @@ namespace Skybound.Gecko
 		/// Modifies the cursor BIDI level after a change in keyboard direction.
 		/// </summary>
 		/// <param name="langRtl"></param>
-		void SelectionLanguageChange(bool langRtl)
+		public void SelectionLanguageChange(bool langRtl)
 		{
 			Selection.SelectionLanguageChange(langRtl);
 		}
-		
+
+		/// <summary>
+		/// Match this up with EndbatchChanges. Will stop ui updates while multiple selection methods are called.
+		/// </summary>
+		public void StartBatchChanges()
+		{
+			((nsISelectionPrivate)Selection).StartBatchChanges();
+		}
+
+		/// <summary>
+		/// Match this up with startBatchChanges
+		/// </summary>
+		public void EndBatchChanges()
+		{
+			((nsISelectionPrivate)Selection).EndBatchChanges();
+		}
+
+		/// <summary>
+		/// Scrolls a region of the selection, so that it is visible in
+		/// the scrolled view.
+		///
+		/// @param aRegion - the region inside the selection to scroll into view
+		/// (see selection region constants defined in
+		/// nsISelectionController).
+		/// @param aIsSynchronous - when true, scrolls the selection into view
+		/// before returning. If false, posts a request which
+		/// is processed at some point after the method returns.
+		/// @param aVPercent - how to align the frame vertically. A value of 0
+		/// means the frame's upper edge is aligned with the top edge
+		/// of the visible area. A value of 100 means the frame's
+		/// bottom edge is aligned with the bottom edge of
+		/// the visible area. For values in between, the point
+		/// "aVPercent" down the frame is placed at the point
+		/// "aVPercent" down the visible area. A value of 50 centers
+		/// the frame vertically. A value of -1 means move
+		/// the frame the minimum amount necessary in order for
+		/// the entire frame to be visible vertically (if possible).
+		/// @param aHPercent - how to align the frame horizontally. A value of 0
+		/// means the frame's left edge is aligned with the left
+		/// edge of the visible area. A value of 100 means the
+		/// frame's right edge is aligned with the right edge of
+		/// the visible area. For values in between, the point
+		/// "aHPercent" across the frame is placed at the point
+		/// "aHPercent" across the visible area. A value of 50
+		/// centers the frame horizontally . A value of -1 means
+		/// move the frame the minimum amount necessary in order
+		/// for the entire frame to be visible horizontally
+		/// (if possible).
+		/// </summary>
+		public void ScrollIntoView(short aRegion, bool aIsSynchronous, short aVPercent, short aHPercent)
+		{
+			((nsISelectionPrivate)Selection).ScrollIntoView(aRegion, aIsSynchronous, aVPercent, aHPercent);
+		}
+
 		/// <summary>
 		/// Returns the whole selection as a plain text string.
 		/// </summary>
@@ -228,110 +286,108 @@ namespace Skybound.Gecko
 	{
 		internal GeckoRange(nsIDOMRange range)
 		{
-			this.Range = range;
+			this.DomRange = range;			
 		}
 		
 		/// <summary>
 		/// Gets the unmanaged nsIDOMRange which this instance wraps.
 		/// </summary>
-		public object DomRange { get { return Range; } }
-		
-		nsIDOMRange Range;
+		public nsIDOMRange DomRange { get; protected set; }		
 		
 		public GeckoNode StartContainer
 		{
-			get { return GeckoNode.Create(Range.GetStartContainer()); }
+			get { return GeckoNode.Create(DomRange.GetStartContainerAttribute()); }
 		}
-		
-		public int StartOffset { get { return Range.GetStartOffset(); } }
+
+		public int StartOffset { get { return DomRange.GetStartOffsetAttribute(); } }
 		
 		public GeckoNode EndContainer
 		{
-			get { return GeckoNode.Create(Range.GetEndContainer()); }
+			get { return GeckoNode.Create(DomRange.GetEndContainerAttribute()); }
 		}
-		
-		public int EndOffset { get { return Range.GetEndOffset(); } }
-		
-		public bool Collapsed { get { return Range.GetCollapsed(); } }
+
+		public int EndOffset { get { return DomRange.GetEndOffsetAttribute(); } }
+
+		public bool Collapsed { get { return DomRange.GetCollapsedAttribute(); } }
 		
 		public GeckoNode CommonAncestorContainer
 		{
-			get { return GeckoNode.Create(Range.GetCommonAncestorContainer()); }
+			get { return GeckoNode.Create(DomRange.GetCommonAncestorContainerAttribute()); }
 		}
 		
 		public void SetStart(GeckoNode node, int offset)
 		{
-			Range.SetStart((nsIDOMNode)node.DomObject, offset);
+			DomRange.SetStart((nsIDOMNode)node.DomObject, offset);
 		}
 		
 		public void SetEnd(GeckoNode node, int offset)
 		{
-			Range.SetEnd((nsIDOMNode)node.DomObject, offset);
+			DomRange.SetEnd((nsIDOMNode)node.DomObject, offset);
 		}
 		
 		public void SetStartBefore(GeckoNode node)
 		{
-			Range.SetStartBefore((nsIDOMNode)node.DomObject);
+			DomRange.SetStartBefore((nsIDOMNode)node.DomObject);
 		}
 		
 		public void SetStartAfter(GeckoNode node)
 		{
-			Range.SetStartAfter((nsIDOMNode)node.DomObject);
+			DomRange.SetStartAfter((nsIDOMNode)node.DomObject);
 		}
 		
 		public void SetEndBefore(GeckoNode node)
 		{
-			Range.SetEndBefore((nsIDOMNode)node.DomObject);
+			DomRange.SetEndBefore((nsIDOMNode)node.DomObject);
 		}
 		
 		public void SetEndAfter(GeckoNode node)
 		{
-			Range.SetEndAfter((nsIDOMNode)node.DomObject);
+			DomRange.SetEndAfter((nsIDOMNode)node.DomObject);
 		}
 		
 		public void Collapse(bool toStart)
 		{
-			Range.Collapse(toStart);
+			DomRange.Collapse(toStart);
 		}
 		
 		public void SelectNode(GeckoNode node)
 		{
-			Range.SelectNode((nsIDOMNode)node);
+			DomRange.SelectNode((nsIDOMNode)node.DomObject);
 		}
 		
 		public void SelectNodeContents(GeckoNode node)
 		{
-			Range.SelectNodeContents((nsIDOMNode)node);
+			DomRange.SelectNodeContents((nsIDOMNode)node.DomObject);
 		}
 		
 		public short CompareBoundaryPoints(ushort how, GeckoRange sourceRange)
 		{
-			return Range.CompareBoundaryPoints(how, (nsIDOMRange)sourceRange.DomRange);
+			return DomRange.CompareBoundaryPoints(how, (nsIDOMRange)sourceRange.DomRange);
 		}
 		
 		public void DeleteContents()
 		{
-			Range.DeleteContents();
+			DomRange.DeleteContents();
 		}
 		
 		public GeckoNode ExtractContents()
 		{
-			return GeckoNode.Create(Range.ExtractContents());
+			return GeckoNode.Create(DomRange.ExtractContents());
 		}
 		
 		public GeckoNode CloneContents()
 		{
-			return GeckoNode.Create(Range.CloneContents());
+			return GeckoNode.Create(DomRange.CloneContents());
 		}
 		
 		public void InsertNode(GeckoNode newNode)
 		{
-			Range.InsertNode((nsIDOMNode)newNode.DomObject);
+			DomRange.InsertNode((nsIDOMNode)newNode.DomObject);
 		}
 		
 		public void SurroundContents(GeckoNode newParent)
 		{
-			Range.SurroundContents((nsIDOMNode)newParent.DomObject);
+			DomRange.SurroundContents((nsIDOMNode)newParent.DomObject);
 		}
 		
 		public object Clone()
@@ -341,17 +397,57 @@ namespace Skybound.Gecko
 
 		public GeckoRange CloneRange()
 		{
-			return new GeckoRange(Range.CloneRange());
+			return new GeckoRange(DomRange.CloneRange());
 		}
 		
 		public override string ToString()
 		{
-			return nsString.Get(Range.ToString);
+			using (nsAString retval = new nsAString())
+			{
+				DomRange.ToString(retval);
+				return retval.ToString();
+			}
 		}
 		
 		public void Detach()
 		{
-			Range.Detach();
+			DomRange.Detach();
+		}
+
+		// Get Rectange which surrounds entire selection.
+		public Rectangle BoundingClientRect
+		{
+			get
+			{
+				nsIDOMClientRect domRect = DomRange.GetBoundingClientRect();
+				var r = new Rectangle((int)domRect.GetLeftAttribute(), (int)domRect.GetTopAttribute(), (int)domRect.GetWidthAttribute(), (int)domRect.GetHeightAttribute());
+				return r;				
+			}
+		}
+
+		/// <summary>
+		/// Get the Individual rectangles that make up a selection.
+		/// </summary>
+		public IEnumerable<Rectangle> ClientRects
+		{
+			get
+			{
+				//List<Rectangle> retVal = new List<Rectangle>();
+				nsIDOMClientRectList domRectangles = DomRange.GetClientRects();
+				for(uint i = 0; i < domRectangles.GetLengthAttribute(); i++)
+				{
+					nsIDOMClientRect domRect = domRectangles.Item(i);
+					//retVal.Add(new Rectangle((int)domRect.GetLeftAttribute(), (int)domRect.GetTopAttribute(), (int)domRect.GetWidthAttribute(), (int)domRect.GetHeightAttribute());
+					yield return new Rectangle((int)domRect.GetLeftAttribute(), (int)domRect.GetTopAttribute(), (int)domRect.GetWidthAttribute(), (int)domRect.GetHeightAttribute());
+				}
+
+				yield break;
+			}
+		}
+
+		public bool IsPointInRange(GeckoNode node, int offset)
+		{
+			return DomRange.IsPointInRange(node.DomObject, offset);			
 		}
 	}
 }
