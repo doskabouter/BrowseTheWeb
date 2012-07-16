@@ -215,6 +215,38 @@ namespace BrowseTheWeb
             #endregion
         }
 
+        private void SetBrowserWindow()
+        {
+            GUIControl cntrol = GetControl(545376890);
+            GUIControl statusBar = GetControl(545376891);
+            GUIPropertyManager.SetProperty("#btWeb.statusvisible", settings.StatusBar.ToString());
+
+            Point loc;
+            int w, h;
+            if (cntrol != null && statusBar != null)
+            {
+                loc = new Point(cntrol.XPosition, cntrol.YPosition);
+                w = cntrol.Width;
+
+                if (settings.StatusBar)
+                    h = cntrol.Height - statusBar.Height;
+                else
+                    h = cntrol.Height;
+            }
+            else
+            {
+                loc = new Point(0, 0);
+                w = GUIGraphicsContext.form.Width;
+                if (settings.StatusBar)
+                    h = GUIGraphicsContext.form.Height - 100;
+                else
+                    h = GUIGraphicsContext.form.Height;
+            }
+
+            webBrowser.Location = loc;
+            webBrowser.Size = new Size(w, h);
+        }
+
         protected override void OnPageLoad()
         {
             GUIPropertyManager.SetProperty("#currentmodule", settings.PluginName);
@@ -247,7 +279,7 @@ namespace BrowseTheWeb
                 webBrowser.Enabled = settings.UseMouse;
 
                 webBrowser.Dock = DockStyle.None;
-                webBrowser.Location = new System.Drawing.Point(0, 0);
+                SetBrowserWindow();
 
                 MyLog.debug("Create eventhandler");
 
@@ -257,11 +289,6 @@ namespace BrowseTheWeb
                 MyLog.debug("Create dom eventhandler");
                 webBrowser.DomKeyDown += new GeckoDomKeyEventHandler(webBrowser_DomKeyDown);
                 webBrowser.DomClick += new GeckoDomEventHandler(webBrowser_DomClick);
-
-                if (settings.StatusBar)
-                    webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height - 100);
-                else
-                    webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height);
 
                 MyLog.debug("set zoom size to " + settings.FontZoom + "/" + zoom);
 
@@ -469,10 +496,7 @@ namespace BrowseTheWeb
             if (action.wID == settings.Remote_Status)
             {
                 settings.StatusBar = !settings.StatusBar;
-                if (settings.StatusBar)
-                    webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height - 100);
-                else
-                    webBrowser.Size = new System.Drawing.Size(GUIGraphicsContext.form.Width, GUIGraphicsContext.form.Height);
+                SetBrowserWindow();
             }
             if (action.wID == settings.Remote_PageUp)
             {
