@@ -1075,8 +1075,8 @@ namespace Gecko
 
         public GeckoMarkupDocumentViewer GetMarkupDocumentViewer()
         {
-            if (_MarkupDocumentViewer != null)
-                return _MarkupDocumentViewer;
+            //if (_MarkupDocumentViewer != null)
+            //return _MarkupDocumentViewer;
 
             if (WebNav == null)
                 return null;
