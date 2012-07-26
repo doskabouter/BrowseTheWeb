@@ -38,10 +38,52 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Proxies;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
-namespace Gecko
+namespace Skybound.Gecko
 {
+	#region Unmanaged Interfaces
+	
+	#if GECKO_1_8
+	[Guid("7294fe9b-14d8-11d5-9882-00c04fa02f40"), ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	interface nsISHistory
+	{
+		int GetCount();
+		int GetIndex();
+		int GetMaxLength();
+		void SetMaxLength(int aMaxLength);
+		nsIHistoryEntry GetEntryAtIndex(int index, bool modifyIndex);
+		void PurgeHistory(int numEntries);
+		void AddSHistoryListener(nsISHistoryListener aListener);
+		void RemoveSHistoryListener(nsISHistoryListener aListener);
+		nsISimpleEnumerator GetSHistoryEnumerator();
+	}
+	#elif GECKO_1_9
+	[Guid("9883609f-cdd8-4d83-9b55-868ff08ad433"), ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	interface nsISHistory
+	{
+		int GetCount();
+		int GetIndex();
+		int GetRequestedIndex();
+		int GetMaxLength();
+		void SetMaxLength(int aMaxLength);
+		nsIHistoryEntry GetEntryAtIndex(int index, bool modifyIndex);
+		void PurgeHistory(int numEntries);
+		void AddSHistoryListener(nsISHistoryListener aListener);
+		void RemoveSHistoryListener(nsISHistoryListener aListener);
+		nsISimpleEnumerator GetSHistoryEnumerator();
+	}
+	#endif
+	
+	[Guid("a41661d4-1417-11d5-9882-00c04fa02f40"), ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	interface nsIHistoryEntry
+	{
+		nsIURI GetURI();
+		[PreserveSig] int GetTitle(out IntPtr aTitle);
+		bool GetIsSubFrame();
+	}
+	
+	#endregion
+	
 	/// <summary>
 	/// Represents an entry in a <see cref="GeckoWebBrowser"/> session history.
 	/// </summary>
@@ -100,7 +142,7 @@ namespace Gecko
 		internal GeckoSessionHistory(nsIWebNavigation webNav)
 		{
 			this.WebNav = webNav;
-			this.History = webNav.GetSessionHistoryAttribute();
+			this.History = webNav.GetSessionHistory();
 		}
 		
 		nsIWebNavigation WebNav;
@@ -118,8 +160,8 @@ namespace Gecko
 			{
 				get
 				{
-					nsIURI uri = Entry.GetURIAttribute();
-					return (uri == null) ? null : new Uri(nsString.Get(uri.GetSpecAttribute));
+					nsIURI uri = Entry.GetURI();
+					return (uri == null) ? null : new Uri(nsString.Get(uri.GetSpec));
 				}
 			}
 			
@@ -127,13 +169,16 @@ namespace Gecko
 			{
 				get
 				{
-					return Entry.GetTitleAttribute();					
+					// for some reason normal marshalling doesn't work for this property, so we have to do it manually
+					IntPtr result;
+					Entry.GetTitle(out result);
+					return Marshal.PtrToStringUni(result);
 				}
 			}
 			
 			public override bool IsSubFrame
 			{
-				get { return Entry.GetIsSubFrameAttribute(); }
+				get { return Entry.GetIsSubFrame(); }
 			}
 		}
 		
@@ -226,7 +271,7 @@ namespace Gecko
 		/// </summary>
 		public int Count
 		{
-			get { return History.GetCountAttribute(); }
+			get { return History.GetCount(); }
 		}
 		
 		/// <summary>
@@ -234,8 +279,8 @@ namespace Gecko
 		/// </summary>
 		public int MaxLength
 		{
-			get { return History.GetMaxLengthAttribute(); }
-			set { History.SetMaxLengthAttribute(value); }
+			get { return History.GetMaxLength(); }
+			set { History.SetMaxLength(value); }
 		}
 		
 		public bool IsReadOnly

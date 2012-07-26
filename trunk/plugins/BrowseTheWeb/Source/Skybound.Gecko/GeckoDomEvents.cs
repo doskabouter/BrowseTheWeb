@@ -37,8 +37,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Gecko
-{	
+namespace Skybound.Gecko
+{
+	public delegate void GeckoDomEventHandler(Object sender, GeckoDomEventArgs e);
+	
 	/// <summary>
 	/// Provides data about a DOM event.
 	/// </summary>
@@ -64,56 +66,26 @@ namespace Gecko
 		
 		public bool Bubbles
 		{
-			get { return _Event.GetBubblesAttribute(); }
+			get { return _Event.GetBubbles(); }
 		}
 		
 		public bool Cancelable
 		{
-			get { return _Event.GetCancelableAttribute(); }
+			get { return _Event.GetCancelable(); }
 		}
 		
-		public GeckoHtmlElement CurrentTarget
+		public GeckoElement CurrentTarget
 		{
-			get { return GeckoHtmlElement.Create(Xpcom.QueryInterface<nsIDOMHTMLElement>(_Event.GetCurrentTargetAttribute())); }
+			get { return GeckoElement.Create(Xpcom.QueryInterface<nsIDOMHTMLElement>(_Event.GetCurrentTarget())); }
 		}
 		
 		/// <summary>
 		/// Gets the final destination of the event.
 		/// </summary>
-		public GeckoHtmlElement Target
+		public GeckoElement Target
 		{
-			get { return GeckoHtmlElement.Create(Xpcom.QueryInterface<nsIDOMHTMLElement>(_Event.GetTargetAttribute())); }
+			get { return GeckoElement.Create(Xpcom.QueryInterface<nsIDOMHTMLElement>(_Event.GetTarget())); }
 		}
-
-		/// <summary>
-		/// If an event is cancelable, the preventDefault method is used to
-		/// signify that the event is to be canceled, meaning any default action
-		/// normally taken by the implementation as a result of the event will
-		/// not occur. If, during any stage of event flow, the preventDefault
-		/// method is called the event is canceled. Any default action associated
-		/// with the event will not occur. Calling this method for a
-		/// non-cancelable event has no effect. Once preventDefault has been
-		/// called it will remain in effect throughout the remainder of the
-		/// event's propagation. This method may be used during any stage of
-		/// event flow.
-		/// </summary>
-		public void PreventDefault()
-		{
-			_Event.PreventDefault();
-		}
-
-		/// <summary>
-		/// The stopPropagation method is used prevent further propagation of an
-		/// event during event flow. If this method is called by any
-		/// EventListener the event will cease propagating through the tree. The
-		/// event will complete dispatch to all listeners on the current
-		/// EventTarget before event flow stops. This method may be used during
-		/// any stage of event flow.
-		/// </summary>
-		public void StopPropagation()
-		{
-			_Event.StopPropagation();
-		}		
 	};
 	
 	public class GeckoDomUIEventArgs : GeckoDomEventArgs
@@ -127,18 +99,18 @@ namespace Gecko
 		
 		public int Detail
 		{
-			get { return _Event.GetDetailAttribute(); }
+			get { return _Event.GetDetail(); }
 		}
 	};
+	
+	public delegate void GeckoDomKeyEventHandler(Object sender, GeckoDomKeyEventArgs e);
 	
 	/// <summary>
 	/// Provides data about a DOM key event.
 	/// </summary>
-	public class GeckoDomKeyEventArgs
-		: GeckoDomUIEventArgs
+	public class GeckoDomKeyEventArgs : GeckoDomUIEventArgs
 	{
-		internal GeckoDomKeyEventArgs(nsIDOMKeyEvent ev)
-			: base(ev)
+		internal GeckoDomKeyEventArgs(nsIDOMKeyEvent ev) : base((nsIDOMUIEvent)ev)
 		{
 			_Event = ev;
 		}
@@ -147,29 +119,31 @@ namespace Gecko
 		
 		public uint KeyChar
 		{
-			get { return _Event.GetCharCodeAttribute(); }
+			get { return _Event.GetCharCode(); }
 		}
 		
 		public uint KeyCode
 		{
-			get { return _Event.GetKeyCodeAttribute(); }
+			get { return _Event.GetKeyCode(); }
 		}
 		
 		public bool AltKey
 		{
-			get { return _Event.GetAltKeyAttribute(); }
+			get { return _Event.GetAltKey(); }
 		}
 		
 		public bool CtrlKey
 		{
-			get { return _Event.GetCtrlKeyAttribute(); }
+			get { return _Event.GetCtrlKey(); }
 		}
 		
 		public bool ShiftKey
 		{
-			get { return _Event.GetShiftKeyAttribute(); }
+			get { return _Event.GetShiftKey(); }
 		}
 	};
+	
+	public delegate void GeckoDomMouseEventHandler(object sender, GeckoDomMouseEventArgs e);
 	
 	/// <summary>
 	/// Provides data about a DOM mouse event.
@@ -183,80 +157,44 @@ namespace Gecko
 		
 		nsIDOMMouseEvent _Event;
 		
-		/// <summary>
-		/// The X coordinate of the mouse pointer in local (DOM content) coordinates.
-		/// </summary>
 		public int ClientX
 		{
-			get { return _Event.GetClientXAttribute(); }
+			get { return _Event.GetClientX(); }
 		}
 		
-		/// <summary>
-		/// The Y coordinate of the mouse pointer in local (DOM content) coordinates.
-		/// </summary>
 		public int ClientY
 		{
-			get { return _Event.GetClientYAttribute(); }
+			get { return _Event.GetClientY(); }
 		}
 		
-		/// <summary>
-		/// The X coordinate of the mouse pointer in global (screen) coordinates.
-		/// </summary>
 		public int ScreenX
 		{
-			get { return _Event.GetScreenXAttribute(); }
+			get { return _Event.GetScreenX(); }
 		}
 		
-		/// <summary>
-		/// The Y coordinate of the mouse pointer in global (screen) coordinates.
-		/// </summary>
 		public int ScreenY
 		{
-			get { return _Event.GetScreenYAttribute(); }
+			get { return _Event.GetScreenY(); }
 		}
 		
-		/// <summary>
-		/// The button number that was pressed when the mouse event was fired.
-		/// </summary>
-		public GeckoMouseButton Button
+		public ushort Button
 		{
-			get { return (GeckoMouseButton)_Event.GetButtonAttribute(); }
+			get { return _Event.GetButton(); }
 		}
 		
-		/// <summary>
-		/// true if the alt key was down when the mouse event was fired.
-		/// </summary>
 		public bool AltKey
 		{
-			get { return _Event.GetAltKeyAttribute(); }
-		}
-
-		/// <summary>
-		/// Indicates which mouse wheel axis changed; this will be either HORIZONTAL_AXIS (1) or VERTICAL_AXIS (2).
-		/// </summary>
-		public int Axis
-		{
-			get { 
-				if(_Event is nsIDOMMouseScrollEvent)
-					return (_Event as nsIDOMMouseScrollEvent).GetAxisAttribute();
-				return -1;
-			}
+			get { return _Event.GetAltKey(); }
 		}
 		
-		/// <summary>
-		/// true if the control key was down when the mouse event was fired.
-		/// </summary>
 		public bool CtrlKey
 		{
-			get { return _Event.GetCtrlKeyAttribute(); }
+			get { return _Event.GetCtrlKey(); }
 		}
 		
-		/// <summary>
-		/// true if the shift key was down when the mouse event was fired.
-		/// </summary>
 		public bool ShiftKey
 		{
-			get { return _Event.GetShiftKeyAttribute(); }
+			get { return _Event.GetShiftKey(); }
 		}
 	};
 }

@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Gecko
+namespace Skybound.Gecko
 {
 	public partial class ChromeDialog : Form
 	{
@@ -34,6 +34,5 @@ namespace Gecko
 		{
 			this.Close();
 		}
-
 	}
 }

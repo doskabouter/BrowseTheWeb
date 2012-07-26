@@ -35,84 +35,319 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
-using System.Text;
 
-namespace Gecko
+namespace Skybound.Gecko
 {
 	/// <summary>
 	/// Creates a scoped, fake "system principal" security context.  This class is used primarly to work around bugs in gecko
 	/// which prevent methods on nsIDOMCSSStyleSheet from working outside of javascript.
 	/// </summary>
-	public class AutoJSContext : IDisposable
-	{			
-		IntPtr _cx;
+	class AutoJSContext : IDisposable
+	{
+		#region Unmanaged Interfaces
 		
-		public IntPtr ContextPointer { get { return _cx; } }
-
-		private readonly nsIThreadJSContextStack _jsContextStack;
-		private readonly nsIJSContextStack _contextStack;
-		private readonly nsIScriptSecurityManager _securityManager;
-		private readonly nsIPrincipal _systemPrincipal;
-
-		/// <summary>
-		/// Create a AutoJSContext using the SafeJSContext.
-		/// If context is IntPtr.Zero use the SafeJSContext
-		/// </summary>
-		/// <param name="context"></param>
-		public AutoJSContext(IntPtr context)
+		[Guid("c67d8270-3189-11d3-9885-006008962422"), ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+		interface nsIJSContextStack
 		{
-			if (context == IntPtr.Zero)
-			{
-				_jsContextStack = Xpcom.GetService<nsIThreadJSContextStack>("@mozilla.org/js/xpc/ContextStack;1");
-				context = _jsContextStack.GetSafeJSContextAttribute();
-			}
+			int GetCount();
+			IntPtr Peek();
+			IntPtr Pop();
+			void Push(IntPtr cx);
+		}
+		
+		#if GECKO_1_9_1
+		[Guid("f8e350b9-9f31-451a-8c8f-d10fea26b780"), ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+		#elif GECKO_1_9
+		[Guid("3fffd8e8-3fea-442e-a0ed-2ba81ae197d5"), ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+		#elif GECKO_1_8
+		[Guid("f4d74511-2b2d-4a14-a3e4-a392ac5ac3ff"), ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+		#endif
+		interface nsIScriptSecurityManager
+		{
+			// nsIXPCSecurityManager:
+			void CanCreateWrapper(out IntPtr aJSContext, ref Guid aIID, nsISupports aObj, IntPtr aClassInfo, IntPtr aPolicy); // aClassInfo=nsIClassInfo
+			void CanCreateInstance(out IntPtr aJSContext, ref Guid aCID);
+			void CanGetService(out IntPtr aJSContext, ref Guid aCID);
+			void CanAccess(uint aAction, IntPtr aCallContext, out IntPtr aJSContext, out IntPtr aJSObject, nsISupports aObj, IntPtr aClassInfo, IntPtr aName, IntPtr aPolicy); // aCallContext=nsIXPCNativeCallContext
 			
-			_cx = context;			
-
+			#if GECKO_1_8
+			// nsIScriptSecurityManager:
+			void CheckPropertyAccess(out IntPtr aJSContext, out IntPtr aJSObject, [MarshalAs(UnmanagedType.LPStr)] out string aClassName, IntPtr aProperty, uint aAction);
+			void CheckConnect(out IntPtr aJSContext, nsIURI aTargetURI, [MarshalAs(UnmanagedType.LPStr)] out string aClassName, [MarshalAs(UnmanagedType.LPStr)] string aProperty);
+			void CheckLoadURIFromScript(out IntPtr cx, nsIURI uri);
+			void CheckLoadURIWithPrincipal(nsIPrincipal aPrincipal, nsIURI uri, uint flags);
+			void CheckLoadURI(nsIURI from, nsIURI uri, uint flags);
+			void CheckLoadURIStr(nsACString from, nsACString uri, uint flags);
+			void CheckFunctionAccess(out IntPtr cx, out IntPtr funObj, IntPtr targetObj);
+			bool CanExecuteScripts(out IntPtr cx, nsIPrincipal principal);
+			nsIPrincipal GetSubjectPrincipal();
+			nsIPrincipal GetSystemPrincipal();
+			nsIPrincipal GetCertificatePrincipal(nsACString aCertFingerprint, nsACString aSubjectName, nsACString aPrettyName, nsISupports aCert, nsIURI aURI);
+			nsIPrincipal GetCodebasePrincipal(nsIURI aURI);
+			short RequestCapability(nsIPrincipal principal, [MarshalAs(UnmanagedType.LPStr)] out string capability);
+			bool IsCapabilityEnabled([MarshalAs(UnmanagedType.LPStr)] out string capability);
+			void EnableCapability([MarshalAs(UnmanagedType.LPStr)] string capability);
+			void RevertCapability([MarshalAs(UnmanagedType.LPStr)] string capability);
+			void DisableCapability([MarshalAs(UnmanagedType.LPStr)] string capability);
+			void SetCanEnableCapability(nsACString certificateFingerprint, [MarshalAs(UnmanagedType.LPStr)] out string capability, short canEnable);
+			nsIPrincipal GetObjectPrincipal(out IntPtr aJSContext, out IntPtr aJSObject);
+			bool SubjectPrincipalIsSystem();
+			void CheckSameOrigin(out IntPtr aJSContext, nsIURI aTargetURI);
+			void CheckSameOriginURI(nsIURI aSourceURI, nsIURI aTargetURI);
+			void CheckSameOriginPrincipal(nsIPrincipal aSourcePrincipal, nsIPrincipal aTargetPrincipal);
+			nsIPrincipal GetPrincipalFromContext(out IntPtr aJSContext);
+			bool SecurityCompareURIs(nsIURI aSubjectURI, nsIURI aObjectURI);
+			#elif GECKO_1_9
+			// nsIScriptSecurityManager:
+			void CheckPropertyAccess(out IntPtr aJSContext, out IntPtr aJSObject, [MarshalAs(UnmanagedType.LPStr)] string aClassName, IntPtr aProperty, uint aAction); // aProperty=jsval
+			void CheckConnect(out IntPtr aJSContext, nsIURI aTargetURI, [MarshalAs(UnmanagedType.LPStr)] string aClassName, [MarshalAs(UnmanagedType.LPStr)] string aProperty);
+			void CheckLoadURIFromScript(out IntPtr cx, nsIURI uri);
+			void CheckLoadURIWithPrincipal(nsIPrincipal aPrincipal, nsIURI uri, uint flags);
+			void CheckLoadURI(nsIURI from, nsIURI uri, uint flags);
+			void CheckLoadURIStrWithPrincipal(nsIPrincipal aPrincipal, nsACString uri, uint flags);
+			void CheckLoadURIStr(nsACString from, nsACString uri, uint flags);
+			void CheckFunctionAccess(out IntPtr cx, out IntPtr funObj, IntPtr targetObj);
+			bool CanExecuteScripts(out IntPtr cx, nsIPrincipal principal);
+			nsIPrincipal GetSubjectPrincipal();
+			nsIPrincipal GetSystemPrincipal();
+			nsIPrincipal GetCertificatePrincipal(nsACString aCertFingerprint, nsACString aSubjectName, nsACString aPrettyName, nsISupports aCert, nsIURI aURI);
+			nsIPrincipal GetCodebasePrincipal(nsIURI aURI);
+			short RequestCapability(nsIPrincipal principal, [MarshalAs(UnmanagedType.LPStr)] string capability);
+			bool IsCapabilityEnabled([MarshalAs(UnmanagedType.LPStr)] string capability);
+			void EnableCapability([MarshalAs(UnmanagedType.LPStr)] string capability);
+			void RevertCapability([MarshalAs(UnmanagedType.LPStr)] string capability);
+			void DisableCapability([MarshalAs(UnmanagedType.LPStr)] string capability);
+			void SetCanEnableCapability(nsACString certificateFingerprint, [MarshalAs(UnmanagedType.LPStr)] string capability, short canEnable);
+			nsIPrincipal GetObjectPrincipal(out IntPtr cx, out IntPtr aJSObject);
+			bool SubjectPrincipalIsSystem();
+			void CheckSameOrigin(out IntPtr aJSContext, nsIURI aTargetURI);
+			void CheckSameOriginURI(nsIURI aSourceURI, nsIURI aTargetURI, bool reportError);
+			nsIPrincipal GetPrincipalFromContext(out IntPtr cx);
+			nsIPrincipal GetChannelPrincipal(IntPtr aChannel); // nsIChannel
+			bool IsSystemPrincipal(nsIPrincipal aPrincipal);
+			nsIPrincipal GetCxSubjectPrincipal(IntPtr cx); // JSContext
+			#if GECKO_1_9_1
+			nsIPrincipal getCxSubjectPrincipalAndFrame(IntPtr cx, out IntPtr fp);
+			#endif
+			#endif
+		}
+		
+		#if GECKO_1_8
+		[Guid("fb9ddeb9-26f9-46b8-85d5-3978aaee05aa"), ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+		#elif GECKO_1_9
+		[Guid("b8268b9a-2403-44ed-81e3-614075c92034"), ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+		#endif
+		interface nsIPrincipal
+		{
+			// nsISerializable:
+			void Read(IntPtr aInputStream); // nsIObjectInputStream
+			void Write(IntPtr aOutputStream); // nsIObjectOutputStream
+			
+			// nsIPrincipal:
+			void GetPreferences(out string prefBranch, out string id, out string subjectName, out string grantedList, out string deniedList);
+			bool Equals(nsIPrincipal other);
+			uint GetHashValue();
+			IntPtr GetJSPrincipals(IntPtr aJSContext); // returns: JSPrincipals
+			IntPtr GetSecurityPolicy();
+			IntPtr SetSecurityPolicy();
+			short CanEnableCapability(out string capability);
+			void SetCanEnableCapability(out string capability, short canEnable);
+			bool IsCapabilityEnabled(out string capability, out IntPtr annotation);
+			void EnableCapability(out string capability, IntPtr annotation);
+			void RevertCapability(out string capability, IntPtr annotation);
+			void DisableCapability(out string capability, IntPtr annotation);
+			nsIURI GetURI();
+			nsIURI GetDomain();
+			void SetDomain(nsIURI aDomain);
+			[return: MarshalAs(UnmanagedType.LPStr)] string GetOrigin();
+			bool GetHasCertificate();
+			void GetFingerprint(nsACString aFingerprint);
+			void GetPrettyName(nsACString aPrettyName);
+			bool Subsumes(nsIPrincipal other);
+			#if GECKO_1_9
+			void CheckMayLoad(nsIURI uri, bool report);
+			#endif
+			void GetSubjectName(nsACString aSubjectName);
+			nsISupports GetCertificate();
+		}
+		
+		[Guid("e7d09265-4c23-4028-b1b0-c99e02aa78f8"), ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+		interface nsIJSRuntimeService
+		{
+			IntPtr GetRuntime();
+			IntPtr GetBackstagePass(); // nsIXPCScriptable
+		}
+		
+		#if GECKO_1_8
+		[StructLayout(LayoutKind.Sequential)]
+		struct JSStackFrame
+		{
+			IntPtr     callobj;       /* lazily created Call object */
+			IntPtr     argsobj;       /* lazily created arguments object */
+			IntPtr     varobj;        /* variables object, where vars go */
+			public IntPtr     script;        /* script being interpreted */
+			IntPtr   fun;           /* function being called or null */
+			IntPtr     thisp;         /* "this" pointer if in method */
+			IntPtr           argc;           /* actual argument count */
+			IntPtr        argv;          /* base of argument stack slots */
+			int           rval;           /* function return value */
+			uint           nvars;          /* local variable count */
+			IntPtr        vars;          /* base of variable stack slots */
+			public IntPtr down;          /* previous frame */
+			IntPtr         annotation;    /* used by Java security */
+			IntPtr     scopeChain;    /* scope chain */
+			IntPtr   pc;            /* program counter */
+			IntPtr        sp;            /* stack pointer */
+			IntPtr        spbase;        /* operand stack base */
+			uint           sharpDepth;     /* array/object initializer depth */
+			IntPtr     sharpArray;    /* scope for #n= initializer vars */
+			uint          flags;          /* frame flags -- see below */
+			IntPtr dormantNext;   /* next dormant frame chain */
+			IntPtr     xmlNamespace;  /* null or default xml namespace in E4X */
+			IntPtr     blockChain;    /* active compile-time block scopes */
+		}
+		#elif GECKO_1_9_1
+		[StructLayout(LayoutKind.Sequential)]
+		struct JSStackFrame
+		{
+			IntPtr regs;
+			IntPtr imacpc;        /* null or interpreter macro call pc */
+			IntPtr slots;         /* variables, locals and operand stack */
+			IntPtr callobj;       /* lazily created Call object */
+			IntPtr argsobj;       /* lazily created arguments object */
+			IntPtr varobj;        /* variables object, where vars go */
+			IntPtr callee;        /* function or script object */
+			public IntPtr script;        /* script being interpreted */
+			IntPtr fun;           /* function being called or null */
+			IntPtr thisp;         /* "this" pointer if in method */
+			uint argc;           /* actual argument count */
+			IntPtr argv;          /* base of argument stack slots */
+			IntPtr rval;           /* function return value */
+			public IntPtr down;          /* previous frame */
+			IntPtr annotation;    /* used by Java security */
+			IntPtr scopeChain;
+			IntPtr blockChain;
+			uint sharpDepth;     /* array/object initializer depth */
+			IntPtr sharpArray;    /* scope for #n= initializer vars */
+			uint flags;          /* frame flags -- see below */
+			IntPtr dormantNext;   /* next dormant frame chain */
+			IntPtr xmlNamespace;  /* null or default xml namespace in E4X */
+			IntPtr displaySave;   /* previous value of display entry for script->staticLevel */
+		}
+		#elif GECKO_1_9
+		[StructLayout(LayoutKind.Sequential)]
+		struct JSStackFrame
+		{
+			IntPtr regs;
+			IntPtr spbase;        /* operand stack base */
+			IntPtr callobj;       /* lazily created Call object */
+			IntPtr argsobj;       /* lazily created arguments object */
+			IntPtr varobj;        /* variables object, where vars go */
+			IntPtr callee;        /* function or script object */
+			public IntPtr script;        /* script being interpreted */
+			IntPtr fun;           /* function being called or null */
+			IntPtr thisp;         /* "this" pointer if in method */
+			IntPtr argc;           /* actual argument count */
+			IntPtr argv;          /* base of argument stack slots */
+			int rval;           /* function return value */
+			uint nvars;          /* local variable count */
+			IntPtr vars;          /* base of variable stack slots */
+			public IntPtr down;          /* previous frame */
+			IntPtr annotation;    /* used by Java security */
+			IntPtr scopeChain;    /* scope chain */
+			uint sharpDepth;     /* array/object initializer depth */
+			IntPtr sharpArray;    /* scope for #n= initializer vars */
+			uint flags;          /* frame flags -- see below */
+			IntPtr dormantNext;   /* next dormant frame chain */
+			IntPtr xmlNamespace;  /* null or default xml namespace in E4X */
+			IntPtr blockChain;    /* active compile-time block scopes */
+			
+			IntPtr pcDisabledSave; // reserved for debug use
+		}
+		#endif
+		#endregion
+		
+		#region Native Members
+		
+		[DllImport("js3250", CharSet=CharSet.Ansi)]
+		static extern IntPtr JS_CompileScriptForPrincipals(IntPtr aJSContext, IntPtr aJSObject, IntPtr aJSPrincipals, string bytes, int length, string filename, int lineNumber);
+		
+		[DllImport("js3250")]
+		static extern IntPtr JS_GetGlobalObject(IntPtr aJSContext);
+		
+		[DllImport("js3250")]
+		static extern IntPtr JS_NewContext(IntPtr aJSRuntime, int stackchunksize);
+		
+		[DllImport("js3250")]
+		static extern void JS_DestroyContextNoGC(IntPtr cx);
+		
+		[DllImport("js3250")]
+		static extern IntPtr JS_BeginRequest(IntPtr cx);
+		
+		[DllImport("js3250")]
+		static extern IntPtr JS_EndRequest(IntPtr cx);
+		#endregion
+		
+		public AutoJSContext()
+		{
+			// obtain the JS runtime used by gecko
+			nsIJSRuntimeService runtimeService = (nsIJSRuntimeService)Xpcom.GetService("@mozilla.org/js/xpc/RuntimeService;1");
+			IntPtr jsRuntime = runtimeService.GetRuntime();
+			
+			// create a new JSContext
+			cx = JS_NewContext(jsRuntime, 8192);
+			
 			// begin a new request
-			SpiderMonkey.JS_BeginRequest(_cx);
-
+			JS_BeginRequest(cx);
+			
 			// push the context onto the context stack
-			_contextStack = Xpcom.GetService<nsIJSContextStack>("@mozilla.org/js/xpc/ContextStack;1");
-			_contextStack.Push(_cx);
-
-			// obtain the system principal (no security checks) (one could get a different principal by calling securityManager.GetObjectPrincipal())
-			_securityManager = Xpcom.GetService<nsIScriptSecurityManager>("@mozilla.org/scriptsecuritymanager;1");
-			_systemPrincipal = _securityManager.GetSystemPrincipal();
-			_securityManager.PushContextPrincipal(_cx, IntPtr.Zero, _systemPrincipal);
+			nsIJSContextStack contextStack = Xpcom.GetService<nsIJSContextStack>("@mozilla.org/js/xpc/ContextStack;1");
+			contextStack.Push(cx);
+			
+			// obtain the system principal (no security checks) which we will use when compiling the empty script below
+			nsIPrincipal system = Xpcom.GetService<nsIScriptSecurityManager>("@mozilla.org/scriptsecuritymanager;1").GetSystemPrincipal();
+			IntPtr jsPrincipals = system.GetJSPrincipals(cx);
+			
+			// create a fake stack frame
+			JSStackFrame frame = new JSStackFrame();
+			frame.script = JS_CompileScriptForPrincipals(cx, JS_GetGlobalObject(cx), jsPrincipals, "", 0, "", 1);
+			
+			// put a pointer to the fake stack frame on the JSContext
+			
+			// frame.down = cx->fp
+			IntPtr old = Marshal.ReadIntPtr(cx, OfsetOfFP);
+			frame.down = old;
+			
+			IntPtr framePtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(JSStackFrame)));
+			Marshal.StructureToPtr(frame, framePtr, true);
+			
+			// cx->fp = framePtr;
+			Marshal.WriteIntPtr(cx, OfsetOfFP, framePtr);
 		}
-
-		/// <summary>
-		/// Create a AutoJSContext using the SafeJSContext.
-		/// </summary>
-		public AutoJSContext() : this(IntPtr.Zero)
-		{
-		}
-
-		/// <summary>
-		/// Evaluate javascript in the current context.
-		/// </summary>
-		/// <param name="jsScript"></param>
-		/// <param name="jsval"></param>
-		/// <returns></returns>
-		public bool EvaluateScript(string jsScript, out string result)
-		{
-			var ptr = new JsVal();
-			IntPtr globalObject = SpiderMonkey.JS_GetGlobalForScopeChain(_cx);
-			bool ret = SpiderMonkey.JS_EvaluateScript(_cx, globalObject, jsScript, (uint)jsScript.Length, "script", 1, ref ptr);
-
-			IntPtr jsStringPtr = SpiderMonkey.JS_ValueToString(_cx, ptr);
-			result = Marshal.PtrToStringAnsi(SpiderMonkey.JS_EncodeString(_cx, jsStringPtr));
-			return ret;
-		}		
-
+		
+		//NOTE: these hard-coded field offsets are based on the unmanaged layout of JSContext objects.  this will
+		// probably not work for versions other than 1.8, 1.9 and 1.9.1
+		#if GECKO_1_9_1
+		const int OfsetOfFP = 0x98;
+		#elif GECKO_1_9
+		const int OfsetOfFP = 0x54;
+		#elif GECKO_1_8
+		const int OfsetOfFP = 0x34;
+		#endif
+		
+		IntPtr cx;
+		
 		public void Dispose()
 		{
-			_securityManager.PopContextPrincipal(_cx);
+			nsIJSContextStack contextStack = Xpcom.GetService<nsIJSContextStack>("@mozilla.org/js/xpc/ContextStack;1");
+			contextStack.Pop();
 			
-			_contextStack.Pop();
-			SpiderMonkey.JS_EndRequest(_cx);
+			// free the memory allocated for the fake stack frame
+			Marshal.FreeHGlobal(Marshal.ReadIntPtr(cx, OfsetOfFP));
+			
+			// end the request, destroy the context
+			JS_EndRequest(cx);
+			JS_DestroyContextNoGC(cx);
 		}
 	}
 }

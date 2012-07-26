@@ -1,4 +1,4 @@
-﻿namespace Gecko
+﻿namespace Skybound.Gecko
 {
 	partial class PromptDialog
 	{

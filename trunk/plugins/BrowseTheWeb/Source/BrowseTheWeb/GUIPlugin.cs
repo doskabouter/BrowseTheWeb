@@ -34,7 +34,7 @@ using MediaPortal.Configuration;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-using Gecko;
+using Skybound.Gecko;
 
 namespace BrowseTheWeb
 {
@@ -287,13 +287,13 @@ namespace BrowseTheWeb
                 webBrowser.StatusTextChanged += new EventHandler(webBrowser_StatusTextChanged);
 
                 MyLog.debug("Create dom eventhandler");
-                webBrowser.DomKeyDown += new EventHandler<GeckoDomKeyEventArgs>(webBrowser_DomKeyDown);
-                webBrowser.DomClick += new EventHandler<GeckoDomEventArgs>(webBrowser_DomClick);
+                webBrowser.DomKeyDown += new GeckoDomKeyEventHandler(webBrowser_DomKeyDown);
+                webBrowser.DomClick += new GeckoDomEventHandler(webBrowser_DomClick);
 
                 MyLog.debug("set zoom size to " + settings.FontZoom + "/" + zoom);
 
                 webBrowser.Window.TextZoom = settings.FontZoom;
-                webBrowserZoom = zoom;
+                webBrowser.Zoom = zoom;
 
                 if (settings.Windowed)
                 {
@@ -360,8 +360,8 @@ namespace BrowseTheWeb
 
             webBrowser.DocumentCompleted -= new EventHandler(webBrowser_DocumentCompleted);
             webBrowser.StatusTextChanged -= new EventHandler(webBrowser_StatusTextChanged);
-            webBrowser.DomKeyDown -= new EventHandler<GeckoDomKeyEventArgs>(webBrowser_DomKeyDown);
-            webBrowser.DomClick -= new EventHandler<GeckoDomEventArgs>(webBrowser_DomClick);
+            webBrowser.DomKeyDown -= new GeckoDomKeyEventHandler(webBrowser_DomKeyDown);
+            webBrowser.DomClick -= new GeckoDomEventHandler(webBrowser_DomClick);
 
             timer.Tick -= new EventHandler(timer_Tick);
             timer.Stop();
@@ -762,13 +762,13 @@ namespace BrowseTheWeb
         private void OnZoomIn()
         {
             if (zoom < 3) zoom += 0.1f;
-            webBrowserZoom = zoom;
+            webBrowser.Zoom = zoom;
             if (!settings.Remote) GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
         }
         private void OnZoomOut()
         {
             if (zoom > 0.1f) zoom -= 0.1f;
-            webBrowserZoom = zoom;
+            webBrowser.Zoom = zoom;
             if (!settings.Remote) GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
         }
         private void OnMoveLeft()
@@ -876,26 +876,26 @@ namespace BrowseTheWeb
             }
         }
 
-        private void AddElements(List<GeckoHtmlElement> list, GeckoNode parent, string elName)
+        private void AddElements(List<GeckoElement> list, GeckoNode parent, string elName)
         {
-            if (parent is GeckoHtmlElement && ((GeckoHtmlElement)parent).TagName.ToLowerInvariant() == elName)
-                list.Add((GeckoHtmlElement)parent);
+            if (parent is GeckoElement && ((GeckoElement)parent).TagName.ToLowerInvariant() == elName)
+                list.Add((GeckoElement)parent);
             foreach (GeckoNode child in parent.ChildNodes)
                 AddElements(list, child, elName);
         }
 
-        private List<GeckoHtmlElement> getElements(GeckoNode parent, string elName)
+        private List<GeckoElement> getElements(GeckoNode parent, string elName)
         {
-            List<GeckoHtmlElement> res = new List<GeckoHtmlElement>();
+            List<GeckoElement> res = new List<GeckoElement>();
             AddElements(res, parent, elName);
             return res;
         }
 
-        private GeckoHtmlElement insertSpan(int geckoId, string geckoAction, string geckoType, string className, GeckoNode after)
+        private GeckoElement insertSpan(int geckoId, string geckoAction, string geckoType, string className, GeckoNode after)
         {
             if (after == null)
                 throw new ArgumentNullException("after");
-            GeckoHtmlElement newChild = after.OwnerDocument.CreateHtmlElement("span");
+            GeckoElement newChild = after.OwnerDocument.CreateElement("span");
             newChild.SetAttribute("style", _spanstyle);
             newChild.SetAttribute("gecko_id", geckoId.ToString());
             newChild.SetAttribute("gecko_action", geckoAction);
@@ -910,7 +910,7 @@ namespace BrowseTheWeb
             return newChild;
         }
 
-        private void SetLinkAttributes(GeckoHtmlElement link, int linkNumber, out string id, out string name)
+        private void SetLinkAttributes(GeckoElement link, int linkNumber, out string id, out string name)
         {
             string gb = link.GetAttribute("gb");
             id = link.GetAttribute("id");
@@ -950,17 +950,17 @@ namespace BrowseTheWeb
 
                     MyLog.debug("page links cnt : " + links.Count);
 
-                    foreach (GeckoHtmlElement element in links)
+                    foreach (GeckoElement element in links)
                     {
                         string link = element.GetAttribute("href");
 
                         if (!link.StartsWith("javascript:"))
                         {
-                            GeckoHtmlElement lastSpan = element;
+                            GeckoElement lastSpan = element;
                             bool ready = false;
                             while (!ready)
                             {
-                                GeckoHtmlElement ls = lastSpan.LastChild as GeckoHtmlElement;
+                                GeckoElement ls = lastSpan.LastChild as GeckoElement;
                                 if (ls == null || ls.TagName != "SPAN")
                                     ready = true;
                                 else
@@ -968,9 +968,9 @@ namespace BrowseTheWeb
                             };
                             if (!element.InnerHtml.Contains("gecko_id"))
                             {
-                                GeckoHtmlElement ls = element;
-                                while (ls.LastChild != null && ls.LastChild is GeckoHtmlElement && !String.IsNullOrEmpty(ls.LastChild.TextContent))
-                                    ls = (GeckoHtmlElement)ls.LastChild;
+                                GeckoElement ls = element;
+                                while (ls.LastChild != null && ls.LastChild is GeckoElement && !String.IsNullOrEmpty(ls.LastChild.TextContent))
+                                    ls = (GeckoElement)ls.LastChild;
                                 insertSpan(i, String.Empty, "LINK", lastSpan.ClassName,
                                     ls);
                             }
@@ -984,11 +984,11 @@ namespace BrowseTheWeb
 
                     GeckoElementCollection objects = webBrowser.Document.GetElementsByTagName("object");
                     MyLog.debug("page objects cnt : " + objects.Count);
-                    foreach (GeckoHtmlElement element in objects)
+                    foreach (GeckoElement element in objects)
                         if (element.GetAttribute("type") == "application/x-shockwave-flash")
                         {
                             string id, name;
-                            GeckoHtmlElement element2 = element.Parent;
+                            GeckoElement element2 = element.Parent;
                             SetLinkAttributes(element2, i, out id, out name);
 
                             if (!element2.InnerHtml.Contains("gecko_id=\"" + i + "\""))
@@ -1005,11 +1005,11 @@ namespace BrowseTheWeb
 
                     MyLog.debug("page forms cnt : " + forms.Count);
 
-                    foreach (GeckoHtmlElement element in forms)
+                    foreach (GeckoElement element in forms)
                     {
-                        List<GeckoHtmlElement> inps = getElements(element, "input");
+                        List<GeckoElement> inps = getElements(element, "input");
                         string action = element.GetAttribute("action");
-                        foreach (GeckoHtmlElement link in inps)
+                        foreach (GeckoElement link in inps)
                         {
                             string linkType = link.GetAttribute("type");
                             if (!String.IsNullOrEmpty(linkType))
@@ -1062,7 +1062,7 @@ namespace BrowseTheWeb
                 #region reset zoom
                 if (settings.ZoomPage)
                 {
-                    webBrowserZoom = settings.DefaultZoom;
+                    webBrowser.Zoom = settings.DefaultZoom;
                     zoom = settings.DefaultZoom;
                     GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
                 }
@@ -1071,7 +1071,7 @@ namespace BrowseTheWeb
                     if (lastDomain != webBrowser.Document.Domain)
                     {
                         {
-                            webBrowserZoom = settings.DefaultZoom;
+                            webBrowser.Zoom = settings.DefaultZoom;
                             zoom = settings.DefaultZoom;
                             GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
                         }
@@ -1083,7 +1083,7 @@ namespace BrowseTheWeb
                 {
                     using (System.IO.StreamWriter tw = new System.IO.StreamWriter(@"e:\last.html"))
                     {
-                        tw.WriteLine(((GeckoHtmlElement)webBrowser.Document.DocumentElement).InnerHtml);
+                        tw.WriteLine(webBrowser.Document.DocumentElement.InnerHtml);
                     }
                 }
             }
@@ -1187,7 +1187,7 @@ namespace BrowseTheWeb
 
         private bool SetInputElementValue(GeckoNode parent, int geckoId, string text)
         {
-            GeckoHtmlElement el = parent as GeckoHtmlElement;
+            GeckoElement el = parent as GeckoElement;
             if (el != null && el.TagName.ToLowerInvariant() == "input" && el.GetAttribute("gb") == "gecko_link" + geckoId)
             {
                 el.SetAttribute("value", text);
@@ -1233,14 +1233,6 @@ namespace BrowseTheWeb
         private void OnRenderSound(string strFilePath)
         {
             MediaPortal.Util.Utils.PlaySound(strFilePath, false, true);
-        }
-
-        private float webBrowserZoom
-        {
-            set
-            {
-                webBrowser.GetMarkupDocumentViewer().SetFullZoomAttribute(value);
-            }
         }
     }
 }

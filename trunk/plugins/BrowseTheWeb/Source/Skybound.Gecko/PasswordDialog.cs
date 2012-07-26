@@ -37,7 +37,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Gecko
+namespace Skybound.Gecko
 {
 	partial class PasswordDialog : Form
 	{
