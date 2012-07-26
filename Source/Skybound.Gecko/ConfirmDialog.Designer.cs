@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 using System.ComponentModel;
 using System.Drawing;
-namespace Gecko
+namespace Skybound.Gecko
 {
 	partial class ConfirmDialog
 	{

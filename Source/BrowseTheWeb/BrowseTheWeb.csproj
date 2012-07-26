@@ -34,7 +34,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Windows|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -45,7 +45,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Windows|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\Release\Plugins\Windows\</OutputPath>
@@ -218,7 +218,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Skybound.Gecko\Skybound.Gecko.csproj">
-      <Project>{6AB4EEE6-1889-43AB-83F7-A4F083230BE7}</Project>
+      <Project>{877D1A24-2D5E-4C46-A933-FCF11EA0403B}</Project>
       <Name>Skybound.Gecko</Name>
     </ProjectReference>
   </ItemGroup>
