@@ -264,7 +264,7 @@ namespace BrowseTheWeb
                     MyLog.debug("Mouse support is enabled");
                     originalMouseSupport = GUIGraphicsContext.MouseSupport;
                     GUIGraphicsContext.MouseSupport = true;
-                    Cursor.Show();
+                    while (ShowCursor(true) < 0) ;
                 }
 
                 Parameter = null;
