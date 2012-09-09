@@ -85,6 +85,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.cbOverrideUserAgent = new System.Windows.Forms.CheckBox();
+            this.cmbUserAgent = new System.Windows.Forms.ComboBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.txtHttpPort = new System.Windows.Forms.TextBox();
             this.txtHttpServer = new System.Windows.Forms.TextBox();
@@ -156,6 +159,7 @@
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage5.SuspendLayout();
+            this.groupBox13.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.groupBox11.SuspendLayout();
@@ -731,13 +735,56 @@
             // tabPage5
             // 
             this.tabPage5.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage5.Controls.Add(this.groupBox13);
             this.tabPage5.Controls.Add(this.groupBox8);
             this.tabPage5.Location = new System.Drawing.Point(4, 25);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage5.Size = new System.Drawing.Size(562, 476);
             this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "Proxy";
+            this.tabPage5.Text = "Proxy/UserAgent";
+            // 
+            // groupBox13
+            // 
+            this.groupBox13.Controls.Add(this.cbOverrideUserAgent);
+            this.groupBox13.Controls.Add(this.cmbUserAgent);
+            this.groupBox13.Location = new System.Drawing.Point(6, 157);
+            this.groupBox13.Name = "groupBox13";
+            this.groupBox13.Size = new System.Drawing.Size(550, 100);
+            this.groupBox13.TabIndex = 2;
+            this.groupBox13.TabStop = false;
+            this.groupBox13.Text = "UserAgent";
+            // 
+            // cbOverrideUserAgent
+            // 
+            this.cbOverrideUserAgent.AutoSize = true;
+            this.cbOverrideUserAgent.Location = new System.Drawing.Point(6, 21);
+            this.cbOverrideUserAgent.Name = "cbOverrideUserAgent";
+            this.cbOverrideUserAgent.Size = new System.Drawing.Size(146, 20);
+            this.cbOverrideUserAgent.TabIndex = 1;
+            this.cbOverrideUserAgent.Text = "Override UserAgent";
+            this.cbOverrideUserAgent.UseVisualStyleBackColor = true;
+            this.cbOverrideUserAgent.CheckedChanged += new System.EventHandler(this.cbOverrideUserAgent_CheckedChanged);
+            // 
+            // cmbUserAgent
+            // 
+            this.cmbUserAgent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbUserAgent.FormattingEnabled = true;
+            this.cmbUserAgent.Items.AddRange(new object[] {
+            "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0; SLCC1; .NET CLR 2" +
+                ".0.50727; Media Center PC 5.0; .NET CLR 3.0.30729; .NET CLR 3.5.30729; .NET4.0C;" +
+                " .NET4.0E)",
+            "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.19) Gecko",
+            "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20100101 Firefox/15.0",
+            "Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.1.3) Gecko/20090824 Firefox/3" +
+                ".5.3",
+            "Mozilla/5.0 (iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHT" +
+                "ML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.10"});
+            this.cmbUserAgent.Location = new System.Drawing.Point(6, 46);
+            this.cmbUserAgent.Name = "cmbUserAgent";
+            this.cmbUserAgent.Size = new System.Drawing.Size(538, 24);
+            this.cmbUserAgent.TabIndex = 0;
             // 
             // groupBox8
             // 
@@ -1313,6 +1360,8 @@
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage5.ResumeLayout(false);
+            this.groupBox13.ResumeLayout(false);
+            this.groupBox13.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             this.tabPage4.ResumeLayout(false);
@@ -1437,5 +1486,8 @@
         private System.Windows.Forms.ComboBox cmbPageUp;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.GroupBox groupBox13;
+        private System.Windows.Forms.ComboBox cmbUserAgent;
+        private System.Windows.Forms.CheckBox cbOverrideUserAgent;
     }
 }

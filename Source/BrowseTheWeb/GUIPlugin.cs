@@ -177,6 +177,9 @@ namespace BrowseTheWeb
             #endregion
 
             TrySetProxy();
+            if (!String.IsNullOrEmpty(settings.UserAgent))
+                GeckoPreferences.User["general.useragent.override"] = settings.UserAgent;
+
             BookmarkXml.AddFolder(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) +
                                   "\\bookmarks.xml", "Saved by MP");
 
