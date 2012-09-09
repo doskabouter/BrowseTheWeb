@@ -643,6 +643,9 @@ namespace BrowseTheWeb
             cmbPageDown.SelectedItem = settings.Remote_PageDown;
             cmbBookmarkView.SelectedItem = settings.View;
 
+            cmbUserAgent.Text = settings.UserAgent;
+            cbOverrideUserAgent.Checked = !String.IsNullOrEmpty(cmbUserAgent.Text);
+
             chkProxy.Checked = settings.UseProxy;
             txtHttpServer.Text = settings.Server;
             txtHttpPort.Text = settings.Port.ToString();
@@ -678,6 +681,10 @@ namespace BrowseTheWeb
             settings.Remote_Status = (Action.ActionType)cmbStatusBar.SelectedItem;
 
             settings.View = (GUIFacadeControl.Layout)cmbBookmarkView.SelectedItem;
+            if (cbOverrideUserAgent.Checked)
+                settings.UserAgent = cmbUserAgent.Text;
+            else
+                settings.UserAgent = String.Empty;
 
             settings.UseProxy = chkProxy.Checked;
             settings.Server = txtHttpServer.Text;
@@ -733,8 +740,7 @@ namespace BrowseTheWeb
             // http://geckofx.org/viewtopic.php?id=832
             GeckoPreferences.User["network.proxy.http"] = Server;
             GeckoPreferences.User["network.proxy.http_port"] = Port;
-            int ena = 0; if (useProxy) ena = 1;
-            GeckoPreferences.User["network.proxy.type"] = ena;
+            GeckoPreferences.User["network.proxy.type"] = useProxy ? 1 : 0;
 
             // maybe possible... not sure...
             // network.proxy.login
@@ -833,6 +839,11 @@ namespace BrowseTheWeb
             cmbStatusBar.SelectedItem = Settings.Default_Remote_Status;
             cmbPageUp.SelectedItem = Settings.Default_Remote_PageUp;
             cmbPageDown.SelectedItem = Settings.Default_Remote_PageDown;
+        }
+
+        private void cbOverrideUserAgent_CheckedChanged(object sender, EventArgs e)
+        {
+            cmbUserAgent.Enabled = cbOverrideUserAgent.Checked;
         }
 
     }

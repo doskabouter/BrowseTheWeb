@@ -48,6 +48,7 @@ namespace BrowseTheWeb
         public string Server { get; set; }
         public int Port { get; set; }
         public GUIFacadeControl.Layout View { get; set; }
+        public string UserAgent { get; set; }
 
         private const string section = "btWeb";
 
@@ -98,6 +99,7 @@ namespace BrowseTheWeb
                 Remote_PageDown = GetActionFromString(xmlreader, "remote_pagedown", Default_Remote_PageDown);
 
                 LastUrl = xmlreader.GetValueAsString(section, "lastUrl", string.Empty);
+                UserAgent = xmlreader.GetValueAsString(section, "useragent", string.Empty);
 
                 UseProxy = xmlreader.GetValueAsBool(section, "proxy", false);
                 Server = xmlreader.GetValueAsString(section, "proxy_server", "127.0.0.1");
@@ -160,6 +162,7 @@ namespace BrowseTheWeb
                     xmlwriter.SetValue(section, "remote_pagedown", Remote_PageDown);
 
                     xmlwriter.SetValue(section, "bookmark", View);
+                    xmlwriter.SetValue(section, "useragent", UserAgent);
 
                     xmlwriter.SetValueAsBool(section, "proxy", UseProxy);
                     xmlwriter.SetValue(section, "proxy_server", Server);
