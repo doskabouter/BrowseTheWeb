@@ -103,6 +103,44 @@
           </Items>
         </Files>
       </GroupItem>
+      <GroupItem Name="Titan">
+        <ParentGroup />
+        <DisplayName>Titan</DisplayName>
+        <DefaulChecked>true</DefaulChecked>
+        <Description>Titan skin</Description>
+        <Files>
+          <Items>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Skin\Titan\browsetheweb.xml</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{32f77709-f0a8-447b-a83d-4d8edf5a069f}-browsetheweb.xml</ZipFileName>
+              <DestinationFilename>%Skin%\Titan\browsetheweb.xml</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Skin\Titan\browsethewebbook.xml</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{8fff8bac-aeb8-4446-85a2-3baa74e3f230}-browsethewebbook.xml</ZipFileName>
+              <DestinationFilename>%Skin%\Titan\browsethewebbook.xml</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Skin\Titan\Media\hover_BrowseTheWeb.png</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{29405d3f-be2b-4ae9-9745-6c9be54b6ba1}-hover_BrowseTheWeb.png</ZipFileName>
+              <DestinationFilename>%Skin%\Titan\Media\hover_BrowseTheWeb.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Skin\Titan\Media\icon_btw.png</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{581ec8e6-5f7d-45d0-a473-3b4ac0c09a00}-icon_btw.png</ZipFileName>
+              <DestinationFilename>%Skin%\Titan\Media\icon_btw.png</DestinationFilename>
+            </FileItem>
+          </Items>
+        </Files>
+      </GroupItem>
     </Items>
   </Groups>
   <Sections>
@@ -304,14 +342,14 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <Version>
       <Major>0</Major>
       <Minor>3</Minor>
-      <Build>8</Build>
+      <Build>9</Build>
       <Revision>0</Revision>
     </Version>
     <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / Webbrowser.</ExtensionDescription>
-    <VersionDescription>Fixed zoom issue, Added possibility for skinners to define the area of the statusbar and webbrowser control</VersionDescription>
+    <VersionDescription>Added Titan skin files</VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
     <OnlineLocation>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.mpe1</OnlineLocation>
-    <ReleaseDate>2012-07-16T14:19:36.713895+02:00</ReleaseDate>
+    <ReleaseDate>2013-01-13T15:55:13.4867701+01:00</ReleaseDate>
     <Tags>webbrowser, internet, web</Tags>
     <Location>..\..\BrowseTheWeb.mpe1</Location>
     <Params>
@@ -418,11 +456,39 @@ If have .dll extension used like MP plugin configuration</Description>
         <ZipFileName>Installer{CopyFile}\{261f9f9e-cace-4e95-b709-c1db6c350606}-hover_browsetheweb.png</ZipFileName>
         <DestinationFilename>%Skin%\DefaultWide\Media\hover_browsetheweb.png</DestinationFilename>
       </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Skin\Titan\browsetheweb.xml</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{32f77709-f0a8-447b-a83d-4d8edf5a069f}-browsetheweb.xml</ZipFileName>
+        <DestinationFilename>%Skin%\Titan\browsetheweb.xml</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Skin\Titan\browsethewebbook.xml</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{8fff8bac-aeb8-4446-85a2-3baa74e3f230}-browsethewebbook.xml</ZipFileName>
+        <DestinationFilename>%Skin%\Titan\browsethewebbook.xml</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Skin\Titan\Media\hover_BrowseTheWeb.png</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{29405d3f-be2b-4ae9-9745-6c9be54b6ba1}-hover_BrowseTheWeb.png</ZipFileName>
+        <DestinationFilename>%Skin%\Titan\Media\hover_BrowseTheWeb.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Skin\Titan\Media\icon_btw.png</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{581ec8e6-5f7d-45d0-a473-3b4ac0c09a00}-icon_btw.png</ZipFileName>
+        <DestinationFilename>%Skin%\Titan\Media\icon_btw.png</DestinationFilename>
+      </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="true" Modified="true">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>..\Source\BrowseTheWeb\xulrunner.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{110abcb7-bb33-4c64-ac7f-ad0e6accd506}-xulrunner.png</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{6e728693-bf55-4d93-bbcd-0ad506b44c58}-xulrunner.png</ZipFileName>
         <DestinationFilename />
       </FileItem>
     </Items>
