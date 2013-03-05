@@ -39,11 +39,13 @@ namespace BrowseTheWeb
         [SkinControlAttribute(3)]
         protected GUISortButtonControl btnSortBy = null;
 
+        public const int BookmarkWindowId = 54537688;
+
         public override int GetID
         {
             get
             {
-                return 54537688;
+                return BookmarkWindowId;
             }
             set
             {
@@ -79,7 +81,10 @@ namespace BrowseTheWeb
                     else
                     {
                         GUIPlugin.StartupLink = item.Path;
-                        GUIWindowManager.ActivateWindow(54537689);
+                        if (GUIWindowManager.GetPreviousActiveWindow() == GUIPlugin.PluginWindowId)
+                            GUIWindowManager.ShowPreviousWindow();
+                        else
+                            GUIWindowManager.ActivateWindow(GUIPlugin.PluginWindowId);
                     }
                 }
             }

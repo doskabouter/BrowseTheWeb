@@ -61,6 +61,7 @@ namespace BrowseTheWeb
 
         #region Constants
         private const string _spanstyle = "font-family: arial,sans-serif; font-size: 12px ! important; line-height: 130% ! important; border-width: 1px ! important; border-style: solid ! important; -moz-border-radius: 2px 2px 2px 2px ! important; padding: 0px 2px ! important; margin-right: 2px; max-width: 20px; max-height: 10px ! important; overflow: visible ! important; float: none ! important; display: inline;";
+        public const int PluginWindowId = 54537689;
         #endregion
 
         #region declare vars
@@ -86,7 +87,7 @@ namespace BrowseTheWeb
 
         public string Author()
         {
-            return "Mark Koenig (kroko) 2010";
+            return "Doskabouter";
         }
         public bool CanEnable()
         {
@@ -133,7 +134,7 @@ namespace BrowseTheWeb
         {
             get
             {
-                return 54537689;
+                return PluginWindowId;
             }
             set
             {
@@ -346,7 +347,7 @@ namespace BrowseTheWeb
 
         protected override void OnPageDestroy(int new_windowId)
         {
-            if (new_windowId != 54537688)
+            if (new_windowId != GUIBookmark.BookmarkWindowId)
             { // not if you got favs
                 if (settings.BlankBrowser)
                 {
@@ -483,7 +484,7 @@ namespace BrowseTheWeb
             }
             if (action.wID == settings.Remote_Bookmark)
             {
-                GUIWindowManager.ActivateWindow(54537688);
+                GUIWindowManager.ActivateWindow(GUIBookmark.BookmarkWindowId);
                 return;
             }
             if ((action.wID == settings.Remote_Zoom_In) ||
@@ -636,7 +637,7 @@ namespace BrowseTheWeb
                 if (e.KeyCode == (uint)Keys.Left) OnMoveLeft();
                 if (e.KeyCode == (uint)Keys.Right) OnMoveRight();
 
-                if (e.KeyCode == (uint)Keys.F3) GUIWindowManager.ActivateWindow(54537688);
+                if (e.KeyCode == (uint)Keys.F3) GUIWindowManager.ActivateWindow(GUIBookmark.BookmarkWindowId);
 
                 if (e.KeyCode == (uint)Keys.F7) webBrowser.GoBack();
                 if (e.KeyCode == (uint)Keys.F8) webBrowser.GoForward();
