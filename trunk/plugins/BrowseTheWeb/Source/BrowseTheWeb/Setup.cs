@@ -52,6 +52,9 @@ namespace BrowseTheWeb
 
             string zipToUnpack = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\xulrunner.zip";
             string unpackDirectory = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config);
+            string xulPath = Path.Combine(unpackDirectory, "xulrunner");
+            if (Directory.Exists(xulPath))
+                Directory.Delete(xulPath, true);
 
             if (File.Exists(zipToUnpack))
             {
