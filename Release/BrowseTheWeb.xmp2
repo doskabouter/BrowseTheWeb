@@ -335,21 +335,22 @@ Click Next to continue or Cancel to exit Setup.</Value>
   <GeneralInfo>
     <Name>Browse The Web</Name>
     <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
-    <Author>Mark Koenig (kroko) 2010</Author>
+    <Author>Doskabouter/Mark Koenig (kroko)</Author>
     <HomePage>http://www.team-mediaportal.com/extensions/news-info/browse-the-web-webbrowser</HomePage>
     <ForumPage>http://forum.team-mediaportal.com/threads/browse-the-web-webbrowser.107285/</ForumPage>
     <UpdateUrl>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
     <Version>
       <Major>0</Major>
       <Minor>3</Minor>
-      <Build>9</Build>
+      <Build>10</Build>
       <Revision>0</Revision>
     </Version>
     <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / Webbrowser.</ExtensionDescription>
-    <VersionDescription>Added Titan skin files</VersionDescription>
+    <VersionDescription>Better cleanup previous version at install
+Improved exiting plugin</VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
     <OnlineLocation>https://mp-plugins.svn.sourceforge.net/svnroot/mp-plugins/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.mpe1</OnlineLocation>
-    <ReleaseDate>2013-01-13T15:55:13.4867701+01:00</ReleaseDate>
+    <ReleaseDate>2013-03-06T23:17:16.0419324+01:00</ReleaseDate>
     <Tags>webbrowser, internet, web</Tags>
     <Location>..\..\BrowseTheWeb.mpe1</Location>
     <Params>
