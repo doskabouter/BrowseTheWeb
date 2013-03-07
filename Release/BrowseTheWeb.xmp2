@@ -342,15 +342,14 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <Version>
       <Major>0</Major>
       <Minor>3</Minor>
-      <Build>10</Build>
+      <Build>11</Build>
       <Revision>0</Revision>
     </Version>
     <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / Webbrowser.</ExtensionDescription>
-    <VersionDescription>Better cleanup previous version at install
-Improved exiting plugin</VersionDescription>
+    <VersionDescription>versioned installer</VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
-    <OnlineLocation>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.mpe1</OnlineLocation>
-    <ReleaseDate>2013-03-07T21:47:43.4934835+01:00</ReleaseDate>
+    <OnlineLocation>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.0.3.11.mpe1</OnlineLocation>
+    <ReleaseDate>2013-03-07T22:12:13.1391675+01:00</ReleaseDate>
     <Tags>webbrowser, internet, web</Tags>
     <Location>..\..\BrowseTheWeb.mpe1</Location>
     <Params>
