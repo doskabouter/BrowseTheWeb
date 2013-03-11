@@ -27,7 +27,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 
-using Skybound.Gecko;
+using Gecko;
 using Ionic.Zip;
 
 using MediaPortal.Configuration;
@@ -627,6 +627,7 @@ namespace BrowseTheWeb
             chkOSD.Checked = settings.OSD;
             chkWindowed.Checked = settings.Windowed;
             chkMouse.Checked = settings.UseMouse;
+            chkDisableAero.Checked = settings.DisableAero;
 
             trkZoom.Value = settings.DefaultZoom_percentage;
             trkFont.Value = settings.FontZoom_percentage;
@@ -667,6 +668,7 @@ namespace BrowseTheWeb
             settings.OSD = chkOSD.Checked;
             settings.Windowed = chkWindowed.Checked;
             settings.UseMouse = chkMouse.Checked;
+            settings.DisableAero = chkDisableAero.Checked;
 
             settings.DefaultZoom_percentage = trkZoom.Value;
             settings.FontZoom_percentage = trkFont.Value;

@@ -16,6 +16,7 @@ namespace BrowseTheWeb
         public bool OSD { get; set; }
         public bool Windowed { get; set; }
         public bool UseMouse { get; set; }
+        public bool DisableAero { get; set; }
 
         public int DefaultZoom_percentage { get; set; }
         public int FontZoom_percentage { get; set; }
@@ -79,6 +80,7 @@ namespace BrowseTheWeb
                 OSD = xmlreader.GetValueAsBool(section, "osd", true);
                 Windowed = xmlreader.GetValueAsBool(section, "window", false);
                 UseMouse = xmlreader.GetValueAsBool(section, "mouse", false);
+                DisableAero = xmlreader.GetValueAsBool(section, "disableAero", false);
 
                 DefaultZoom_percentage = xmlreader.GetValueAsInt(section, "zoom", 100);
                 FontZoom_percentage = xmlreader.GetValueAsInt(section, "font", 100);
@@ -143,6 +145,7 @@ namespace BrowseTheWeb
                     xmlwriter.SetValueAsBool(section, "osd", OSD);
                     xmlwriter.SetValueAsBool(section, "window", Windowed);
                     xmlwriter.SetValueAsBool(section, "mouse", UseMouse);
+                    xmlwriter.SetValueAsBool(section, "disableAero", DisableAero);
 
                     xmlwriter.SetValue(section, "zoom", DefaultZoom_percentage);
                     xmlwriter.SetValue(section, "font", FontZoom_percentage);

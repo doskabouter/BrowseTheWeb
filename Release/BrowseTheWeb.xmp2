@@ -31,12 +31,19 @@
               <ZipFileName>Installer{CopyFile}\{3c35cede-0ef8-455e-8ea5-f341e7d0398e}-HtmlAgilityPack.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\HtmlAgilityPack.dll</DestinationFilename>
             </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Plugins\Windows\Skybound.Gecko.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{a57471fc-683c-417b-8a58-b57de15ace66}-Skybound.Gecko.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\Skybound.Gecko.dll</DestinationFilename>
+              <LocalFileName>Plugins\Windows\geckofx-core-18.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{7101304c-9abf-4fd0-a686-64327ece8e7d}-geckofx-core-18.dll</ZipFileName>
+              <DestinationFilename>%Plugins%\Windows\geckofx-core-18.dll</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Plugins\Windows\Geckofx-Winforms-18.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{6c097b5d-1f5e-4dce-bbef-aa554e8d1e49}-Geckofx-Winforms-18.dll</ZipFileName>
+              <DestinationFilename>%Plugins%\Windows\Geckofx-Winforms-18.dll</DestinationFilename>
             </FileItem>
           </Items>
         </Files>
@@ -340,16 +347,16 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <ForumPage>http://forum.team-mediaportal.com/threads/browse-the-web-webbrowser.107285/</ForumPage>
     <UpdateUrl>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
     <Version>
-      <Major>0</Major>
-      <Minor>3</Minor>
-      <Build>11</Build>
+      <Major>1</Major>
+      <Minor>0</Minor>
+      <Build>0</Build>
       <Revision>0</Revision>
     </Version>
     <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / Webbrowser.</ExtensionDescription>
-    <VersionDescription>versioned installer</VersionDescription>
-    <DevelopmentStatus>Stable</DevelopmentStatus>
+    <VersionDescription>Upgraded core to 18.0.2</VersionDescription>
+    <DevelopmentStatus>Rc</DevelopmentStatus>
     <OnlineLocation>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.0.3.11.mpe1</OnlineLocation>
-    <ReleaseDate>2013-03-07T22:12:13.1391675+01:00</ReleaseDate>
+    <ReleaseDate>2013-03-11T22:59:55.6086995+01:00</ReleaseDate>
     <Tags>webbrowser, internet, web</Tags>
     <Location>..\..\BrowseTheWeb.mpe1</Location>
     <Params>
@@ -407,12 +414,19 @@ If have .dll extension used like MP plugin configuration</Description>
         <ZipFileName>Installer{CopyFile}\{3c35cede-0ef8-455e-8ea5-f341e7d0398e}-HtmlAgilityPack.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\HtmlAgilityPack.dll</DestinationFilename>
       </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Plugins\Windows\Skybound.Gecko.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{a57471fc-683c-417b-8a58-b57de15ace66}-Skybound.Gecko.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\Skybound.Gecko.dll</DestinationFilename>
+        <LocalFileName>Plugins\Windows\geckofx-core-18.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{7101304c-9abf-4fd0-a686-64327ece8e7d}-geckofx-core-18.dll</ZipFileName>
+        <DestinationFilename>%Plugins%\Windows\geckofx-core-18.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Plugins\Windows\Geckofx-Winforms-18.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{6c097b5d-1f5e-4dce-bbef-aa554e8d1e49}-Geckofx-Winforms-18.dll</ZipFileName>
+        <DestinationFilename>%Plugins%\Windows\Geckofx-Winforms-18.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
