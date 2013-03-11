@@ -174,9 +174,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\edit-icon.png" />
+    <Content Include="readme.txt" />
     <Content Include="res\fav-b-icon.png" />
     <Content Include="res\MouseCursor.cur" />
-    <Content Include="todo.txt" />
     <EmbeddedResource Include="GetThumb.resx">
       <DependentUpon>GetThumb.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -217,9 +217,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Skybound.Gecko\Skybound.Gecko.csproj">
-      <Project>{877D1A24-2D5E-4C46-A933-FCF11EA0403B}</Project>
-      <Name>Skybound.Gecko</Name>
+    <ProjectReference Include="..\geckofx-18.0\Geckofx-Core\Geckofx-Core.csproj">
+      <Project>{6AB4EEE6-1889-43AB-83F7-A4F083230BE7}</Project>
+      <Name>Geckofx-Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\geckofx-18.0\Geckofx-Winforms\Geckofx-Winforms.csproj">
+      <Project>{D7ADC901-E1C4-480E-8F6D-B1FFD5CF87E8}</Project>
+      <Name>Geckofx-Winforms</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -49,6 +49,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.chkDisableAero = new System.Windows.Forms.CheckBox();
             this.chkMouse = new System.Windows.Forms.CheckBox();
             this.chkWindowed = new System.Windows.Forms.CheckBox();
             this.chkOSD = new System.Windows.Forms.CheckBox();
@@ -341,6 +342,7 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.chkDisableAero);
             this.groupBox5.Controls.Add(this.chkMouse);
             this.groupBox5.Controls.Add(this.chkWindowed);
             this.groupBox5.Controls.Add(this.chkOSD);
@@ -354,6 +356,16 @@
             this.groupBox5.TabIndex = 19;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Other settings";
+            // 
+            // chkDisableAero
+            // 
+            this.chkDisableAero.AutoSize = true;
+            this.chkDisableAero.Location = new System.Drawing.Point(19, 207);
+            this.chkDisableAero.Name = "chkDisableAero";
+            this.chkDisableAero.Size = new System.Drawing.Size(242, 20);
+            this.chkDisableAero.TabIndex = 7;
+            this.chkDisableAero.Text = "disable Aero while running (for Vista)";
+            this.chkDisableAero.UseVisualStyleBackColor = true;
             // 
             // chkMouse
             // 
@@ -1489,5 +1501,6 @@
         private System.Windows.Forms.GroupBox groupBox13;
         private System.Windows.Forms.ComboBox cmbUserAgent;
         private System.Windows.Forms.CheckBox cbOverrideUserAgent;
+        private System.Windows.Forms.CheckBox chkDisableAero;
     }
 }
