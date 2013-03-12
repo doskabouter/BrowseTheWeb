@@ -48,49 +48,20 @@ namespace BrowseTheWeb
         {
             InitializeComponent();
 
-            #region create xulrunner if needed
+            #region remove old xulrunner folder
 
-            string zipToUnpack = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\xulrunner.zip";
             string unpackDirectory = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config);
-            string xulPath = Path.Combine(unpackDirectory, "xulrunner");
-            if (Directory.Exists(xulPath))
-                Directory.Delete(xulPath, true);
-
-            if (File.Exists(zipToUnpack))
-            {
-                Log.Debug("BrowseTheWeb | zip found : " + zipToUnpack, new object[0]);
-                try
-                {
-                    using (ZipFile zip1 = ZipFile.Read(zipToUnpack))
-                    {
-                        foreach (ZipEntry e in zip1)
-                        {
-                            e.Extract(unpackDirectory, true);
-                        }
-                    }
-                    Log.Debug("BrowseTheWeb | unpack finished to " + unpackDirectory, new object[0]);
-                }
-                catch (Exception ex)
-                {
-                    Log.Debug("BrowseTheWeb | Exception : " + ex.Message, new object[0]);
-                }
-            }
+            string oldXulPath = Path.Combine(unpackDirectory, "xulrunner");
+            if (Directory.Exists(oldXulPath))
+                Directory.Delete(oldXulPath, true);
 
             #endregion
 
             settings = Settings.Instance;
 
-            string plugins = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Plugins);
-
-            FileInfo info = new FileInfo(plugins + "\\Windows\\HtmlAgilityPack.dll");
-            Log.Debug("BrowseTheWeb | HtmlAgilityPack: " + info.CreationTime);
-
-            info = new FileInfo(plugins + "\\Windows\\Skybound.Gecko.dll");
-            Log.Debug("BrowseTheWeb | Skybound.Gecko.dll: " + info.CreationTime);
-
             try
             {
-                Xpcom.Initialize(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\xulrunner");
+                Xpcom.Initialize(Settings.XulRunnerPath());
             }
             catch (Exception ex)
             {
