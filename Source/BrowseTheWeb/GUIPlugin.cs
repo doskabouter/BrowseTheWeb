@@ -197,7 +197,7 @@ namespace BrowseTheWeb
         {
             try
             {
-                Xpcom.Initialize(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\xulrunner");
+                Xpcom.Initialize(Settings.XulRunnerPath());
             }
             catch (Exception ex)
             {

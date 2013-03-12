@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using MediaPortal.GUI.Library;
 using MediaPortal.Configuration;
 using Action = MediaPortal.GUI.Library.Action;
@@ -65,6 +66,12 @@ namespace BrowseTheWeb
         }
         private Settings() { LoadFromXml(); }
         #endregion
+
+        public static string XulRunnerPath()
+        {
+            return Path.Combine(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Plugins),
+                         Path.Combine("Windows", "xulrunner"));
+        }
 
         private void LoadFromXml()
         {
