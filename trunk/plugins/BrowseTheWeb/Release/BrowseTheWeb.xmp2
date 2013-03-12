@@ -355,7 +355,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / Webbrowser.</ExtensionDescription>
     <VersionDescription>Upgraded core to 18.0.2</VersionDescription>
     <DevelopmentStatus>Rc</DevelopmentStatus>
-    <OnlineLocation>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.0.3.11.mpe1</OnlineLocation>
+    <OnlineLocation>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.1.0.0.mpe1</OnlineLocation>
     <ReleaseDate>2013-03-11T22:59:55.6086995+01:00</ReleaseDate>
     <Tags>webbrowser, internet, web</Tags>
     <Location>..\..\BrowseTheWeb.mpe1</Location>
