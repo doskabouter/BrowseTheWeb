@@ -9,16 +9,16 @@
       <description>background image</description>
       <type>image</type>
       <id>1</id>
-      <width>720</width>
-      <height>576</height>
+      <width>960</width>
+      <height>720</height>
     </control>
     
     <control>
       <description>Placeholder for browser component. If statusvisible=true, then bottom coordinate is decreased by the height of control with id of 545376891</description>
       <type>image</type>
       <id>545376890</id>
-      <width>720</width>
-      <height>576</height>
+      <width>960</width>
+      <height>720</height>
     </control>
 
     <control>
@@ -26,7 +26,7 @@
       <type>label</type>
       <id>545376891</id>
       <posX>7</posX>
-      <posY>540</posY>
+      <posY>690</posY>
       <label>#btWeb.status</label>
       <font>font12</font>
       <align>left</align>
@@ -38,11 +38,11 @@
       <description>Link id label</description>
       <type>label</type>
       <id>9</id>
-      <posX>900</posX>
-      <posY>540</posY>
+      <posX>950</posX>
+      <posY>690</posY>
       <label>#btWeb.linkid</label>
       <font>font10</font>
-      <align>left</align>
+      <align>right</align>
       <textcolor>ffffffff</textcolor>
       <height>36</height>
       <visible>string.equals(#btWeb.statusvisible, true)</visible>
