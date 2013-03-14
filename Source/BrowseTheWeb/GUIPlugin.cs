@@ -291,7 +291,7 @@ namespace BrowseTheWeb
                 webBrowser.Visible = true;
 
                 webBrowser.Enabled = settings.UseMouse;
-                webBrowser.ClearCachedCOMPtrs();
+                //webBrowser.ClearCachedCOMPtrs();possibly not needed anymore
 
                 webBrowser.Dock = DockStyle.None;
                 SetBrowserWindow();
