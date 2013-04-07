@@ -23,9 +23,9 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Text;
 
 using MediaPortal.GUI.Library;
 using MediaPortal.Dialogs;
@@ -35,6 +35,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
 using Gecko;
+using Gecko.DOM;
 
 namespace BrowseTheWeb
 {
@@ -57,12 +58,8 @@ namespace BrowseTheWeb
         private bool mouseVisible = false;
         private bool clickFromPlugin = false;
         private bool aeroDisabled = false;
-        #region Links
-        private Dictionary<int, HtmlLinkNumber> _htmlLinkNumbers = new Dictionary<int, HtmlLinkNumber>();
-        #endregion
 
         #region Constants
-        private const string _spanstyle = "font-family: arial,sans-serif; font-size: 12px ! important; line-height: 130% ! important; border-width: 1px ! important; border-style: solid ! important; -moz-border-radius: 2px 2px 2px 2px ! important; padding: 0px 2px ! important; margin-right: 2px; max-width: 20px; max-height: 10px ! important; overflow: visible ! important; float: none ! important; display: inline;";
         public const int PluginWindowId = 54537689;
         #endregion
 
@@ -217,6 +214,9 @@ namespace BrowseTheWeb
             osd_linkID = new OSD_LinkId();
             GUIGraphicsContext.form.Controls.Add(osd_linkID);
             osd_linkID.Visible = false;
+            string preferenceFile = Path.Combine(Config.GetFolder(Config.Dir.Config), "btwebprefs.js");
+            if (File.Exists(preferenceFile))
+                GeckoPreferences.Load(preferenceFile);
 
             #endregion
         }
@@ -291,7 +291,7 @@ namespace BrowseTheWeb
                 webBrowser.Visible = true;
 
                 webBrowser.Enabled = settings.UseMouse;
-                //webBrowser.ClearCachedCOMPtrs();possibly not needed anymore
+                webBrowser.ClearCachedCOMPtrs();
 
                 webBrowser.Dock = DockStyle.None;
                 SetBrowserWindow();
@@ -410,8 +410,7 @@ namespace BrowseTheWeb
             // http://geckofx.org/viewtopic.php?id=832
             GeckoPreferences.User["network.proxy.http"] = Server;
             GeckoPreferences.User["network.proxy.http_port"] = Port;
-            int ena = 0; if (useProxy) ena = 1;
-            GeckoPreferences.User["network.proxy.type"] = ena;
+            GeckoPreferences.User["network.proxy.type"] = useProxy ? 1 : 0;
 
             // maybe possible... not sure...
             // network.proxy.login
@@ -903,56 +902,6 @@ namespace BrowseTheWeb
             }
         }
 
-        private void AddElements(List<GeckoHtmlElement> list, GeckoNode parent, string elName)
-        {
-            if (parent is GeckoHtmlElement && ((GeckoHtmlElement)parent).TagName.ToLowerInvariant() == elName)
-                list.Add((GeckoHtmlElement)parent);
-            foreach (GeckoNode child in parent.ChildNodes)
-                AddElements(list, child, elName);
-        }
-
-        private List<GeckoHtmlElement> getElements(GeckoNode parent, string elName)
-        {
-            List<GeckoHtmlElement> res = new List<GeckoHtmlElement>();
-            AddElements(res, parent, elName);
-            return res;
-        }
-
-        private GeckoElement insertSpan(int geckoId, string geckoAction, string geckoType, string className, GeckoNode after)
-        {
-            if (after == null)
-                throw new ArgumentNullException("after");
-            GeckoHtmlElement newChild = after.OwnerDocument.CreateHtmlElement("span");
-            newChild.SetAttribute("style", _spanstyle);
-            newChild.SetAttribute("gecko_id", geckoId.ToString());
-            newChild.SetAttribute("gecko_action", geckoAction);
-            newChild.SetAttribute("gecko_type", geckoType);
-            newChild.InnerHtml = geckoId.ToString();
-            if (!String.IsNullOrEmpty(className))
-                newChild.SetAttribute("class", className);
-            if (after.FirstChild == null)
-                after.AppendChild(newChild);
-            else
-                after.InsertBefore(newChild, after.FirstChild);
-            return newChild;
-        }
-
-        private void SetLinkAttributes(GeckoElement link, int linkNumber, out string id, out string name)
-        {
-            string gb = link.GetAttribute("gb");
-            id = link.GetAttribute("id");
-            name = link.GetAttribute("name");
-            if (string.IsNullOrEmpty(gb))
-            {
-                link.SetAttribute("gb", "gecko_link" + linkNumber);
-            }
-            if (string.IsNullOrEmpty(id))
-            {
-                link.SetAttribute("id", "gb" + linkNumber);
-                id = "gb" + linkNumber;
-            }
-        }
-
         private void webBrowser_DocumentCompleted(object sender, EventArgs e)
         {
             MyLog.debug("page completed : " + webBrowser.Url.ToString());
@@ -968,122 +917,7 @@ namespace BrowseTheWeb
                 #endregion
 
                 if (!settings.UseMouse)
-                {
-                    #region add links to page
-                    _htmlLinkNumbers.Clear();
-
-                    GeckoElementCollection links = webBrowser.Document.Links;
-                    int i = 1;
-
-                    MyLog.debug("page links cnt : " + links.Count);
-
-                    foreach (GeckoHtmlElement element in links)
-                    {
-                        string link = element.GetAttribute("href");
-
-                        if (!link.StartsWith("javascript:"))
-                        {
-                            GeckoHtmlElement lastSpan = element;
-                            bool ready = false;
-                            while (!ready)
-                            {
-                                GeckoHtmlElement ls = lastSpan.LastChild as GeckoHtmlElement;
-                                if (ls == null || ls.TagName != "SPAN")
-                                    ready = true;
-                                else
-                                    lastSpan = ls;
-                            };
-                            if (!element.InnerHtml.Contains("gecko_id"))
-                            {
-                                GeckoElement ls = element;
-                                while (ls.LastChild != null && ls.LastChild is GeckoElement && !String.IsNullOrEmpty(ls.LastChild.TextContent))
-                                    ls = (GeckoElement)ls.LastChild;
-                                insertSpan(i, String.Empty, "LINK", lastSpan.ClassName, ls);
-                            }
-
-                            string id, name;
-                            SetLinkAttributes(element, i, out id, out name);
-                            _htmlLinkNumbers.Add(i, new HtmlLinkNumber(i, id, name, link, HtmlInputType.Link));
-                            i++;
-                        }
-                    }
-
-                    GeckoElementCollection objects = webBrowser.Document.GetElementsByTagName("object");
-                    MyLog.debug("page objects cnt : " + objects.Count);
-                    foreach (GeckoHtmlElement element in objects)
-                        if (element.GetAttribute("type") == "application/x-shockwave-flash")
-                        {
-                            string id, name;
-                            GeckoHtmlElement element2 = element.Parent;
-                            SetLinkAttributes(element2, i, out id, out name);
-
-                            if (!element2.InnerHtml.Contains("gecko_id=\"" + i + "\""))
-                            {
-                                insertSpan(i, String.Empty, "LINK", null, element2);
-                            }
-                            RectangleF rect = element2.BoundingClientRect;
-                            Point p = new Point(Convert.ToInt32(rect.Left + rect.Width / 2), Convert.ToInt32(rect.Top + rect.Height / 2));
-                            _htmlLinkNumbers.Add(i, new HtmlLinkNumber(i, id, name, p, HtmlInputType.FlashObject));
-                            i++;
-                        }
-
-                    GeckoElementCollection forms = webBrowser.Document.GetElementsByTagName("form");
-
-                    MyLog.debug("page forms cnt : " + forms.Count);
-
-                    foreach (GeckoHtmlElement element in forms)
-                    {
-                        List<GeckoHtmlElement> inps = getElements(element, "input");
-                        string action = element.GetAttribute("action");
-                        foreach (GeckoHtmlElement link in inps)
-                        {
-                            string linkType = link.GetAttribute("type");
-                            if (!String.IsNullOrEmpty(linkType))
-                            {
-                                if (linkType != "hidden")
-                                {
-                                    string id, name;
-                                    SetLinkAttributes(link, i, out id, out name);
-
-                                    if (!element.InnerHtml.Contains("gecko_id=\"" + i + "\""))
-                                    {
-                                        insertSpan(i, action, "INPUT", null, link.Parent);
-                                    }
-                                    if (linkType == "submit" ||
-                                        linkType == "reset" ||
-                                        linkType == "radio" ||
-                                        linkType == "image" ||
-                                        linkType == "checkbox")
-                                    {
-                                        _htmlLinkNumbers.Add(i, new HtmlLinkNumber(i, id, name, action, HtmlInputType.Action));
-                                    }
-                                    else
-                                    {
-                                        if (linkType == "password")
-                                            _htmlLinkNumbers.Add(i, new HtmlLinkNumber(i, id, name, action, HtmlInputType.InputPassword));
-                                        else
-                                            _htmlLinkNumbers.Add(i, new HtmlLinkNumber(i, id, name, action, HtmlInputType.Input));
-                                    }
-                                    i++;
-                                }
-                            }
-                            else
-                            {
-                                string id, name;
-                                SetLinkAttributes(link, i, out id, out name);
-
-                                if (!element.InnerHtml.Contains("gecko_id=\"" + i + "\""))
-                                {
-                                    insertSpan(i, action, "INPUT", null, link.Parent);
-                                }
-
-                                _htmlLinkNumbers.Add(i, new HtmlLinkNumber(i, id, name, action, HtmlInputType.Input));
-                                i++;
-                            }
-                        }
-                    }
-                    #endregion
-                }
+                    DomHelper.AddLinksToPage(webBrowser.Document);
 
                 #region reset zoom
                 if (settings.ZoomPage)
@@ -1125,118 +959,120 @@ namespace BrowseTheWeb
             osd_linkID.Visible = false;
             Application.DoEvents();
 
-            HtmlLinkNumber hln = null;
-            if (GetLinkById(Convert.ToInt32(LinkId), out hln))
-            {
-                switch (hln.Type)
-                {
-                    case HtmlInputType.Link:
-                        string link = (string)hln.Obj;
-                        webBrowser.Navigate(link);
-                        MyLog.debug("navigate to linkid=" + LinkId + " URL=" + link);
-                        break;
-                    case HtmlInputType.Input:
-                    case HtmlInputType.InputPassword:
-                        ShowInputDialog(hln);
-                        break;
-                    case HtmlInputType.Action:
-                        webBrowser.Navigate("javascript:document.getElementById(\"" + hln.Id + "\").click()");
-                        MyLog.debug("action linkid=" + LinkId);
-                        break;
-                    case HtmlInputType.FlashObject:
-                        MyLog.debug("flash click on " + Cursor.Position.ToString());
-                        Point p = (Point)hln.Obj;
-                        webBrowser.Enabled = true;
+            GeckoHtmlElement ge = DomHelper.GetElement(LinkId, webBrowser.Document);
 
-                        System.Threading.Thread.Sleep(200);
-                        Cursor.Position = webBrowser.PointToScreen(p);
-                        int X = Cursor.Position.X;
-                        int Y = Cursor.Position.Y;
-                        clickFromPlugin = true;
-                        mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
-                        break;
-                }
+            if (ge == null)
+            {
+                MyLog.debug(String.Format("LinkId {0} not found in _htmlLinkNumbers", LinkId));
+                return;
             }
-        }
-        private bool GetLinkById(int value, out HtmlLinkNumber hln)
-        {
-            if (_htmlLinkNumbers.ContainsKey(value))
-            {
-                HtmlLinkNumber id = _htmlLinkNumbers[value];
-                switch (id.Type)
-                {
-                    case HtmlInputType.Link:
-                        {
-                            string link = (string)id.Obj;
-                            if (!Uri.IsWellFormedUriString(link, UriKind.Absolute))
-                            {
-                                Uri baseUri = webBrowser.Url;
 
-                                GeckoElementCollection baseElements = webBrowser.Document.GetElementsByTagName("base");
-                                if (baseElements != null && baseElements.Count > 0)
-                                {
-                                    GeckoNode gn = baseElements[0].Attributes["href"];
-                                    if (gn != null && !String.IsNullOrEmpty(gn.NodeValue))
-                                        baseUri = new Uri(gn.NodeValue);
-                                }
-                                id.Obj = new Uri(baseUri, link).AbsoluteUri;
-                            }
-                            hln = id;
-                            return true;
-                        }
-                    case HtmlInputType.FlashObject:
-                    case HtmlInputType.Input:
-                    case HtmlInputType.InputPassword:
-                    case HtmlInputType.Action:
-                        hln = id;
-                        return true;
-                    //return "javascript:document.getElementById(\"" + id.Name + "\").click()";
-                }
+            if (ge is GeckoAnchorElement)
+            {
+                string link = ((GeckoAnchorElement)ge).Href;
+                webBrowser.Navigate(link);
+                MyLog.debug("navigate to linkid=" + LinkId + " URL=" + link);
             }
             else
-                MyLog.debug(String.Format("LinkId {0} not found in _htmlLinkNumbers", value));
-            hln = null;
-            return false;
+                if (ge is GeckoButtonElement)
+                {
+                    ge.Click();
+                }
+                else
+                    if (ge is GeckoSelectElement)
+                    {
+                        ShowSelect(ge as GeckoSelectElement);
+                    }
+                    else
+                        if (ge is GeckoInputElement)
+                        {
+                            string linkType = ((GeckoInputElement)ge).Type;
+                            if (!String.IsNullOrEmpty(linkType))
+                            {
+                                switch (linkType)
+                                {
+                                    case "password": ShowInputDialog(true, ge as GeckoInputElement); break;
+                                    case "submit":
+                                    case "reset":
+                                    case "radio":
+                                    case "image":
+                                    case "checkbox":
+                                        ge.Click();
+                                        MyLog.debug("action linkid=" + LinkId);
+                                        break;
+                                    case "hidden": break;
+                                    default: ShowInputDialog(false, ge as GeckoInputElement); break;
+                                }
+                            }
+                        }
+                        else
+                        //if (ge is GeckoObjectElement)
+                        // some items just need a mousehover, and a ge.Click won't do that
+                        {
+                            Point p = DomHelper.GetCenterCoordinate(webBrowser.Document, ge);
+                            MyLog.debug("perform click on " + p.ToString());
+
+                            webBrowser.Enabled = true;
+                            System.Threading.Thread.Sleep(200);
+                            Cursor.Position = webBrowser.PointToScreen(p);
+                            clickFromPlugin = true;
+                            mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+                        }
+            //else
+            // ge.Click();
         }
 
-        public void ShowInputDialog(HtmlLinkNumber id)
+        public void ShowInputDialog(bool isPassword, GeckoInputElement element)
         {
             webBrowser.Visible = false;
 
-            string result = string.Empty;
-            if (ShowKeyboard(ref result, id.Type == HtmlInputType.InputPassword) == DialogResult.OK)
+            string result = element.Value;
+            if (ShowKeyboard(ref result, isPassword) == DialogResult.OK)
             {
-                SetInputElementValue(webBrowser.Document, id.Number, result);
+                if (element != null)
+                    element.SetAttribute("value", result);
+                GeckoFormElement form = element.Form;
+                if (form != null)
+                {
+                    //List<GeckoHtmlElement> inps = DomHelper.GetElements(form, "input");
+                    GeckoElementCollection inps = form.GetElementsByTagName("input");
+                    if (DomHelper.NrOfChildElementsDone(form) == 1)
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        foreach (GeckoInputElement inp in inps)
+                        {
+                            if (sb.Length != 0)
+                                sb.Append('&');
+                            sb.Append(inp.Name);
+                            sb.Append('=');
+                            sb.Append(inp.Value);
+                        }
+
+                        if (form.Method == "get")
+                            webBrowser.Navigate(form.Action + '?' + sb.ToString());
+                        else
+                        {
+                            using (GeckoMIMEInputStream stream = new GeckoMIMEInputStream())
+                            {
+                                stream.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+                                stream.AddContentLength = true;
+                                stream.SetData(sb.ToString());
+                                webBrowser.Navigate(form.Action, 0, null, stream);
+                            }
+                        }
+                    }
+                }
             }
             webBrowser.Visible = true;
-        }
-
-        private bool SetInputElementValue(GeckoNode parent, int geckoId, string text)
-        {
-            GeckoElement el = parent as GeckoElement;
-            if (el != null && el.TagName.ToLowerInvariant() == "input" && el.GetAttribute("gb") == "gecko_link" + geckoId)
-            {
-                el.SetAttribute("value", text);
-                return true;
-            }
-            else
-            {
-                foreach (GeckoNode child in parent.ChildNodes)
-                {
-                    if (SetInputElementValue(child, geckoId, text))
-                        return true;
-                }
-                return false;
-            }
         }
 
         public static DialogResult ShowKeyboard(ref string DefaultText, bool PasswordInput)
         {
             VirtualKeyboard vk = (VirtualKeyboard)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_VIRTUAL_KEYBOARD);
-
             vk.Reset();
             vk.Password = PasswordInput;
             vk.Text = DefaultText;
+            vk.SetLabelAsInitialText(false); // set to false, otherwise our intial text is cleared
             vk.DoModal(GUIWindowManager.ActiveWindow);
 
             if (vk.IsConfirmed)
@@ -1255,6 +1091,29 @@ namespace BrowseTheWeb
             dlg.SetLine(2, line2);
             dlg.SetLine(3, line3);
             dlg.DoModal(GUIWindowManager.ActiveWindow);
+        }
+        public void ShowSelect(GeckoSelectElement select)
+        {
+            webBrowser.Visible = false;
+
+            GUIDialogSelect2 dlgMenu = (GUIDialogSelect2)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_SELECT2);
+            dlgMenu.Reset();
+            dlgMenu.SetHeading(select.Name);
+            dlgMenu.SelectedLabel = select.SelectedIndex;
+            GeckoOptionsCollection options = select.Options;
+            for (uint i = 0; i < options.Length; i++)
+            {
+                GeckoOptionElement option = options.item(i);
+                dlgMenu.Add(option.Label);
+            }
+            dlgMenu.DoModal(GUIWindowManager.ActiveWindow);
+            webBrowser.Visible = true;
+
+            if (dlgMenu.SelectedLabel == -1)
+                return;
+            select.SelectedIndex = dlgMenu.SelectedLabel;
+            return;
+
         }
 
         private void OnRenderSound(string strFilePath)
