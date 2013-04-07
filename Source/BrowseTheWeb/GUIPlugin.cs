@@ -74,11 +74,11 @@ namespace BrowseTheWeb
         private float zoom = Settings.Instance.DefaultZoom;
         private Settings settings = Settings.Instance;
 
-        public static bool ParameterSupported = false;
         public static string Parameter = string.Empty;
 
         public static string loadFav = string.Empty;
         private bool originalMouseSupport;
+        private bool formsAdded = false;
 
         #endregion
 
@@ -165,21 +165,6 @@ namespace BrowseTheWeb
         {
             MyLog.debug("Init Browse the web");
 
-            AddFormsDelegate d = AddForms;
-            GUIGraphicsContext.form.Invoke(d);
-
-            #region parameters test
-            ParameterSupported = false;
-            if (typeof(GUIWindow).GetField("_loadParameter", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance) != null)
-            {
-                ParameterSupported = true;
-            }
-            #endregion
-
-            TrySetProxy();
-            if (!String.IsNullOrEmpty(settings.UserAgent))
-                GeckoPreferences.User["general.useragent.override"] = settings.UserAgent;
-
             BookmarkXml.AddFolder(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) +
                                   "\\bookmarks.xml", "Saved by MP");
 
@@ -188,10 +173,11 @@ namespace BrowseTheWeb
             return Load(GUIGraphicsContext.Skin + @"\BrowseTheWeb.xml");
         }
 
-        private delegate void AddFormsDelegate();
-
         private void AddForms()
         {
+            if (formsAdded)
+                return;
+            MyLog.debug("Start AddForms");
             try
             {
                 Xpcom.Initialize(Settings.XulRunnerPath());
@@ -219,6 +205,12 @@ namespace BrowseTheWeb
                 GeckoPreferences.Load(preferenceFile);
 
             #endregion
+            TrySetProxy();
+            if (!String.IsNullOrEmpty(settings.UserAgent))
+                GeckoPreferences.User["general.useragent.override"] = settings.UserAgent;
+
+            formsAdded = true;
+            MyLog.debug("Finish AddForms");
         }
 
         private void SetBrowserWindow()
@@ -255,6 +247,7 @@ namespace BrowseTheWeb
 
         protected override void OnPageLoad()
         {
+            AddForms();
             GUIPropertyManager.SetProperty("#currentmodule", settings.PluginName);
 
             if (settings.DisableAero && !aeroDisabled)
@@ -281,11 +274,7 @@ namespace BrowseTheWeb
                     while (ShowCursor(true) < 0) ;
                 }
 
-                Parameter = null;
-                if (ParameterSupported)
-                {
-                    Parameter = _loadParameter;
-                }
+                Parameter = _loadParameter;
 
                 #region init browser
                 webBrowser.Visible = true;
