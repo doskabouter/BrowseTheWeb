@@ -83,6 +83,7 @@
     <Compile Include="Bookmark.cs" />
     <Compile Include="BookmarkElement.cs" />
     <Compile Include="BookmarkXml.cs" />
+    <Compile Include="DomHelper.cs" />
     <Compile Include="GetFolder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,8 +104,6 @@
     </Compile>
     <Compile Include="GUIBookmark.cs" />
     <Compile Include="GUIPlugin.cs" />
-    <Compile Include="HtmlInputType.cs" />
-    <Compile Include="HtmlLinkNumber.cs" />
     <Compile Include="ImportIE.cs">
       <SubType>Form</SubType>
     </Compile>
