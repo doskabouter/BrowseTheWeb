@@ -707,9 +707,9 @@ Click Next to continue or Cancel to exit Setup.</Value>
         </CompatibleVersion>
         <SubSystemsUsed>
           <Items>
-            <SubSystemItem Name="MP.SkinEngine" />
             <SubSystemItem Name="MP.Config" />
             <SubSystemItem Name="MP.DB" />
+            <SubSystemItem Name="MP.SkinEngine" />
           </Items>
         </SubSystemsUsed>
       </PluginDependencyItem>
@@ -718,21 +718,25 @@ Click Next to continue or Cancel to exit Setup.</Value>
   <GeneralInfo>
     <Name>Browse The Web</Name>
     <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
-    <Author>Doskabouter/Mark Koenig (kroko)</Author>
+    <Author>Doskabouter</Author>
     <HomePage>http://www.team-mediaportal.com/extensions/news-info/browse-the-web-webbrowser</HomePage>
     <ForumPage>http://forum.team-mediaportal.com/threads/browse-the-web-webbrowser.107285/</ForumPage>
     <UpdateUrl>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
     <Version>
       <Major>1</Major>
-      <Minor>0</Minor>
+      <Minor>1</Minor>
       <Build>0</Build>
       <Revision>0</Revision>
     </Version>
     <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / Webbrowser.</ExtensionDescription>
-    <VersionDescription>Upgraded core to 18.0.2</VersionDescription>
-    <DevelopmentStatus>Rc</DevelopmentStatus>
-    <OnlineLocation>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.1.0.0.mpe1</OnlineLocation>
-    <ReleaseDate>2013-03-12T23:29:26.965465+01:00</ReleaseDate>
+    <VersionDescription>Added compatibility with 1.4.0
+More items to click on
+Added skin selection to installer
+Fixed installation issues
+Skin improvements</VersionDescription>
+    <DevelopmentStatus>Stable</DevelopmentStatus>
+    <OnlineLocation>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.[Version].mpe1</OnlineLocation>
+    <ReleaseDate>2013-04-08T21:18:37.2804854+02:00</ReleaseDate>
     <Tags>webbrowser, internet, web</Tags>
     <Location>..\..\BrowseTheWeb.mpe1</Location>
     <Params>
