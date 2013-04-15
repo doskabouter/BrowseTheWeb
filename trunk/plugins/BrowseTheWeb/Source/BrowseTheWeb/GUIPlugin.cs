@@ -1000,7 +1000,8 @@ namespace BrowseTheWeb
                         {
                             Point p = DomHelper.GetCenterCoordinate(webBrowser.Document, ge);
                             MyLog.debug("perform click on " + p.ToString());
-
+                            p.X = Convert.ToInt32(p.X * zoom);
+                            p.Y = Convert.ToInt32(p.Y * zoom);
                             webBrowser.Enabled = true;
                             System.Threading.Thread.Sleep(200);
                             Cursor.Position = webBrowser.PointToScreen(p);
