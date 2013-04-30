@@ -13,13 +13,16 @@ namespace BrowseTheWeb
             "line-height: 130% ! important; " +
             "border-width: 1px ! important; " +
             "border-style: solid ! important; " +
-            "-moz-border-radius: 2px 2px 2px 2px ! important; " +
+            "border-radius: 2px 2px 2px 2px ! important; " +
             "padding: 0px 2px ! important; " +
             "margin-right: 2px; " +
             "max-width: 20px; " +
             "max-height: 10px ! important; " +
             "overflow: visible ! important; " +
             "float: none ! important; " +
+            "position: relative !important; " +
+            "top: 0; " +
+            "left: 0; " +
             "display: inline;";
         private const string btwebId = "btweb_id";
 
