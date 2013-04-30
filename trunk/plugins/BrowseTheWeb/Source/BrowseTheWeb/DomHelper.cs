@@ -8,7 +8,19 @@ namespace BrowseTheWeb
 {
     public class DomHelper
     {
-        private const string _spanstyle = "font-family: arial,sans-serif; font-size: 12px ! important; line-height: 130% ! important; border-width: 1px ! important; border-style: solid ! important; -moz-border-radius: 2px 2px 2px 2px ! important; padding: 0px 2px ! important; margin-right: 2px; max-width: 20px; max-height: 10px ! important; overflow: visible ! important; float: none ! important; display: inline;";
+        private const string _spanstyle = "font-family: arial,sans-serif; " +
+            "font-size: 12px ! important; " +
+            "line-height: 130% ! important; " +
+            "border-width: 1px ! important; " +
+            "border-style: solid ! important; " +
+            "-moz-border-radius: 2px 2px 2px 2px ! important; " +
+            "padding: 0px 2px ! important; " +
+            "margin-right: 2px; " +
+            "max-width: 20px; " +
+            "max-height: 10px ! important; " +
+            "overflow: visible ! important; " +
+            "float: none ! important; " +
+            "display: inline;";
         private const string btwebId = "btweb_id";
 
         public static void AddLinksToPage(GeckoDocument document)
