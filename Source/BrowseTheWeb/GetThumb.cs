@@ -27,6 +27,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using Gecko;
+using Gecko.Utils;
 
 namespace BrowseTheWeb
 {
@@ -34,7 +35,6 @@ namespace BrowseTheWeb
     {
         public string SelectedUrl = string.Empty;
         private GeckoWebBrowser browser;
-        private Bitmap snap;
 
         private bool received = false;
         private int time = 0;
@@ -47,6 +47,7 @@ namespace BrowseTheWeb
             browser = new GeckoWebBrowser();
             this.Controls.Add(browser);
         }
+
         private void GetThumb_Load(object sender, EventArgs e)
         {
             browser.Visible = false;
@@ -63,8 +64,7 @@ namespace BrowseTheWeb
         {
             if (browser.Url.ToString() != "about:blank")
             {
-                snap = new Bitmap(browser.Width, browser.Height);
-                browser.DrawToBitmap(snap, new Rectangle(0, 0, browser.Width, browser.Height));
+                Bitmap snap = browser.GetBitmap((uint)browser.Width, (uint)browser.Height);
 
                 snap = MediaPortal.Util.BitmapResize.Resize(ref snap, 300, 400, false, true);
 
