@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Gecko;
@@ -85,6 +86,7 @@ namespace BrowseTheWeb
 
         private static void AddLinksToPage(GeckoDocument document, int id)
         {
+            Dictionary<string, int> hrefs = new Dictionary<string, int>();
             GeckoElementCollection links = document.Links;
             MyLog.debug("page links cnt : " + links.Count);
             foreach (GeckoHtmlElement element in links) // no casting to GeckoAnchorElement, because document.links also returns GeckoAreaElemenets
@@ -105,9 +107,24 @@ namespace BrowseTheWeb
                         GeckoElement ls = element;
                         while (ls.LastChild != null && ls.LastChild is GeckoElement && !String.IsNullOrEmpty(ls.LastChild.TextContent))
                             ls = (GeckoElement)ls.LastChild;
-                        insertSpanAfter(id, lastSpan.ClassName, ls);
-                        SetLinkAttributes(element, id);
-                        id++;
+
+                        int newId;
+                        string url = element.GetAttribute("href");
+                        if (!element.HasAttribute("onclick"))
+                        {
+                            if (hrefs.ContainsKey(url))
+                                newId = hrefs[url];
+                            else
+                            {
+                                newId = id++;
+                                hrefs.Add(url, newId);
+                            }
+                        }
+                        else
+                            newId = id++;
+
+                        insertSpanAfter(newId, lastSpan.ClassName, ls);
+                        SetLinkAttributes(element, newId);
                     }
                 }
 
