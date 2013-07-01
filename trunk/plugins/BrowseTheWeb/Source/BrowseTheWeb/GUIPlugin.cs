@@ -956,7 +956,7 @@ namespace BrowseTheWeb
                 return;
             }
 
-            if (ge is GeckoAnchorElement)
+            if (ge is GeckoAnchorElement && !ge.HasAttribute("onclick"))
             {
                 string link = ((GeckoAnchorElement)ge).Href;
                 webBrowser.Navigate(link);
