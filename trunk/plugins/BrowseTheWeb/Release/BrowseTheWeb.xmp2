@@ -724,18 +724,17 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <UpdateUrl>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
     <Version>
       <Major>1</Major>
-      <Minor>2</Minor>
+      <Minor>3</Minor>
       <Build>0</Build>
       <Revision>0</Revision>
     </Version>
     <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / Webbrowser.</ExtensionDescription>
-    <VersionDescription>Added compatibility with 1.4.0
-Fixed click issue when zoom isn't 100%
-Fixed missing round corners at link-numbers
-Improved placement of link-numbers</VersionDescription>
+    <VersionDescription>Fixed creation of thumbnails
+Better handling of &lt;a&gt; elements with onclick handler
+Reuse numbers for &lt;a&gt; elements with same href</VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
     <OnlineLocation>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.[Version].mpe1</OnlineLocation>
-    <ReleaseDate>2013-05-18T21:31:58.202852+02:00</ReleaseDate>
+    <ReleaseDate>2013-07-02T21:43:02.437834+02:00</ReleaseDate>
     <Tags>webbrowser, internet, web</Tags>
     <Location>..\..\BrowseTheWeb.mpe1</Location>
     <Params>
