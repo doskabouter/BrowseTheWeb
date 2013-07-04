@@ -192,14 +192,14 @@ namespace BrowseTheWeb
             webBrowser = new GeckoWebBrowser();
             webBrowser.Name = "BrowseTheWeb";
             webBrowser.NoDefaultContextMenu = true;
-
-            GUIGraphicsContext.form.Controls.Add(webBrowser);
             webBrowser.Enabled = false;
             webBrowser.Visible = false;
 
+            GUIGraphicsContext.form.Controls.Add(webBrowser);
+
             osd_linkID = new OSD_LinkId();
-            GUIGraphicsContext.form.Controls.Add(osd_linkID);
             osd_linkID.Visible = false;
+            GUIGraphicsContext.form.Controls.Add(osd_linkID);
             string preferenceFile = Path.Combine(Config.GetFolder(Config.Dir.Config), "btwebprefs.js");
             if (File.Exists(preferenceFile))
                 GeckoPreferences.Load(preferenceFile);
@@ -277,13 +277,14 @@ namespace BrowseTheWeb
                 Parameter = _loadParameter;
 
                 #region init browser
+
+                webBrowser.Dock = DockStyle.None;
+                SetBrowserWindow();
+
                 webBrowser.Visible = true;
 
                 webBrowser.Enabled = settings.UseMouse;
                 webBrowser.ClearCachedCOMPtrs();
-
-                webBrowser.Dock = DockStyle.None;
-                SetBrowserWindow();
 
                 MyLog.debug("Create eventhandler");
 
