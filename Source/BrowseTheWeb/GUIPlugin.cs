@@ -308,21 +308,28 @@ namespace BrowseTheWeb
                 }
 
                 string loadFav = StartupLink;
-
-                if (String.IsNullOrEmpty(webBrowser.Document.Domain))
-                {
-                    if ((settings.UseHome) && (string.IsNullOrEmpty(loadFav)))
-                    {
-                        webBrowser.Navigate(settings.HomePage);
-                        MyLog.debug("load home page " + settings.HomePage);
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(loadFav))
+                if (!String.IsNullOrEmpty(loadFav))
                 {
                     webBrowser.Navigate(loadFav);
                     MyLog.debug("load favorite " + loadFav);
                     StartupLink = string.Empty;
+                }
+                else
+                {
+                    if (String.IsNullOrEmpty(webBrowser.Document.Domain))
+                    {
+                        if (settings.UseHome)
+                        {
+                            webBrowser.Navigate(settings.HomePage);
+                            MyLog.debug("load home page " + settings.HomePage);
+                        }
+                        else
+                        {
+                            webBrowser.Navigate("about:blank");
+                            MyLog.debug("load about:blank");
+                        }
+                    }
+
                 }
 
                 #endregion
