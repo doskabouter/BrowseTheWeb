@@ -198,10 +198,12 @@ namespace BrowseTheWeb
             {
                 string filename = GetThumbString(Url);
                 filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb\\" + filename;
-
                 Snap.Save(filename);
             }
-            catch { }
+            catch (Exception e)
+            {
+                MyLog.debug("Exception: " + e.ToString());
+            }
         }
         public static Bitmap GetSnap(string Url)
         {
@@ -217,8 +219,14 @@ namespace BrowseTheWeb
                     snap = (Bitmap)Bitmap.FromFile(filename);
                     return snap;
                 }
+                else
+                    MyLog.debug("Getsnap does not exist");
+
             }
-            catch { }
+            catch (Exception e)
+            {
+                MyLog.debug("Exception: " + e.ToString());
+            }
 
             return snap;
         }
