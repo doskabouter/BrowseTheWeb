@@ -700,8 +700,8 @@ Click Next to continue or Cancel to exit Setup.</Value>
         <CompatibleVersion>
           <Items>
             <CompatibleVersionItem>
-              <MinRequiredVersion>1.1.7.0</MinRequiredVersion>
-              <DesignedForVersion>1.3.100.0</DesignedForVersion>
+              <MinRequiredVersion>1.3.100.0</MinRequiredVersion>
+              <DesignedForVersion>1.5.100.0</DesignedForVersion>
             </CompatibleVersionItem>
           </Items>
         </CompatibleVersion>
@@ -724,17 +724,16 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <UpdateUrl>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
     <Version>
       <Major>1</Major>
-      <Minor>3</Minor>
+      <Minor>4</Minor>
       <Build>0</Build>
       <Revision>0</Revision>
     </Version>
     <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / Webbrowser.</ExtensionDescription>
-    <VersionDescription>Fixed creation of thumbnails
-Better handling of &lt;a&gt; elements with onclick handler
-Reuse numbers for &lt;a&gt; elements with same href</VersionDescription>
+    <VersionDescription>Fixed some gui issues
+Fixed Compatibility with Mediaportal 1.6.0</VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
     <OnlineLocation>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.[Version].mpe1</OnlineLocation>
-    <ReleaseDate>2013-07-02T21:43:02.437834+02:00</ReleaseDate>
+    <ReleaseDate>2013-11-12T23:14:07.6287285+01:00</ReleaseDate>
     <Tags>webbrowser, internet, web</Tags>
     <Location>..\..\BrowseTheWeb.mpe1</Location>
     <Params>
