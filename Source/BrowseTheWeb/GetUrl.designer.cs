@@ -1,4 +1,4 @@
-﻿namespace BrowseTheWeb
+﻿namespace BrowseTheWeb.Setup
 {
   partial class GetUrl
   {

@@ -123,7 +123,7 @@ namespace BrowseTheWeb
         }
         public void ShowPlugin()
         {
-            Setup setup = new Setup();
+            Setup.Setup setup = new Setup.Setup();
             setup.ShowDialog();
         }
 
@@ -164,12 +164,6 @@ namespace BrowseTheWeb
         public override bool Init()
         {
             MyLog.debug("Init Browse the web");
-
-            BookmarkXml.AddFolder(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) +
-                                  "\\bookmarks.xml", "Saved by MP");
-
-            MyLog.debug("Init Browse the web finished");
-
             return Load(GUIGraphicsContext.Skin + @"\BrowseTheWeb.xml");
         }
 
@@ -746,7 +740,7 @@ namespace BrowseTheWeb
             DialogResult result = ShowKeyboard(ref title, false);
             if (result == DialogResult.OK)
             {
-                bool hasSaved = BookmarkXml.AddBookmark(title, actualUrl, Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml", 0);
+                bool hasSaved = Bookmarks.Instance.AddBookmark(title, actualUrl, Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml");
                 if (hasSaved)
                 {
                     ShowAlert("Bookmark has been saved !", "Title : " + title, "URL : " + actualUrl, "");

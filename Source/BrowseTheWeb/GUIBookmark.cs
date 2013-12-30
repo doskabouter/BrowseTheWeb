@@ -23,13 +23,18 @@
 #endregion
 
 
+using System.Collections.Generic;
 using MediaPortal.GUI.Library;
 using MediaPortal.Configuration;
 
-using System.Xml;
 
 namespace BrowseTheWeb
 {
+    public class BtwebGuiListItem : GUIListItem
+    {
+        public BookmarkBase bookmark;
+    }
+
     public class GUIBookmark : GUIWindow
     {
         [SkinControlAttribute(50)]
@@ -52,15 +57,19 @@ namespace BrowseTheWeb
                 base.GetID = value;
             }
         }
+
         public override bool Init()
         {
+            MyLog.debug("Init Browse the web bookmarks");
             bool result = Load(GUIGraphicsContext.Skin + @"\BrowseTheWebBook.xml");
+            Bookmarks.Instance.LoadFromXml(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml");
+
             return result;
         }
 
         protected override void OnPageLoad()
         {
-            LoadFacade(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml", "");
+            LoadFacade(null);
             Bookmark.InitCachePath();
             base.OnPageLoad();
         }
@@ -68,15 +77,12 @@ namespace BrowseTheWeb
         {
             if (actionType == MediaPortal.GUI.Library.Action.ActionType.ACTION_SELECT_ITEM)
             {
-                GUIListItem item = facade.SelectedListItem;
+                BtwebGuiListItem item = facade.SelectedListItem as BtwebGuiListItem;
                 if (item != null)
                 {
                     if (item.IsFolder)
                     {
-                        if (item.Label == "..")
-                            LoadFacade(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml", "");
-                        else
-                            LoadFacade(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml", item.Label);
+                        LoadFacade((BookmarkFolder)item.bookmark);
                     }
                     else
                     {
@@ -113,98 +119,49 @@ namespace BrowseTheWeb
             }
         }
 
-        public void LoadFacade(string Path, string Folder)
+        public void LoadFacade(BookmarkFolder parent)
         {
             facade.CurrentLayout = Settings.Instance.View;
             facade.Clear();
-
-            GUIListItem item = new GUIListItem();
-
-            try
+            if (parent != null)
             {
-                XmlDocument xmlDocument = new XmlDocument();
-                xmlDocument.Load(Path);
-
-                if (Folder == string.Empty)
-                {
-                    XmlNodeList col = xmlDocument.GetElementsByTagName("Entry");
-                    foreach (XmlNode node in col)
-                    {
-                        BookmarkElement bkm = BookmarkXml.GetData(node);
-
-                        string name = bkm.Name.Replace(" ", "_");
-                        name = name.Replace(".", "_");
-
-                        if ((bkm.isFolder) ||
-                            (!bkm.isFolder) && (!bkm.isSubFolder))
-                        {
-                            item = new GUIListItem();
-                            item.IsFolder = bkm.isFolder;
-                            item.Label = bkm.Name;
-                            item.Path = bkm.Url;
-                            if (item.IsFolder)
-                            {
-                                item.IconImage = "defaultFolder.png";
-                                item.IconImageBig = "defaultFolderBig.png";
-                            }
-                            else
-                            {
-                                string file = Bookmark.GetSnapPath(bkm.Url);
-                                item.IconImage = file;
-                                item.IconImageBig = file;
-                            }
-
-                            facade.Add(item);
-                        }
-                    }
-                }
-
-                if (Folder != string.Empty)
-                {
-                    item = new GUIListItem();
-                    item.IsFolder = true;
-                    item.Label = "..";
-                    item.Path = "..";
-                    item.IconImage = "defaultFolderBack.png";
-                    item.IconImageBig = "defaultFolderBackBig.png";
-                    facade.Add(item);
-
-                    bool found = false;
-
-                    XmlNodeList col = xmlDocument.GetElementsByTagName("Entry");
-                    foreach (XmlNode node in col)
-                    {
-                        BookmarkElement bkm = BookmarkXml.GetData(node);
-
-                        if ((bkm.isFolder) || ((!bkm.isSubFolder && !bkm.isFolder))) found = false;
-
-                        if (Folder == bkm.Name)
-                        {
-                            found = true;
-                        }
-                        if (found)
-                        {
-                            if (bkm.isSubFolder)
-                            {
-                                item = new GUIListItem();
-                                item.IsFolder = bkm.isFolder;
-                                item.Label = bkm.Name;
-                                item.Path = bkm.Url;
-
-                                string file = Bookmark.GetSnapPath(bkm.Url);
-                                item.IconImage = file;
-                                item.IconImageBig = file;
-
-                                facade.Add(item);
-                            }
-                        }
-                    }
-                }
-
-                GUIPropertyManager.SetProperty("#itemcount", facade.Count.ToString());
-                facade.SelectedListItemIndex = 0;
+                BtwebGuiListItem item = new BtwebGuiListItem();
+                item.bookmark = parent.Parent;
+                item.IsFolder = true;
+                item.Label = "..";
+                item.Path = "..";
+                item.IconImage = "defaultFolderBack.png";
+                item.IconImageBig = "defaultFolderBackBig.png";
+                facade.Add(item);
             }
-            catch { }
+
+            List<BookmarkBase> list = parent == null ? Bookmarks.Instance.root : parent.Items;
+
+            foreach (BookmarkBase bookmark in list)
+            {
+                BtwebGuiListItem item = new BtwebGuiListItem();
+                item.IsFolder = bookmark is BookmarkFolder;
+                item.Label = bookmark.Name;
+                item.bookmark = bookmark;
+
+                if (item.IsFolder)
+                {
+                    item.IconImage = "defaultFolder.png";
+                    item.IconImageBig = "defaultFolderBig.png";
+                }
+                else
+                {
+                    item.Path = ((BookmarkItem)bookmark).Url;
+                    string file = Bookmark.GetSnapPath(item.Path);
+                    item.IconImage = file;
+                    item.IconImageBig = file;
+                }
+
+                facade.Add(item);
+            }
+            GUIPropertyManager.SetProperty("#itemcount", facade.Count.ToString());
+            facade.SelectedListItemIndex = 0;
+
         }
     }
 }

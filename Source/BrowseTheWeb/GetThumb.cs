@@ -29,7 +29,7 @@ using System.Windows.Forms;
 using Gecko;
 using Gecko.Utils;
 
-namespace BrowseTheWeb
+namespace BrowseTheWeb.Setup
 {
     public partial class GetThumb : Form
     {

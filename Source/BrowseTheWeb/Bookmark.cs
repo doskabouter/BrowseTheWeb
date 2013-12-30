@@ -23,254 +23,115 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Xml;
-using System.IO;
-using System.Windows.Forms;
-using System.Net;
-using MediaPortal.Configuration;
-
-using System.Drawing;
 
 namespace BrowseTheWeb
 {
-    public class Bookmark
+    public class BookmarkBase
     {
-        private static XmlTextWriter textWriter;
+        public string Name = String.Empty;
+        public DateTime Created = DateTime.Now;
 
-        public static bool Save(TreeView Treeview, string Path)
+        virtual public void ToXml(XmlTextWriter textWriter)
         {
-            bool result = false;
-
-            try
-            {
-                textWriter = new XmlTextWriter(Path, null);
-                textWriter.Formatting = Formatting.Indented;
-
-                textWriter.WriteStartDocument();
-                textWriter.WriteStartElement("Bookmarks");
-
-                foreach (TreeNode t in Treeview.Nodes[0].Nodes)
-                {
-                    BookmarkElement bkm = (BookmarkElement)t.Tag;
-                    if (bkm != null)
-                    {
-                        WriteOneEntry(bkm);
-
-                        foreach (TreeNode sub in t.Nodes)
-                        {
-                            BookmarkElement bkm2 = (BookmarkElement)sub.Tag;
-                            WriteOneEntry(bkm2);
-                        }
-                    }
-                }
-
-                textWriter.WriteEndElement();
-
-                textWriter.WriteEndDocument();
-                textWriter.Close();
-
-                result = true;
-            }
-            catch
-            {
-                // error
-            }
-            finally
-            {
-                if (textWriter != null) textWriter.Close();
-            }
-
-            return result;
-        }
-        public static void Load(TreeView Treeview, string Path)
-        {
-            Treeview.Nodes.Clear();
-
-            TreeNode main = Treeview.Nodes.Add("Bookmarks", "Bookmarks");
-            main.ImageIndex = 2;
-            main.SelectedImageIndex = 2;
-
-            try
-            {
-                BookmarkXml.LoadBookmarks(Path);
-                TreeNode akt = new TreeNode();
-
-                foreach (BookmarkElement bkm in BookmarkXml.BookmarkItems)
-                {
-                    if (bkm.isFolder)
-                    {
-                        akt = main.Nodes.Add(bkm.Name);
-                        akt.Tag = bkm;
-                        akt.ImageIndex = 1;
-                        akt.SelectedImageIndex = 1;
-                    }
-                    if (bkm.isSubFolder)
-                    {
-                        TreeNode sub = akt.Nodes.Add(bkm.Name);
-                        sub.Tag = bkm;
-                    }
-                    if ((!bkm.isFolder) && (!bkm.isSubFolder))
-                    {
-                        TreeNode add = main.Nodes.Add(bkm.Name);
-                        add.Tag = bkm;
-                    }
-                }
-
-                Treeview.Invalidate();
-
-            }
-            catch { }
+            textWriter.WriteStartElement("Name");
+            textWriter.WriteValue(Name);
+            textWriter.WriteEndElement();
+            textWriter.WriteStartElement("Created");
+            textWriter.WriteValue(Created);
+            textWriter.WriteEndElement();
         }
 
-        private static void WriteOneEntry(BookmarkElement bkm)
+        virtual public void FromXml(XmlNode node)
+        {
+            XmlNode nameNode = node.SelectSingleNode("Name");
+            if (nameNode != null)
+            {
+                Name = nameNode.InnerText;
+                Created = Convert.ToDateTime(node.SelectSingleNode("Created").InnerText);
+            }
+        }
+    }
+
+    public class BookmarkItem : BookmarkBase
+    {
+        public string Url = string.Empty;
+
+        public int Visited = 0;
+        public DateTime LastVisited;
+
+        public override void ToXml(XmlTextWriter textWriter)
         {
             textWriter.WriteStartElement("Entry");
-
-            textWriter.WriteStartElement("Name");
-            textWriter.WriteValue(bkm.Name);
-            textWriter.WriteEndElement();
+            base.ToXml(textWriter);
 
             textWriter.WriteStartElement("URL");
-            textWriter.WriteValue(bkm.Url);
+            textWriter.WriteValue(Url);
             textWriter.WriteEndElement();
 
             textWriter.WriteStartElement("Visited");
-            textWriter.WriteValue(bkm.Visited);
+            textWriter.WriteValue(Visited);
             textWriter.WriteEndElement();
-
             textWriter.WriteStartElement("LastVisited");
-            textWriter.WriteValue(bkm.LastVisited);
-            textWriter.WriteEndElement();
-
-            textWriter.WriteStartElement("Created");
-            textWriter.WriteValue(bkm.Created);
-            textWriter.WriteEndElement();
-
-            textWriter.WriteStartElement("isFolder");
-            textWriter.WriteValue(bkm.isFolder);
-            textWriter.WriteEndElement();
-
-            textWriter.WriteStartElement("isSubFolder");
-            textWriter.WriteValue(bkm.isSubFolder);
+            textWriter.WriteValue(LastVisited);
             textWriter.WriteEndElement();
 
             textWriter.WriteEndElement();
-
         }
 
-        public static bool Exists(TreeView Treeview, string Name)
+        public override void FromXml(XmlNode node)
         {
-            foreach (TreeNode t in Treeview.Nodes[0].Nodes)
+            base.FromXml(node);
+            Url = node.SelectSingleNode("URL").InnerText;
+
+            Visited = Convert.ToInt32(node.SelectSingleNode("Visited").InnerText);
+            LastVisited = Convert.ToDateTime(node.SelectSingleNode("LastVisited").InnerText);
+        }
+
+    }
+
+    public class BookmarkFolder : BookmarkBase
+    {
+        public List<BookmarkBase> Items;
+        public BookmarkFolder Parent;
+
+        public BookmarkFolder()
+        {
+            Items = new List<BookmarkBase>();
+        }
+
+        public override void ToXml(XmlTextWriter textWriter)
+        {
+            textWriter.WriteStartElement("Folder");
+            base.ToXml(textWriter);
+            foreach (BookmarkBase item in Items)
+                item.ToXml(textWriter);
+
+
+            textWriter.WriteEndElement();
+        }
+
+        public override void FromXml(XmlNode node)
+        {
+            base.FromXml(node);
+            foreach (XmlNode subNode in node.SelectNodes("Entry|Folder"))
             {
-                if (Name == t.Text)
-                    return true;
-                foreach (TreeNode sub in t.Nodes)
+                if (subNode.Name == "Folder")
                 {
-                    if (Name == sub.Text)
-                        return true;
-                }
-            }
-            return false;
-        }
-
-        public static bool isValidUrl(string URL)
-        {
-            try
-            {
-                Uri urlCheck = new Uri(URL);
-                WebRequest request = WebRequest.Create(urlCheck);
-                request.Timeout = 10000;
-
-                WebResponse response;
-
-                response = request.GetResponse();
-            }
-            catch (Exception)
-            {
-                return false; //url does not exist
-            }
-            return true;
-        }
-
-        public static void SaveSnap(Bitmap Snap, string Url)
-        {
-            try
-            {
-                string filename = GetThumbString(Url);
-                filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb\\" + filename;
-                Snap.Save(filename);
-            }
-            catch (Exception e)
-            {
-                MyLog.debug("Exception: " + e.ToString());
-            }
-        }
-        public static Bitmap GetSnap(string Url)
-        {
-            Bitmap snap = null;
-
-            try
-            {
-                string filename = GetThumbString(Url);
-                filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb\\" + filename;
-
-                if (File.Exists(filename))
-                {
-                    snap = (Bitmap)Bitmap.FromFile(filename);
-                    return snap;
+                    BookmarkFolder item = new BookmarkFolder();
+                    item.FromXml(subNode);
+                    Items.Add(item);
                 }
                 else
-                    MyLog.debug("Getsnap does not exist");
-
-            }
-            catch (Exception e)
-            {
-                MyLog.debug("Exception: " + e.ToString());
-            }
-
-            return snap;
-        }
-
-        public static string GetSnapPath(string Url)
-        {
-            string filename = GetThumbString(Url);
-            filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb\\" + filename;
-
-            return filename;
-        }
-        public static void InitCachePath()
-        {
-            if (!Directory.Exists(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb"))
-                Directory.CreateDirectory(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb");
-
-
-            if (Directory.Exists(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb"))
-            {
-                string[] files = Directory.GetFiles(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb", "*.*");
-                foreach (string f in files)
                 {
-                    File.Move(f, Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb\\" + Path.GetFileName(f));
+                    BookmarkItem bmItem = new BookmarkItem();
+                    bmItem.FromXml(subNode);
+                    Items.Add(bmItem);
                 }
+
             }
-
-        }
-
-        private static string GetThumbString(string Name)
-        {
-            string result = Name;
-
-            if (result.EndsWith("/")) result = result.Substring(0, result.Length - 1);
-
-            int x = result.IndexOf("//");
-            if (x > 0)
-            {
-                result = result.Substring(x + 2);
-            }
-
-            foreach (char c in Path.GetInvalidFileNameChars())
-                result = result.Replace(c, '_');
-            result = result + ".png";
-            return result;
         }
     }
+
 }

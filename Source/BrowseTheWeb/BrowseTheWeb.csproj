@@ -73,6 +73,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Utils">
@@ -81,8 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bookmark.cs" />
-    <Compile Include="BookmarkElement.cs" />
-    <Compile Include="BookmarkXml.cs" />
+    <Compile Include="Bookmarks.cs" />
     <Compile Include="DomHelper.cs" />
     <Compile Include="GetFolder.cs">
       <SubType>Form</SubType>
@@ -104,24 +104,13 @@
     </Compile>
     <Compile Include="GUIBookmark.cs" />
     <Compile Include="GUIPlugin.cs" />
-    <Compile Include="ImportIE.cs">
+    <Compile Include="ImportBrowser.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ImportIE.Designer.cs">
-      <DependentUpon>ImportIE.cs</DependentUpon>
+    <Compile Include="ImportBrowser.Designer.cs">
+      <DependentUpon>ImportBrowser.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImportFF.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ImportFF.Designer.cs">
-      <DependentUpon>ImportFF.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ImportChrome.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ImportChrome.Designer.cs">
-      <DependentUpon>ImportChrome.cs</DependentUpon>
-    </Compile>
+    <Compile Include="JSONNode.cs" />
     <Compile Include="MyLog.cs" />
     <Compile Include="OSD_LinkId.cs">
       <SubType>UserControl</SubType>
@@ -152,6 +141,9 @@
       <DependentUpon>GetUrl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="ImportBrowser.resx">
+      <DependentUpon>ImportBrowser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -178,17 +170,6 @@
     <Content Include="res\MouseCursor.cur" />
     <EmbeddedResource Include="GetThumb.resx">
       <DependentUpon>GetThumb.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ImportIE.resx">
-      <DependentUpon>ImportIE.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ImportFF.resx">
-      <DependentUpon>ImportFF.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ImportChrome.resx">
-      <DependentUpon>ImportChrome.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="OSD_LinkId.resx">
