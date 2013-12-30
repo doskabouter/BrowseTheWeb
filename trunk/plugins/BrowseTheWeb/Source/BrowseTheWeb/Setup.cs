@@ -26,15 +26,15 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
-
+using System.Collections.Generic;
 using Gecko;
-using Ionic.Zip;
 
 using MediaPortal.Configuration;
 using MediaPortal.GUI.Library;
 using Action = MediaPortal.GUI.Library.Action;
+using TreeView = System.Windows.Forms.TreeView;
 
-namespace BrowseTheWeb
+namespace BrowseTheWeb.Setup
 {
     public partial class Setup : Form
     {
@@ -69,10 +69,54 @@ namespace BrowseTheWeb
             }
         }
 
+
+        public static void FillTreeview(List<BookmarkBase> bookmarks, TreeNodeCollection nodes)
+        {
+            foreach (BookmarkBase item in bookmarks)
+            {
+                TreeNode newNode = nodes.Add(item.Name);
+                newNode.Tag = item;
+                if (item is BookmarkFolder)
+                {
+                    newNode.ImageIndex = 1;
+                    newNode.SelectedImageIndex = 1;
+                    FillTreeview(((BookmarkFolder)item).Items, newNode.Nodes);
+                }
+            }
+        }
+
+        private void FillTreeview(TreeView treeview)
+        {
+            treeview.Nodes.Clear();
+            TreeNode main = treeview.Nodes.Add("Bookmarks", "Bookmarks");
+            main.ImageIndex = 2;
+            main.SelectedImageIndex = 2;
+            FillTreeview(Bookmarks.Instance.root, main.Nodes);
+            treeview.Invalidate();
+        }
+
+        private void FillBookmarks(TreeNodeCollection nodes, List<BookmarkBase> bms)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                BookmarkBase bkm = (BookmarkBase)node.Tag;
+                bms.Add(bkm);
+
+                BookmarkFolder bmf = node.Tag as BookmarkFolder;
+                if (bmf != null)
+                {
+                    bmf.Items.Clear();
+                    FillBookmarks(node.Nodes, bmf.Items);
+                }
+            }
+        }
+
         private void Setup_Load(object sender, EventArgs e)
         {
             Bookmark.InitCachePath();
-            Bookmark.Load(treeView1, Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml");
+            Bookmarks.Instance.LoadFromXml(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml");
+            FillTreeview(treeView1);
+
             treeView1.ExpandAll();
 
             for (GUIFacadeControl.Layout l = GUIFacadeControl.Layout.List; l <= GUIFacadeControl.Layout.LargeIcons; l++)
@@ -127,7 +171,10 @@ namespace BrowseTheWeb
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            bool result = Bookmark.Save(treeView1, Config.GetFolder(Config.Dir.Config) + "\\bookmarks.xml");
+            Bookmarks.Instance.Clear();
+            FillBookmarks(treeView1.Nodes[0].Nodes, Bookmarks.Instance.root);
+
+            bool result = Bookmarks.Instance.SaveToXml(Config.GetFolder(Config.Dir.Config) + "\\bookmarks.xml");
             if (!result)
             {
                 MessageBox.Show("Bookmarks could not be saved !");
@@ -153,19 +200,19 @@ namespace BrowseTheWeb
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             TreeNode n = (TreeNode)e.Node;
-            BookmarkElement bkm = (BookmarkElement)n.Tag;
+            BookmarkBase bkm = (BookmarkBase)n.Tag;
 
             if (bkm != null)
             {
-                if (bkm.isFolder)
+                if (bkm is BookmarkFolder)
                 {
                     pictureBox1.Image = null;
                     txtLink.Text = bkm.Name;
                 }
                 else
                 {
-                    txtLink.Text = bkm.Url;
-                    pictureBox1.Image = Bookmark.GetSnap(bkm.Url);
+                    txtLink.Text = ((BookmarkItem)bkm).Url;
+                    pictureBox1.Image = Bookmark.GetSnap(txtLink.Text);
                 }
             }
             else
@@ -197,7 +244,7 @@ namespace BrowseTheWeb
                         contextMenuStrip1.Items[5].Enabled = false;
                         contextMenuStrip1.Items[7].Enabled = false;
                     }
-                    if (treeView1.SelectedNode.Level == 2)
+                    if (node.Tag is BookmarkItem)
                     {
                         contextMenuStrip1.Items[2].Enabled = false;
                         contextMenuStrip1.Items[3].Enabled = false;
@@ -230,132 +277,30 @@ namespace BrowseTheWeb
             #region get source and target node
             Point pos = treeView1.PointToClient(new Point(e.X, e.Y));
             TreeNode targetNode = treeView1.GetNodeAt(pos);
-
-            TreeNode nodeCopy = new TreeNode(sourceNode.Text, sourceNode.ImageIndex, sourceNode.SelectedImageIndex);
-            BookmarkElement sourceBkm = (BookmarkElement)sourceNode.Tag;
-            nodeCopy.Tag = sourceBkm;
-
-            foreach (TreeNode n in sourceNode.Nodes)
+            TreeNode tmp = targetNode;
+            while (tmp != null && tmp != sourceNode)
+                tmp = tmp.Parent;
+            if (tmp != null)
             {
-                nodeCopy.Nodes.Add((TreeNode)n.Clone());
+                MessageBox.Show("The destination folder is a subfolder of the source folder.", "Error moving folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             #endregion
 
-            if (targetNode != null)
+            if (targetNode.Tag is BookmarkFolder)
             {
-                int level = targetNode.Level;
-                BookmarkElement targetBkm = (BookmarkElement)targetNode.Tag;
-                BookmarkElement bkm;
-
-                switch (level)
-                {
-                    case 0: // copy to root
-                        bkm = (BookmarkElement)nodeCopy.Tag;
-                        bkm.isSubFolder = false;
-
-                        treeView1.Nodes[0].Nodes.Add(nodeCopy);
-
-                        sourceNode.Remove();
-                        treeView1.Invalidate();
-                        break;
-                    case 1: // main level      
-                        if (targetBkm.isFolder) // if target folder
-                        {
-                            bkm = (BookmarkElement)nodeCopy.Tag;
-                            bkm.isSubFolder = false;
-
-                            if (sourceBkm.isFolder) // move folder
-                            {
-                                if (sourceNode.Index > targetNode.Index)
-                                {
-                                    targetNode.Parent.Nodes.Insert(targetNode.Index, nodeCopy);
-                                    sourceNode.Remove();
-                                    treeView1.Invalidate();
-                                }
-                                else
-                                {
-                                    targetNode.Parent.Nodes.Insert(targetNode.Index + 1, nodeCopy);
-                                    sourceNode.Remove();
-                                    treeView1.Invalidate();
-                                }
-                            }
-                            else
-                            { // move item
-                                bkm = (BookmarkElement)nodeCopy.Tag;
-                                bkm.isSubFolder = true;
-
-                                targetNode.Nodes.Add(nodeCopy);
-                                sourceNode.Remove();
-
-                                targetNode.ExpandAll();
-
-                                treeView1.Invalidate();
-                            }
-                        }
-                        else
-                        { // if target item
-                            if (sourceNode.Index > targetNode.Index)
-                            {
-                                bkm = (BookmarkElement)nodeCopy.Tag;
-                                bkm.isSubFolder = false;
-
-                                targetNode.Parent.Nodes.Insert(targetNode.Index, nodeCopy);
-                                sourceNode.Remove();
-                                treeView1.Invalidate();
-                            }
-                            else
-                            {
-                                bkm = (BookmarkElement)nodeCopy.Tag;
-                                bkm.isSubFolder = false;
-
-                                targetNode.Parent.Nodes.Insert(targetNode.Index + 1, nodeCopy);
-                                sourceNode.Remove();
-                                treeView1.Invalidate();
-                            }
-                        }
-                        break;
-                    case 2: // sub level (in folder)
-                        {
-                            if (!sourceBkm.isFolder) // no folder
-                            {
-                                if (sourceNode.Index > targetNode.Index)
-                                {
-                                    bkm = (BookmarkElement)nodeCopy.Tag;
-                                    bkm.isSubFolder = true;
-
-                                    targetNode.Parent.Nodes.Insert(targetNode.Index, nodeCopy);
-
-                                    sourceNode.Remove();
-                                    treeView1.Invalidate();
-                                }
-                                else
-                                {
-                                    bkm = (BookmarkElement)nodeCopy.Tag;
-                                    bkm.isSubFolder = true;
-
-                                    targetNode.Parent.Nodes.Insert(targetNode.Index + 1, nodeCopy);
-                                    sourceNode.Remove();
-                                    treeView1.Invalidate();
-                                }
-                            }
-                        }
-                        break;
-                }
+                sourceNode.Remove();
+                targetNode.Nodes.Insert(0, sourceNode);
             }
             else
             {
-                // no target
-                if (!sourceBkm.isFolder) // no folder
+                if (targetNode.Parent != null)
                 {
-                    BookmarkElement bkm = (BookmarkElement)nodeCopy.Tag;
-                    bkm.isSubFolder = false;
-
-                    treeView1.Nodes[0].Nodes.Add(nodeCopy);
-
                     sourceNode.Remove();
-                    treeView1.Invalidate();
+                    targetNode.Parent.Nodes.Insert(targetNode.Index, sourceNode);
                 }
             }
+
         }
 
         private void contextMenuStrip1_MouseLeave(object sender, EventArgs e)
@@ -376,42 +321,16 @@ namespace BrowseTheWeb
 
                 if (result == DialogResult.OK)
                 {
-                    if (Bookmark.Exists(treeView1, get.SelectedFolderName))
-                    {
-                        MessageBox.Show("Name is already exisiting", "Error name", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                    TreeNode newNode = node.Tag is BookmarkFolder ? node.Nodes.Add(get.SelectedFolderName) :
+                        node.Parent.Nodes.Insert(node.Index + 1, get.SelectedFolderName);
+                    newNode.ImageIndex = 1;
+                    newNode.SelectedImageIndex = 1;
 
-                    if (node.Level == 0)
-                    {
-                        TreeNode newNode = treeView1.Nodes[0].Nodes.Add(get.SelectedFolderName);
-                        newNode.ImageIndex = 1;
-                        newNode.SelectedImageIndex = 1;
+                    BookmarkFolder bmf = new BookmarkFolder();
+                    bmf.Name = get.SelectedFolderName;
+                    newNode.Tag = bmf;
 
-                        BookmarkElement bkm = new BookmarkElement();
-                        bkm.Name = get.SelectedFolderName;
-                        bkm.isFolder = true;
-                        newNode.Tag = bkm;
-
-                        treeView1.Nodes[0].ExpandAll();
-                    }
-                    if (node.Level == 1)
-                    {
-                        int x = node.Parent.Nodes.IndexOf(node);
-                        if (x >= 0)
-                        {
-                            TreeNode newNode = node.Parent.Nodes.Insert(x + 1, get.SelectedFolderName);
-                            newNode.ImageIndex = 1;
-                            newNode.SelectedImageIndex = 1;
-
-                            BookmarkElement bkm = new BookmarkElement();
-                            bkm.Name = get.SelectedFolderName;
-                            bkm.isFolder = true;
-                            newNode.Tag = bkm;
-
-                            node.Parent.ExpandAll();
-                        }
-                    }
+                    node.Parent.ExpandAll();
                 }
             }
 
@@ -421,8 +340,6 @@ namespace BrowseTheWeb
             TreeNode node = treeView1.SelectedNode;
             if (node != null)
             {
-                BookmarkElement bkm = (BookmarkElement)node.Tag;
-
                 GetUrl get = new GetUrl();
                 get.SelectedName = "new bookmark";
                 get.SelectedUrl = @"http://";
@@ -430,11 +347,6 @@ namespace BrowseTheWeb
 
                 if (result == DialogResult.OK)
                 {
-                    if (Bookmark.Exists(treeView1, get.SelectedName))
-                    {
-                        MessageBox.Show("Name is already exisiting", "Error name", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
                     if (!Bookmark.isValidUrl(get.SelectedUrl))
                     {
                         DialogResult res = MessageBox.Show("The url seems not to be valid !\nContinue anyway ?", "Error home page address", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -448,46 +360,18 @@ namespace BrowseTheWeb
                         thumb.ShowDialog();
                     }
 
-                    if (bkm != null)
-                    {
-                        if (bkm.isFolder)
-                        {
-                            TreeNode add = node.Nodes.Add(get.SelectedUrl, get.SelectedName);
+                    TreeNode newNode = node.Tag is BookmarkFolder ? node.Nodes.Add(get.SelectedName) :
+                        node.Parent.Nodes.Insert(node.Index + 1, get.SelectedName);
+                    newNode.ImageIndex = 1;
+                    newNode.SelectedImageIndex = 1;
 
-                            BookmarkElement addBkm = new BookmarkElement();
-                            addBkm.Name = get.SelectedName;
-                            addBkm.Url = get.SelectedUrl;
-                            addBkm.isSubFolder = true;
-                            addBkm.Created = DateTime.Now;
-                            add.Tag = addBkm;
+                    BookmarkItem bmi = new BookmarkItem();
+                    bmi.Name = get.SelectedName;
+                    bmi.Url = get.SelectedUrl;
+                    newNode.Tag = bmi;
 
-                            node.ExpandAll();
-                        }
-                        else
-                        {
-                            TreeNode add = node.Parent.Nodes.Add(get.SelectedUrl, get.SelectedName);
+                    newNode.Parent.ExpandAll();
 
-                            BookmarkElement addBkm = new BookmarkElement();
-                            addBkm.Name = get.SelectedName;
-                            addBkm.Url = get.SelectedUrl;
-                            addBkm.Created = DateTime.Now;
-                            add.Tag = addBkm;
-
-                            node.Parent.ExpandAll();
-                        }
-                    }
-                    else
-                    { // root
-                        TreeNode add = treeView1.Nodes[0].Nodes.Add(get.SelectedUrl, get.SelectedName);
-
-                        BookmarkElement addBkm = new BookmarkElement();
-                        addBkm.Name = get.SelectedName;
-                        addBkm.Url = get.SelectedUrl;
-                        addBkm.Created = DateTime.Now;
-                        add.Tag = addBkm;
-
-                        treeView1.Nodes[0].ExpandAll();
-                    }
                 }
             }
         }
@@ -496,8 +380,8 @@ namespace BrowseTheWeb
             TreeNode node = treeView1.SelectedNode;
             if (node != null)
             {
-                BookmarkElement bkm = (BookmarkElement)node.Tag;
-                if (!bkm.isFolder)
+                BookmarkBase bkm = (BookmarkBase)node.Tag;
+                if (bkm is BookmarkItem)
                 {
                     DialogResult res = MessageBox.Show("Do you really want to remove entry\n" + node.Text + "?", "Confirm ?", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                     if (res == DialogResult.OK)
@@ -522,8 +406,8 @@ namespace BrowseTheWeb
             TreeNode node = treeView1.SelectedNode;
             if (node != null)
             {
-                BookmarkElement bkm = (BookmarkElement)node.Tag;
-                if (bkm.isFolder)
+                BookmarkBase bkm = (BookmarkBase)node.Tag;
+                if (bkm is BookmarkFolder)
                 {
                     GetFolder get = new GetFolder();
                     get.SelectedFolderName = bkm.Name;
@@ -534,18 +418,10 @@ namespace BrowseTheWeb
                         if ((get.SelectedFolderName != string.Empty) &&
                             (get.SelectedFolderName != bkm.Name))
                         {
-                            if (!Bookmark.Exists(treeView1, get.SelectedFolderName))
-                            {
-                                bkm.Name = get.SelectedFolderName;
-                                node.Text = get.SelectedFolderName;
+                            bkm.Name = get.SelectedFolderName;
+                            node.Text = get.SelectedFolderName;
 
-                                treeView1.Invalidate();
-                            }
-                            else
-                            {
-                                MessageBox.Show("Name is already exisiting", "Error name", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
+                            treeView1.Invalidate();
                         }
                     }
                 }
@@ -553,20 +429,16 @@ namespace BrowseTheWeb
                 {
                     GetUrl get = new GetUrl();
                     get.SelectedName = bkm.Name;
-                    get.SelectedUrl = bkm.Url;
+                    BookmarkItem bmi = (BookmarkItem)bkm;
+                    get.SelectedUrl = bmi.Url;
                     DialogResult result = get.ShowDialog();
 
                     if (result == DialogResult.OK)
                     {
                         if (get.SelectedName != bkm.Name)
                         {
-                            if (Bookmark.Exists(treeView1, get.SelectedName))
-                            {
-                                MessageBox.Show("Name is already exisiting", "Error name", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
                         }
-                        if (get.SelectedUrl != bkm.Url)
+                        if (get.SelectedUrl != bmi.Url)
                         {
                             if (!Bookmark.isValidUrl(get.SelectedUrl))
                             {
@@ -575,10 +447,10 @@ namespace BrowseTheWeb
                             }
                         }
 
-                        node.Name = get.SelectedName;
+                        node.Text = get.SelectedName;
 
-                        bkm.Name = get.SelectedName;
-                        bkm.Url = get.SelectedUrl;
+                        bmi.Name = get.SelectedName;
+                        bmi.Url = get.SelectedUrl;
 
                         treeView1.Invalidate();
                     }
@@ -685,20 +557,17 @@ namespace BrowseTheWeb
         private void pictureBox1_DoubleClick(object sender, EventArgs e)
         {
             TreeNode n = treeView1.SelectedNode;
-            BookmarkElement bkm = (BookmarkElement)n.Tag;
+            BookmarkItem bkm = n.Tag as BookmarkItem;
 
             if (bkm != null)
             {
-                if (!bkm.isFolder)
-                {
-                    pictureBox1.Image = null;
-                    GetThumb thumb = new GetThumb();
-                    thumb.SelectedUrl = bkm.Url;
+                pictureBox1.Image = null;
+                GetThumb thumb = new GetThumb();
+                thumb.SelectedUrl = bkm.Url;
 
-                    thumb.ShowDialog();
+                thumb.ShowDialog();
 
-                    pictureBox1.Image = Bookmark.GetSnap(bkm.Url);
-                }
+                pictureBox1.Image = Bookmark.GetSnap(bkm.Url);
             }
         }
 
@@ -736,74 +605,57 @@ namespace BrowseTheWeb
             TrySetProxy();
         }
 
+        private TreeNode FindNode(TreeNodeCollection nodes, string name)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (node.Text == name)
+                    return node;
+                TreeNode tmp = FindNode(node.Nodes, name);
+                if (tmp != null)
+                    return tmp;
+            }
+            return null;
+        }
+
+        private void DoImport(string nodeName, ImportBrowser.BrowserType browserType)
+        {
+            #region generate folder
+            TreeNode importRootNode = FindNode(treeView1.Nodes, nodeName);
+            if (importRootNode == null)
+            {
+                importRootNode = treeView1.Nodes[0].Nodes.Add(nodeName);
+                importRootNode.ImageIndex = 1;
+                importRootNode.SelectedImageIndex = 1;
+
+                BookmarkFolder bmf = new BookmarkFolder();
+                bmf.Name = nodeName;
+                importRootNode.Tag = bmf;
+
+                treeView1.Nodes[0].ExpandAll();
+            }
+            #endregion
+
+            ImportBrowser import = new ImportBrowser(importRootNode, imageList1, browserType);
+            import.ShowDialog();
+
+            treeView1.Invalidate();
+        }
+
+
         private void btnImportIE_Click(object sender, EventArgs e)
         {
-            #region generate folder
-            if (!Bookmark.Exists(treeView1, "Import IE"))
-            {
-                TreeNode newNode = treeView1.Nodes[0].Nodes.Add("Import IE");
-                newNode.ImageIndex = 1;
-                newNode.SelectedImageIndex = 1;
-
-                BookmarkElement bkm = new BookmarkElement();
-                bkm.Name = "Import IE";
-                bkm.isFolder = true;
-                newNode.Tag = bkm;
-
-                treeView1.Nodes[0].ExpandAll();
-            }
-            #endregion
-
-            ImportIE import = new ImportIE(treeView1);
-            import.ShowDialog();
-
-            treeView1.Invalidate();
+            DoImport("Import IE", ImportBrowser.BrowserType.IE);
         }
+
         private void btnImportFF_Click(object sender, EventArgs e)
         {
-            #region generate folder
-            if (!Bookmark.Exists(treeView1, "Import FF"))
-            {
-                TreeNode newNode = treeView1.Nodes[0].Nodes.Add("Import FF");
-                newNode.ImageIndex = 1;
-                newNode.SelectedImageIndex = 1;
-
-                BookmarkElement bkm = new BookmarkElement();
-                bkm.Name = "Import FF";
-                bkm.isFolder = true;
-                newNode.Tag = bkm;
-
-                treeView1.Nodes[0].ExpandAll();
-            }
-            #endregion
-
-            ImportFF import = new ImportFF(treeView1);
-            import.ShowDialog();
-
-            treeView1.Invalidate();
+            DoImport("Import FF", ImportBrowser.BrowserType.FireFox);
         }
+
         private void btnImportChr_Click(object sender, EventArgs e)
         {
-            #region generate folder
-            if (!Bookmark.Exists(treeView1, "Import Chrome"))
-            {
-                TreeNode newNode = treeView1.Nodes[0].Nodes.Add("Import Chrome");
-                newNode.ImageIndex = 1;
-                newNode.SelectedImageIndex = 1;
-
-                BookmarkElement bkm = new BookmarkElement();
-                bkm.Name = "Import Chrome";
-                bkm.isFolder = true;
-                newNode.Tag = bkm;
-
-                treeView1.Nodes[0].ExpandAll();
-            }
-            #endregion
-
-            ImportChrome import = new ImportChrome(treeView1);
-            import.ShowDialog();
-
-            treeView1.Invalidate();
+            DoImport("Import Chrome", ImportBrowser.BrowserType.Chrome);
         }
 
         private void btnDefault_Click(object sender, EventArgs e)
@@ -820,6 +672,11 @@ namespace BrowseTheWeb
         private void cbOverrideUserAgent_CheckedChanged(object sender, EventArgs e)
         {
             cmbUserAgent.Enabled = cbOverrideUserAgent.Checked;
+        }
+
+        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            treeView1.SelectedNode = e.Node;
         }
 
     }

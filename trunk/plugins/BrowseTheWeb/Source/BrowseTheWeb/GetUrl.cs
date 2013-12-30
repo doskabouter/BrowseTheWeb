@@ -25,7 +25,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace BrowseTheWeb
+namespace BrowseTheWeb.Setup
 {
     public partial class GetUrl : Form
     {

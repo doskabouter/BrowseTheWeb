@@ -1,4 +1,4 @@
-﻿namespace BrowseTheWeb
+﻿namespace BrowseTheWeb.Setup
 {
   partial class GetFolder
   {
@@ -90,7 +90,7 @@
       this.ShowIcon = false;
       this.ShowInTaskbar = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-      this.Text = "Inpu folder name";
+      this.Text = "Input folder name";
       this.Load += new System.EventHandler(this.GetFolder_Load);
       this.ResumeLayout(false);
       this.PerformLayout();
