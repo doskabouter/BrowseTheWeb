@@ -38,12 +38,12 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>C:\Program Files\Team MediaPortal\MediaPortal\plugins\Windows\</OutputPath>
+    <OutputPath>$(ProgramFiles)\Team MediaPortal\MediaPortal\plugins\Windows\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -55,19 +55,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common.Utils">
-      <HintPath>C:\Program Files\Team MediaPortal\MediaPortal\Common.Utils.dll</HintPath>
+      <HintPath>$(ProgramFiles)\Team MediaPortal\MediaPortal\Common.Utils.dll</HintPath>
     </Reference>
     <Reference Include="Core">
-      <HintPath>C:\Program Files\Team MediaPortal\MediaPortal\Core.dll</HintPath>
+      <HintPath>$(ProgramFiles)\Team MediaPortal\MediaPortal\Core.dll</HintPath>
     </Reference>
     <Reference Include="Databases">
-      <HintPath>C:\Program Files\Team MediaPortal\MediaPortal\Databases.dll</HintPath>
+      <HintPath>$(ProgramFiles)\Team MediaPortal\MediaPortal\Databases.dll</HintPath>
     </Reference>
     <Reference Include="Dialogs">
-      <HintPath>C:\Program Files\Team MediaPortal\MediaPortal\plugins\Windows\Dialogs.dll</HintPath>
+      <HintPath>$(ProgramFiles)\Team MediaPortal\MediaPortal\plugins\Windows\Dialogs.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
-      <HintPath>C:\Program Files\Team MediaPortal\MediaPortal\Ionic.Zip.dll</HintPath>
+      <HintPath>$(ProgramFiles)\Team MediaPortal\MediaPortal\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -77,7 +77,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Utils">
-      <HintPath>C:\Program Files\Team MediaPortal\MediaPortal\Utils.dll</HintPath>
+      <HintPath>$(ProgramFiles)\Team MediaPortal\MediaPortal\Utils.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +215,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release  "C:\Program Files\Team MediaPortal\MediaPortal\MpeMaker" ..\..\BrowseTheWeb.xmp2 /B /UpdateXML</PostBuildEvent>
+    <PostBuildEvent>if $(ConfigurationName) == Release  "$(ProgramFiles)\Team MediaPortal\MediaPortal\MpeMaker" ..\..\BrowseTheWeb.xmp2 /B /UpdateXML</PostBuildEvent>
   </PropertyGroup>
 </Project>
