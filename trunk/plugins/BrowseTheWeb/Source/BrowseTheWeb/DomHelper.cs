@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Gecko;
+using Gecko.Collections;
 using Gecko.DOM;
 
 namespace BrowseTheWeb
@@ -52,7 +53,7 @@ namespace BrowseTheWeb
         public static Point GetCenterCoordinate(GeckoDocument root, GeckoHtmlElement element)
         {
             Point documentOffset = DocumentOffset(root, element.OwnerDocument);
-            RectangleF rect = element.BoundingClientRect;
+            Rectangle rect = element.GetBoundingClientRect();
             Point p = new Point(Convert.ToInt32(rect.Left + rect.Width / 2), Convert.ToInt32(rect.Top + rect.Height / 2));
             p.X += documentOffset.X;
             p.Y += documentOffset.Y;
@@ -76,8 +77,8 @@ namespace BrowseTheWeb
                 if (element.ContentDocument.Equals(current))
                 {
                     Point tmp = DocumentOffset(root, element.OwnerDocument);
-                    result.X += element.BoundingClientRect.Left + tmp.X;
-                    result.Y += element.BoundingClientRect.Top + tmp.Y;
+                    result.X += element.GetBoundingClientRect().Left + tmp.X;
+                    result.Y += element.GetBoundingClientRect().Top + tmp.Y;
                     return result;
                 }
             }
@@ -88,7 +89,7 @@ namespace BrowseTheWeb
         {
             Dictionary<string, int> hrefs = new Dictionary<string, int>();
             GeckoElementCollection links = document.Links;
-            MyLog.debug("page links cnt : " + links.Count);
+            MyLog.debug("page links cnt : " + links.Count<GeckoHtmlElement>());
             foreach (GeckoHtmlElement element in links) // no casting to GeckoAnchorElement, because document.links also returns GeckoAreaElemenets
                 if (!element.GetAttribute("href").StartsWith("javascript:"))
                 {
@@ -171,7 +172,7 @@ namespace BrowseTheWeb
                 }
 
             GeckoElementCollection objects = document.GetElementsByTagName("object");
-            MyLog.debug("page objects cnt : " + objects.Count);
+            MyLog.debug("page objects cnt : " + objects.Count<GeckoHtmlElement>());
             foreach (GeckoObjectElement element in objects)
                 if (element.Type == "application/x-shockwave-flash")
                 {
@@ -184,7 +185,7 @@ namespace BrowseTheWeb
                 }
 
             GeckoElementCollection embeds = document.GetElementsByTagName("embed");
-            MyLog.debug("page embeds cnt : " + embeds.Count);
+            MyLog.debug("page embeds cnt : " + embeds.Count<GeckoHtmlElement>());
             foreach (GeckoEmbedElement element in embeds)
                 if (element.Type == "application/x-shockwave-flash")
                 {
@@ -197,10 +198,10 @@ namespace BrowseTheWeb
                 }
 
             GeckoElementCollection forms = document.GetElementsByTagName("form");
-            MyLog.debug("page forms cnt : " + forms.Count);
+            MyLog.debug("page forms cnt : " + forms.Count<GeckoHtmlElement>());
             foreach (GeckoHtmlElement element in forms)
             {
-                GeckoElementCollection inps = element.GetElementsByTagName("input");
+                IDomHtmlCollection<GeckoElement> inps = element.GetElementsByTagName("input");
                 foreach (GeckoInputElement inp in inps)
                     if (!elementDone(inp))
                     {
@@ -230,7 +231,7 @@ namespace BrowseTheWeb
                         }
                     }
 
-                GeckoElementCollection buttons = element.GetElementsByTagName("button");
+                IDomHtmlCollection<GeckoElement> buttons = element.GetElementsByTagName("button");
                 foreach (GeckoHtmlElement button in buttons)
                     if (!elementDone(button) && button.ClientRects.Length != 0)
                     {
@@ -239,7 +240,7 @@ namespace BrowseTheWeb
                         id++;
                     }
 
-                GeckoElementCollection selects = element.GetElementsByTagName("select");
+                IDomHtmlCollection<GeckoElement> selects = element.GetElementsByTagName("select");
                 foreach (GeckoHtmlElement select in selects)
                     if (!elementDone(select) && select.ClientRects.Length != 0)
                     {
@@ -250,7 +251,7 @@ namespace BrowseTheWeb
             }
 
             GeckoElementCollection iframes = document.GetElementsByTagName("iframe");
-            MyLog.debug("page iframes cnt : " + iframes.Count);
+            MyLog.debug("page iframes cnt : " + iframes.Count<GeckoHtmlElement>());
             foreach (GeckoIFrameElement element in iframes)
                 AddLinksToPage(element.ContentDocument, id);
         }
