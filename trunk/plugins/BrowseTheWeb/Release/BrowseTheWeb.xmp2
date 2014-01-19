@@ -17,13 +17,6 @@
               <ZipFileName>Installer{CopyFile}\{1506466c-26c2-4a8f-bbe3-20b5be6eefdf}-BrowseTheWeb.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\BrowseTheWeb.dll</DestinationFilename>
             </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Plugins\Windows\HtmlAgilityPack.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{3c35cede-0ef8-455e-8ea5-f341e7d0398e}-HtmlAgilityPack.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\HtmlAgilityPack.dll</DestinationFilename>
-            </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
@@ -713,13 +706,6 @@ If have .dll extension used like MP plugin configuration</Description>
         <LocalFileName>Plugins\Windows\BrowseTheWeb.dll</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{1506466c-26c2-4a8f-bbe3-20b5be6eefdf}-BrowseTheWeb.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\BrowseTheWeb.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Plugins\Windows\HtmlAgilityPack.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{3c35cede-0ef8-455e-8ea5-f341e7d0398e}-HtmlAgilityPack.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\HtmlAgilityPack.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
