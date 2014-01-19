@@ -31,6 +31,7 @@ using MediaPortal.GUI.Library;
 using MediaPortal.Dialogs;
 using MediaPortal.Configuration;
 
+using System.Reflection;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
@@ -44,7 +45,7 @@ namespace BrowseTheWeb
     public class GUIPlugin : GUIWindow, ISetupForm
     {
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
-        public static extern void mouse_event(long dwFlags, long dx, long dy, long cButtons, long dwExtraInfo);
+        public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, IntPtr dwExtraInfo);
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern int ShowCursor(bool bShow);
         [DllImport("dwmapi.dll", EntryPoint = "DwmEnableComposition")]
@@ -78,6 +79,7 @@ namespace BrowseTheWeb
 
         public static string loadFav = string.Empty;
         private bool originalMouseSupport;
+        private bool originalMouseAutoHide;
         private bool formsAdded = false;
 
         #endregion
@@ -266,6 +268,9 @@ namespace BrowseTheWeb
                     originalMouseSupport = GUIGraphicsContext.MouseSupport;
                     GUIGraphicsContext.MouseSupport = true;
                     while (ShowCursor(true) < 0) ;
+                    FieldInfo fi = GUIGraphicsContext.form.GetType().GetField("AutoHideMouse", BindingFlags.NonPublic | BindingFlags.Instance);
+                    originalMouseAutoHide = (bool)fi.GetValue(GUIGraphicsContext.form);
+                    fi.SetValue(GUIGraphicsContext.form, false);
                 }
 
                 Parameter = _loadParameter;
@@ -492,7 +497,7 @@ namespace BrowseTheWeb
                     clickFromPlugin = true;
                     int X = Cursor.Position.X;
                     int Y = Cursor.Position.Y;
-                    mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+                    mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, IntPtr.Zero);
                 }
             }
             if (action.wID == settings.Remote_Bookmark)
@@ -932,7 +937,7 @@ namespace BrowseTheWeb
                 #endregion
                 if (logHtml)
                 {
-                    using (System.IO.StreamWriter tw = new System.IO.StreamWriter(@"e:\last.html"))
+                    using (System.IO.StreamWriter tw = new System.IO.StreamWriter(@"d:\last.html"))
                     {
                         tw.WriteLine(((GeckoHtmlElement)webBrowser.Document.DocumentElement).OuterHtml);
                     }
@@ -1008,7 +1013,7 @@ namespace BrowseTheWeb
                             System.Threading.Thread.Sleep(200);
                             Cursor.Position = webBrowser.PointToScreen(p);
                             clickFromPlugin = true;
-                            mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+                            mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, IntPtr.Zero);
                         }
             //else
             // ge.Click();
