@@ -557,7 +557,7 @@ namespace BrowseTheWeb
                                 GUIGraphicsContext.form.Cursor = new Cursor(memoryStream);
                             }
                             mouseVisible = true;
-                            while (ShowCursor(true) < 0) ;
+                            while (ShowCursor(true) < 0);
                         }
                     }
                     break;
