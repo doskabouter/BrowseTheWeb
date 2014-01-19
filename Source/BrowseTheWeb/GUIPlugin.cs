@@ -36,6 +36,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
 using Gecko;
+using Gecko.Collections;
 using Gecko.DOM;
 
 namespace BrowseTheWeb
@@ -283,7 +284,6 @@ namespace BrowseTheWeb
                 webBrowser.Visible = true;
 
                 webBrowser.Enabled = settings.UseMouse;
-                webBrowser.ClearCachedCOMPtrs();
 
                 MyLog.debug("Create eventhandler");
 
@@ -557,7 +557,7 @@ namespace BrowseTheWeb
                                 GUIGraphicsContext.form.Cursor = new Cursor(memoryStream);
                             }
                             mouseVisible = true;
-                            while (ShowCursor(true) < 0);
+                            while (ShowCursor(true) < 0) ;
                         }
                     }
                     break;
@@ -671,30 +671,6 @@ namespace BrowseTheWeb
         }
         void webBrowser_DomClick(object sender, DomEventArgs e)
         {
-            if (settings.UseMouse)
-            {
-                // this is a workarround until i know what wrong on the links...
-                GeckoWebBrowser g = (GeckoWebBrowser)sender;
-                string dom = g.Document.Url.AbsoluteUri.ToString();
-                string parent = e.Target.Parent.InnerHtml;
-
-                if (!parent.Contains("shockwave"))
-                {
-                    int x = parent.IndexOf("a href=");
-                    if (x >= 0)
-                    {
-                        int y = parent.IndexOf("\"", x + 8);
-                        if (y >= 0)
-                        {
-                            string link = parent.Substring(x + 7, y - x - 6);
-                            link = link.Replace("\"", "");
-                            if (link.Contains("http"))
-                                g.Navigate(link);
-                        }
-                    }
-                }
-            }
-
             if (clickFromPlugin) // click succeeded, so focus can safely be reset
             {
                 clickFromPlugin = false;
@@ -1031,8 +1007,7 @@ namespace BrowseTheWeb
                 GeckoFormElement form = element.Form;
                 if (form != null)
                 {
-                    //List<GeckoHtmlElement> inps = DomHelper.GetElements(form, "input");
-                    GeckoElementCollection inps = form.GetElementsByTagName("input");
+                    IDomHtmlCollection<GeckoElement> inps = form.GetElementsByTagName("input");
                     if (DomHelper.NrOfChildElementsDone(form) == 1)
                     {
                         StringBuilder sb = new StringBuilder();

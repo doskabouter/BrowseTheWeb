@@ -66,6 +66,12 @@
     <Reference Include="Dialogs">
       <HintPath>$(ProgramFiles)\Team MediaPortal\MediaPortal\plugins\Windows\Dialogs.dll</HintPath>
     </Reference>
+    <Reference Include="Geckofx-Core">
+      <HintPath>..\..\..\..\..\..\..\Gecko\Gecko 22.0-0.7\Geckofx-Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Geckofx-Winforms">
+      <HintPath>..\..\..\..\..\..\..\Gecko\Gecko 22.0-0.7\Geckofx-Winforms.dll</HintPath>
+    </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>$(ProgramFiles)\Team MediaPortal\MediaPortal\Ionic.Zip.dll</HintPath>
     </Reference>
@@ -195,16 +201,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\geckofx-18.0\Geckofx-Core\Geckofx-Core.csproj">
-      <Project>{6AB4EEE6-1889-43AB-83F7-A4F083230BE7}</Project>
-      <Name>Geckofx-Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\geckofx-18.0\Geckofx-Winforms\Geckofx-Winforms.csproj">
-      <Project>{D7ADC901-E1C4-480E-8F6D-B1FFD5CF87E8}</Project>
-      <Name>Geckofx-Winforms</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -27,352 +27,289 @@
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Plugins\Windows\geckofx-core-18.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{7101304c-9abf-4fd0-a686-64327ece8e7d}-geckofx-core-18.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\geckofx-core-18.dll</DestinationFilename>
+              <LocalFileName>Plugins\Windows\Geckofx-Core.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{41ffb796-38a6-40a4-8e92-4a51387d5acd}-Geckofx-Core.dll</ZipFileName>
+              <DestinationFilename>%Plugins%\Windows\Geckofx-Core.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Plugins\Windows\Geckofx-Winforms-18.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{6c097b5d-1f5e-4dce-bbef-aa554e8d1e49}-Geckofx-Winforms-18.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\Geckofx-Winforms-18.dll</DestinationFilename>
+              <LocalFileName>Plugins\Windows\Geckofx-Winforms.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{1b30ea58-3a73-485d-8c0e-38db3c0a5099}-Geckofx-Winforms.dll</ZipFileName>
+              <DestinationFilename>%Plugins%\Windows\Geckofx-Winforms.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\AccessibleMarshal.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{5d0ef453-3120-43c8-a451-be8be8904d63}-AccessibleMarshal.dll</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{704c8bfb-2648-48be-b546-cfafd1aec147}-AccessibleMarshal.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\AccessibleMarshal.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\breakpadinjector.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{a96b091b-bf7c-46a9-9d98-6ac54896abdc}-breakpadinjector.dll</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{1824a42a-c1b9-4b36-a120-dd6a28ee3812}-breakpadinjector.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\breakpadinjector.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>Files\xulrunner\chrome.manifest</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{3ec4b636-d69c-4082-8417-f001cdae464e}-chrome.manifest</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\chrome.manifest</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\crashreporter.exe</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{b1f3fe64-8bd7-49d4-88cb-b161e0ec020f}-crashreporter.exe</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{bc79c48a-0399-4a9d-8294-f9e7f2138e4d}-crashreporter.exe</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\crashreporter.exe</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\crashreporter.ini</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{287e2c62-67ec-444b-81c3-8596b87b364c}-crashreporter.ini</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{e1d9d7a3-04fc-47cd-8fc0-adafe61a21fc}-crashreporter.ini</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\crashreporter.ini</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\D3DCompiler_43.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{6ee91eca-53c8-4d02-8517-6b3e19a1dcd7}-D3DCompiler_43.dll</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{874a2cb8-66bc-47b1-a924-59c7aedeaf72}-D3DCompiler_43.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\D3DCompiler_43.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>Files\xulrunner\d3dx9_43.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{7532e3c2-d3d8-4be8-817c-17e30683445b}-d3dx9_43.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\d3dx9_43.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\dependentlibs.list</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{d1cca528-4b91-4bd0-8da7-6f85a011fc23}-dependentlibs.list</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{ee734ece-98b2-45e2-845a-e037b2af7b64}-dependentlibs.list</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\dependentlibs.list</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\freebl3.chk</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{72444e4f-0636-46f6-b4ac-74d66032bb18}-freebl3.chk</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{3d7d850b-d04c-443a-93f4-c815d649da13}-freebl3.chk</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\freebl3.chk</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\freebl3.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{0c3c0adf-44f8-4f08-845d-66c4ff09d31d}-freebl3.dll</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{049aaa8e-c25f-4f2c-ac0a-b683490eedbc}-freebl3.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\freebl3.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\gkmedias.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{cf32841a-329a-4a7b-99da-e1c6567b61ac}-gkmedias.dll</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{0b00dd67-cca2-46a7-9765-9195e6f97ff4}-gkmedias.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\gkmedias.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\IA2Marshal.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{8087e539-87c4-4222-b7d8-c613341965a4}-IA2Marshal.dll</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{dc71e2a7-11a4-4da7-8169-624e36a5a0c5}-IA2Marshal.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\IA2Marshal.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Files\xulrunner\js-gdb.py</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{2eac2555-0e37-4c40-be5e-3e9b7166e88c}-js-gdb.py</ZipFileName>
+              <DestinationFilename>%Plugins%\Windows\xulrunner\js-gdb.py</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\js.exe</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{0e132c62-795e-4461-8a2c-a844188ecab4}-js.exe</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{d74ddb83-d0a4-47a1-8d8d-35b69e5cbec9}-js.exe</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\js.exe</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\libEGL.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{b4ad176a-07c2-4c00-a0b8-60e393f71ed7}-libEGL.dll</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{707eb149-bfa5-4158-b50c-1e59804dfac1}-libEGL.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\libEGL.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\libGLESv2.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{fcedc7d6-7475-49cc-896e-495601fe455e}-libGLESv2.dll</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{d67d38fd-3f13-4ed0-aa2d-70af86c7d9d3}-libGLESv2.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\libGLESv2.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\LICENSE</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{7089abae-fdf0-4c79-928c-0d1e7d7597cf}-LICENSE</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{2aae553a-45cb-4b70-b1dc-029f223a12a4}-LICENSE</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\LICENSE</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\mozalloc.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{81d1b6c7-8fd5-418e-9e81-5a3535c93b0c}-mozalloc.dll</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{54af4050-6f08-4c13-90e3-d2758f067a24}-mozalloc.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\mozalloc.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\mozglue.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{ecd275d9-a8cc-4193-bade-de348d4796b4}-mozglue.dll</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{80e915c7-8e34-43b3-b079-6b7ed9b91ed1}-mozglue.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\mozglue.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\mozjs.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{6b600e94-2aca-4f90-a9e5-ddda79cb8760}-mozjs.dll</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{4107c7e1-c531-4a71-83f9-5b8264075361}-mozjs.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\mozjs.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>Files\xulrunner\mozsqlite3.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{7a6f44f6-0ad7-4d82-8406-a243a2443a69}-mozsqlite3.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\mozsqlite3.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\msvcp100.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{33379289-cba2-467b-a8c6-72cc55ed77ab}-msvcp100.dll</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{99eaa6db-622e-4f87-95d8-912857ca4043}-msvcp100.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\msvcp100.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\msvcr100.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{174dc3bf-0df0-4831-b0a1-9546bb59c88c}-msvcr100.dll</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{63faaaba-5267-479b-90a3-19aa1ead2856}-msvcr100.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\msvcr100.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>Files\xulrunner\nspr4.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{de49c525-af61-4ade-a974-076d2f5ecc18}-nspr4.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\nspr4.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\nss3.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{f9fefb45-1367-459f-ad1a-f157a3e226e6}-nss3.dll</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{4ea1548a-e093-4792-8822-63ffb0b9a941}-nss3.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\nss3.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\nssckbi.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{b050c28b-1490-4255-9589-95ad7f90de6a}-nssckbi.dll</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{92516e88-bc35-4d15-8e9b-486581b428ee}-nssckbi.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\nssckbi.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\nssdbm3.chk</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{0cfda781-eed4-4906-bb68-c6ec49d2be7e}-nssdbm3.chk</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{cc8e4fa3-d888-46e8-a009-a0ecc5e798f8}-nssdbm3.chk</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\nssdbm3.chk</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\nssdbm3.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{9953f61c-54f2-4f4f-b986-97ed500a1182}-nssdbm3.dll</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{16e9cefa-f807-4734-978c-e2775d692e6a}-nssdbm3.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\nssdbm3.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>Files\xulrunner\nssutil3.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{65b5012a-275a-45c8-b23e-978fe0534587}-nssutil3.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\nssutil3.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\omni.ja</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{c1391a90-0903-427f-b7f8-4ebb594db10d}-omni.ja</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{c6bce977-80c9-45ca-b4a0-32139ff3774b}-omni.ja</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\omni.ja</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\platform.ini</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{397a0e92-5775-4e9a-bbd6-c1956193b16a}-platform.ini</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{b31ad71b-77b4-4103-9470-d6b7cb609cb4}-platform.ini</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\platform.ini</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>Files\xulrunner\plc4.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{0bc1d754-4d28-4f24-89d5-7a9cb356746b}-plc4.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\plc4.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>Files\xulrunner\plds4.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{d0f2ea94-34d3-42c1-bfe2-4d30ef4f5762}-plds4.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\plds4.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\plugin-container.exe</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{388c3679-eefc-431a-9936-38d5a9ad32b3}-plugin-container.exe</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{d0bf4f74-bb43-432b-89e6-e22584ed98b7}-plugin-container.exe</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\plugin-container.exe</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>Files\xulrunner\plugin-hang-ui.exe</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{bde8189a-0d42-4f3a-9d73-708ad508637f}-plugin-hang-ui.exe</ZipFileName>
+              <DestinationFilename>%Plugins%\Windows\xulrunner\plugin-hang-ui.exe</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\precomplete</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{6d8ff592-0e26-4378-bba3-0c6f3df03900}-precomplete</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{21066f36-a86a-4152-b2ba-7bd013456546}-precomplete</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\precomplete</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\README.xulrunner</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{737aeb25-f024-434a-be78-9d6f7819e98e}-README.xulrunner</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{9d332951-ba2e-4336-ac41-debca551d189}-README.xulrunner</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\README.xulrunner</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\redit.exe</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{e8843f2c-78a3-411a-a6b6-9a169eca0809}-redit.exe</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{0c0ae566-c4f6-49b9-97a0-9fceaa8f3d45}-redit.exe</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\redit.exe</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>Files\xulrunner\smime3.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{00d3b907-baa6-4a79-a5db-172ca77cf0f4}-smime3.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\smime3.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\softokn3.chk</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{a63aceb8-c5cf-4e61-82cb-841e149248c0}-softokn3.chk</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{3eda149d-2221-46a4-917a-d441adc16ab3}-softokn3.chk</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\softokn3.chk</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\softokn3.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{2750cd50-c6d7-43da-b2bd-76dc2d7a6782}-softokn3.dll</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{f95afeed-6f04-4848-a10f-a17476e8fc57}-softokn3.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\softokn3.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>Files\xulrunner\ssl3.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{0cd11faa-0b5c-4714-ad19-731d2754066e}-ssl3.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\ssl3.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\updater.exe</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{65786666-ad0f-416c-909c-362c43748a6a}-updater.exe</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{d6886be1-f2bd-4160-9784-b6799f00489a}-updater.exe</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\updater.exe</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>Files\xulrunner\xpcom.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{835e2b5c-86f8-416d-a38a-dbfe9347999e}-xpcom.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\xpcom.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\xul.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{13055766-7135-4a31-9823-4deea3eb7dcb}-xul.dll</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{51739373-ea01-4927-abca-c5e80326007e}-xul.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\xul.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\xulrunner-stub.exe</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{f5df0873-a9a1-455d-bf79-b0fe4fe5512c}-xulrunner-stub.exe</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{efcc3882-31e8-4129-a2a7-5b7195fc4844}-xulrunner-stub.exe</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\xulrunner-stub.exe</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\xulrunner.exe</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{1d223357-3727-42fb-a933-10b2bf31bd21}-xulrunner.exe</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{bb2d6969-e6b0-4578-8a8d-01e5fc0a67da}-xulrunner.exe</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\xulrunner.exe</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\dictionaries\en-US.aff</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{3af6cf93-e55a-468e-9317-5660e487970c}-en-US.aff</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{e597a5fe-5e74-4f0e-aa00-ea04f7fbde9d}-en-US.aff</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\dictionaries\en-US.aff</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>Files\xulrunner\dictionaries\en-US.dic</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{ea40822e-0cd1-432e-9746-8648c48289d5}-en-US.dic</ZipFileName>
+              <ZipFileName>Installer{CopyFile}\{39d7d724-77d1-4d19-897c-a73a982728d0}-en-US.dic</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\xulrunner\dictionaries\en-US.dic</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>Files\xulrunner\components\binary.manifest</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{c6673673-3b04-401d-b764-0e06bf5f8185}-binary.manifest</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\components\binary.manifest</DestinationFilename>
             </FileItem>
           </Items>
         </Files>
@@ -700,8 +637,8 @@ Click Next to continue or Cancel to exit Setup.</Value>
         <CompatibleVersion>
           <Items>
             <CompatibleVersionItem>
-              <MinRequiredVersion>1.3.100.0</MinRequiredVersion>
-              <DesignedForVersion>1.5.100.0</DesignedForVersion>
+              <MinRequiredVersion>1.6.0.0</MinRequiredVersion>
+              <DesignedForVersion>1.6.0.0</DesignedForVersion>
             </CompatibleVersionItem>
           </Items>
         </CompatibleVersion>
@@ -733,7 +670,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
 Fixed Compatibility with Mediaportal 1.6.0</VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
     <OnlineLocation>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.[Version].mpe1</OnlineLocation>
-    <ReleaseDate>2013-11-12T23:14:07.6287285+01:00</ReleaseDate>
+    <ReleaseDate>2014-01-19T17:09:41.9034161+01:00</ReleaseDate>
     <Tags>webbrowser, internet, web</Tags>
     <Location>..\..\BrowseTheWeb.mpe1</Location>
     <Params>
@@ -787,352 +724,289 @@ If have .dll extension used like MP plugin configuration</Description>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Plugins\Windows\geckofx-core-18.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{7101304c-9abf-4fd0-a686-64327ece8e7d}-geckofx-core-18.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\geckofx-core-18.dll</DestinationFilename>
+        <LocalFileName>Plugins\Windows\Geckofx-Core.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{41ffb796-38a6-40a4-8e92-4a51387d5acd}-Geckofx-Core.dll</ZipFileName>
+        <DestinationFilename>%Plugins%\Windows\Geckofx-Core.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Plugins\Windows\Geckofx-Winforms-18.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{6c097b5d-1f5e-4dce-bbef-aa554e8d1e49}-Geckofx-Winforms-18.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\Geckofx-Winforms-18.dll</DestinationFilename>
+        <LocalFileName>Plugins\Windows\Geckofx-Winforms.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{1b30ea58-3a73-485d-8c0e-38db3c0a5099}-Geckofx-Winforms.dll</ZipFileName>
+        <DestinationFilename>%Plugins%\Windows\Geckofx-Winforms.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\AccessibleMarshal.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{5d0ef453-3120-43c8-a451-be8be8904d63}-AccessibleMarshal.dll</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{704c8bfb-2648-48be-b546-cfafd1aec147}-AccessibleMarshal.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\AccessibleMarshal.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\breakpadinjector.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{a96b091b-bf7c-46a9-9d98-6ac54896abdc}-breakpadinjector.dll</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{1824a42a-c1b9-4b36-a120-dd6a28ee3812}-breakpadinjector.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\breakpadinjector.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>Files\xulrunner\chrome.manifest</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{3ec4b636-d69c-4082-8417-f001cdae464e}-chrome.manifest</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\chrome.manifest</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\crashreporter.exe</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{b1f3fe64-8bd7-49d4-88cb-b161e0ec020f}-crashreporter.exe</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{bc79c48a-0399-4a9d-8294-f9e7f2138e4d}-crashreporter.exe</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\crashreporter.exe</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\crashreporter.ini</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{287e2c62-67ec-444b-81c3-8596b87b364c}-crashreporter.ini</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{e1d9d7a3-04fc-47cd-8fc0-adafe61a21fc}-crashreporter.ini</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\crashreporter.ini</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\D3DCompiler_43.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{6ee91eca-53c8-4d02-8517-6b3e19a1dcd7}-D3DCompiler_43.dll</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{874a2cb8-66bc-47b1-a924-59c7aedeaf72}-D3DCompiler_43.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\D3DCompiler_43.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>Files\xulrunner\d3dx9_43.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{7532e3c2-d3d8-4be8-817c-17e30683445b}-d3dx9_43.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\d3dx9_43.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\dependentlibs.list</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{d1cca528-4b91-4bd0-8da7-6f85a011fc23}-dependentlibs.list</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{ee734ece-98b2-45e2-845a-e037b2af7b64}-dependentlibs.list</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\dependentlibs.list</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\freebl3.chk</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{72444e4f-0636-46f6-b4ac-74d66032bb18}-freebl3.chk</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{3d7d850b-d04c-443a-93f4-c815d649da13}-freebl3.chk</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\freebl3.chk</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\freebl3.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{0c3c0adf-44f8-4f08-845d-66c4ff09d31d}-freebl3.dll</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{049aaa8e-c25f-4f2c-ac0a-b683490eedbc}-freebl3.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\freebl3.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\gkmedias.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{cf32841a-329a-4a7b-99da-e1c6567b61ac}-gkmedias.dll</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{0b00dd67-cca2-46a7-9765-9195e6f97ff4}-gkmedias.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\gkmedias.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\IA2Marshal.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{8087e539-87c4-4222-b7d8-c613341965a4}-IA2Marshal.dll</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{dc71e2a7-11a4-4da7-8169-624e36a5a0c5}-IA2Marshal.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\IA2Marshal.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Files\xulrunner\js-gdb.py</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{2eac2555-0e37-4c40-be5e-3e9b7166e88c}-js-gdb.py</ZipFileName>
+        <DestinationFilename>%Plugins%\Windows\xulrunner\js-gdb.py</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\js.exe</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{0e132c62-795e-4461-8a2c-a844188ecab4}-js.exe</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{d74ddb83-d0a4-47a1-8d8d-35b69e5cbec9}-js.exe</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\js.exe</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\libEGL.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{b4ad176a-07c2-4c00-a0b8-60e393f71ed7}-libEGL.dll</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{707eb149-bfa5-4158-b50c-1e59804dfac1}-libEGL.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\libEGL.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\libGLESv2.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{fcedc7d6-7475-49cc-896e-495601fe455e}-libGLESv2.dll</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{d67d38fd-3f13-4ed0-aa2d-70af86c7d9d3}-libGLESv2.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\libGLESv2.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\LICENSE</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{7089abae-fdf0-4c79-928c-0d1e7d7597cf}-LICENSE</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{2aae553a-45cb-4b70-b1dc-029f223a12a4}-LICENSE</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\LICENSE</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\mozalloc.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{81d1b6c7-8fd5-418e-9e81-5a3535c93b0c}-mozalloc.dll</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{54af4050-6f08-4c13-90e3-d2758f067a24}-mozalloc.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\mozalloc.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\mozglue.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{ecd275d9-a8cc-4193-bade-de348d4796b4}-mozglue.dll</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{80e915c7-8e34-43b3-b079-6b7ed9b91ed1}-mozglue.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\mozglue.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\mozjs.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{6b600e94-2aca-4f90-a9e5-ddda79cb8760}-mozjs.dll</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{4107c7e1-c531-4a71-83f9-5b8264075361}-mozjs.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\mozjs.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>Files\xulrunner\mozsqlite3.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{7a6f44f6-0ad7-4d82-8406-a243a2443a69}-mozsqlite3.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\mozsqlite3.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\msvcp100.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{33379289-cba2-467b-a8c6-72cc55ed77ab}-msvcp100.dll</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{99eaa6db-622e-4f87-95d8-912857ca4043}-msvcp100.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\msvcp100.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\msvcr100.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{174dc3bf-0df0-4831-b0a1-9546bb59c88c}-msvcr100.dll</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{63faaaba-5267-479b-90a3-19aa1ead2856}-msvcr100.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\msvcr100.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>Files\xulrunner\nspr4.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{de49c525-af61-4ade-a974-076d2f5ecc18}-nspr4.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\nspr4.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\nss3.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{f9fefb45-1367-459f-ad1a-f157a3e226e6}-nss3.dll</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{4ea1548a-e093-4792-8822-63ffb0b9a941}-nss3.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\nss3.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\nssckbi.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{b050c28b-1490-4255-9589-95ad7f90de6a}-nssckbi.dll</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{92516e88-bc35-4d15-8e9b-486581b428ee}-nssckbi.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\nssckbi.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\nssdbm3.chk</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{0cfda781-eed4-4906-bb68-c6ec49d2be7e}-nssdbm3.chk</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{cc8e4fa3-d888-46e8-a009-a0ecc5e798f8}-nssdbm3.chk</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\nssdbm3.chk</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\nssdbm3.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{9953f61c-54f2-4f4f-b986-97ed500a1182}-nssdbm3.dll</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{16e9cefa-f807-4734-978c-e2775d692e6a}-nssdbm3.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\nssdbm3.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>Files\xulrunner\nssutil3.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{65b5012a-275a-45c8-b23e-978fe0534587}-nssutil3.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\nssutil3.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\omni.ja</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{c1391a90-0903-427f-b7f8-4ebb594db10d}-omni.ja</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{c6bce977-80c9-45ca-b4a0-32139ff3774b}-omni.ja</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\omni.ja</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\platform.ini</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{397a0e92-5775-4e9a-bbd6-c1956193b16a}-platform.ini</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{b31ad71b-77b4-4103-9470-d6b7cb609cb4}-platform.ini</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\platform.ini</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>Files\xulrunner\plc4.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{0bc1d754-4d28-4f24-89d5-7a9cb356746b}-plc4.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\plc4.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>Files\xulrunner\plds4.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{d0f2ea94-34d3-42c1-bfe2-4d30ef4f5762}-plds4.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\plds4.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\plugin-container.exe</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{388c3679-eefc-431a-9936-38d5a9ad32b3}-plugin-container.exe</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{d0bf4f74-bb43-432b-89e6-e22584ed98b7}-plugin-container.exe</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\plugin-container.exe</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>Files\xulrunner\plugin-hang-ui.exe</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{bde8189a-0d42-4f3a-9d73-708ad508637f}-plugin-hang-ui.exe</ZipFileName>
+        <DestinationFilename>%Plugins%\Windows\xulrunner\plugin-hang-ui.exe</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\precomplete</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{6d8ff592-0e26-4378-bba3-0c6f3df03900}-precomplete</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{21066f36-a86a-4152-b2ba-7bd013456546}-precomplete</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\precomplete</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\README.xulrunner</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{737aeb25-f024-434a-be78-9d6f7819e98e}-README.xulrunner</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{9d332951-ba2e-4336-ac41-debca551d189}-README.xulrunner</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\README.xulrunner</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\redit.exe</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{e8843f2c-78a3-411a-a6b6-9a169eca0809}-redit.exe</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{0c0ae566-c4f6-49b9-97a0-9fceaa8f3d45}-redit.exe</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\redit.exe</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>Files\xulrunner\smime3.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{00d3b907-baa6-4a79-a5db-172ca77cf0f4}-smime3.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\smime3.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\softokn3.chk</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{a63aceb8-c5cf-4e61-82cb-841e149248c0}-softokn3.chk</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{3eda149d-2221-46a4-917a-d441adc16ab3}-softokn3.chk</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\softokn3.chk</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\softokn3.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{2750cd50-c6d7-43da-b2bd-76dc2d7a6782}-softokn3.dll</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{f95afeed-6f04-4848-a10f-a17476e8fc57}-softokn3.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\softokn3.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>Files\xulrunner\ssl3.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{0cd11faa-0b5c-4714-ad19-731d2754066e}-ssl3.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\ssl3.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\updater.exe</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{65786666-ad0f-416c-909c-362c43748a6a}-updater.exe</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{d6886be1-f2bd-4160-9784-b6799f00489a}-updater.exe</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\updater.exe</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>Files\xulrunner\xpcom.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{835e2b5c-86f8-416d-a38a-dbfe9347999e}-xpcom.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\xpcom.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\xul.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{13055766-7135-4a31-9823-4deea3eb7dcb}-xul.dll</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{51739373-ea01-4927-abca-c5e80326007e}-xul.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\xul.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\xulrunner-stub.exe</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{f5df0873-a9a1-455d-bf79-b0fe4fe5512c}-xulrunner-stub.exe</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{efcc3882-31e8-4129-a2a7-5b7195fc4844}-xulrunner-stub.exe</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\xulrunner-stub.exe</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\xulrunner.exe</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{1d223357-3727-42fb-a933-10b2bf31bd21}-xulrunner.exe</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{bb2d6969-e6b0-4578-8a8d-01e5fc0a67da}-xulrunner.exe</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\xulrunner.exe</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\dictionaries\en-US.aff</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{3af6cf93-e55a-468e-9317-5660e487970c}-en-US.aff</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{e597a5fe-5e74-4f0e-aa00-ea04f7fbde9d}-en-US.aff</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\dictionaries\en-US.aff</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>Files\xulrunner\dictionaries\en-US.dic</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{ea40822e-0cd1-432e-9746-8648c48289d5}-en-US.dic</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{39d7d724-77d1-4d19-897c-a73a982728d0}-en-US.dic</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner\dictionaries\en-US.dic</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>Files\xulrunner\components\binary.manifest</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{c6673673-3b04-401d-b764-0e06bf5f8185}-binary.manifest</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\components\binary.manifest</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
@@ -1217,9 +1091,9 @@ If have .dll extension used like MP plugin configuration</Description>
     <FolderGroups>
       <FolderGroup InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName />
-        <ZipFileName>Installer{CopyFile}\{998cb619-e507-471e-9f6c-d7459be47e3a}-</ZipFileName>
+        <ZipFileName>Installer{CopyFile}\{ae873e73-3042-4de5-a733-7921a4560bf9}-</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\xulrunner</DestinationFilename>
         <Folder>Files\xulrunner</Folder>
         <Group>Common</Group>
