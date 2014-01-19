@@ -183,6 +183,19 @@ namespace BrowseTheWeb
                     }
                 }
 
+            GeckoElementCollection embeds = document.GetElementsByTagName("embed");
+            MyLog.debug("page embeds cnt : " + embeds.Count);
+            foreach (GeckoEmbedElement element in embeds)
+                if (element.Type == "application/x-shockwave-flash")
+                {
+                    if (!elementDone(element))
+                    {
+                        insertSpanAfter(id, null, element.Parent, "color:black;background-color:white");
+                        SetLinkAttributes(element, id);
+                        id++;
+                    }
+                }
+
             GeckoElementCollection forms = document.GetElementsByTagName("form");
             MyLog.debug("page forms cnt : " + forms.Count);
             foreach (GeckoHtmlElement element in forms)
