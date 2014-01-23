@@ -613,10 +613,10 @@ Click Next to continue or Cancel to exit Setup.</Value>
           <Revision>0</Revision>
         </MinVersion>
         <MaxVersion>
-          <Major>9</Major>
-          <Minor>9</Minor>
-          <Build>9</Build>
-          <Revision>9</Revision>
+          <Major>1</Major>
+          <Minor>1</Minor>
+          <Build>6</Build>
+          <Revision>27644</Revision>
         </MaxVersion>
         <WarnOnly>false</WarnOnly>
         <Message>requires MediaPortal version 1.6 or higher.</Message>
@@ -654,16 +654,19 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <UpdateUrl>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
     <Version>
       <Major>1</Major>
-      <Minor>4</Minor>
+      <Minor>5</Minor>
       <Build>0</Build>
       <Revision>0</Revision>
     </Version>
     <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / Webbrowser.</ExtensionDescription>
-    <VersionDescription>Fixed some gui issues
-Fixed Compatibility with Mediaportal 1.6.0</VersionDescription>
+    <VersionDescription>Preserve bookmark folder structure on import
+Fixed mouse visibility
+Fixed some mouse click issues
+Uses Gecko version 22
+</VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
     <OnlineLocation>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.[Version].mpe1</OnlineLocation>
-    <ReleaseDate>2014-01-19T17:09:41.9034161+01:00</ReleaseDate>
+    <ReleaseDate>2014-01-23T22:56:18.0702247+01:00</ReleaseDate>
     <Tags>webbrowser, internet, web</Tags>
     <Location>..\..\BrowseTheWeb.mpe1</Location>
     <Params>
