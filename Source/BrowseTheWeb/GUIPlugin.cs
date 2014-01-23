@@ -45,8 +45,26 @@ namespace BrowseTheWeb
 
     public class GUIPlugin : GUIWindow, ISetupForm
     {
-        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
-        public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, IntPtr dwExtraInfo);
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct MOUSEINPUT
+        {
+            public int X;
+            public int Y;
+            public uint MouseData;
+            public uint Flags;
+            public uint Time;
+            public IntPtr ExtraInfo;
+        }
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct INPUT
+        {
+            public uint Type;
+            public MOUSEINPUT Mouse;
+        }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern uint SendInput(uint numberOfInputs, INPUT[] inputs, int sizeOfInputStructure);
+
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern int ShowCursor(bool bShow);
         [DllImport("dwmapi.dll", EntryPoint = "DwmEnableComposition")]
@@ -492,12 +510,7 @@ namespace BrowseTheWeb
                 }
                 else
                 {
-                    webBrowser.Enabled = true;
-                    System.Threading.Thread.Sleep(200);
-                    clickFromPlugin = true;
-                    int X = Cursor.Position.X;
-                    int Y = Cursor.Position.Y;
-                    mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, IntPtr.Zero);
+                    ClickOn(null);
                 }
             }
             if (action.wID == settings.Remote_Bookmark)
@@ -982,17 +995,33 @@ namespace BrowseTheWeb
                         // some items just need a mousehover, and a ge.Click won't do that
                         {
                             Point p = DomHelper.GetCenterCoordinate(webBrowser.Document, ge);
-                            MyLog.debug("perform click on " + p.ToString());
                             p.X = Convert.ToInt32(p.X * zoom);
                             p.Y = Convert.ToInt32(p.Y * zoom);
-                            webBrowser.Enabled = true;
-                            System.Threading.Thread.Sleep(200);
-                            Cursor.Position = webBrowser.PointToScreen(p);
-                            clickFromPlugin = true;
-                            mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, IntPtr.Zero);
+                            ClickOn(p);
                         }
             //else
             // ge.Click();
+        }
+
+        private int delta = 5;
+        private void ClickOn(Point? p)
+        {
+            webBrowser.Enabled = true;
+            if (p.HasValue)
+            {
+                Point newP = new Point(p.Value.X + delta, p.Value.Y);
+                delta = -delta;// some flash vids don't react to clicking on previous coordinate
+                MyLog.debug("perform click on " + newP.ToString());
+                Cursor.Position = webBrowser.PointToScreen(newP);
+            }
+
+            INPUT[] ips = new INPUT[] { new INPUT { Type = 0 }, new INPUT { Type = 0 } };
+            ips[0].Mouse.Flags = MOUSEEVENTF_LEFTDOWN;
+            ips[1].Mouse.Flags = MOUSEEVENTF_LEFTUP;
+
+            clickFromPlugin = true;
+            if (SendInput(2, ips, Marshal.SizeOf(typeof(INPUT))) == 0)
+                MyLog.debug("Error sendinput");
         }
 
         public void ShowInputDialog(bool isPassword, GeckoInputElement element)
