@@ -608,18 +608,18 @@ Click Next to continue or Cancel to exit Setup.</Value>
         <Id />
         <MinVersion>
           <Major>1</Major>
-          <Minor>1</Minor>
-          <Build>6</Build>
-          <Revision>27644</Revision>
+          <Minor>6</Minor>
+          <Build>0</Build>
+          <Revision>0</Revision>
         </MinVersion>
         <MaxVersion>
-          <Major>1</Major>
-          <Minor>1</Minor>
-          <Build>6</Build>
-          <Revision>27644</Revision>
+          <Major>9</Major>
+          <Minor>9</Minor>
+          <Build>9</Build>
+          <Revision>9</Revision>
         </MaxVersion>
         <WarnOnly>false</WarnOnly>
-        <Message>requires MediaPortal version 1.1.6.27644 to 1.1.6.27644.</Message>
+        <Message>requires MediaPortal version 1.6 or higher.</Message>
         <Name>MediaPortal</Name>
       </DependencyItem>
     </Items>
