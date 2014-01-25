@@ -81,7 +81,7 @@ namespace BrowseTheWeb
                 UseHome = xmlreader.GetValueAsBool(section, "usehome", true);
                 HomePage = xmlreader.GetValueAsString(section, "homepage", "http://team-mediaportal.com");
                 RemoteTime = xmlreader.GetValueAsInt(section, "remotetime", 15);
-                PluginName = xmlreader.GetValueAsString(section, "name", "Browse Web");
+                PluginName = xmlreader.GetValueAsString(section, "name", "WebBrowser");
                 BlankBrowser = xmlreader.GetValueAsBool(section, "blank", false);
                 StatusBar = xmlreader.GetValueAsBool(section, "status", true);
                 OSD = xmlreader.GetValueAsBool(section, "osd", true);
