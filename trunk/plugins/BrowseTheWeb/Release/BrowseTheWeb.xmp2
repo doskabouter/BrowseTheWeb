@@ -666,7 +666,7 @@ Uses Gecko version 22
 </VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
     <OnlineLocation>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.[Version].mpe1</OnlineLocation>
-    <ReleaseDate>2014-01-25T21:08:31.4691286+01:00</ReleaseDate>
+    <ReleaseDate>2014-01-25T21:13:09.5882715+01:00</ReleaseDate>
     <Tags>webbrowser, internet, web</Tags>
     <Location>..\..\BrowseTheWeb.mpe1</Location>
     <Params>
