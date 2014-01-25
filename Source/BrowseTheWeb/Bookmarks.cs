@@ -121,6 +121,7 @@ namespace BrowseTheWeb
 
                 if (doc.DocumentElement.SelectSingleNode("//isFolder") != null)
                 {
+                    File.Copy(fileName, Path.ChangeExtension(fileName, ".bak"));
                     LoadOldVersion(doc);
                 }
                 else
