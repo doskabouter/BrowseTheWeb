@@ -287,17 +287,20 @@ namespace BrowseTheWeb.Setup
             }
             #endregion
 
-            if (targetNode.Tag is BookmarkFolder)
+            if (targetNode != null)
             {
-                sourceNode.Remove();
-                targetNode.Nodes.Insert(0, sourceNode);
-            }
-            else
-            {
-                if (targetNode.Parent != null)
+                if (targetNode.Tag is BookmarkFolder)
                 {
                     sourceNode.Remove();
-                    targetNode.Parent.Nodes.Insert(targetNode.Index, sourceNode);
+                    targetNode.Nodes.Insert(0, sourceNode);
+                }
+                else
+                {
+                    sourceNode.Remove();
+                    if (targetNode.Parent != null)
+                        targetNode.Parent.Nodes.Insert(targetNode.Index, sourceNode);
+                    else
+                        targetNode.Nodes.Insert(targetNode.Index, sourceNode);
                 }
             }
 
@@ -360,8 +363,14 @@ namespace BrowseTheWeb.Setup
                         thumb.ShowDialog();
                     }
 
-                    TreeNode newNode = node.Tag is BookmarkFolder ? node.Nodes.Add(get.SelectedName) :
-                        node.Parent.Nodes.Insert(node.Index + 1, get.SelectedName);
+                    TreeNode newNode;
+                    if (node.Parent == null)//root node "Bookmarks"
+                        newNode = node.Nodes.Insert(node.Index + 1, get.SelectedName);
+                    else
+                        if (node.Tag is BookmarkFolder)
+                            newNode = node.Nodes.Add(get.SelectedName);
+                        else
+                            newNode = node.Parent.Nodes.Insert(node.Index + 1, get.SelectedName);
                     newNode.ImageIndex = 1;
                     newNode.SelectedImageIndex = 1;
 
