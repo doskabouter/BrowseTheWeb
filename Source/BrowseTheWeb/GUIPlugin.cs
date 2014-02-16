@@ -763,7 +763,7 @@ namespace BrowseTheWeb
 
                 }
                 else
-                    ShowAlert("Bookmark could not been saved !", "Title : " + title, "URL : " + actualUrl, "");
+                    ShowAlert("Bookmark could not be saved !", "Title : " + title, "URL : " + actualUrl, "");
             }
 
             webBrowser.Visible = true;
