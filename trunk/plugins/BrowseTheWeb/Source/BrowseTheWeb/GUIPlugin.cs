@@ -199,7 +199,7 @@ namespace BrowseTheWeb
             }
             catch (Exception ex)
             {
-                MyLog.debug("Could not find xulrunner under : " + Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\xulrunner");
+                MyLog.debug("Could not find xulrunner under : " + Settings.XulRunnerPath());
                 MyLog.debug("Reason : " + ex.Message);
             }
 
