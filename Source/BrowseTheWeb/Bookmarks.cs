@@ -23,7 +23,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Xml;
 using System.IO;
 using System.Windows.Forms;
@@ -38,7 +37,7 @@ namespace BrowseTheWeb
     public class Bookmarks
     {
         public static string SavedByMp = "Saved by MP";
-        public List<BookmarkBase> root;
+        public BookmarkFolder root;
 
         #region singleton
         private static Bookmarks instance;
@@ -56,12 +55,13 @@ namespace BrowseTheWeb
 
         private Bookmarks()
         {
-            root = new List<BookmarkBase>();
+            root = new BookmarkFolder();
+            root.Parent = null;
         }
 
         public void Clear()
         {
-            root.Clear();
+            root.Items.Clear();
         }
 
         private void LoadOldVersion(XmlDocument doc)
@@ -69,24 +69,24 @@ namespace BrowseTheWeb
 
             try
             {
-                List<BookmarkBase> last = root;
+                BookmarkFolder last = root;
                 foreach (XmlNode node in doc.DocumentElement.SelectNodes("//Entry"))
                 {
                     if (Convert.ToBoolean(node.SelectSingleNode("isFolder").InnerText))
                     {
                         BookmarkFolder bmf = new BookmarkFolder();
                         bmf.FromXml(node);
-                        last = bmf.Items;
-                        root.Add(bmf);
+                        last = bmf;
+                        root.Items.Add(bmf);
                     }
                     else
                     {
                         BookmarkItem item = new BookmarkItem();
                         item.FromXml(node);
                         if (Convert.ToBoolean(node.SelectSingleNode("isSubFolder").InnerText))
-                            last.Add(item);
+                            last.Items.Add(item);
                         else
-                            root.Add(item);
+                            root.Items.Add(item);
                     }
                 }
 
@@ -97,15 +97,15 @@ namespace BrowseTheWeb
             }
         }
 
-        private void SetParent(List<BookmarkBase> items, BookmarkFolder parent)
+        private void SetParent(BookmarkFolder item)
         {
-            foreach (BookmarkBase sub in items)
+            foreach (BookmarkBase sub in item.Items)
             {
                 BookmarkFolder bmf = sub as BookmarkFolder;
                 if (bmf != null)
                 {
-                    bmf.Parent = parent;
-                    SetParent(bmf.Items, bmf);
+                    bmf.Parent = item;
+                    SetParent(bmf);
                 }
             }
 
@@ -126,18 +126,16 @@ namespace BrowseTheWeb
                 }
                 else
                 {
-                    BookmarkFolder dummy = new BookmarkFolder();
-                    dummy.Items = root;
-                    dummy.FromXml(doc.DocumentElement);
+                    root.FromXml(doc.DocumentElement);
                 }
 
-                SetParent(root, null);
+                SetParent(root);
             }
             else
             {
                 BookmarkFolder bmf = new BookmarkFolder();
                 bmf.Name = SavedByMp;
-                root.Add(bmf);
+                root.Items.Add(bmf);
             }
 
         }
@@ -151,7 +149,7 @@ namespace BrowseTheWeb
                     textWriter.Formatting = Formatting.Indented;
                     textWriter.WriteStartDocument();
                     textWriter.WriteStartElement("Bookmarks");
-                    foreach (BookmarkBase item in root)
+                    foreach (BookmarkBase item in root.Items)
                     {
                         item.ToXml(textWriter);
                     }
@@ -170,7 +168,7 @@ namespace BrowseTheWeb
 
         public bool AddBookmark(string title, string url, string path)
         {
-            BookmarkFolder bmf = root.Find(x => x.Name == SavedByMp && x is BookmarkFolder) as BookmarkFolder;
+            BookmarkFolder bmf = root.Items.Find(x => x.Name == SavedByMp && x is BookmarkFolder) as BookmarkFolder;
             if (bmf != null)
             {
                 bmf.Items.Add(new BookmarkItem() { Name = title, Url = url });

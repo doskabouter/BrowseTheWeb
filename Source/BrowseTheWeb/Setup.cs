@@ -70,9 +70,9 @@ namespace BrowseTheWeb.Setup
         }
 
 
-        public static void FillTreeview(List<BookmarkBase> bookmarks, TreeNodeCollection nodes)
+        public static void FillTreeview(BookmarkFolder bmf, TreeNodeCollection nodes)
         {
-            foreach (BookmarkBase item in bookmarks)
+            foreach (BookmarkBase item in bmf.Items)
             {
                 TreeNode newNode = nodes.Add(item.Name);
                 newNode.Tag = item;
@@ -80,7 +80,7 @@ namespace BrowseTheWeb.Setup
                 {
                     newNode.ImageIndex = 1;
                     newNode.SelectedImageIndex = 1;
-                    FillTreeview(((BookmarkFolder)item).Items, newNode.Nodes);
+                    FillTreeview((BookmarkFolder)item, newNode.Nodes);
                 }
             }
         }
@@ -95,18 +95,18 @@ namespace BrowseTheWeb.Setup
             treeview.Invalidate();
         }
 
-        private void FillBookmarks(TreeNodeCollection nodes, List<BookmarkBase> bms)
+        private void FillBookmarks(TreeNodeCollection nodes, BookmarkFolder bms)
         {
             foreach (TreeNode node in nodes)
             {
                 BookmarkBase bkm = (BookmarkBase)node.Tag;
-                bms.Add(bkm);
+                bms.Items.Add(bkm);
 
                 BookmarkFolder bmf = node.Tag as BookmarkFolder;
                 if (bmf != null)
                 {
                     bmf.Items.Clear();
-                    FillBookmarks(node.Nodes, bmf.Items);
+                    FillBookmarks(node.Nodes, bmf);
                 }
             }
         }

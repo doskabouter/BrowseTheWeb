@@ -23,7 +23,6 @@
 #endregion
 
 
-using System.Collections.Generic;
 using MediaPortal.GUI.Library;
 using MediaPortal.Configuration;
 
@@ -135,9 +134,9 @@ namespace BrowseTheWeb
                 facade.Add(item);
             }
 
-            List<BookmarkBase> list = parent == null ? Bookmarks.Instance.root : parent.Items;
+            BookmarkFolder bmf = parent == null ? Bookmarks.Instance.root : parent;
 
-            foreach (BookmarkBase bookmark in list)
+            foreach (BookmarkBase bookmark in bmf.Items)
             {
                 BtwebGuiListItem item = new BtwebGuiListItem();
                 item.IsFolder = bookmark is BookmarkFolder;
