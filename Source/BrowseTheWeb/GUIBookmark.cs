@@ -43,6 +43,9 @@ namespace BrowseTheWeb
         [SkinControlAttribute(3)]
         protected GUISortButtonControl btnSortBy = null;
 
+        BookmarkFolder currentList;
+        BookmarkBase selectedBookmark;
+
         public const int BookmarkWindowId = 54537688;
 
         public override int GetID
@@ -62,16 +65,29 @@ namespace BrowseTheWeb
             MyLog.debug("Init Browse the web bookmarks");
             bool result = Load(GUIGraphicsContext.Skin + @"\BrowseTheWebBook.xml");
             Bookmarks.Instance.LoadFromXml(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml");
+            currentList = Bookmarks.Instance.root;
+            selectedBookmark = null;
 
             return result;
         }
 
         protected override void OnPageLoad()
         {
-            LoadFacade(null);
+            LoadFacade();
             Bookmark.InitCachePath();
             base.OnPageLoad();
         }
+
+        protected override void OnPageDestroy(int newWindowId)
+        {
+            BtwebGuiListItem item = facade.SelectedListItem as BtwebGuiListItem;
+            if (item != null)
+            {
+                selectedBookmark = item.bookmark;
+            }
+            base.OnPageDestroy(newWindowId);
+        }
+
         protected override void OnClicked(int controlId, GUIControl control, MediaPortal.GUI.Library.Action.ActionType actionType)
         {
             if (actionType == MediaPortal.GUI.Library.Action.ActionType.ACTION_SELECT_ITEM)
@@ -81,10 +97,16 @@ namespace BrowseTheWeb
                 {
                     if (item.IsFolder)
                     {
-                        LoadFacade((BookmarkFolder)item.bookmark);
+                        if (item.Path == "..")
+                        {
+                            selectedBookmark = currentList;
+                        }
+                        currentList = (BookmarkFolder)item.bookmark;
+                        LoadFacade();
                     }
                     else
                     {
+                        selectedBookmark = item.bookmark;
                         GUIPlugin.StartupLink = item.Path;
                         if (GUIWindowManager.GetPreviousActiveWindow() == GUIPlugin.PluginWindowId)
                             GUIWindowManager.ShowPreviousWindow();
@@ -92,6 +114,7 @@ namespace BrowseTheWeb
                             GUIWindowManager.ActivateWindow(GUIPlugin.PluginWindowId);
                     }
                 }
+
             }
 
             if (control == btnViewAs)
@@ -118,14 +141,15 @@ namespace BrowseTheWeb
             }
         }
 
-        public void LoadFacade(BookmarkFolder parent)
+        public void LoadFacade()
         {
+            BookmarkFolder bmf = currentList;
             facade.CurrentLayout = Settings.Instance.View;
             facade.Clear();
-            if (parent != null)
+            if (bmf.Parent != null)
             {
                 BtwebGuiListItem item = new BtwebGuiListItem();
-                item.bookmark = parent.Parent;
+                item.bookmark = bmf.Parent;
                 item.IsFolder = true;
                 item.Label = "..";
                 item.Path = "..";
@@ -134,7 +158,7 @@ namespace BrowseTheWeb
                 facade.Add(item);
             }
 
-            BookmarkFolder bmf = parent == null ? Bookmarks.Instance.root : parent;
+            facade.SelectedListItemIndex = 0;
 
             foreach (BookmarkBase bookmark in bmf.Items)
             {
@@ -157,9 +181,11 @@ namespace BrowseTheWeb
                 }
 
                 facade.Add(item);
+                if (bookmark == selectedBookmark)
+                    facade.SelectedListItemIndex = facade.Count - 1;
             }
+
             GUIPropertyManager.SetProperty("#itemcount", facade.Count.ToString());
-            facade.SelectedListItemIndex = 0;
 
         }
     }
