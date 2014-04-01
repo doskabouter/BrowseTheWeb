@@ -195,8 +195,8 @@ namespace BrowseTheWeb.Setup
                     MyLog.debug("open database");
                     SQLiteClient client = new SQLiteClient(path);
 
-                    List<BookmarkBase> dummy = new List<BookmarkBase>();
-                    ImportFFFolder(client, "2", dummy);
+                    BookmarkFolder dummy = new BookmarkFolder();
+                    ImportFFFolder(client, "2", dummy.Items);
                     Setup.FillTreeview(dummy, treeView1.Nodes);
                     MyLog.debug("close database");
                     client.Close();
@@ -250,11 +250,11 @@ namespace BrowseTheWeb.Setup
 
         private void ImportIE()
         {
-            List<BookmarkBase> dummy = new List<BookmarkBase>();
+            BookmarkFolder dummy = new BookmarkFolder();
             string favPath = Environment.GetFolderPath(Environment.SpecialFolder.Favorites);
             if (Directory.Exists(favPath))
             {
-                ImportIEFolder(favPath, dummy);
+                ImportIEFolder(favPath, dummy.Items);
                 Setup.FillTreeview(dummy, treeView1.Nodes);
             }
             else
@@ -299,8 +299,8 @@ namespace BrowseTheWeb.Setup
                 string s = File.ReadAllText(path);
                 JSONNode node = JSONNode.LoadJSON(s);
                 List<JSONNode> res = node.GetNodes("roots/bookmark_bar/children", null);
-                List<BookmarkBase> dummy = new List<BookmarkBase>();
-                ImportChromeFolder(res, dummy);
+                BookmarkFolder dummy = new BookmarkFolder();
+                ImportChromeFolder(res, dummy.Items);
                 Setup.FillTreeview(dummy, treeView1.Nodes);
             }
             else
