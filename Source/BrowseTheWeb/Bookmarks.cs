@@ -33,6 +33,7 @@ using System.Drawing;
 
 using Gecko;
 using Gecko.Utils;
+using TreeView = System.Windows.Forms.TreeView;
 
 namespace BrowseTheWeb
 {
