@@ -27,7 +27,6 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using Gecko;
-using Gecko.Utils;
 
 namespace BrowseTheWeb.Setup
 {
@@ -62,16 +61,8 @@ namespace BrowseTheWeb.Setup
 
         private void browser_DocumentCompleted(object sender, EventArgs e)
         {
-            if (browser.Url.ToString() != "about:blank")
+            if (Bookmark.GetAndSaveSnap(browser))
             {
-                Bitmap snap = browser.GetBitmap((uint)browser.Width, (uint)browser.Height);
-
-                snap = MediaPortal.Util.BitmapResize.Resize(ref snap, 300, 400, false, true);
-
-                Graphics g = Graphics.FromImage((Image)snap);
-                g.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(1, 1, snap.Width - 2, snap.Height - 2));
-
-                Bookmark.SaveSnap(snap, SelectedUrl);
                 received = true;
                 chkGetThumb.Checked = true;
             }
