@@ -292,7 +292,7 @@ namespace BrowseTheWeb
             return result;
         }
 
-        public static bool GetAndSaveSnap(GeckoWebBrowser browser)
+        public static bool GetAndSaveSnap(GeckoWebBrowser browser, string url)
         {
             if (browser.Url.ToString() != "about:blank")
             {
@@ -303,7 +303,7 @@ namespace BrowseTheWeb
                 Graphics g = Graphics.FromImage((Image)snap);
                 g.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(1, 1, snap.Width - 2, snap.Height - 2));
 
-                Bookmark.SaveSnap(snap, browser.Url.ToString());
+                Bookmark.SaveSnap(snap, url);
                 return true;
             }
             return false;
