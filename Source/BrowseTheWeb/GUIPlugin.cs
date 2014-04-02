@@ -738,29 +738,7 @@ namespace BrowseTheWeb
                 if (hasSaved)
                 {
                     ShowAlert("Bookmark has been saved !", "Title : " + title, "URL : " + actualUrl, "");
-                    #region save snapshot
-
-                    if (webBrowser.Url.ToString() != "about:blank")
-                    {
-                        int y = webBrowser.Height;
-                        int x = y / 4 * 3;
-
-                        int offset = (webBrowser.Width - x) / 2;
-
-                        Bitmap snap = new Bitmap(webBrowser.Width, webBrowser.Height);
-                        webBrowser.DrawToBitmap(snap, new Rectangle(0, 0, webBrowser.Width, webBrowser.Height));
-
-                        snap = CopyBitmap(snap, new Rectangle(offset, 0, x, y));
-
-                        snap = MediaPortal.Util.BitmapResize.Resize(ref snap, 300, 400, false, true);
-
-                        Graphics g = Graphics.FromImage((Image)snap);
-                        g.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(1, 1, snap.Width - 2, snap.Height - 2));
-
-                        Bookmark.SaveSnap(snap, actualUrl);
-                    }
-                    #endregion
-
+                    Bookmark.GetAndSaveSnap(webBrowser, actualUrl);
                 }
                 else
                     ShowAlert("Bookmark could not be saved !", "Title : " + title, "URL : " + actualUrl, "");
