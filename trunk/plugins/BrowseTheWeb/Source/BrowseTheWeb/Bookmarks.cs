@@ -226,7 +226,7 @@ namespace BrowseTheWeb
             return true;
         }
 
-        public static void SaveSnap(Bitmap Snap, string Url)
+        private static void SaveSnap(Bitmap Snap, string Url)
         {
             try
             {
