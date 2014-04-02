@@ -31,6 +31,9 @@ using MediaPortal.Configuration;
 
 using System.Drawing;
 
+using Gecko;
+using Gecko.Utils;
+
 namespace BrowseTheWeb
 {
 
@@ -181,6 +184,8 @@ namespace BrowseTheWeb
 
     public class Bookmark
     {
+        private static string ThumbDir = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb";
+
         public static TreeNode FindNode(TreeView Treeview, string Name)
         {
             foreach (TreeNode t in Treeview.Nodes[0].Nodes)
@@ -224,8 +229,7 @@ namespace BrowseTheWeb
         {
             try
             {
-                string filename = GetThumbString(Url);
-                filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb\\" + filename;
+                string filename = GetSnapPath(Url);
                 Snap.Save(filename);
             }
             catch (Exception e)
@@ -233,22 +237,20 @@ namespace BrowseTheWeb
                 MyLog.debug("Exception: " + e.ToString());
             }
         }
+
         public static Bitmap GetSnap(string Url)
         {
-            Bitmap snap = null;
 
             try
             {
-                string filename = GetThumbString(Url);
-                filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb\\" + filename;
+                string filename = GetSnapPath(Url);
 
                 if (File.Exists(filename))
                 {
-                    snap = (Bitmap)Bitmap.FromFile(filename);
-                    return snap;
+                    return (Bitmap)Bitmap.FromFile(filename);
                 }
                 else
-                    MyLog.debug("Getsnap does not exist");
+                    MyLog.debug("Getsnap " + filename + " does not exist");
 
             }
             catch (Exception e)
@@ -256,31 +258,19 @@ namespace BrowseTheWeb
                 MyLog.debug("Exception: " + e.ToString());
             }
 
-            return snap;
+            return null;
         }
 
         public static string GetSnapPath(string Url)
         {
             string filename = GetThumbString(Url);
-            filename = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb\\" + filename;
-
-            return filename;
+            return Path.Combine(ThumbDir, filename);
         }
+
         public static void InitCachePath()
         {
-            if (!Directory.Exists(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb"))
-                Directory.CreateDirectory(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb");
-
-
-            if (Directory.Exists(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb"))
-            {
-                string[] files = Directory.GetFiles(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Cache) + "\\BrowseTheWeb", "*.*");
-                foreach (string f in files)
-                {
-                    File.Move(f, Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb\\" + Path.GetFileName(f));
-                }
-            }
-
+            if (!Directory.Exists(ThumbDir))
+                Directory.CreateDirectory(ThumbDir);
         }
 
         private static string GetThumbString(string Name)
@@ -299,6 +289,23 @@ namespace BrowseTheWeb
                 result = result.Replace(c, '_');
             result = result + ".png";
             return result;
+        }
+
+        public static bool GetAndSaveSnap(GeckoWebBrowser browser)
+        {
+            if (browser.Url.ToString() != "about:blank")
+            {
+                Bitmap snap = browser.GetBitmap((uint)browser.Width, (uint)browser.Height);
+
+                snap = MediaPortal.Util.BitmapResize.Resize(ref snap, 300, 400, false, true);
+
+                Graphics g = Graphics.FromImage((Image)snap);
+                g.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(1, 1, snap.Width - 2, snap.Height - 2));
+
+                Bookmark.SaveSnap(snap, browser.Url.ToString());
+                return true;
+            }
+            return false;
         }
     }
 }
