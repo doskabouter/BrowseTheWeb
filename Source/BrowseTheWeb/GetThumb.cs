@@ -61,7 +61,7 @@ namespace BrowseTheWeb.Setup
 
         private void browser_DocumentCompleted(object sender, EventArgs e)
         {
-            if (Bookmark.GetAndSaveSnap(browser))
+            if (Bookmark.GetAndSaveSnap(browser, SelectedUrl))
             {
                 received = true;
                 chkGetThumb.Checked = true;
