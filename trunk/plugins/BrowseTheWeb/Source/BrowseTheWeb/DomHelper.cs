@@ -85,7 +85,7 @@ namespace BrowseTheWeb
             return new Point(0, 0);
         }
 
-        private static void AddLinksToPage(GeckoDocument document, int id)
+        private static int AddLinksToPage(GeckoDocument document, int id)
         {
             Dictionary<string, int> hrefs = new Dictionary<string, int>();
             GeckoElementCollection links = document.Links;
@@ -253,7 +253,8 @@ namespace BrowseTheWeb
             GeckoElementCollection iframes = document.GetElementsByTagName("iframe");
             MyLog.debug("page iframes cnt : " + iframes.Count<GeckoHtmlElement>());
             foreach (GeckoIFrameElement element in iframes)
-                AddLinksToPage(element.ContentDocument, id);
+                id = AddLinksToPage(element.ContentDocument, id);
+            return id;
         }
 
         private static int GetMaxId(GeckoDocument document)
@@ -282,7 +283,7 @@ namespace BrowseTheWeb
         private static GeckoHtmlElement CreateSpan(GeckoDocument owner, int geckoId, string className, string extra)
         {
             GeckoHtmlElement result = owner.CreateHtmlElement("span");
-            result.SetAttribute("style", _spanstyle + extra);
+                result.SetAttribute("style", _spanstyle + extra);
             result.InnerHtml = geckoId.ToString();
             if (!String.IsNullOrEmpty(className))
                 result.SetAttribute("class", className);
