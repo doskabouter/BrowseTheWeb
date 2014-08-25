@@ -39,6 +39,8 @@ using Gecko;
 using Gecko.Collections;
 using Gecko.DOM;
 
+using Action = MediaPortal.GUI.Library.Action;
+
 namespace BrowseTheWeb
 {
     [PluginIcons("BrowseTheWeb.xulrunner.png", "BrowseTheWeb.xulrunnerOff.png")]
@@ -474,13 +476,13 @@ namespace BrowseTheWeb
             base.OnPreviousWindow();
         }
 
-        public override void OnAction(MediaPortal.GUI.Library.Action action)
+        public override void OnAction(Action action)
         {
             GUIPropertyManager.SetProperty("#btWeb.linkid", String.IsNullOrEmpty(linkId) ? String.Empty : "Link ID = " + linkId);
             #region remote diagnostic
             if (settings.Remote)
             {
-                if (action.wID != MediaPortal.GUI.Library.Action.ActionType.ACTION_KEY_PRESSED)
+                if (action.wID != Action.ActionType.ACTION_KEY_PRESSED)
                     GUIPropertyManager.SetProperty("#btWeb.status", DateTime.Now.ToLongTimeString() + " : " +
                                                     action.wID.ToString());
                 else
@@ -519,12 +521,12 @@ namespace BrowseTheWeb
                 return;
             }
             if ((action.wID == settings.Remote_Zoom_In) ||
-                (action.wID == MediaPortal.GUI.Library.Action.ActionType.ACTION_MUSIC_FORWARD))
+                (action.wID == Action.ActionType.ACTION_MUSIC_FORWARD))
             {
                 OnZoomIn();
             }
             if ((action.wID == settings.Remote_Zoom_Out) ||
-                (action.wID == MediaPortal.GUI.Library.Action.ActionType.ACTION_MUSIC_REWIND))
+                (action.wID == Action.ActionType.ACTION_MUSIC_REWIND))
             {
                 OnZoomOut();
             }
@@ -545,17 +547,17 @@ namespace BrowseTheWeb
 
             switch (action.wID)
             {
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_MOUSE_CLICK:
+                case Action.ActionType.ACTION_MOUSE_CLICK:
                     {
                         break;
                     }
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_MOUSE_MOVE:
+                case Action.ActionType.ACTION_MOUSE_MOVE:
                     if (settings.UseMouse)
                     {
 
                     }
                     break;
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_NEXT_SUBTITLE:
+                case Action.ActionType.ACTION_NEXT_SUBTITLE:
                     if (!settings.UseMouse)
                     {
                         if (mouseVisible)
@@ -574,7 +576,7 @@ namespace BrowseTheWeb
                         }
                     }
                     break;
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_KEY_PRESSED:
+                case Action.ActionType.ACTION_KEY_PRESSED:
                     if (!settings.UseMouse)
                     {
                         linkTime = 0;
@@ -599,52 +601,52 @@ namespace BrowseTheWeb
                         if (linkId.Length > 4) linkId = linkId.Substring(0, 1);
                     }
                     break;
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_PREVIOUS_MENU:
+                case Action.ActionType.ACTION_PREVIOUS_MENU:
                     linkId = string.Empty;
                     break;
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_PLAY:
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_MUSIC_PLAY:
+                case Action.ActionType.ACTION_PLAY:
+                case Action.ActionType.ACTION_MUSIC_PLAY:
                     OnEnterNewLink();
                     return;
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_PAUSE:
+                case Action.ActionType.ACTION_PAUSE:
                     webBrowser.Navigate(settings.HomePage);
                     MyLog.debug("load home page " + settings.HomePage);
                     if (!settings.Remote) GUIPropertyManager.SetProperty("#btWeb.status", "go to homepage");
                     return;
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_STOP:
+                case Action.ActionType.ACTION_STOP:
                     webBrowser.Navigate("about:blank");
                     if (!settings.Remote) GUIPropertyManager.SetProperty("#btWeb.status", "Stop");
                     return;
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_PREV_ITEM:
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_REWIND:
+                case Action.ActionType.ACTION_PREV_ITEM:
+                case Action.ActionType.ACTION_REWIND:
                     webBrowser.GoBack();
                     if (!settings.Remote) GUIPropertyManager.SetProperty("#btWeb.status", "go backward");
                     MyLog.debug("navigate go back");
                     return;
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_NEXT_ITEM:
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_FORWARD:
+                case Action.ActionType.ACTION_NEXT_ITEM:
+                case Action.ActionType.ACTION_FORWARD:
                     webBrowser.GoForward();
                     if (!settings.Remote) GUIPropertyManager.SetProperty("#btWeb.status", "go forward");
                     MyLog.debug("navigate go forward");
                     return;
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_RECORD:
+                case Action.ActionType.ACTION_RECORD:
                     OnAddBookmark();
                     return;
 
                 #region move
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_MOVE_RIGHT:
+                case Action.ActionType.ACTION_MOVE_RIGHT:
                     OnMoveRight();
                     return;
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_MOVE_LEFT:
+                case Action.ActionType.ACTION_MOVE_LEFT:
                     OnMoveLeft();
                     return;
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_MOVE_UP:
+                case Action.ActionType.ACTION_MOVE_UP:
                     OnMoveUp();
                     return;
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_MOVE_DOWN:
+                case Action.ActionType.ACTION_MOVE_DOWN:
                     OnMoveDown();
                     return;
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_SELECT_ITEM:
+                case Action.ActionType.ACTION_SELECT_ITEM:
                     return;
                 #endregion
             }
