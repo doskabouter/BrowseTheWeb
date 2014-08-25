@@ -393,7 +393,7 @@ namespace BrowseTheWeb
             webBrowser.DomKeyDown -= webBrowser_DomKeyDown;
             webBrowser.DomClick -= webBrowser_DomClick;
 
-            timer.Tick -= new EventHandler(timer_Tick);
+            timer.Tick -= timer_Tick;
             timer.Stop();
             if (settings.UseMouse)
             {
