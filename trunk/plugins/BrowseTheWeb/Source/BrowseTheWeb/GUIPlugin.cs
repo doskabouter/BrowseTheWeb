@@ -388,10 +388,10 @@ namespace BrowseTheWeb
 
             osd_linkID.Visible = false;
 
-            webBrowser.DocumentCompleted -= new EventHandler(webBrowser_DocumentCompleted);
-            webBrowser.StatusTextChanged -= new EventHandler(webBrowser_StatusTextChanged);
-            webBrowser.DomKeyDown -= new EventHandler<DomKeyEventArgs>(webBrowser_DomKeyDown);
-            webBrowser.DomClick -= new EventHandler<DomEventArgs>(webBrowser_DomClick);
+            webBrowser.DocumentCompleted -= webBrowser_DocumentCompleted;
+            webBrowser.StatusTextChanged -= webBrowser_StatusTextChanged;
+            webBrowser.DomKeyDown -= webBrowser_DomKeyDown;
+            webBrowser.DomClick -= webBrowser_DomClick;
 
             timer.Tick -= new EventHandler(timer_Tick);
             timer.Stop();
