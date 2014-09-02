@@ -30,6 +30,13 @@ namespace BrowseTheWeb
             "top: 0; " +
             "left: 0; ";
 
+        private const string _spanStyleObject = _baseSpanStyle +
+            "padding: 0px 2px 4px 2px ! important; " +
+            "margin-right: 8px; " +
+            "max-width: 30px; " +
+            "position: absolute ! important;" +
+            "z-index-100; ";
+
         private const string btwebId = "btweb_id";
 
         public static void AddLinksToPage(GeckoDocument document)
@@ -182,7 +189,7 @@ namespace BrowseTheWeb
                 {
                     if (!elementDone(element))
                     {
-                        insertSpanAfter(id, null, element.Parent, "color:black;background-color:white");
+                        insertSpanAfter(id, null, element.Parent, "color:black;background-color:white", true);
                         SetLinkAttributes(element, id);
                         id++;
                     }
@@ -195,7 +202,7 @@ namespace BrowseTheWeb
                 {
                     if (!elementDone(element))
                     {
-                        insertSpanAfter(id, null, element.Parent, "color:black;background-color:white");
+                        insertSpanAfter(id, null, element.Parent, "color:black;background-color:white;position:absolute;z-index:2000");
                         SetLinkAttributes(element, id);
                         id++;
                     }
@@ -284,9 +291,12 @@ namespace BrowseTheWeb
             return maxId;
         }
 
-        private static GeckoHtmlElement CreateSpan(GeckoDocument owner, int geckoId, string className, string extra)
+        private static GeckoHtmlElement CreateSpan(GeckoDocument owner, int geckoId, string className, string extra, bool isObject = false)
         {
             GeckoHtmlElement result = owner.CreateHtmlElement("span");
+            if (isObject)
+                result.SetAttribute("style", _spanStyleObject + extra);
+            else
                 result.SetAttribute("style", _spanstyle + extra);
             result.InnerHtml = geckoId.ToString();
             if (!String.IsNullOrEmpty(className))
@@ -294,11 +304,11 @@ namespace BrowseTheWeb
             return result;
         }
 
-        private static GeckoElement insertSpanAfter(int geckoId, string className, GeckoNode after, string extra = "")
+        private static GeckoElement insertSpanAfter(int geckoId, string className, GeckoNode after, string extra = "", bool isObject = false)
         {
             if (after == null)
                 throw new ArgumentNullException("after");
-            GeckoHtmlElement newChild = CreateSpan(after.OwnerDocument, geckoId, className, extra);
+            GeckoHtmlElement newChild = CreateSpan(after.OwnerDocument, geckoId, className, extra, isObject);
             if (after.FirstChild == null)
                 after.AppendChild(newChild);
             else
