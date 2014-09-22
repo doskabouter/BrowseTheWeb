@@ -666,31 +666,22 @@ namespace BrowseTheWeb
         {
             if (settings.UseMouse || mouseVisible)
             {
-                //System.Diagnostics.Debug.WriteLine("DOM " + e.KeyCode.ToString());
-
-                if (e.KeyCode == (uint)Keys.Escape)
-                    GUIWindowManager.ShowPreviousWindow();
-
-                if (e.KeyCode == (uint)Keys.PageUp) OnZoomIn();
-                if (e.KeyCode == (uint)Keys.PageDown) OnZoomOut();
-
-                if (e.KeyCode == (uint)Keys.Down) OnMoveDown();
-                if (e.KeyCode == (uint)Keys.Up) OnMoveUp();
-                if (e.KeyCode == (uint)Keys.Left) OnMoveLeft();
-                if (e.KeyCode == (uint)Keys.Right) OnMoveRight();
-
-                if (e.KeyCode == (uint)Keys.F3) GUIWindowManager.ActivateWindow(GUIBookmark.BookmarkWindowId);
-
-                if (e.KeyCode == (uint)Keys.F7) webBrowser.GoBack();
-                if (e.KeyCode == (uint)Keys.F8) webBrowser.GoForward();
-
-                if (e.CtrlKey == true)
+                GeckoHtmlElement element = webBrowser.Document.ActiveElement;
+                bool keyIsChar = e.KeyCode >= 65 && (e.KeyCode <= 90);
+                if (keyIsChar && ((element is GeckoInputElement) || (element is GeckoTextAreaElement)))
+                { }//user is typing text, so don't convert to MediaPortal.GUI.Library.Action
+                else
                 {
-                    if (e.KeyCode == (uint)Keys.R) OnAddBookmark();
-                    if (e.KeyCode == (uint)Keys.P) OnEnterNewLink();
-                    if (e.KeyCode == (uint)Keys.B) webBrowser.Navigate("about:blank");
+                    Action action = new Action();
+                    Key key;
+                    //Uppercase keys (f.e. Record=R) isn't recognized, so hack to get mp to find the correct action
+                    if (keyIsChar)
+                        key = new Key((int)e.KeyCode + 32, 0);
+                    else
+                        key = new Key((int)e.KeyChar, (int)e.KeyCode);
+                    if (ActionTranslator.GetAction(-1, key, ref action) && action.wID != Action.ActionType.ACTION_INVALID)
+                        OnAction(action);
                 }
-
             }
         }
 
