@@ -91,6 +91,7 @@ namespace BrowseTheWeb
         private string linkId = string.Empty;
         private int linkTime = 0;
         private Timer timer = new Timer();
+        private Timer restoreClickTimer = new Timer();
 
         private string lastDomain = string.Empty;
         private float zoom = Settings.Instance.DefaultZoom;
@@ -360,6 +361,10 @@ namespace BrowseTheWeb
                 timer.Tick += new EventHandler(timer_Tick);
                 timer.Start();
 
+                restoreClickTimer.Enabled = false;
+                restoreClickTimer.Interval = 500;
+                restoreClickTimer.Tick += new EventHandler(restoreClickTimer_Tick);
+
                 if (settings.UseMouse)
                     webBrowser.Select();
             }
@@ -397,10 +402,14 @@ namespace BrowseTheWeb
 
             timer.Tick -= timer_Tick;
             timer.Stop();
+            restoreClickTimer.Stop();
+            restoreClickTimer.Tick -= restoreClickTimer_Tick;
             if (settings.UseMouse)
             {
                 Cursor.Hide();
                 GUIGraphicsContext.MouseSupport = originalMouseSupport;
+                FieldInfo fi = GUIGraphicsContext.form.GetType().GetField("AutoHideMouse", BindingFlags.NonPublic | BindingFlags.Instance);
+                fi.SetValue(GUIGraphicsContext.form, originalMouseAutoHide);
             }
             base.OnPageDestroy(new_windowId);
         }
@@ -684,14 +693,25 @@ namespace BrowseTheWeb
 
             }
         }
+
+        void ResetFocus()
+        {
+            clickFromPlugin = false;
+            restoreClickTimer.Stop();
+
+            webBrowser.Enabled = false;
+            GUIGraphicsContext.form.Focus();
+        }
+
         void webBrowser_DomClick(object sender, DomEventArgs e)
         {
             if (clickFromPlugin) // click succeeded, so focus can safely be reset
-            {
-                clickFromPlugin = false;
-                webBrowser.Enabled = false;
-                GUIGraphicsContext.form.Focus();
-            }
+                ResetFocus();
+        }
+
+        void restoreClickTimer_Tick(object sender, EventArgs e)
+        {
+            ResetFocus();
         }
 
         private void OnEnterNewLink()
@@ -1000,6 +1020,7 @@ namespace BrowseTheWeb
             ips[1].Mouse.Flags = MOUSEEVENTF_LEFTUP;
 
             clickFromPlugin = true;
+            restoreClickTimer.Start();
             if (SendInput(2, ips, Marshal.SizeOf(typeof(INPUT))) == 0)
                 MyLog.debug("Error sendinput");
         }
