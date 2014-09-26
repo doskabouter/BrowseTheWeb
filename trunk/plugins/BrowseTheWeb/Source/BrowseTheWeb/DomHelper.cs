@@ -39,10 +39,17 @@ namespace BrowseTheWeb
 
         private const string btwebId = "btweb_id";
 
-        public static void AddLinksToPage(GeckoDocument document)
+        private static string previousUrl;
+        private static string nextUrl;
+
+        public static Tuple<string, string> AddLinksToPage(GeckoDocument document, Settings settings)
         {
+            previousUrl = null;
+            nextUrl = null;
+
             int maxId = GetMaxId(document);
-            AddLinksToPage(document, maxId + 1);
+            AddLinksToPage(document, maxId + 1, settings);
+            return new Tuple<string, string>(previousUrl, nextUrl);
         }
 
         public static GeckoHtmlElement GetElement(string linkId, GeckoDocument document)
@@ -96,7 +103,15 @@ namespace BrowseTheWeb
             return new Point(0, 0);
         }
 
-        private static int AddLinksToPage(GeckoDocument document, int id)
+        private static void Check(GeckoAnchorElement element, string[] tags, ref string url)
+        {
+            if (String.IsNullOrEmpty(url))
+                foreach (string tag in tags)
+                    if (element.TextContent.ToUpperInvariant().Contains(tag.ToUpperInvariant()))
+                        url = element.Href;
+        }
+
+        private static int AddLinksToPage(GeckoDocument document, int id, Settings settings)
         {
             Dictionary<string, int> hrefs = new Dictionary<string, int>();
             GeckoElementCollection links = document.Links;
@@ -130,6 +145,12 @@ namespace BrowseTheWeb
                             {
                                 newId = id++;
                                 hrefs.Add(url, newId);
+                            }
+
+                            if (!String.IsNullOrEmpty(url) && element is GeckoAnchorElement)
+                            {
+                                Check((GeckoAnchorElement)element, settings.PreviousTags, ref previousUrl);
+                                Check((GeckoAnchorElement)element, settings.NextTags, ref nextUrl);
                             }
                         }
                         else
@@ -264,7 +285,7 @@ namespace BrowseTheWeb
             GeckoElementCollection iframes = document.GetElementsByTagName("iframe");
             MyLog.debug("page iframes cnt : " + iframes.Count<GeckoHtmlElement>());
             foreach (GeckoIFrameElement element in iframes)
-                id = AddLinksToPage(element.ContentDocument, id);
+                id = AddLinksToPage(element.ContentDocument, id, settings);
             return id;
         }
 

@@ -131,6 +131,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cmbConfirmLink = new System.Windows.Forms.ComboBox();
             this.chkRemote = new System.Windows.Forms.CheckBox();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.textBoxNext = new System.Windows.Forms.TextBox();
+            this.label39 = new System.Windows.Forms.Label();
+            this.textBoxPrevious = new System.Windows.Forms.TextBox();
+            this.label38 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
@@ -142,6 +147,7 @@
             this.label22 = new System.Windows.Forms.Label();
             this.comboBox4 = new System.Windows.Forms.ComboBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.contextMenuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -1300,6 +1306,58 @@
             this.chkRemote.Text = "Show diagnose on status bar";
             this.chkRemote.UseVisualStyleBackColor = true;
             // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.textBoxNext);
+            this.tabPage6.Controls.Add(this.label39);
+            this.tabPage6.Controls.Add(this.textBoxPrevious);
+            this.tabPage6.Controls.Add(this.label38);
+            this.tabPage6.Location = new System.Drawing.Point(4, 25);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(562, 476);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "Prev/Next";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // textBoxNext
+            // 
+            this.textBoxNext.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxNext.Location = new System.Drawing.Point(9, 91);
+            this.textBoxNext.Name = "textBoxNext";
+            this.textBoxNext.Size = new System.Drawing.Size(547, 22);
+            this.textBoxNext.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.textBoxNext, "Values must be separated by \";\"");
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(6, 72);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(64, 16);
+            this.label39.TabIndex = 2;
+            this.label39.Text = "Next tags";
+            // 
+            // textBoxPrevious
+            // 
+            this.textBoxPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxPrevious.Location = new System.Drawing.Point(9, 33);
+            this.textBoxPrevious.Name = "textBoxPrevious";
+            this.textBoxPrevious.Size = new System.Drawing.Size(547, 22);
+            this.textBoxPrevious.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.textBoxPrevious, "Values must be separated by \";\"");
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(6, 14);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(90, 16);
+            this.label38.TabIndex = 0;
+            this.label38.Text = "Previous tags";
+            // 
             // label15
             // 
             this.label15.AutoSize = true;
@@ -1452,6 +1510,8 @@
             this.groupBox10.PerformLayout();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1570,5 +1630,11 @@
         private System.Windows.Forms.ComboBox cmbUserAgent;
         private System.Windows.Forms.CheckBox cbOverrideUserAgent;
         private System.Windows.Forms.CheckBox chkDisableAero;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.TextBox textBoxNext;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.TextBox textBoxPrevious;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
