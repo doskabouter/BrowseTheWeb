@@ -502,6 +502,9 @@ namespace BrowseTheWeb.Setup
             cmbUserAgent.Text = settings.UserAgent;
             cbOverrideUserAgent.Checked = !String.IsNullOrEmpty(cmbUserAgent.Text);
 
+            textBoxPrevious.Text = Settings.TagsToString(settings.PreviousTags);
+            textBoxNext.Text = Settings.TagsToString(settings.NextTags);
+
             chkProxy.Checked = settings.UseProxy;
             txtHttpServer.Text = settings.Server;
             txtHttpPort.Text = settings.Port.ToString();
@@ -542,6 +545,9 @@ namespace BrowseTheWeb.Setup
                 settings.UserAgent = cmbUserAgent.Text;
             else
                 settings.UserAgent = String.Empty;
+
+            settings.PreviousTags = Settings.StringToTags(textBoxPrevious.Text);
+            settings.NextTags = Settings.StringToTags(textBoxNext.Text);
 
             settings.UseProxy = chkProxy.Checked;
             settings.Server = txtHttpServer.Text;

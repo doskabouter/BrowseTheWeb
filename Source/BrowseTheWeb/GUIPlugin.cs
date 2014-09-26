@@ -81,6 +81,8 @@ namespace BrowseTheWeb
         private bool clickFromPlugin = false;
         private bool aeroDisabled = false;
 
+        private Tuple<string, string> prevNextUrls;
+
         #region Constants
         public const int PluginWindowId = 54537689;
         #endregion
@@ -659,6 +661,19 @@ namespace BrowseTheWeb
                     return;
                 #endregion
             }
+
+            if (prevNextUrls != null)
+                switch (action.wID)
+                {
+                    case Action.ActionType.ACTION_PREV_CHAPTER:
+                        if (!String.IsNullOrEmpty(prevNextUrls.Item1))
+                            webBrowser.Navigate(prevNextUrls.Item1);
+                        return;
+                    case Action.ActionType.ACTION_NEXT_CHAPTER:
+                        if (!String.IsNullOrEmpty(prevNextUrls.Item2))
+                            webBrowser.Navigate(prevNextUrls.Item2);
+                        return;
+                }
             base.OnAction(action);
         }
 
@@ -893,7 +908,7 @@ namespace BrowseTheWeb
                 #endregion
 
                 if (!settings.UseMouse)
-                    DomHelper.AddLinksToPage(webBrowser.Document);
+                    prevNextUrls = DomHelper.AddLinksToPage(webBrowser.Document, settings);
 
                 #region reset zoom
                 if (settings.ZoomPage)

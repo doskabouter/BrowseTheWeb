@@ -52,6 +52,8 @@ namespace BrowseTheWeb
         public GUIFacadeControl.Layout View { get; set; }
         public string UserAgent { get; set; }
 
+        public string[] PreviousTags;
+        public string[] NextTags;
         private const string section = "btWeb";
 
         #region Singleton
@@ -71,6 +73,16 @@ namespace BrowseTheWeb
         {
             return Path.Combine(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Plugins),
                          Path.Combine("Windows", "xulrunner"));
+        }
+
+        public static string TagsToString(string[] tags)
+        {
+            return String.Join(";", tags);
+        }
+
+        public static string[] StringToTags(string tags)
+        {
+            return tags.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         private void LoadFromXml()
@@ -109,6 +121,9 @@ namespace BrowseTheWeb
 
                 LastUrl = xmlreader.GetValueAsString(section, "lastUrl", string.Empty);
                 UserAgent = xmlreader.GetValueAsString(section, "useragent", string.Empty);
+
+                PreviousTags = StringToTags(xmlreader.GetValueAsString(section, "previousTags", string.Empty));
+                NextTags = StringToTags(xmlreader.GetValueAsString(section, "nextTags", string.Empty));
 
                 UseProxy = xmlreader.GetValueAsBool(section, "proxy", false);
                 Server = xmlreader.GetValueAsString(section, "proxy_server", "127.0.0.1");
@@ -173,6 +188,9 @@ namespace BrowseTheWeb
 
                     xmlwriter.SetValue(section, "bookmark", View);
                     xmlwriter.SetValue(section, "useragent", UserAgent);
+
+                    xmlwriter.SetValue(section, "previousTags", TagsToString(PreviousTags));
+                    xmlwriter.SetValue(section, "nextTags", TagsToString(NextTags));
 
                     xmlwriter.SetValueAsBool(section, "proxy", UseProxy);
                     xmlwriter.SetValue(section, "proxy_server", Server);
