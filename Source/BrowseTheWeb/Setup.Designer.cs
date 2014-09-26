@@ -166,6 +166,7 @@
             this.groupBox11.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.groupBox9.SuspendLayout();
+            this.tabPage6.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView1
@@ -221,7 +222,7 @@
             this.toolStripMenuItem5,
             this.deleteToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(154, 164);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(143, 142);
             this.contextMenuStrip1.MouseLeave += new System.EventHandler(this.contextMenuStrip1_MouseLeave);
             // 
             // titleToolStripMenuItem
@@ -229,19 +230,19 @@
             this.titleToolStripMenuItem.BackColor = System.Drawing.Color.Silver;
             this.titleToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titleToolStripMenuItem.Name = "titleToolStripMenuItem";
-            this.titleToolStripMenuItem.Size = new System.Drawing.Size(153, 24);
+            this.titleToolStripMenuItem.Size = new System.Drawing.Size(142, 24);
             this.titleToolStripMenuItem.Text = "Title";
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(150, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(139, 6);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Image = global::BrowseTheWeb.Properties.Resources.file_icon;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(153, 24);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(142, 24);
             this.toolStripMenuItem1.Text = "Add bookmark";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.onAddBookmark);
             // 
@@ -249,33 +250,33 @@
             // 
             this.toolStripMenuItem2.Image = global::BrowseTheWeb.Properties.Resources.folder_icon;
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(153, 24);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(142, 24);
             this.toolStripMenuItem2.Text = "Add folder";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.onAddFolder);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(150, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(139, 6);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Image = global::BrowseTheWeb.Properties.Resources.edit_icon;
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(153, 24);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(142, 24);
             this.editToolStripMenuItem.Text = "Edit";
             this.editToolStripMenuItem.Click += new System.EventHandler(this.onEditEntry_Click);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(150, 6);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(139, 6);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Image = global::BrowseTheWeb.Properties.Resources.delete_icon;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(153, 24);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(142, 24);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.onRemoveEntry);
             // 
@@ -304,6 +305,8 @@
             // 
             // txtHome
             // 
+            this.txtHome.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtHome.Location = new System.Drawing.Point(19, 55);
             this.txtHome.Name = "txtHome";
@@ -316,9 +319,9 @@
             this.chkHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkHome.Location = new System.Drawing.Point(19, 29);
             this.chkHome.Name = "chkHome";
-            this.chkHome.Size = new System.Drawing.Size(118, 20);
+            this.chkHome.Size = new System.Drawing.Size(121, 20);
             this.chkHome.TabIndex = 16;
-            this.chkHome.Text = "use homepage";
+            this.chkHome.Text = "Use homepage";
             this.chkHome.UseVisualStyleBackColor = true;
             // 
             // tabControl1
@@ -331,6 +334,7 @@
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
@@ -353,6 +357,8 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox5.Controls.Add(this.chkDisableAero);
             this.groupBox5.Controls.Add(this.chkMouse);
             this.groupBox5.Controls.Add(this.chkWindowed);
@@ -375,7 +381,7 @@
             this.chkDisableAero.Name = "chkDisableAero";
             this.chkDisableAero.Size = new System.Drawing.Size(242, 20);
             this.chkDisableAero.TabIndex = 7;
-            this.chkDisableAero.Text = "disable Aero while running (for Vista)";
+            this.chkDisableAero.Text = "Disable Aero while running (for Vista)";
             this.chkDisableAero.UseVisualStyleBackColor = true;
             // 
             // chkMouse
@@ -385,7 +391,7 @@
             this.chkMouse.Name = "chkMouse";
             this.chkMouse.Size = new System.Drawing.Size(154, 20);
             this.chkMouse.TabIndex = 6;
-            this.chkMouse.Text = "use mouse to browse";
+            this.chkMouse.Text = "Use mouse to browse";
             this.chkMouse.UseVisualStyleBackColor = true;
             // 
             // chkWindowed
@@ -395,7 +401,7 @@
             this.chkWindowed.Name = "chkWindowed";
             this.chkWindowed.Size = new System.Drawing.Size(223, 20);
             this.chkWindowed.TabIndex = 5;
-            this.chkWindowed.Text = "use windowed mode in fullscreen";
+            this.chkWindowed.Text = "Use windowed mode in fullscreen";
             this.chkWindowed.UseVisualStyleBackColor = true;
             // 
             // chkOSD
@@ -405,7 +411,7 @@
             this.chkOSD.Name = "chkOSD";
             this.chkOSD.Size = new System.Drawing.Size(147, 20);
             this.chkOSD.TabIndex = 4;
-            this.chkOSD.Text = "show OSD for link ID";
+            this.chkOSD.Text = "Show OSD for link ID";
             this.chkOSD.UseVisualStyleBackColor = true;
             // 
             // chkStatus
@@ -415,7 +421,7 @@
             this.chkStatus.Name = "chkStatus";
             this.chkStatus.Size = new System.Drawing.Size(188, 20);
             this.chkStatus.TabIndex = 3;
-            this.chkStatus.Text = "enable statusbar as default";
+            this.chkStatus.Text = "Enable statusbar as default";
             this.chkStatus.UseVisualStyleBackColor = true;
             // 
             // chkBlank
@@ -425,7 +431,7 @@
             this.chkBlank.Name = "chkBlank";
             this.chkBlank.Size = new System.Drawing.Size(224, 20);
             this.chkBlank.TabIndex = 2;
-            this.chkBlank.Text = "blank browser on window change";
+            this.chkBlank.Text = "Blank browser on window change";
             this.chkBlank.UseVisualStyleBackColor = true;
             // 
             // txtName
@@ -446,6 +452,8 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.Controls.Add(this.txtRemote);
             this.groupBox4.Controls.Add(this.trkRemote);
             this.groupBox4.Location = new System.Drawing.Point(16, 111);
@@ -460,17 +468,19 @@
             this.txtRemote.AutoSize = true;
             this.txtRemote.Location = new System.Drawing.Point(16, 53);
             this.txtRemote.Name = "txtRemote";
-            this.txtRemote.Size = new System.Drawing.Size(133, 16);
+            this.txtRemote.Size = new System.Drawing.Size(139, 16);
             this.txtRemote.TabIndex = 2;
-            this.txtRemote.Text = "reset link ID after 1,5s";
+            this.txtRemote.Text = "Reset link ID after 1,5s";
             // 
             // trkRemote
             // 
+            this.trkRemote.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.trkRemote.Location = new System.Drawing.Point(5, 24);
             this.trkRemote.Maximum = 100;
             this.trkRemote.Minimum = 1;
             this.trkRemote.Name = "trkRemote";
-            this.trkRemote.Size = new System.Drawing.Size(525, 45);
+            this.trkRemote.Size = new System.Drawing.Size(525, 42);
             this.trkRemote.SmallChange = 5;
             this.trkRemote.TabIndex = 1;
             this.trkRemote.TickFrequency = 5;
@@ -479,6 +489,8 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.txtHome);
             this.groupBox3.Controls.Add(this.chkHome);
             this.groupBox3.Location = new System.Drawing.Point(16, 13);
@@ -505,6 +517,8 @@
             // 
             // groupBox12
             // 
+            this.groupBox12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox12.Controls.Add(this.cmbBookmarkView);
             this.groupBox12.Location = new System.Drawing.Point(6, 391);
             this.groupBox12.Name = "groupBox12";
@@ -524,6 +538,8 @@
             // 
             // groupBox7
             // 
+            this.groupBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox7.Controls.Add(this.chkThumbsOnVisit);
             this.groupBox7.Controls.Add(this.chkUseThumbs);
             this.groupBox7.Location = new System.Drawing.Point(6, 303);
@@ -540,7 +556,7 @@
             this.chkThumbsOnVisit.Name = "chkThumbsOnVisit";
             this.chkThumbsOnVisit.Size = new System.Drawing.Size(213, 20);
             this.chkThumbsOnVisit.TabIndex = 1;
-            this.chkThumbsOnVisit.Text = "cache thumb if a page is visited";
+            this.chkThumbsOnVisit.Text = "Cache thumb if a page is visited";
             this.chkThumbsOnVisit.UseVisualStyleBackColor = true;
             this.chkThumbsOnVisit.Visible = false;
             // 
@@ -551,11 +567,13 @@
             this.chkUseThumbs.Name = "chkUseThumbs";
             this.chkUseThumbs.Size = new System.Drawing.Size(167, 20);
             this.chkUseThumbs.TabIndex = 0;
-            this.chkUseThumbs.Text = "use thumbs for favorites";
+            this.chkUseThumbs.Text = "Use thumbs for favorites";
             this.chkUseThumbs.UseVisualStyleBackColor = true;
             // 
             // groupBox6
             // 
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox6.Controls.Add(this.optNoZoom);
             this.groupBox6.Controls.Add(this.optZoomDomain);
             this.groupBox6.Controls.Add(this.optZoomPage);
@@ -575,7 +593,7 @@
             this.optNoZoom.Size = new System.Drawing.Size(132, 20);
             this.optNoZoom.TabIndex = 2;
             this.optNoZoom.TabStop = true;
-            this.optNoZoom.Text = "do not reset zoom";
+            this.optNoZoom.Text = "Do not reset zoom";
             this.optNoZoom.UseVisualStyleBackColor = true;
             // 
             // optZoomDomain
@@ -585,7 +603,7 @@
             this.optZoomDomain.Name = "optZoomDomain";
             this.optZoomDomain.Size = new System.Drawing.Size(206, 20);
             this.optZoomDomain.TabIndex = 1;
-            this.optZoomDomain.Text = "reset zoom on domain change";
+            this.optZoomDomain.Text = "Reset zoom on domain change";
             this.optZoomDomain.UseVisualStyleBackColor = true;
             // 
             // optZoomPage
@@ -595,11 +613,13 @@
             this.optZoomPage.Name = "optZoomPage";
             this.optZoomPage.Size = new System.Drawing.Size(193, 20);
             this.optZoomPage.TabIndex = 0;
-            this.optZoomPage.Text = "reset zoom on page change";
+            this.optZoomPage.Text = "Reset zoom on page change";
             this.optZoomPage.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.txtFont);
             this.groupBox2.Controls.Add(this.trkFont);
             this.groupBox2.Location = new System.Drawing.Point(6, 97);
@@ -620,12 +640,14 @@
             // 
             // trkFont
             // 
+            this.trkFont.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.trkFont.LargeChange = 10;
             this.trkFont.Location = new System.Drawing.Point(6, 21);
             this.trkFont.Maximum = 200;
             this.trkFont.Minimum = 10;
             this.trkFont.Name = "trkFont";
-            this.trkFont.Size = new System.Drawing.Size(538, 45);
+            this.trkFont.Size = new System.Drawing.Size(538, 42);
             this.trkFont.SmallChange = 10;
             this.trkFont.TabIndex = 0;
             this.trkFont.TickFrequency = 10;
@@ -634,6 +656,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.txtZoom);
             this.groupBox1.Controls.Add(this.trkZoom);
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
@@ -654,12 +678,14 @@
             // 
             // trkZoom
             // 
+            this.trkZoom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.trkZoom.LargeChange = 10;
             this.trkZoom.Location = new System.Drawing.Point(6, 21);
             this.trkZoom.Maximum = 300;
             this.trkZoom.Minimum = 10;
             this.trkZoom.Name = "trkZoom";
-            this.trkZoom.Size = new System.Drawing.Size(538, 45);
+            this.trkZoom.Size = new System.Drawing.Size(538, 42);
             this.trkZoom.SmallChange = 10;
             this.trkZoom.TabIndex = 0;
             this.trkZoom.TickFrequency = 10;
@@ -775,6 +801,8 @@
             // 
             // groupBox13
             // 
+            this.groupBox13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox13.Controls.Add(this.cbOverrideUserAgent);
             this.groupBox13.Controls.Add(this.cmbUserAgent);
             this.groupBox13.Location = new System.Drawing.Point(6, 157);
@@ -817,6 +845,8 @@
             // 
             // groupBox8
             // 
+            this.groupBox8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox8.Controls.Add(this.txtHttpPort);
             this.groupBox8.Controls.Add(this.txtHttpServer);
             this.groupBox8.Controls.Add(this.label6);
@@ -874,7 +904,7 @@
             this.chkProxy.Name = "chkProxy";
             this.chkProxy.Size = new System.Drawing.Size(85, 20);
             this.chkProxy.TabIndex = 0;
-            this.chkProxy.Text = "use proxy";
+            this.chkProxy.Text = "Use proxy";
             this.chkProxy.UseVisualStyleBackColor = true;
             this.chkProxy.CheckedChanged += new System.EventHandler(this.chkProxy_CheckedChanged);
             // 
@@ -894,16 +924,19 @@
             // 
             // btnDefault
             // 
+            this.btnDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDefault.Location = new System.Drawing.Point(417, 439);
             this.btnDefault.Name = "btnDefault";
             this.btnDefault.Size = new System.Drawing.Size(119, 31);
             this.btnDefault.TabIndex = 33;
-            this.btnDefault.Text = "set to default";
+            this.btnDefault.Text = "Set to default";
             this.btnDefault.UseVisualStyleBackColor = true;
             this.btnDefault.Click += new System.EventHandler(this.btnDefault_Click);
             // 
             // groupBox11
             // 
+            this.groupBox11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox11.Controls.Add(this.cmbPageDown);
             this.groupBox11.Controls.Add(this.cmbPageUp);
             this.groupBox11.Controls.Add(this.label37);
@@ -923,6 +956,8 @@
             // 
             // cmbPageDown
             // 
+            this.cmbPageDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbPageDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPageDown.FormattingEnabled = true;
             this.cmbPageDown.Location = new System.Drawing.Point(184, 120);
@@ -932,6 +967,8 @@
             // 
             // cmbPageUp
             // 
+            this.cmbPageUp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbPageUp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPageUp.FormattingEnabled = true;
             this.cmbPageUp.Location = new System.Drawing.Point(184, 95);
@@ -962,9 +999,9 @@
             this.label33.AutoSize = true;
             this.label33.Location = new System.Drawing.Point(181, 71);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(149, 16);
+            this.label33.Size = new System.Drawing.Size(151, 16);
             this.label33.TabIndex = 29;
-            this.label33.Text = "cursor up/down/left/right";
+            this.label33.Text = "Cursor up/down/left/right";
             // 
             // label34
             // 
@@ -973,10 +1010,12 @@
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(42, 16);
             this.label34.TabIndex = 28;
-            this.label34.Text = "move";
+            this.label34.Text = "Move";
             // 
             // cmbZoomOut
             // 
+            this.cmbZoomOut.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbZoomOut.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbZoomOut.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbZoomOut.FormattingEnabled = true;
@@ -991,21 +1030,23 @@
             this.label31.AutoSize = true;
             this.label31.Location = new System.Drawing.Point(6, 45);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(62, 16);
+            this.label31.Size = new System.Drawing.Size(64, 16);
             this.label31.TabIndex = 26;
-            this.label31.Text = "zoom out";
+            this.label31.Text = "Zoom out";
             // 
             // label32
             // 
             this.label32.AutoSize = true;
             this.label32.Location = new System.Drawing.Point(6, 18);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(54, 16);
+            this.label32.Size = new System.Drawing.Size(56, 16);
             this.label32.TabIndex = 25;
-            this.label32.Text = "zoom in";
+            this.label32.Text = "Zoom in";
             // 
             // cmbZoomIn
             // 
+            this.cmbZoomIn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbZoomIn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbZoomIn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbZoomIn.FormattingEnabled = true;
@@ -1017,6 +1058,8 @@
             // 
             // groupBox10
             // 
+            this.groupBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox10.Controls.Add(this.label35);
             this.groupBox10.Controls.Add(this.cmbShowBookmarks);
             this.groupBox10.Controls.Add(this.label29);
@@ -1049,6 +1092,8 @@
             // 
             // cmbShowBookmarks
             // 
+            this.cmbShowBookmarks.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbShowBookmarks.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbShowBookmarks.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbShowBookmarks.FormattingEnabled = true;
@@ -1072,9 +1117,9 @@
             this.label30.AutoSize = true;
             this.label30.Location = new System.Drawing.Point(6, 101);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(96, 16);
+            this.label30.Size = new System.Drawing.Size(97, 16);
             this.label30.TabIndex = 22;
-            this.label30.Text = "add bookmark";
+            this.label30.Text = "Add bookmark";
             // 
             // label27
             // 
@@ -1090,9 +1135,9 @@
             this.label28.AutoSize = true;
             this.label28.Location = new System.Drawing.Point(6, 85);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(86, 16);
+            this.label28.Size = new System.Drawing.Size(88, 16);
             this.label28.TabIndex = 20;
-            this.label28.Text = "go backward";
+            this.label28.Text = "Go backward";
             // 
             // label25
             // 
@@ -1108,9 +1153,9 @@
             this.label26.AutoSize = true;
             this.label26.Location = new System.Drawing.Point(6, 69);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(71, 16);
+            this.label26.Size = new System.Drawing.Size(73, 16);
             this.label26.TabIndex = 18;
-            this.label26.Text = "go forward";
+            this.label26.Text = "Go forward";
             // 
             // label23
             // 
@@ -1126,9 +1171,9 @@
             this.label24.AutoSize = true;
             this.label24.Location = new System.Drawing.Point(6, 53);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(85, 16);
+            this.label24.Size = new System.Drawing.Size(86, 16);
             this.label24.TabIndex = 16;
-            this.label24.Text = "blank screen";
+            this.label24.Text = "Blank screen";
             // 
             // label13
             // 
@@ -1144,9 +1189,9 @@
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(6, 37);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(75, 16);
+            this.label14.Size = new System.Drawing.Size(77, 16);
             this.label14.TabIndex = 14;
-            this.label14.Text = "go to home";
+            this.label14.Text = "Go to home";
             // 
             // label11
             // 
@@ -1162,12 +1207,14 @@
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(6, 21);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(85, 16);
+            this.label12.Size = new System.Drawing.Size(87, 16);
             this.label12.TabIndex = 12;
-            this.label12.Text = "select a URL";
+            this.label12.Text = "Select a URL";
             // 
             // groupBox9
             // 
+            this.groupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox9.Controls.Add(this.cmbStatusBar);
             this.groupBox9.Controls.Add(this.label10);
             this.groupBox9.Controls.Add(this.label9);
@@ -1183,6 +1230,8 @@
             // 
             // cmbStatusBar
             // 
+            this.cmbStatusBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbStatusBar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStatusBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbStatusBar.FormattingEnabled = true;
@@ -1230,6 +1279,8 @@
             // 
             // cmbConfirmLink
             // 
+            this.cmbConfirmLink.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbConfirmLink.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbConfirmLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbConfirmLink.FormattingEnabled = true;
