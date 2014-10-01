@@ -1,14 +1,13 @@
 ﻿Deployment new version:
 
 1: Check assemblyinfo for version
-2: edit BrowseTheWeb.xmp2
-3: do a release build
-4: rename resulting mpe1 to include version number
+2: do a release build
+3: rename resulting mpe1 to include version number
+4: edit BrowseTheWeb.xmp2 (and Change url of OnlineLocation of old files)
 5: Edit http://www.team-mediaportal.com/extensions/news-info/browse-the-web-webbrowser
    - Update version
    - Update changelog
-   - Update External Download (version number)
-   - Upload new MPE1 Update File
+   - Upload new MPE1
 6: Notify on forum
 
 Change history (not maintained)
