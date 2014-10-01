@@ -1167,7 +1167,7 @@ If have .exe extension the will be executed
 If have .dll extension used like MP plugin configuration</Description>
             </SectionParam>
             <SectionParam Name="Online Screenshots">
-              <Value>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/browser1.jpg;http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/setup3.jpg</Value>
+              <Value>http://svn.code.sf.net/p/mp-plugins/code/TRUNK/plugins/BrowseTheWeb/Release/browser1.jpg;http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/setup3.jpg</Value>
               <ValueType>String</ValueType>
               <Description>Online stored screenshot urls separated by ; </Description>
             </SectionParam>
