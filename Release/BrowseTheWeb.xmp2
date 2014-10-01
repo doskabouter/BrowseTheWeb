@@ -654,19 +654,21 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <UpdateUrl>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
     <Version>
       <Major>1</Major>
-      <Minor>5</Minor>
+      <Minor>6</Minor>
       <Build>0</Build>
-      <Revision>1</Revision>
+      <Revision>0</Revision>
     </Version>
     <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / Webbrowser.</ExtensionDescription>
-    <VersionDescription>Preserve bookmark folder structure on import
-Fixed mouse visibility
-Fixed some mouse click issues
-Uses Gecko version 22
-</VersionDescription>
+    <VersionDescription>Added option for previous and next pages
+Improved bookmark handling
+Improved number-placing
+Improved keybindings
+Fixed missing thumbs
+Fixed spurious duplicate link numbers
+Fixed focus issues with flash player</VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
-    <OnlineLocation>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.[Version].mpe1</OnlineLocation>
-    <ReleaseDate>2014-01-25T21:13:09.5882715+01:00</ReleaseDate>
+    <OnlineLocation>http://www.team-mediaportal.com/index.php?option=com_mtree&amp;task=att_download&amp;link_id=72&amp;cf_id=24</OnlineLocation>
+    <ReleaseDate>2014-10-01T22:36:12.6586003+02:00</ReleaseDate>
     <Tags>webbrowser, internet, web</Tags>
     <Location>..\..\BrowseTheWeb.mpe1</Location>
     <Params>
