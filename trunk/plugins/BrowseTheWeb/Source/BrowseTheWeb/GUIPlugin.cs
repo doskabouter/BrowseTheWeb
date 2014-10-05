@@ -391,6 +391,9 @@ namespace BrowseTheWeb
                 }
             }
             settings.SaveToXml(false);
+            bool result = Bookmarks.Instance.SaveToXml(Config.GetFolder(Config.Dir.Config) + "\\bookmarks.xml");
+            if (!result)
+                MyLog.error("Bookmarks could not be saved !");
 
             webBrowser.Visible = false;
             GUIGraphicsContext.form.Focus();

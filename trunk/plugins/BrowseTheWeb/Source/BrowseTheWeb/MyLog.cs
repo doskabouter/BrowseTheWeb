@@ -36,6 +36,11 @@ namespace BrowseTheWeb
         {
             Log.Debug("BrowseTheWeb | " + str, new object[0]);
         }
+
+        public static void error(string str)
+        {
+            Log.Error("BrowseTheWeb | " + str, new object[0]);
+        }
     }
 }
 
