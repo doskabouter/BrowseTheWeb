@@ -44,10 +44,14 @@ namespace BrowseTheWeb
 
         public static Tuple<string, string> AddLinksToPage(GeckoDocument document, Settings settings)
         {
-            previousUrl = null;
-            nextUrl = null;
-
             int maxId = GetMaxId(document);
+            if (maxId == 0)
+            {
+                //new page, so reset prev and next
+                MyLog.debug("Reset prev and next url");
+                previousUrl = null;
+                nextUrl = null;
+            }
             AddLinksToPage(document, maxId + 1, settings);
             return new Tuple<string, string>(previousUrl, nextUrl);
         }
