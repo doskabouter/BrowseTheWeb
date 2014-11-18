@@ -227,7 +227,7 @@ namespace BrowseTheWeb
                 {
                     if (!elementDone(element))
                     {
-                        insertSpanAfter(id, null, element.Parent, "color:black;background-color:white;position:absolute;z-index:2000");
+                        insertSpanAfter(id, null, element.Parent, "color:black;background-color:white", true);
                         SetLinkAttributes(element, id);
                         id++;
                     }
