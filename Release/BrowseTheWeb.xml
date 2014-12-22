@@ -1302,8 +1302,158 @@ Fixed missing thumbs
 Fixed spurious duplicate link numbers
 Fixed focus issues with flash player</VersionDescription>
         <DevelopmentStatus>Stable</DevelopmentStatus>
+        <OnlineLocation>http://www.team-mediaportal.com/index.php?option=com_mtree&amp;task=att_download&amp;link_id=72&amp;cf_id=40</OnlineLocation>
+        <ReleaseDate>2014-12-22T21:18:01.8120994+01:00</ReleaseDate>
+        <Tags>webbrowser, internet, web</Tags>
+        <Location>..\..\BrowseTheWeb.mpe1</Location>
+        <Params>
+          <Items>
+            <SectionParam Name="Online Icon">
+              <Value />
+              <ValueType>String</ValueType>
+              <Description>The icon file of the package stored online (jpg,png,bmp)</Description>
+            </SectionParam>
+            <SectionParam Name="Configuration file">
+              <Value />
+              <ValueType>Template</ValueType>
+              <Description>The file used to configure the extension.
+If have .exe extension the will be executed
+If have .dll extension used like MP plugin configuration</Description>
+            </SectionParam>
+            <SectionParam Name="Online Screenshots">
+              <Value>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/browser1.jpg;http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/setup3.jpg</Value>
+              <ValueType>String</ValueType>
+              <Description>Online stored screenshot urls separated by ; </Description>
+            </SectionParam>
+            <SectionParam Name="Force to uninstall on update">
+              <Value>YES</Value>
+              <ValueType>Bool</ValueType>
+              <Description>Show dialog and force to uninstall previous version when updating an extension. Should only be disabled if you are using an NSIS/MSI installer.</Description>
+            </SectionParam>
+          </Items>
+        </Params>
+      </GeneralInfo>
+      <UniqueFileList>
+        <Items />
+      </UniqueFileList>
+      <ProjectSettings>
+        <FolderGroups />
+      </ProjectSettings>
+      <IsSkin>false</IsSkin>
+    </PackageClass>
+    <PackageClass>
+      <Version>2.0</Version>
+      <Groups>
+        <Items>
+          <GroupItem Name="Common">
+            <DisplayName>Common</DisplayName>
+            <DefaulChecked>true</DefaulChecked>
+            <Description>Common</Description>
+            <Files>
+              <Items />
+            </Files>
+          </GroupItem>
+          <GroupItem Name="Default">
+            <DisplayName>Default</DisplayName>
+            <DefaulChecked>true</DefaulChecked>
+            <Description>Default</Description>
+            <Files>
+              <Items />
+            </Files>
+          </GroupItem>
+          <GroupItem Name="DefaultWide">
+            <DisplayName>DefaultWide</DisplayName>
+            <DefaulChecked>true</DefaulChecked>
+            <Description>DefaultWide</Description>
+            <Files>
+              <Items />
+            </Files>
+          </GroupItem>
+          <GroupItem Name="Titan">
+            <DisplayName>Titan</DisplayName>
+            <DefaulChecked>false</DefaulChecked>
+            <Description>Titan</Description>
+            <Files>
+              <Items />
+            </Files>
+          </GroupItem>
+          <GroupItem Name="Skins">
+            <DisplayName>Skins</DisplayName>
+            <DefaulChecked>true</DefaulChecked>
+            <Description>Skins</Description>
+            <Files>
+              <Items />
+            </Files>
+          </GroupItem>
+        </Items>
+      </Groups>
+      <Sections>
+        <Items />
+      </Sections>
+      <Dependencies>
+        <Items>
+          <DependencyItem>
+            <Type>MediaPortal</Type>
+            <Id />
+            <MinVersion>
+              <Major>1</Major>
+              <Minor>1</Minor>
+              <Build>6</Build>
+              <Revision>27644</Revision>
+            </MinVersion>
+            <MaxVersion>
+              <Major>1</Major>
+              <Minor>1</Minor>
+              <Build>6</Build>
+              <Revision>27644</Revision>
+            </MaxVersion>
+            <WarnOnly>false</WarnOnly>
+            <Message>requires MediaPortal version 1.6 or higher.</Message>
+            <Name>MediaPortal</Name>
+          </DependencyItem>
+        </Items>
+      </Dependencies>
+      <PluginDependencies>
+        <Items>
+          <PluginDependencyItem AssemblyName="BrowseTheWeb.dll">
+            <CompatibleVersion>
+              <Items>
+                <CompatibleVersionItem>
+                  <MinRequiredVersion>1.6.0.0</MinRequiredVersion>
+                  <DesignedForVersion>1.6.0.0</DesignedForVersion>
+                </CompatibleVersionItem>
+              </Items>
+            </CompatibleVersion>
+            <SubSystemsUsed>
+              <Items>
+                <SubSystemItem Name="MP.Config" />
+                <SubSystemItem Name="MP.DB" />
+                <SubSystemItem Name="MP.SkinEngine" />
+              </Items>
+            </SubSystemsUsed>
+          </PluginDependencyItem>
+        </Items>
+      </PluginDependencies>
+      <GeneralInfo>
+        <Name>Browse The Web</Name>
+        <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
+        <Author>Doskabouter</Author>
+        <HomePage>http://www.team-mediaportal.com/extensions/news-info/browse-the-web-webbrowser</HomePage>
+        <ForumPage>http://forum.team-mediaportal.com/threads/browse-the-web-webbrowser.107285/</ForumPage>
+        <UpdateUrl>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
+        <Version>
+          <Major>1</Major>
+          <Minor>6</Minor>
+          <Build>1</Build>
+          <Revision>0</Revision>
+        </Version>
+        <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / Webbrowser.</ExtensionDescription>
+        <VersionDescription>Numbers for flash objects and other html-objects now displayed on top of the flash instead of above it
+Fixed prev/next issue with iframes
+Fixed bug: Bookmarks added in Mediaportal were not saved</VersionDescription>
+        <DevelopmentStatus>Stable</DevelopmentStatus>
         <OnlineLocation>http://www.team-mediaportal.com/index.php?option=com_mtree&amp;task=att_download&amp;link_id=72&amp;cf_id=24</OnlineLocation>
-        <ReleaseDate>2014-10-01T22:36:12.6586003+02:00</ReleaseDate>
+        <ReleaseDate>2014-12-22T21:29:06.652126+01:00</ReleaseDate>
         <Tags>webbrowser, internet, web</Tags>
         <Location>..\..\BrowseTheWeb.mpe1</Location>
         <Params>

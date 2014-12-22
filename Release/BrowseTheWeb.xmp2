@@ -655,20 +655,16 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <Version>
       <Major>1</Major>
       <Minor>6</Minor>
-      <Build>0</Build>
+      <Build>1</Build>
       <Revision>0</Revision>
     </Version>
     <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / Webbrowser.</ExtensionDescription>
-    <VersionDescription>Added option for previous and next pages
-Improved bookmark handling
-Improved number-placing
-Improved keybindings
-Fixed missing thumbs
-Fixed spurious duplicate link numbers
-Fixed focus issues with flash player</VersionDescription>
+    <VersionDescription>Numbers for flash objects and other html-objects now displayed on top of the flash instead of above it
+Fixed prev/next issue with iframes
+Fixed bug: Bookmarks added in Mediaportal were not saved</VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
     <OnlineLocation>http://www.team-mediaportal.com/index.php?option=com_mtree&amp;task=att_download&amp;link_id=72&amp;cf_id=24</OnlineLocation>
-    <ReleaseDate>2014-10-01T22:36:12.6586003+02:00</ReleaseDate>
+    <ReleaseDate>2014-12-22T21:29:06.652126+01:00</ReleaseDate>
     <Tags>webbrowser, internet, web</Tags>
     <Location>..\..\BrowseTheWeb.mpe1</Location>
     <Params>
