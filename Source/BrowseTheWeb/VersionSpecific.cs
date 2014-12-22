@@ -23,6 +23,8 @@
 
 #endregion
 
+using System.Drawing;
+using MediaPortal.Configuration;
 using MediaPortal.GUI.Library;
 
 namespace BrowseTheWeb
@@ -41,6 +43,17 @@ namespace BrowseTheWeb
         {
             Log.Error("BrowseTheWeb | " + str, new object[0]);
         }
+    }
+
+    public static class VersionSpecific
+    {
+        public static string ThumbDir = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb";
+
+        public static Image Resize(Bitmap image)
+        {
+          return MediaPortal.Util.BitmapResize.Resize(ref image, 300, 400, false, true);
+        }
+
     }
 }
 

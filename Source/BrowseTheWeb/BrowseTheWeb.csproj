@@ -131,7 +131,6 @@
       <DependentUpon>ImportBrowser.cs</DependentUpon>
     </Compile>
     <Compile Include="JSONNode.cs" />
-    <Compile Include="MyLog.cs" />
     <Compile Include="OSD_LinkId.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -151,6 +150,7 @@
     <Compile Include="Setup.Designer.cs">
       <DependentUpon>Setup.cs</DependentUpon>
     </Compile>
+    <Compile Include="VersionSpecific.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GetFolder.resx">

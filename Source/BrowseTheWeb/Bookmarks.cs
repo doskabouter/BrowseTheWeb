@@ -27,7 +27,6 @@ using System.Xml;
 using System.IO;
 using System.Windows.Forms;
 using System.Net;
-using MediaPortal.Configuration;
 
 using System.Drawing;
 
@@ -185,7 +184,7 @@ namespace BrowseTheWeb
 
     public class Bookmark
     {
-        private static string ThumbDir = Config.GetFolder(MediaPortal.Configuration.Config.Dir.Thumbs) + "\\BrowseTheWeb";
+        private static string ThumbDir = VersionSpecific.ThumbDir;
 
         public static TreeNode FindNode(TreeView Treeview, string Name)
         {
@@ -226,7 +225,7 @@ namespace BrowseTheWeb
             return true;
         }
 
-        private static void SaveSnap(Bitmap Snap, string Url)
+        private static void SaveSnap(Image Snap, string Url)
         {
             try
             {
@@ -241,7 +240,6 @@ namespace BrowseTheWeb
 
         public static Bitmap GetSnap(string Url)
         {
-
             try
             {
                 string filename = GetSnapPath(Url);
@@ -296,14 +294,17 @@ namespace BrowseTheWeb
         {
             if (browser.Url.ToString() != "about:blank")
             {
-                Bitmap snap = browser.GetBitmap((uint)browser.Width, (uint)browser.Height);
-
-                snap = MediaPortal.Util.BitmapResize.Resize(ref snap, 300, 400, false, true);
-
-                Graphics g = Graphics.FromImage((Image)snap);
-                g.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(1, 1, snap.Width - 2, snap.Height - 2));
-
-                Bookmark.SaveSnap(snap, url);
+                using (Bitmap snap = browser.GetBitmap((uint)browser.Width, (uint)browser.Height))
+                {
+                    using (Image newImage = VersionSpecific.Resize(snap))
+                    {
+                        using (Graphics g = Graphics.FromImage(newImage))
+                        {
+                            g.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(1, 1, newImage.Width - 2, newImage.Height - 2));
+                        }
+                        Bookmark.SaveSnap(newImage, url);
+                    }
+                }
                 return true;
             }
             return false;
