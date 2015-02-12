@@ -313,6 +313,23 @@ namespace BrowseTheWeb.Setup
         #endregion
 
         #region tree view action add / remove..
+
+        private TreeNode addNode(TreeNode node, string name)
+        {
+            TreeNode newNode;
+            if (node.Parent == null)//root node "Bookmarks"
+                newNode = node.Nodes.Insert(node.Index + 1, name);
+            else
+                if (node.Tag is BookmarkFolder)
+                    newNode = node.Nodes.Add(name);
+                else
+                    newNode = node.Parent.Nodes.Insert(node.Index + 1, name);
+
+            newNode.ImageIndex = 1;
+            newNode.SelectedImageIndex = 1;
+            return newNode;
+        }
+
         private void onAddFolder(object sender, EventArgs e)
         {
             TreeNode node = treeView1.SelectedNode;
@@ -324,20 +341,18 @@ namespace BrowseTheWeb.Setup
 
                 if (result == DialogResult.OK)
                 {
-                    TreeNode newNode = node.Tag is BookmarkFolder ? node.Nodes.Add(get.SelectedFolderName) :
-                        node.Parent.Nodes.Insert(node.Index + 1, get.SelectedFolderName);
-                    newNode.ImageIndex = 1;
-                    newNode.SelectedImageIndex = 1;
+                    TreeNode newNode = addNode(node, get.SelectedFolderName);
 
                     BookmarkFolder bmf = new BookmarkFolder();
                     bmf.Name = get.SelectedFolderName;
                     newNode.Tag = bmf;
 
-                    node.Parent.ExpandAll();
+                    newNode.Parent.ExpandAll();
                 }
             }
 
         }
+
         private void onAddBookmark(object sender, EventArgs e)
         {
             TreeNode node = treeView1.SelectedNode;
@@ -363,16 +378,7 @@ namespace BrowseTheWeb.Setup
                         thumb.ShowDialog();
                     }
 
-                    TreeNode newNode;
-                    if (node.Parent == null)//root node "Bookmarks"
-                        newNode = node.Nodes.Insert(node.Index + 1, get.SelectedName);
-                    else
-                        if (node.Tag is BookmarkFolder)
-                            newNode = node.Nodes.Add(get.SelectedName);
-                        else
-                            newNode = node.Parent.Nodes.Insert(node.Index + 1, get.SelectedName);
-                    newNode.ImageIndex = 1;
-                    newNode.SelectedImageIndex = 1;
+                    TreeNode newNode = addNode(node, get.SelectedName);
 
                     BookmarkItem bmi = new BookmarkItem();
                     bmi.Name = get.SelectedName;
