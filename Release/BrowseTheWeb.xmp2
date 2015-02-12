@@ -651,7 +651,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <Author>Doskabouter</Author>
     <HomePage>http://www.team-mediaportal.com/extensions/news-info/browse-the-web-webbrowser</HomePage>
     <ForumPage>http://forum.team-mediaportal.com/threads/browse-the-web-webbrowser.107285/</ForumPage>
-    <UpdateUrl>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
+    <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
     <Version>
       <Major>1</Major>
       <Minor>6</Minor>
@@ -687,7 +687,7 @@ If have .exe extension the will be executed
 If have .dll extension used like MP plugin configuration</Description>
         </SectionParam>
         <SectionParam Name="Online Screenshots">
-          <Value>http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/browser1.jpg;http://svn.code.sf.net/p/mp-plugins/code/trunk/plugins/BrowseTheWeb/Release/setup3.jpg</Value>
+          <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/setup3.jpg</Value>
           <ValueType>String</ValueType>
           <Description>Online stored screenshot urls separated by ; </Description>
         </SectionParam>
