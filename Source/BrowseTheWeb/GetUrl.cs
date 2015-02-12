@@ -43,19 +43,14 @@ namespace BrowseTheWeb.Setup
             txtUrl.Text = SelectedUrl;
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
-        }
         private void btnOK_Click(object sender, EventArgs e)
         {
             try
             {
-                Uri u = new Uri(txtUrl.Text);
+                SelectedName = txtName.Text;
                 if (SelectedName != string.Empty)
                 {
-                    SelectedName = txtName.Text;
+                    Uri u = new Uri(txtUrl.Text);
                     SelectedUrl = txtUrl.Text;
 
                     if (SelectedName.EndsWith("/")) SelectedName = SelectedName.Substring(0, SelectedName.Length - 1);
@@ -77,6 +72,7 @@ namespace BrowseTheWeb.Setup
                 btnOK_Click(this, new EventArgs());
             }
         }
+
         private void txtName_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)

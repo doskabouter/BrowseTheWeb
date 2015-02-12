@@ -36,32 +36,17 @@ namespace BrowseTheWeb.Setup
             InitializeComponent();
             this.DialogResult = DialogResult.Cancel;
         }
+
         private void GetFolder_Load(object sender, EventArgs e)
         {
             txtName.Text = SelectedFolderName;
+            btnOK.Enabled = !String.IsNullOrEmpty(txtName.Text);
         }
 
-        private void btnOK_Click(object sender, EventArgs e)
+        private void txtName_TextChanged(object sender, EventArgs e)
         {
-            if (txtName.Text != string.Empty)
-            {
-                this.DialogResult = DialogResult.OK;
-                SelectedFolderName = txtName.Text;
-                Close();
-            }
-        }
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.Cancel;
-            Close();
-        }
-
-        private void txtName_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                btnOK_Click(this, new EventArgs());
-            }
+            SelectedFolderName = txtName.Text;
+            btnOK.Enabled = !String.IsNullOrEmpty(txtName.Text);
         }
 
 
