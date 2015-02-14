@@ -90,9 +90,6 @@ namespace BrowseTheWeb
         #region declare vars
         private GeckoWebBrowser webBrowser;
         private OSD_LinkId osd_linkID;
-        private string linkId = string.Empty;
-        private int linkTime = 0;
-        private Timer timer = new Timer();
         private Timer restoreClickTimer = new Timer();
 
         private string lastDomain = string.Empty;
@@ -218,7 +215,8 @@ namespace BrowseTheWeb
             GUIGraphicsContext.form.Controls.Add(webBrowser);
 
             osd_linkID = new OSD_LinkId();
-            osd_linkID.Visible = false;
+            osd_linkID.VisibleTime = settings.RemoteTime * 100;
+
             GUIGraphicsContext.form.Controls.Add(osd_linkID);
             string preferenceFile = Path.Combine(Config.GetFolder(Config.Dir.Config), "btwebprefs.js");
             if (File.Exists(preferenceFile))
@@ -284,7 +282,6 @@ namespace BrowseTheWeb
 
                 GUIPropertyManager.SetProperty("#btWeb.status", "Init browser");
                 GUIPropertyManager.SetProperty("#btWeb.linkid", "");
-                linkId = string.Empty;
 
                 if (settings.UseMouse)
                 {
@@ -358,10 +355,7 @@ namespace BrowseTheWeb
 
                 osd_linkID.Location = new System.Drawing.Point((GUIGraphicsContext.form.Width / 2) - (osd_linkID.Width / 2),
                                                                (GUIGraphicsContext.form.Height / 2) - (osd_linkID.Height / 2));
-
-                timer.Interval = 100;
-                timer.Tick += new EventHandler(timer_Tick);
-                timer.Start();
+                osd_linkID.Enabled = settings.OSD;
 
                 restoreClickTimer.Enabled = false;
                 restoreClickTimer.Interval = 500;
@@ -398,15 +392,13 @@ namespace BrowseTheWeb
             webBrowser.Visible = false;
             GUIGraphicsContext.form.Focus();
 
-            osd_linkID.Visible = false;
+            osd_linkID.HideOSD();
 
             webBrowser.DocumentCompleted -= webBrowser_DocumentCompleted;
             webBrowser.StatusTextChanged -= webBrowser_StatusTextChanged;
             webBrowser.DomKeyDown -= webBrowser_DomKeyDown;
             webBrowser.DomClick -= webBrowser_DomClick;
 
-            timer.Tick -= timer_Tick;
-            timer.Stop();
             restoreClickTimer.Stop();
             restoreClickTimer.Tick -= restoreClickTimer_Tick;
             if (settings.UseMouse)
@@ -447,32 +439,6 @@ namespace BrowseTheWeb
             // network.proxy.password
         }
 
-        private void timer_Tick(object sender, EventArgs e)
-        {
-            if (linkId != string.Empty)
-            {
-                if (settings.OSD)
-                {
-                    osd_linkID.Visible = true;
-                    osd_linkID.BringToFront();
-                    osd_linkID.ID = linkId;
-                }
-                linkTime++;
-            }
-            else
-            {
-                osd_linkID.Visible = false;
-            }
-
-            if (linkTime > settings.RemoteTime)
-            {
-                linkId = string.Empty;
-                linkTime = 0;
-
-                GUIPropertyManager.SetProperty("#btWeb.linkid", linkId);
-            }
-        }
-
         public override bool OnMessage(GUIMessage message)
         {
             //Console.WriteLine("message :" + message.Label);
@@ -492,7 +458,7 @@ namespace BrowseTheWeb
 
         public override void OnAction(Action action)
         {
-            GUIPropertyManager.SetProperty("#btWeb.linkid", String.IsNullOrEmpty(linkId) ? String.Empty : "Link ID = " + linkId);
+            GUIPropertyManager.SetProperty("#btWeb.linkid", String.IsNullOrEmpty(osd_linkID.ID) ? String.Empty : "Link ID = " + osd_linkID.ID);
             #region remote diagnostic
             if (settings.Remote)
             {
@@ -513,10 +479,10 @@ namespace BrowseTheWeb
                     if (!settings.UseMouse)
                     {
 
-                        if (linkId != string.Empty)
+                        if (osd_linkID.ID != string.Empty)
                         {
                             MyLog.debug("confirm link pressed");
-                            OnLinkId(linkId);
+                            OnLinkId(osd_linkID.ID);
                         }
                         else
                         {
@@ -593,7 +559,6 @@ namespace BrowseTheWeb
                 case Action.ActionType.ACTION_KEY_PRESSED:
                     if (!settings.UseMouse)
                     {
-                        linkTime = 0;
                         MyLog.debug("action key press=" + action.m_key.KeyChar);
                         if (action.m_key.KeyChar == 27)
                         {
@@ -604,19 +569,16 @@ namespace BrowseTheWeb
                             }
                             else
                             {
-                                linkId = string.Empty;
-                                osd_linkID.Visible = false;
-                                Application.DoEvents();
+                                osd_linkID.HideOSD();
                             }
                         }
                         else
                             if (action.m_key.KeyChar >= '0' && action.m_key.KeyChar <= '9')
-                                linkId += (char)action.m_key.KeyChar;
-                        if (linkId.Length > 4) linkId = linkId.Substring(0, 1);
+                                osd_linkID.AddChar((char)action.m_key.KeyChar);
                     }
                     break;
                 case Action.ActionType.ACTION_PREVIOUS_MENU:
-                    linkId = string.Empty;
+                    osd_linkID.HideOSD();
                     break;
                 case Action.ActionType.ACTION_PLAY:
                 case Action.ActionType.ACTION_MUSIC_PLAY:
@@ -949,9 +911,7 @@ namespace BrowseTheWeb
 
         private void OnLinkId(string LinkId)
         {
-            linkId = string.Empty;
-            osd_linkID.Visible = false;
-            Application.DoEvents();
+            osd_linkID.HideOSD();
 
             GeckoHtmlElement ge = DomHelper.GetElement(LinkId, webBrowser.Document);
 

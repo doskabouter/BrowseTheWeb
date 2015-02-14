@@ -22,24 +22,70 @@
  */
 #endregion
 
+using System;
 using System.Windows.Forms;
 
 namespace BrowseTheWeb
 {
     public partial class OSD_LinkId : UserControl
     {
+        private Timer timer = new Timer();
+        private string linkId = String.Empty;
+        private bool enabled;
+
         public OSD_LinkId()
         {
             InitializeComponent();
+            Visible = false;
+            timer.Tick += new EventHandler(timer_Tick);
+        }
+
+        public int VisibleTime
+        {
+            set { timer.Interval = value; }
+        }
+
+        public new bool Enabled
+        {
+            set { enabled = value; }
         }
 
         public string ID
         {
+            get { return linkId; }
             set
             {
                 txtId.Text = value;
+                linkId = value;
+                if (enabled)
+                {
+                    Visible = true;
+                    timer.Stop();
+                    timer.Start();
+                    BringToFront();
+                }
                 this.Invalidate();
             }
         }
+
+        public void AddChar(char c)
+        {
+            string newId = linkId + c;
+            if (newId.Length > 4) newId = newId.Substring(1);
+            ID = newId;
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            HideOSD();
+        }
+
+        public void HideOSD()
+        {
+            timer.Stop();
+            Visible = false;
+            linkId = String.Empty;
+        }
+
     }
 }
