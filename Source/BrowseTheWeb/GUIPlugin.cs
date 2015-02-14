@@ -25,7 +25,6 @@
 using System;
 using System.Drawing;
 using System.IO;
-using System.Text;
 
 using MediaPortal.GUI.Library;
 using MediaPortal.Dialogs;
@@ -36,7 +35,6 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
 using Gecko;
-using Gecko.Collections;
 using Gecko.DOM;
 
 using Action = MediaPortal.GUI.Library.Action;
@@ -47,39 +45,16 @@ namespace BrowseTheWeb
 
     public class GUIPlugin : GUIWindow, ISetupForm
     {
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct MOUSEINPUT
-        {
-            public int X;
-            public int Y;
-            public uint MouseData;
-            public uint Flags;
-            public uint Time;
-            public IntPtr ExtraInfo;
-        }
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct INPUT
-        {
-            public uint Type;
-            public MOUSEINPUT Mouse;
-        }
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern uint SendInput(uint numberOfInputs, INPUT[] inputs, int sizeOfInputStructure);
-
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern int ShowCursor(bool bShow);
         [DllImport("dwmapi.dll", EntryPoint = "DwmEnableComposition")]
         protected extern static uint Win32DwmEnableComposition(uint uCompositionAction);
 
-        private const int MOUSEEVENTF_LEFTDOWN = 0x02;
-        private const int MOUSEEVENTF_LEFTUP = 0x04;
-        private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
-        private const int MOUSEEVENTF_RIGHTUP = 0x10;
         private const bool logHtml = false;
         private bool mouseVisible = false;
-        private bool clickFromPlugin = false;
         private bool aeroDisabled = false;
+
+        private LinkHelper linkHelper;
 
         private Tuple<string, string> prevNextUrls;
 
@@ -90,7 +65,6 @@ namespace BrowseTheWeb
         #region declare vars
         private GeckoWebBrowser webBrowser;
         private OSD_LinkId osd_linkID;
-        private Timer restoreClickTimer = new Timer();
 
         private string lastDomain = string.Empty;
         private float zoom = Settings.Instance.DefaultZoom;
@@ -216,8 +190,8 @@ namespace BrowseTheWeb
 
             osd_linkID = new OSD_LinkId();
             osd_linkID.VisibleTime = settings.RemoteTime * 100;
-
             GUIGraphicsContext.form.Controls.Add(osd_linkID);
+
             string preferenceFile = Path.Combine(Config.GetFolder(Config.Dir.Config), "btwebprefs.js");
             if (File.Exists(preferenceFile))
                 GeckoPreferences.Load(preferenceFile);
@@ -228,6 +202,7 @@ namespace BrowseTheWeb
                 GeckoPreferences.User["general.useragent.override"] = settings.UserAgent;
 
             formsAdded = true;
+            linkHelper = new LinkHelper(webBrowser, ShowSelect, ShowKeyboard);
             MyLog.debug("Finish AddForms");
         }
 
@@ -278,6 +253,7 @@ namespace BrowseTheWeb
 
             try
             {
+                linkHelper.Init();
                 MyLog.debug("Init browser");
 
                 GUIPropertyManager.SetProperty("#btWeb.status", "Init browser");
@@ -312,7 +288,6 @@ namespace BrowseTheWeb
 
                 MyLog.debug("Create dom eventhandler");
                 webBrowser.DomKeyDown += new EventHandler<DomKeyEventArgs>(webBrowser_DomKeyDown);
-                webBrowser.DomClick += new EventHandler<DomEventArgs>(webBrowser_DomClick);
 
                 MyLog.debug("set zoom size to " + settings.FontZoom + "/" + zoom);
 
@@ -357,10 +332,6 @@ namespace BrowseTheWeb
                                                                (GUIGraphicsContext.form.Height / 2) - (osd_linkID.Height / 2));
                 osd_linkID.Enabled = settings.OSD;
 
-                restoreClickTimer.Enabled = false;
-                restoreClickTimer.Interval = 500;
-                restoreClickTimer.Tick += new EventHandler(restoreClickTimer_Tick);
-
                 if (settings.UseMouse)
                     webBrowser.Select();
             }
@@ -397,10 +368,7 @@ namespace BrowseTheWeb
             webBrowser.DocumentCompleted -= webBrowser_DocumentCompleted;
             webBrowser.StatusTextChanged -= webBrowser_StatusTextChanged;
             webBrowser.DomKeyDown -= webBrowser_DomKeyDown;
-            webBrowser.DomClick -= webBrowser_DomClick;
-
-            restoreClickTimer.Stop();
-            restoreClickTimer.Tick -= restoreClickTimer_Tick;
+            linkHelper.Done();
             if (settings.UseMouse)
             {
                 Cursor.Hide();
@@ -482,7 +450,8 @@ namespace BrowseTheWeb
                         if (osd_linkID.ID != string.Empty)
                         {
                             MyLog.debug("confirm link pressed");
-                            OnLinkId(osd_linkID.ID);
+                            linkHelper.OnLinkId(osd_linkID.ID, zoom);
+                            osd_linkID.HideOSD();
                         }
                         else
                         {
@@ -492,7 +461,7 @@ namespace BrowseTheWeb
                 }
                 else
                 {
-                    ClickOn(null);
+                    linkHelper.ClickOn(null);
                 }
             }
             if (action.wID == settings.Remote_Bookmark)
@@ -663,26 +632,6 @@ namespace BrowseTheWeb
                         OnAction(action);
                 }
             }
-        }
-
-        void ResetFocus()
-        {
-            clickFromPlugin = false;
-            restoreClickTimer.Stop();
-
-            webBrowser.Enabled = false;
-            GUIGraphicsContext.form.Focus();
-        }
-
-        void webBrowser_DomClick(object sender, DomEventArgs e)
-        {
-            if (clickFromPlugin) // click succeeded, so focus can safely be reset
-                ResetFocus();
-        }
-
-        void restoreClickTimer_Tick(object sender, EventArgs e)
-        {
-            ResetFocus();
         }
 
         private void OnEnterNewLink()
@@ -909,134 +858,6 @@ namespace BrowseTheWeb
             }
         }
 
-        private void OnLinkId(string LinkId)
-        {
-            osd_linkID.HideOSD();
-
-            GeckoHtmlElement ge = DomHelper.GetElement(LinkId, webBrowser.Document);
-
-            if (ge == null)
-            {
-                MyLog.debug(String.Format("LinkId {0} not found in _htmlLinkNumbers", LinkId));
-                return;
-            }
-
-            if (ge is GeckoAnchorElement && !ge.HasAttribute("onclick"))
-            {
-                string link = ((GeckoAnchorElement)ge).Href;
-                webBrowser.Navigate(link);
-                MyLog.debug("navigate to linkid=" + LinkId + " URL=" + link);
-            }
-            else
-                if (ge is GeckoButtonElement)
-                {
-                    ge.Click();
-                }
-                else
-                    if (ge is GeckoSelectElement)
-                    {
-                        ShowSelect(ge as GeckoSelectElement);
-                    }
-                    else
-                        if (ge is GeckoInputElement)
-                        {
-                            string linkType = ((GeckoInputElement)ge).Type;
-                            if (!String.IsNullOrEmpty(linkType))
-                            {
-                                switch (linkType)
-                                {
-                                    case "password": ShowInputDialog(true, ge as GeckoInputElement); break;
-                                    case "submit":
-                                    case "reset":
-                                    case "radio":
-                                    case "image":
-                                    case "checkbox":
-                                        ge.Click();
-                                        MyLog.debug("action linkid=" + LinkId);
-                                        break;
-                                    case "hidden": break;
-                                    default: ShowInputDialog(false, ge as GeckoInputElement); break;
-                                }
-                            }
-                        }
-                        else
-                        //if (ge is GeckoObjectElement)
-                        // some items just need a mousehover, and a ge.Click won't do that
-                        {
-                            Point p = DomHelper.GetCenterCoordinate(webBrowser.Document, ge);
-                            p.X = Convert.ToInt32(p.X * zoom);
-                            p.Y = Convert.ToInt32(p.Y * zoom);
-                            ClickOn(p);
-                        }
-            //else
-            // ge.Click();
-        }
-
-        private int delta = 5;
-        private void ClickOn(Point? p)
-        {
-            webBrowser.Enabled = true;
-            if (p.HasValue)
-            {
-                Point newP = new Point(p.Value.X + delta, p.Value.Y);
-                delta = -delta;// some flash vids don't react to clicking on previous coordinate
-                MyLog.debug("perform click on " + newP.ToString());
-                Cursor.Position = webBrowser.PointToScreen(newP);
-            }
-
-            INPUT[] ips = new INPUT[] { new INPUT { Type = 0 }, new INPUT { Type = 0 } };
-            ips[0].Mouse.Flags = MOUSEEVENTF_LEFTDOWN;
-            ips[1].Mouse.Flags = MOUSEEVENTF_LEFTUP;
-
-            clickFromPlugin = true;
-            restoreClickTimer.Start();
-            if (SendInput(2, ips, Marshal.SizeOf(typeof(INPUT))) == 0)
-                MyLog.debug("Error sendinput");
-        }
-
-        public void ShowInputDialog(bool isPassword, GeckoInputElement element)
-        {
-            webBrowser.Visible = false;
-
-            string result = element.Value;
-            if (ShowKeyboard(ref result, isPassword) == DialogResult.OK)
-            {
-                if (element != null)
-                    element.SetAttribute("value", result);
-                GeckoFormElement form = element.Form;
-                if (form != null)
-                {
-                    IDomHtmlCollection<GeckoElement> inps = form.GetElementsByTagName("input");
-                    if (DomHelper.NrOfChildElementsDone(form) == 1)
-                    {
-                        StringBuilder sb = new StringBuilder();
-                        foreach (GeckoInputElement inp in inps)
-                        {
-                            if (sb.Length != 0)
-                                sb.Append('&');
-                            sb.Append(inp.Name);
-                            sb.Append('=');
-                            sb.Append(inp.Value);
-                        }
-
-                        if (form.Method == "get")
-                            webBrowser.Navigate(form.Action + '?' + sb.ToString());
-                        else
-                        {
-                            using (GeckoMIMEInputStream stream = new GeckoMIMEInputStream())
-                            {
-                                stream.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-                                stream.AddContentLength = true;
-                                stream.SetData(sb.ToString());
-                                webBrowser.Navigate(form.Action, 0, null, stream);
-                            }
-                        }
-                    }
-                }
-            }
-            webBrowser.Visible = true;
-        }
-
         public static DialogResult ShowKeyboard(ref string DefaultText, bool PasswordInput)
         {
             VirtualKeyboard vk = (VirtualKeyboard)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_VIRTUAL_KEYBOARD);
@@ -1063,6 +884,7 @@ namespace BrowseTheWeb
             dlg.SetLine(3, line3);
             dlg.DoModal(GUIWindowManager.ActiveWindow);
         }
+
         public void ShowSelect(GeckoSelectElement select)
         {
             webBrowser.Visible = false;

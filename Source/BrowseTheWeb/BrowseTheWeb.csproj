@@ -107,6 +107,9 @@
     <Compile Include="..\Common\DomHelper.cs">
       <Link>Common\DomHelper.cs</Link>
     </Compile>
+    <Compile Include="..\Common\LinkHelper.cs">
+      <Link>Common\LinkHelper.cs</Link>
+    </Compile>
     <Compile Include="..\Common\OSD_LinkId.cs">
       <Link>Common\OSD_LinkId.cs</Link>
       <SubType>UserControl</SubType>
