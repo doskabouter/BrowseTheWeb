@@ -101,9 +101,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Common\DomHelper.cs">
+      <Link>Common\DomHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\OSD_LinkId.cs">
+      <Link>Common\OSD_LinkId.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\OSD_LinkId.designer.cs">
+      <Link>Common\OSD_LinkId.designer.cs</Link>
+      <DependentUpon>OSD_LinkId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Bookmark.cs" />
     <Compile Include="Bookmarks.cs" />
-    <Compile Include="DomHelper.cs" />
     <Compile Include="GetFolder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,12 +140,6 @@
       <DependentUpon>ImportBrowser.cs</DependentUpon>
     </Compile>
     <Compile Include="JSONNode.cs" />
-    <Compile Include="OSD_LinkId.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="OSD_LinkId.Designer.cs">
-      <DependentUpon>OSD_LinkId.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -153,6 +156,10 @@
     <Compile Include="VersionSpecific.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\Common\OSD_LinkId.resx">
+      <Link>Common\OSD_LinkId.resx</Link>
+      <DependentUpon>OSD_LinkId.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GetFolder.resx">
       <DependentUpon>GetFolder.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -190,10 +197,6 @@
     <Content Include="res\MouseCursor.cur" />
     <EmbeddedResource Include="GetThumb.resx">
       <DependentUpon>GetThumb.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="OSD_LinkId.resx">
-      <DependentUpon>OSD_LinkId.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="xulrunner.png" />
