@@ -101,17 +101,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Common\Bookmark.cs">
+      <Link>Common\Bookmark.cs</Link>
+    </Compile>
     <Compile Include="..\Common\DomHelper.cs">
       <Link>Common\DomHelper.cs</Link>
     </Compile>
     <Compile Include="..\Common\OSD_LinkId.cs">
       <Link>Common\OSD_LinkId.cs</Link>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="..\Common\OSD_LinkId.designer.cs">
       <Link>Common\OSD_LinkId.designer.cs</Link>
       <DependentUpon>OSD_LinkId.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bookmark.cs" />
     <Compile Include="Bookmarks.cs" />
     <Compile Include="GetFolder.cs">
       <SubType>Form</SubType>
