@@ -104,6 +104,9 @@
     <Compile Include="..\Common\Bookmark.cs">
       <Link>Common\Bookmark.cs</Link>
     </Compile>
+    <Compile Include="..\Common\Bookmarks.cs">
+      <Link>Bookmarks.cs</Link>
+    </Compile>
     <Compile Include="..\Common\DomHelper.cs">
       <Link>Common\DomHelper.cs</Link>
     </Compile>
@@ -118,7 +121,6 @@
       <Link>Common\OSD_LinkId.designer.cs</Link>
       <DependentUpon>OSD_LinkId.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bookmarks.cs" />
     <Compile Include="GetFolder.cs">
       <SubType>Form</SubType>
     </Compile>
