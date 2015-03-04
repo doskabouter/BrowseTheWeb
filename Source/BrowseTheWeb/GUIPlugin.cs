@@ -285,6 +285,7 @@ namespace BrowseTheWeb
 
                 webBrowser.DocumentCompleted += new EventHandler(webBrowser_DocumentCompleted);
                 webBrowser.StatusTextChanged += new EventHandler(webBrowser_StatusTextChanged);
+                webBrowser.CreateWindow2 += new EventHandler<GeckoCreateWindow2EventArgs>(webBrowser_CreateWindow2);
 
                 MyLog.debug("Create dom eventhandler");
                 webBrowser.DomKeyDown += new EventHandler<DomKeyEventArgs>(webBrowser_DomKeyDown);
@@ -342,6 +343,11 @@ namespace BrowseTheWeb
             }
 
             base.OnPageLoad();
+        }
+
+        void webBrowser_CreateWindow2(object sender, GeckoCreateWindow2EventArgs e)
+        {
+            e.Cancel = true;
         }
 
         protected override void OnPageDestroy(int new_windowId)
