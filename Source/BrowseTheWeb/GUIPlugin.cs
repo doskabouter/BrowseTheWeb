@@ -642,7 +642,6 @@ namespace BrowseTheWeb
 
         private void OnEnterNewLink()
         {
-            webBrowser.Visible = false;
             GUIGraphicsContext.form.Focus();
 
             string selectedUrl = "http://";
@@ -651,27 +650,25 @@ namespace BrowseTheWeb
                 selectedUrl = settings.LastUrl;
             }
 
-            if (ShowKeyboard(ref selectedUrl, false) == DialogResult.OK)
+            ShowKeyboard("", selectedUrl, false, delegate(string result)
             {
-                if (Bookmark.isValidUrl(selectedUrl))
+                if (Bookmark.isValidUrl(result))
                 {
-                    webBrowser.Navigate(selectedUrl);
-                    MyLog.debug("navigate to " + selectedUrl);
+                    webBrowser.Navigate(result);
+                    MyLog.debug("navigate to " + result);
 
-                    settings.LastUrl = selectedUrl;
+                    settings.LastUrl = result;
                 }
                 else
-                    ShowAlert("Wrong link ?", " The link you entered seems to be not valid.", "Input:", selectedUrl);
-            }
+                    ShowAlert("Wrong link ?", " The link you entered seems to be not valid.", "Input:", result);
+            });
 
-            webBrowser.Visible = true;
             if (settings.UseMouse)
                 webBrowser.Select();
 
         }
         private void OnAddBookmark()
         {
-            webBrowser.Visible = false;
             GUIGraphicsContext.form.Focus();
 
             string title = webBrowser.Document.Title;
@@ -679,20 +676,18 @@ namespace BrowseTheWeb
 
             title = title.Replace("\0", "");
 
-            DialogResult result = ShowKeyboard(ref title, false);
-            if (result == DialogResult.OK)
-            {
-                bool hasSaved = Bookmarks.Instance.AddBookmark(title, actualUrl, Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml");
-                if (hasSaved)
-                {
-                    ShowAlert("Bookmark has been saved !", "Title : " + title, "URL : " + actualUrl, "");
-                    Bookmark.GetAndSaveSnap(webBrowser, actualUrl);
-                }
-                else
-                    ShowAlert("Bookmark could not be saved !", "Title : " + title, "URL : " + actualUrl, "");
-            }
+            ShowKeyboard("", title, false, delegate(string result)
+             {
+                 bool hasSaved = Bookmarks.Instance.AddBookmark(title, actualUrl, Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml");
+                 if (hasSaved)
+                 {
+                     ShowAlert("Bookmark has been saved !", "Title : " + title, "URL : " + actualUrl, "");
+                     Bookmark.GetAndSaveSnap(webBrowser, actualUrl);
+                 }
+                 else
+                     ShowAlert("Bookmark could not be saved !", "Title : " + title, "URL : " + actualUrl, "");
+             });
 
-            webBrowser.Visible = true;
             if (settings.UseMouse)
                 webBrowser.Select();
         }
@@ -864,23 +859,21 @@ namespace BrowseTheWeb
             }
         }
 
-        public static DialogResult ShowKeyboard(ref string DefaultText, bool PasswordInput)
+        public void ShowKeyboard(string title, string value, bool PasswordInput, Action<string> action)
         {
+            webBrowser.Visible = false;
             VirtualKeyboard vk = (VirtualKeyboard)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_VIRTUAL_KEYBOARD);
             vk.Reset();
             vk.Password = PasswordInput;
-            vk.Text = DefaultText;
+            vk.Text = value;
             vk.SetLabelAsInitialText(false); // set to false, otherwise our intial text is cleared
             vk.DoModal(GUIWindowManager.ActiveWindow);
 
             if (vk.IsConfirmed)
-            {
-                DefaultText = vk.Text;
-                return DialogResult.OK;
-            }
-            else
-                return DialogResult.Cancel;
+                action(vk.Text);
+            webBrowser.Visible = true;
         }
+
         public static void ShowAlert(String headline, String line1, String line2, String line3)
         {
             GUIDialogOK dlg = (GUIDialogOK)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_OK);

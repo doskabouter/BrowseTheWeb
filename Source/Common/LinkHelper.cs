@@ -44,7 +44,7 @@ namespace BrowseTheWeb
         private Action<GeckoSelectElement> showSelect;
         private ShowKeyboard showKeyboard;
 
-        public delegate DialogResult ShowKeyboard(ref string DefaultText, bool PasswordInput);
+        public delegate void ShowKeyboard(string title, string value, bool isPassword, Action<string> action);
         public delegate void ShowSelect(GeckoElement select);
 
         public LinkHelper(GeckoWebBrowser webBrowser, Action<GeckoSelectElement> showSelect, ShowKeyboard showKeyboard)
@@ -177,10 +177,7 @@ namespace BrowseTheWeb
 
         public void ShowInputDialog(bool isPassword, GeckoInputElement element)
         {
-            webBrowser.Visible = false;
-
-            string result = element.Value;
-            if (showKeyboard(ref result, isPassword) == DialogResult.OK)
+            showKeyboard(element.Name, element.Value, isPassword, delegate(string result)
             {
                 if (element != null)
                     element.SetAttribute("value", result);
@@ -214,8 +211,8 @@ namespace BrowseTheWeb
                         }
                     }
                 }
-            }
-            webBrowser.Visible = true;
+
+            });
         }
     }
 }
