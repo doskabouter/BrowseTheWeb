@@ -60,7 +60,7 @@ namespace BrowseTheWeb
             restoreClickTimer.Interval = 500;
             restoreClickTimer.Tick += new EventHandler(restoreClickTimer_Tick);
 
-            webBrowser.DomClick += new EventHandler<DomEventArgs>(webBrowser_DomClick);
+            webBrowser.DomClick += new EventHandler<DomMouseEventArgs>(webBrowser_DomClick);
         }
 
         public void Done()
@@ -201,7 +201,7 @@ namespace BrowseTheWeb
                             webBrowser.Navigate(form.Action + '?' + sb.ToString());
                         else
                         {
-                            using (GeckoMIMEInputStream stream = new GeckoMIMEInputStream())
+                            using (Gecko.IO.MimeInputStream stream = Gecko.IO.MimeInputStream.Create())
                             {
                                 stream.AddHeader("Content-Type", "application/x-www-form-urlencoded");
                                 stream.AddContentLength = true;

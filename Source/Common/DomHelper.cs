@@ -58,7 +58,7 @@ namespace BrowseTheWeb
 
         public static GeckoHtmlElement GetElement(string linkId, GeckoDocument document)
         {
-            GeckoHtmlElement ge = document.GetElements(String.Format("//*[@{0}='{1}']", btwebId, linkId)).FirstOrDefault();
+            GeckoHtmlElement ge = document.SelectFirst(String.Format("//*[@{0}='{1}']", btwebId, linkId)) as GeckoHtmlElement;
             if (ge != null)
                 return ge;
 
@@ -84,7 +84,7 @@ namespace BrowseTheWeb
 
         public static int NrOfChildElementsDone(GeckoHtmlElement element)
         {
-            return element.GetElements(".//*[@" + btwebId + "]").Count();
+            return element.EvaluateXPath(".//*[@" + btwebId + "]").GetNodes().Count();
         }
 
         private static Point DocumentOffset(GeckoDocument root, GeckoDocument current)
@@ -298,7 +298,7 @@ namespace BrowseTheWeb
             int maxId = 0;
             try
             {
-                foreach (GeckoHtmlElement ge in document.GetElements("//*[@" + btwebId + "]"))
+                foreach (GeckoHtmlElement ge in document.EvaluateXPath("//*[@" + btwebId + "]").GetNodes())
                 {
                     int j;
                     if (Int32.TryParse(ge.Attributes[btwebId].NodeValue, out j))

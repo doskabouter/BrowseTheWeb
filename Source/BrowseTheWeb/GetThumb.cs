@@ -55,7 +55,7 @@ namespace BrowseTheWeb.Setup
             txtUrl.Text = SelectedUrl;
 
             browser.Size = new Size(800, 1024);
-            browser.DocumentCompleted += new EventHandler(browser_DocumentCompleted);
+            browser.DocumentCompleted += new EventHandler<Gecko.Events.GeckoDocumentCompletedEventArgs>(browser_DocumentCompleted);
             browser.Navigate(SelectedUrl);
         }
 
