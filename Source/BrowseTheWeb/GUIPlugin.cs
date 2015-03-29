@@ -456,7 +456,7 @@ namespace BrowseTheWeb
                         if (osd_linkID.ID != string.Empty)
                         {
                             MyLog.debug("confirm link pressed");
-                            linkHelper.OnLinkId(osd_linkID.ID, zoom);
+                            linkHelper.OnLinkId(osd_linkID.ID);
                             osd_linkID.HideOSD();
                         }
                         else
