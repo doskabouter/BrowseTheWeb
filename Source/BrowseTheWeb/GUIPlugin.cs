@@ -671,21 +671,19 @@ namespace BrowseTheWeb
         {
             GUIGraphicsContext.form.Focus();
 
-            string title = webBrowser.Document.Title;
-            string actualUrl = webBrowser.Document.Url.ToString();
-
-            title = title.Replace("\0", "");
+            string title = webBrowser.Document.Title.Replace("\0", "");
 
             ShowKeyboard("", title, false, delegate(string result)
              {
-                 bool hasSaved = Bookmarks.Instance.AddBookmark(title, actualUrl, Config.GetFolder(MediaPortal.Configuration.Config.Dir.Config) + "\\bookmarks.xml");
+                 string actualUrl = webBrowser.Document.Url.ToString();
+                 bool hasSaved = Bookmarks.Instance.AddBookmark(result, actualUrl);
                  if (hasSaved)
                  {
-                     ShowAlert("Bookmark has been saved !", "Title : " + title, "URL : " + actualUrl, "");
+                     ShowAlert("Bookmark has been saved !", "Title : " + result, "URL : " + actualUrl, "");
                      Bookmark.GetAndSaveSnap(webBrowser, actualUrl);
                  }
                  else
-                     ShowAlert("Bookmark could not be saved !", "Title : " + title, "URL : " + actualUrl, "");
+                     ShowAlert("Bookmark could not be saved !", "Title : " + result, "URL : " + actualUrl, "");
              });
 
             if (settings.UseMouse)

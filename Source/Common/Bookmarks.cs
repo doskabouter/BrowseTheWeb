@@ -169,7 +169,7 @@ namespace BrowseTheWeb
             }
         }
 
-        public bool AddBookmark(string title, string url, string path)
+        public bool AddBookmark(string title, string url)
         {
             BookmarkFolder bmf = root.Items.Find(x => x.Name == SavedByMp && x is BookmarkFolder) as BookmarkFolder;
             if (bmf != null)
