@@ -1,0 +1,88 @@
+<Plugin
+    DescriptorVersion="1.0" 
+    Name="BrowseTheWeb"
+    PluginId="{25604FF1-128B-4E53-BCDF-B801F23DC480}"
+    Author="Doskabouter"
+    Copyright="GPL"
+    Description="Webrowser based on xulrunner and the &quot;Gecko Browser&quot; / Webbrowser."
+    PluginVersion="1.0">
+
+  <DependsOn>
+    <PluginReference PluginId="{D87D92F0-5E71-470a-A2A4-430F90A28BF3}"/>   <!-- SkinEngine -->
+    <PluginReference PluginId="{15FB35F7-8C85-4404-BC67-BFF28446158A}"/>   <!-- Media -->
+    <PluginReference PluginId="{1AFF4467-64B0-4ca1-AF28-9AEDF3525BCE}"/>   <!-- ConfigurationManager -->
+    <PluginReference PluginId="{B765A4B6-F455-4941-BDAE-2CE45208BFEB}"/>   <!-- Configuration plugin -->
+  </DependsOn>
+  
+  <Runtime>
+    <Assembly FileName="BrowseTheWeb.dll"/>
+  </Runtime>
+
+  <Register Location="/Models">
+    <Model Id="1E26DD5F-2630-4647-921F-9CC4376A7CC4" ClassName="BrowseTheWeb.BrowseTheWebModel"/>
+    <Model Id="621186EE-F16C-475D-9D3C-BC2176D43C09" ClassName="BrowseTheWeb.BookmarksModel"/>
+  </Register>
+
+  <Register Location="/Workflow/States">
+    <WorkflowState Id="C685FD89-6CC0-4262-BC7C-3FF5C46DCAA6"
+        Name="zzzMain" MainScreen="BTWeb-main"
+        DisplayLabel="Browsetheweb"
+        WorkflowModel="1E26DD5F-2630-4647-921F-9CC4376A7CC4"/>  <!-- Workflow model = BrowseTheWebModel -->
+    <WorkflowState Id="EF0F2B24-FCCA-4FDB-A67E-1E90D9DA2863"
+            Name="TreeViewTest" MainScreen="BTWeb-bookmarks"
+            DisplayLabel="TreeView"
+            WorkflowModel="621186EE-F16C-475D-9D3C-BC2176D43C09"/>  <!-- Workflow model = BookmarksModel -->
+  </Register>
+
+  <Register Location="/Resources/Skin">
+    <Resource Id="BrowseTheWebSkin" Directory="Skin" Type="Skin"/>
+  </Register>
+
+  <!-- Registration of our configuration section -->
+  <Register Location="/Configuration/Settings/Plugins">
+    <ConfigSection
+        Id="BrowseTheWeb"
+        Redundant="true"
+        Text="BrowseTheWeb"/>
+  </Register>
+
+  <!-- Contents of '/Plugins/BrowseTheWeb' section -->
+  <Register Location="/Configuration/Settings/Plugins/BrowseTheWeb">
+    <ConfigSetting
+        Id="BTWebUseHomePage"
+        Text="Use homepage"
+        HelpText="do not know"
+        ClassName="BrowseTheWeb.Configuration.UseHomePage"/>
+    <ConfigSetting
+        Id="BTWebHomePage"
+        Text="Homepage"
+        HelpText="Startup page"
+        ClassName="BrowseTheWeb.Configuration.HomePage"/>
+    <ConfigSetting
+        Id="BTWebPreviousTags"
+        Text="PreviousTags"
+        HelpText="do not know2"
+        ClassName="BrowseTheWeb.Configuration.PreviousTags"/>
+    <ConfigSetting
+        Id="BTWebNextTags"
+        Text="NextTags"
+        HelpText="do not know2"
+        ClassName="BrowseTheWeb.Configuration.NextTags"/>
+    <ConfigSetting
+        Id="BTWebUseMouse"
+        Text="Use mouse"
+        HelpText="do not know2"
+        ClassName="BrowseTheWeb.Configuration.UseMouse"/>
+    <ConfigSetting
+        Id="BTWebOSDTime"
+        Text="OSD display time"
+        HelpText="Time after which the OSD is closed (in seconds)"
+        ClassName="BrowseTheWeb.Configuration.OSDTime"/>
+    <ConfigSetting
+        Id="BTWebStatusVisible"
+        Text="Status visible"
+        HelpText="Status visible at startup"
+        ClassName="BrowseTheWeb.Configuration.StatusVisible"/>
+  </Register>
+  
+</Plugin>

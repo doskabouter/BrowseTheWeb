@@ -1,0 +1,32 @@
+<Screen
+    xmlns="www.team-mediaportal.com/2008/mpf/directx"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Context="{Model Id=1E26DD5F-2630-4647-921F-9CC4376A7CC4}">
+  <KeyBinding Key="0" Command="{Command Path=NumberPressed, Parameters=0}"/>
+  <KeyBinding Key="1" Command="{Command Path=NumberPressed, Parameters=1}"/>
+  <KeyBinding Key="2" Command="{Command Path=NumberPressed, Parameters=2}"/>
+  <KeyBinding Key="3" Command="{Command Path=NumberPressed, Parameters=3}"/>
+  <KeyBinding Key="4" Command="{Command Path=NumberPressed, Parameters=4}"/>
+  <KeyBinding Key="5" Command="{Command Path=NumberPressed, Parameters=5}"/>
+  <KeyBinding Key="6" Command="{Command Path=NumberPressed, Parameters=6}"/>
+  <KeyBinding Key="7" Command="{Command Path=NumberPressed, Parameters=7}"/>
+  <KeyBinding Key="8" Command="{Command Path=NumberPressed, Parameters=8}"/>
+  <KeyBinding Key="9" Command="{Command Path=NumberPressed, Parameters=9}"/>
+  <KeyBinding Key="Ok" Command="{Command OkPressed}"/>
+  <KeyBinding Key="Left" Command="{Command Path=ScrollHorizontal, Parameters=-100}"/>
+  <KeyBinding Key="Right" Command="{Command Path=ScrollHorizontal, Parameters=100}"/>
+  <KeyBinding Key="Up" Command="{Command Path=ScrollVertical, Parameters=-100}"/>
+  <KeyBinding Key="Down" Command="{Command Path=ScrollVertical, Parameters=100}"/>
+  <KeyBinding Key="PageUp" Command="{Command PageUp}"/>
+  <KeyBinding Key="PageDown" Command="{Command PageDown}"/>
+  <KeyBinding Key="Stop" Command="{Command GotoAboutBlank}"/>
+  <KeyBinding Key="Pause" Command="{Command GotoHomePage}"/>
+  <KeyBinding Key="n" Command="{Command NextPage}"/>
+  <KeyBinding Key="p" Command="{Command PreviousPage}"/>
+  <KeyBinding Key="f" Command="{Command Forward}"/>
+  <KeyBinding Key="b" Command="{Command Back}"/>
+  <KeyBinding Key="R" Command="{Command AddBookmark}"/>
+  <KeyBinding Key="P" Command="{Command EnterNewLink}"/>
+  <KeyBinding Key="s" Command="{Command ToggleStatus}"/>
+  <KeyBinding Key="B" Command="{Command Source={Service WorkflowManager},Path=NavigatePush,Parameters=EF0F2B24-FCCA-4FDB-A67E-1E90D9DA2863}"/>
+</Screen>

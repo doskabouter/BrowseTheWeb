@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CCF86B63-593F-4B4A-A46C-50B0A6F3123C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BrowseTheWeb</RootNamespace>
+    <AssemblyName>BrowseTheWeb</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug MP2master|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug MP2master\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Geckofx-Core, Version=29.0.15.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Release\Plugins\Windows\Geckofx-Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Geckofx-Winforms, Version=29.0.15.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Release\Plugins\Windows\Geckofx-Winforms.dll</HintPath>
+    </Reference>
+    <Reference Include="MediaPortal.Common">
+      <HintPath>C:\Program Files (x86)\Team MediaPortal\MP2-Client\MediaPortal.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="MediaPortal.UI">
+      <HintPath>C:\Program Files (x86)\Team MediaPortal\MP2-Client\MediaPortal.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="MediaPortal.Utilities">
+      <HintPath>C:\Program Files (x86)\Team MediaPortal\MP2-Client\MediaPortal.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX, Version=2.6.2.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Team MediaPortal\MP2-Client\Plugins\SkinEngine\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SkinBase">
+      <HintPath>C:\Program Files (x86)\Team MediaPortal\MP2-Client\Plugins\SkinBase\SkinBase.dll</HintPath>
+    </Reference>
+    <Reference Include="SkinEngine">
+      <HintPath>C:\Program Files (x86)\Team MediaPortal\MP2-Client\Plugins\SkinEngine\SkinEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Common\Bookmark.cs">
+      <Link>Common\Bookmark.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\Bookmarks.cs">
+      <Link>Common\Bookmarks.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\DomHelper.cs">
+      <Link>Common\DomHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\LinkHelper.cs">
+      <Link>Common\LinkHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\OSD_LinkId.cs">
+      <Link>Common\OSD_LinkId.cs</Link>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="..\Common\OSD_LinkId.designer.cs">
+      <Link>Common\OSD_LinkId.designer.cs</Link>
+      <DependentUpon>OSD_LinkId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BookmarksModel.cs" />
+    <Compile Include="BookmarkViewModel.cs" />
+    <Compile Include="BrowseTheWebModel.cs" />
+    <Compile Include="CommandContainer.cs" />
+    <Compile Include="DummyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DummyForm.Designer.cs">
+      <DependentUpon>DummyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MessageHandler.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="VersionSpecific.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="plugin.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="skin\default\workflow\BTWeb-actions.xml">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\Common\OSD_LinkId.resx">
+      <Link>Common\OSD_LinkId.resx</Link>
+      <DependentUpon>OSD_LinkId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DummyForm.resx">
+      <DependentUpon>DummyForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="skin\default\screens\BTWeb-bookmarks.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="skin\default\screens\BTWeb-main.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="skin\default\screens\BTWeb-dialogSelectItems.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="skin\default\screens\BTWeb-dialogEnterText.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if "$(ConfigurationName)" == "Debug" set targetpath="$(ProgramFiles)\Team MediaPortal\MP2-Client\Plugins\BrowseTheWeb"
+if "$(ConfigurationName)" == "Debug MP2master"  set targetpath="D:\MediaPortal Sources\MediaPortal-2\MediaPortal\Bin\MP2-Client\bin\x86\Debug\Plugins\BrowseTheWeb"
+
+echo target: %25targetpath%25
+
+copy "$(TargetDir)BrowseTheWeb.*" %25targetpath%25
+copy "$(ProjectDir)plugin.xml" %25targetpath%25
+xcopy "$(ProjectDir)skin\*.xaml" %25targetpath%25\skin /e /y /i /r
+xcopy "$(ProjectDir)skin\*.xml" %25targetpath%25\skin /e /y /i /r
+xcopy "$(ProjectDir)skin\*.png" %25targetpath%25\skin /e /y /i /r
+xcopy "$(ProjectDir)..\..\Release\files\xulrunner\*.*" %25targetpath%25\xulrunner /e /y /i /r /d
+xcopy "$(ProjectDir)..\..\Release\Plugins\Windows\Geckofx*.*" %25targetpath%25 /e /y /i /r /d</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

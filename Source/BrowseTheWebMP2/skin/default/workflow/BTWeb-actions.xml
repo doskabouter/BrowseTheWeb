@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Workflow DescriptorVersion="1.0">
+  <MenuActions>
+    <PushNavigationTransition Id="82395486-5A7B-49B6-815A-82612E1217D1"
+        Name="Home->BrowseTheWebTest"
+        DisplayCategory="z-Test"
+        SortOrder="a"
+        SourceStates="7F702D9C-F2DD-42da-9ED8-0BA92F07787F"
+        TargetState="C685FD89-6CC0-4262-BC7C-3FF5C46DCAA6"
+        DisplayTitle="BrowseTheWeb"/>
+  </MenuActions>
+</Workflow>
