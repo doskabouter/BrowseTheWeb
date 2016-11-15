@@ -136,7 +136,7 @@ namespace BrowseTheWeb
                     if (!elementDone(element))
                     {
                         GeckoElement ls = element;
-                        while (ls.LastChild != null && ls.LastChild is GeckoElement && !String.IsNullOrEmpty(ls.LastChild.TextContent))
+                        while (ls.LastChild != null && ls.LastChild is GeckoElement && !String.IsNullOrEmpty(ls.LastChild.TextContent) && ((GeckoElement)ls.LastChild).TagName != "SPAN")
                             ls = (GeckoElement)ls.LastChild;
 
                         int newId;
