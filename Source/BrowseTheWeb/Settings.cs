@@ -72,7 +72,7 @@ namespace BrowseTheWeb
         public static string XulRunnerPath()
         {
             return Path.Combine(Config.GetFolder(MediaPortal.Configuration.Config.Dir.Plugins),
-                         Path.Combine("Windows", "xulrunner"));
+                         Path.Combine("Windows", "Firefox"));
         }
 
         public static string TagsToString(string[] tags)

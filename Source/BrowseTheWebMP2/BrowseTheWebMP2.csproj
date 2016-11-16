@@ -10,6 +10,7 @@
     <RootNamespace>BrowseTheWeb</RootNamespace>
     <AssemblyName>BrowseTheWeb</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <NuGetPackageImportStamp>66be88dd</NuGetPackageImportStamp>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -47,13 +48,13 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Geckofx-Core, Version=29.0.15.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
+    <Reference Include="Geckofx-Core, Version=45.0.22.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Release\Plugins\Windows\Geckofx-Core.dll</HintPath>
+      <HintPath>..\packages\Geckofx45.45.0.22\lib\net40\Geckofx-Core.dll</HintPath>
     </Reference>
-    <Reference Include="Geckofx-Winforms, Version=29.0.15.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=MSIL">
+    <Reference Include="Geckofx-Winforms, Version=45.0.22.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Release\Plugins\Windows\Geckofx-Winforms.dll</HintPath>
+      <HintPath>..\packages\Geckofx45.45.0.22\lib\net40\Geckofx-Winforms.dll</HintPath>
     </Reference>
     <Reference Include="MediaPortal.Common">
       <HintPath>C:\Program Files (x86)\Team MediaPortal\MP2-Client\MediaPortal.Common.dll</HintPath>
@@ -155,6 +156,32 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Firefox\omni.ja" />
+    <None Include="packages.config" />
+    <Content Include="Firefox\AccessibleMarshal.dll" />
+    <Content Include="Firefox\breakpadinjector.dll" />
+    <Content Include="Firefox\D3DCompiler_43.dll" />
+    <Content Include="Firefox\d3dcompiler_47.dll" />
+    <Content Include="Firefox\freebl3.dll" />
+    <Content Include="Firefox\icudt56.dll" />
+    <Content Include="Firefox\icuin56.dll" />
+    <Content Include="Firefox\icuuc56.dll" />
+    <Content Include="Firefox\lgpllibs.dll" />
+    <Content Include="Firefox\libEGL.dll" />
+    <Content Include="Firefox\libGLESv2.dll" />
+    <Content Include="Firefox\mozglue.dll" />
+    <Content Include="Firefox\msvcp120.dll" />
+    <Content Include="Firefox\msvcr120.dll" />
+    <Content Include="Firefox\nss3.dll" />
+    <Content Include="Firefox\nssckbi.dll" />
+    <Content Include="Firefox\nssdbm3.dll" />
+    <Content Include="Firefox\plugin-container.exe" />
+    <Content Include="Firefox\plugin-hang-ui.exe" />
+    <Content Include="Firefox\sandboxbroker.dll" />
+    <Content Include="Firefox\softokn3.dll" />
+    <Content Include="Firefox\xul.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if "$(ConfigurationName)" == "Debug" set targetpath="$(ProgramFiles)\Team MediaPortal\MP2-Client\Plugins\BrowseTheWeb"
@@ -177,4 +204,11 @@ xcopy "$(ProjectDir)..\..\Release\Plugins\Windows\Geckofx*.*" %25targetpath%25 /
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Import Project="..\packages\Geckofx45.45.0.22\build\Geckofx45.targets" Condition="Exists('..\packages\Geckofx45.45.0.22\build\Geckofx45.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Geckofx45.45.0.22\build\Geckofx45.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Geckofx45.45.0.22\build\Geckofx45.targets'))" />
+  </Target>
 </Project>

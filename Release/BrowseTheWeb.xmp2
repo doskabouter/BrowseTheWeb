@@ -34,324 +34,163 @@
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\AccessibleMarshal.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{704c8bfb-2648-48be-b546-cfafd1aec147}-AccessibleMarshal.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\AccessibleMarshal.dll</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\AccessibleMarshal.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{73f55502-e175-4b63-bdbe-cb37a74dc954}-AccessibleMarshal.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\AccessibleMarshal.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\breakpadinjector.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{1824a42a-c1b9-4b36-a120-dd6a28ee3812}-breakpadinjector.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\breakpadinjector.dll</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\breakpadinjector.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{5f23e3e6-a8f4-42fb-b0e3-bce80153934e}-breakpadinjector.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\breakpadinjector.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\crashreporter.exe</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{bc79c48a-0399-4a9d-8294-f9e7f2138e4d}-crashreporter.exe</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\crashreporter.exe</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\D3DCompiler_43.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{a7361b82-0ef9-4f96-ad60-9adeda0a89e8}-D3DCompiler_43.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\D3DCompiler_43.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\crashreporter.ini</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{e1d9d7a3-04fc-47cd-8fc0-adafe61a21fc}-crashreporter.ini</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\crashreporter.ini</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\d3dcompiler_47.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{a3b67aad-c133-4ce9-90ef-700060a93ffa}-d3dcompiler_47.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\d3dcompiler_47.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\D3DCompiler_43.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{874a2cb8-66bc-47b1-a924-59c7aedeaf72}-D3DCompiler_43.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\D3DCompiler_43.dll</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\freebl3.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{481bebb9-e077-445a-ab9b-ca4e6a5a8065}-freebl3.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\freebl3.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\dependentlibs.list</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{ee734ece-98b2-45e2-845a-e037b2af7b64}-dependentlibs.list</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\dependentlibs.list</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\icudt56.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{ab770870-8033-4bae-8260-8661b7064796}-icudt56.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\icudt56.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\freebl3.chk</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{3d7d850b-d04c-443a-93f4-c815d649da13}-freebl3.chk</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\freebl3.chk</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\icuin56.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{4928c1c5-09c6-422e-b879-b7a4963f01ba}-icuin56.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\icuin56.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\freebl3.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{049aaa8e-c25f-4f2c-ac0a-b683490eedbc}-freebl3.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\freebl3.dll</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\icuuc56.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{658c5291-52e9-4fed-8239-fffd01658023}-icuuc56.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\icuuc56.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\gkmedias.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{0b00dd67-cca2-46a7-9765-9195e6f97ff4}-gkmedias.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\gkmedias.dll</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\lgpllibs.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{e0a80ca1-0566-470d-b9f5-2adefb4c81aa}-lgpllibs.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\lgpllibs.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\IA2Marshal.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{dc71e2a7-11a4-4da7-8169-624e36a5a0c5}-IA2Marshal.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\IA2Marshal.dll</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\libEGL.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{9c223a2a-c895-4cf4-99e0-61af32498f65}-libEGL.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\libEGL.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\js-gdb.py</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{2eac2555-0e37-4c40-be5e-3e9b7166e88c}-js-gdb.py</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\js-gdb.py</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\libGLESv2.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{c7a347ee-a336-40bf-8867-c719c15536cb}-libGLESv2.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\libGLESv2.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\js.exe</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{d74ddb83-d0a4-47a1-8d8d-35b69e5cbec9}-js.exe</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\js.exe</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\mozglue.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{aa8b361a-28fb-41e5-9496-f63e313ad747}-mozglue.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\mozglue.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\libEGL.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{707eb149-bfa5-4158-b50c-1e59804dfac1}-libEGL.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\libEGL.dll</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\msvcp120.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{9dd86778-3496-420b-a631-1ff62c80cc45}-msvcp120.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\msvcp120.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\libGLESv2.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{d67d38fd-3f13-4ed0-aa2d-70af86c7d9d3}-libGLESv2.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\libGLESv2.dll</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\msvcr120.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{6a754a75-3015-4cf0-bf09-970256e7c7c1}-msvcr120.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\msvcr120.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\LICENSE</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{2aae553a-45cb-4b70-b1dc-029f223a12a4}-LICENSE</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\LICENSE</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\nss3.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{deec999d-0792-4096-b297-c6fb440f6828}-nss3.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\nss3.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\mozalloc.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{54af4050-6f08-4c13-90e3-d2758f067a24}-mozalloc.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\mozalloc.dll</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\nssckbi.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{a5747069-2f1b-4b98-8b76-a210d5da06be}-nssckbi.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\nssckbi.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\mozglue.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{80e915c7-8e34-43b3-b079-6b7ed9b91ed1}-mozglue.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\mozglue.dll</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\nssdbm3.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{4ddc420e-94f4-4106-a202-c6be25122a10}-nssdbm3.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\nssdbm3.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\mozjs.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{4107c7e1-c531-4a71-83f9-5b8264075361}-mozjs.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\mozjs.dll</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\omni.ja</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{44d225f3-4685-4049-b53d-2c8d9d3eaa6c}-omni.ja</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\omni.ja</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\msvcp100.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{99eaa6db-622e-4f87-95d8-912857ca4043}-msvcp100.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\msvcp100.dll</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\plugin-container.exe</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{ae829f61-7f65-453e-9dd9-ad817bf7bb38}-plugin-container.exe</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\plugin-container.exe</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\msvcr100.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{63faaaba-5267-479b-90a3-19aa1ead2856}-msvcr100.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\msvcr100.dll</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\plugin-hang-ui.exe</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{f0d82c61-905c-495d-a061-6bb8bee3cbcd}-plugin-hang-ui.exe</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\plugin-hang-ui.exe</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\nss3.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{4ea1548a-e093-4792-8822-63ffb0b9a941}-nss3.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\nss3.dll</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\sandboxbroker.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{8e68c4ac-51c9-4501-a3e5-ebeb4afcbac5}-sandboxbroker.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\sandboxbroker.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\nssckbi.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{92516e88-bc35-4d15-8e9b-486581b428ee}-nssckbi.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\nssckbi.dll</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\softokn3.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{208e0762-235d-4c9e-bf0c-0e0152dc3120}-softokn3.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\softokn3.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\nssdbm3.chk</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{cc8e4fa3-d888-46e8-a009-a0ecc5e798f8}-nssdbm3.chk</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\nssdbm3.chk</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\nssdbm3.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{16e9cefa-f807-4734-978c-e2775d692e6a}-nssdbm3.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\nssdbm3.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\omni.ja</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{c6bce977-80c9-45ca-b4a0-32139ff3774b}-omni.ja</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\omni.ja</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\platform.ini</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{b31ad71b-77b4-4103-9470-d6b7cb609cb4}-platform.ini</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\platform.ini</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\plugin-container.exe</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{d0bf4f74-bb43-432b-89e6-e22584ed98b7}-plugin-container.exe</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\plugin-container.exe</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\plugin-hang-ui.exe</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{bde8189a-0d42-4f3a-9d73-708ad508637f}-plugin-hang-ui.exe</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\plugin-hang-ui.exe</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\precomplete</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{21066f36-a86a-4152-b2ba-7bd013456546}-precomplete</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\precomplete</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\README.xulrunner</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{9d332951-ba2e-4336-ac41-debca551d189}-README.xulrunner</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\README.xulrunner</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\redit.exe</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{0c0ae566-c4f6-49b9-97a0-9fceaa8f3d45}-redit.exe</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\redit.exe</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\softokn3.chk</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{3eda149d-2221-46a4-917a-d441adc16ab3}-softokn3.chk</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\softokn3.chk</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\softokn3.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{f95afeed-6f04-4848-a10f-a17476e8fc57}-softokn3.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\softokn3.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\updater.exe</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{d6886be1-f2bd-4160-9784-b6799f00489a}-updater.exe</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\updater.exe</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\xul.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{51739373-ea01-4927-abca-c5e80326007e}-xul.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\xul.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\xulrunner-stub.exe</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{efcc3882-31e8-4129-a2a7-5b7195fc4844}-xulrunner-stub.exe</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\xulrunner-stub.exe</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\xulrunner.exe</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{bb2d6969-e6b0-4578-8a8d-01e5fc0a67da}-xulrunner.exe</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\xulrunner.exe</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\dictionaries\en-US.aff</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{e597a5fe-5e74-4f0e-aa00-ea04f7fbde9d}-en-US.aff</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\dictionaries\en-US.aff</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\dictionaries\en-US.dic</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{39d7d724-77d1-4d19-897c-a73a982728d0}-en-US.dic</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\dictionaries\en-US.dic</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\d3dcompiler_46.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{308a5f90-b855-4bc4-ad2f-e14d04df215a}-d3dcompiler_46.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\d3dcompiler_46.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\icudt52.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{9191484d-5da9-4c94-9b0e-c75d7e562aba}-icudt52.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\icudt52.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\icuin52.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{134460ac-4546-41d4-8b0a-efe69948578e}-icuin52.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\icuin52.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\icuuc52.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{9bb6f0bb-829c-4774-819a-3f9048848828}-icuuc52.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\icuuc52.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\sandboxbroker.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{b280fe37-cd0f-4fbd-93e7-e5789a4e9d78}-sandboxbroker.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\sandboxbroker.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\gmp-fake\1.0\fake.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{a707049f-d3c7-4fb6-bd91-b8927cb442af}-fake.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\gmp-fake\1.0\fake.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>Files\xulrunner\gmp-fake\1.0\fake.info</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{cc763d2f-5d44-44af-8838-008019778fd4}-fake.info</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\xulrunner\gmp-fake\1.0\fake.info</DestinationFilename>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\xul.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{6010a50d-8d6b-43bf-8093-eb438f75bd31}-xul.dll</ZipFileName>
+              <DestinationFilename>%PLUGIN%\Windows\Firefox\xul.dll</DestinationFilename>
             </FileItem>
           </Items>
         </Files>
@@ -712,7 +551,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
 Disabled pop-up windows</VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
     <OnlineLocation>http://www.team-mediaportal.com/index.php?option=com_mtree&amp;task=att_download&amp;link_id=72&amp;cf_id=24</OnlineLocation>
-    <ReleaseDate>2015-03-11T22:45:32.2721372+01:00</ReleaseDate>
+    <ReleaseDate>2016-11-16T21:39:51.0793055+01:00</ReleaseDate>
     <Tags>webbrowser, internet, web</Tags>
     <Location>..\..\BrowseTheWeb.mpe1</Location>
     <Params>
@@ -773,324 +612,163 @@ If have .dll extension used like MP plugin configuration</Description>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\AccessibleMarshal.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{704c8bfb-2648-48be-b546-cfafd1aec147}-AccessibleMarshal.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\AccessibleMarshal.dll</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\AccessibleMarshal.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{73f55502-e175-4b63-bdbe-cb37a74dc954}-AccessibleMarshal.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\AccessibleMarshal.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\breakpadinjector.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{1824a42a-c1b9-4b36-a120-dd6a28ee3812}-breakpadinjector.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\breakpadinjector.dll</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\breakpadinjector.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{5f23e3e6-a8f4-42fb-b0e3-bce80153934e}-breakpadinjector.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\breakpadinjector.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\crashreporter.exe</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{bc79c48a-0399-4a9d-8294-f9e7f2138e4d}-crashreporter.exe</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\crashreporter.exe</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\D3DCompiler_43.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{a7361b82-0ef9-4f96-ad60-9adeda0a89e8}-D3DCompiler_43.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\D3DCompiler_43.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\crashreporter.ini</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{e1d9d7a3-04fc-47cd-8fc0-adafe61a21fc}-crashreporter.ini</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\crashreporter.ini</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\d3dcompiler_47.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{a3b67aad-c133-4ce9-90ef-700060a93ffa}-d3dcompiler_47.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\d3dcompiler_47.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\D3DCompiler_43.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{874a2cb8-66bc-47b1-a924-59c7aedeaf72}-D3DCompiler_43.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\D3DCompiler_43.dll</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\freebl3.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{481bebb9-e077-445a-ab9b-ca4e6a5a8065}-freebl3.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\freebl3.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\dependentlibs.list</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{ee734ece-98b2-45e2-845a-e037b2af7b64}-dependentlibs.list</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\dependentlibs.list</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\icudt56.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{ab770870-8033-4bae-8260-8661b7064796}-icudt56.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\icudt56.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\freebl3.chk</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{3d7d850b-d04c-443a-93f4-c815d649da13}-freebl3.chk</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\freebl3.chk</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\icuin56.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{4928c1c5-09c6-422e-b879-b7a4963f01ba}-icuin56.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\icuin56.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\freebl3.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{049aaa8e-c25f-4f2c-ac0a-b683490eedbc}-freebl3.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\freebl3.dll</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\icuuc56.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{658c5291-52e9-4fed-8239-fffd01658023}-icuuc56.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\icuuc56.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\gkmedias.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{0b00dd67-cca2-46a7-9765-9195e6f97ff4}-gkmedias.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\gkmedias.dll</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\lgpllibs.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{e0a80ca1-0566-470d-b9f5-2adefb4c81aa}-lgpllibs.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\lgpllibs.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\IA2Marshal.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{dc71e2a7-11a4-4da7-8169-624e36a5a0c5}-IA2Marshal.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\IA2Marshal.dll</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\libEGL.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{9c223a2a-c895-4cf4-99e0-61af32498f65}-libEGL.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\libEGL.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\js-gdb.py</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{2eac2555-0e37-4c40-be5e-3e9b7166e88c}-js-gdb.py</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\js-gdb.py</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\libGLESv2.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{c7a347ee-a336-40bf-8867-c719c15536cb}-libGLESv2.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\libGLESv2.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\js.exe</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{d74ddb83-d0a4-47a1-8d8d-35b69e5cbec9}-js.exe</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\js.exe</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\mozglue.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{aa8b361a-28fb-41e5-9496-f63e313ad747}-mozglue.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\mozglue.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\libEGL.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{707eb149-bfa5-4158-b50c-1e59804dfac1}-libEGL.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\libEGL.dll</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\msvcp120.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{9dd86778-3496-420b-a631-1ff62c80cc45}-msvcp120.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\msvcp120.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\libGLESv2.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{d67d38fd-3f13-4ed0-aa2d-70af86c7d9d3}-libGLESv2.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\libGLESv2.dll</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\msvcr120.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{6a754a75-3015-4cf0-bf09-970256e7c7c1}-msvcr120.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\msvcr120.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\LICENSE</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{2aae553a-45cb-4b70-b1dc-029f223a12a4}-LICENSE</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\LICENSE</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\nss3.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{deec999d-0792-4096-b297-c6fb440f6828}-nss3.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\nss3.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\mozalloc.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{54af4050-6f08-4c13-90e3-d2758f067a24}-mozalloc.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\mozalloc.dll</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\nssckbi.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{a5747069-2f1b-4b98-8b76-a210d5da06be}-nssckbi.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\nssckbi.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\mozglue.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{80e915c7-8e34-43b3-b079-6b7ed9b91ed1}-mozglue.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\mozglue.dll</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\nssdbm3.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{4ddc420e-94f4-4106-a202-c6be25122a10}-nssdbm3.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\nssdbm3.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\mozjs.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{4107c7e1-c531-4a71-83f9-5b8264075361}-mozjs.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\mozjs.dll</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\omni.ja</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{44d225f3-4685-4049-b53d-2c8d9d3eaa6c}-omni.ja</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\omni.ja</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\msvcp100.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{99eaa6db-622e-4f87-95d8-912857ca4043}-msvcp100.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\msvcp100.dll</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\plugin-container.exe</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{ae829f61-7f65-453e-9dd9-ad817bf7bb38}-plugin-container.exe</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\plugin-container.exe</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\msvcr100.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{63faaaba-5267-479b-90a3-19aa1ead2856}-msvcr100.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\msvcr100.dll</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\plugin-hang-ui.exe</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{f0d82c61-905c-495d-a061-6bb8bee3cbcd}-plugin-hang-ui.exe</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\plugin-hang-ui.exe</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\nss3.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{4ea1548a-e093-4792-8822-63ffb0b9a941}-nss3.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\nss3.dll</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\sandboxbroker.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{8e68c4ac-51c9-4501-a3e5-ebeb4afcbac5}-sandboxbroker.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\sandboxbroker.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\nssckbi.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{92516e88-bc35-4d15-8e9b-486581b428ee}-nssckbi.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\nssckbi.dll</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\softokn3.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{208e0762-235d-4c9e-bf0c-0e0152dc3120}-softokn3.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\softokn3.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\nssdbm3.chk</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{cc8e4fa3-d888-46e8-a009-a0ecc5e798f8}-nssdbm3.chk</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\nssdbm3.chk</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\nssdbm3.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{16e9cefa-f807-4734-978c-e2775d692e6a}-nssdbm3.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\nssdbm3.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\omni.ja</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{c6bce977-80c9-45ca-b4a0-32139ff3774b}-omni.ja</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\omni.ja</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\platform.ini</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{b31ad71b-77b4-4103-9470-d6b7cb609cb4}-platform.ini</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\platform.ini</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\plugin-container.exe</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{d0bf4f74-bb43-432b-89e6-e22584ed98b7}-plugin-container.exe</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\plugin-container.exe</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\plugin-hang-ui.exe</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{bde8189a-0d42-4f3a-9d73-708ad508637f}-plugin-hang-ui.exe</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\plugin-hang-ui.exe</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\precomplete</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{21066f36-a86a-4152-b2ba-7bd013456546}-precomplete</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\precomplete</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\README.xulrunner</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{9d332951-ba2e-4336-ac41-debca551d189}-README.xulrunner</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\README.xulrunner</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\redit.exe</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{0c0ae566-c4f6-49b9-97a0-9fceaa8f3d45}-redit.exe</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\redit.exe</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\softokn3.chk</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{3eda149d-2221-46a4-917a-d441adc16ab3}-softokn3.chk</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\softokn3.chk</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\softokn3.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{f95afeed-6f04-4848-a10f-a17476e8fc57}-softokn3.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\softokn3.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\updater.exe</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{d6886be1-f2bd-4160-9784-b6799f00489a}-updater.exe</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\updater.exe</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\xul.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{51739373-ea01-4927-abca-c5e80326007e}-xul.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\xul.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\xulrunner-stub.exe</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{efcc3882-31e8-4129-a2a7-5b7195fc4844}-xulrunner-stub.exe</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\xulrunner-stub.exe</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\xulrunner.exe</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{bb2d6969-e6b0-4578-8a8d-01e5fc0a67da}-xulrunner.exe</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\xulrunner.exe</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\dictionaries\en-US.aff</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{e597a5fe-5e74-4f0e-aa00-ea04f7fbde9d}-en-US.aff</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\dictionaries\en-US.aff</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\dictionaries\en-US.dic</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{39d7d724-77d1-4d19-897c-a73a982728d0}-en-US.dic</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\dictionaries\en-US.dic</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\d3dcompiler_46.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{308a5f90-b855-4bc4-ad2f-e14d04df215a}-d3dcompiler_46.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\d3dcompiler_46.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\icudt52.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{9191484d-5da9-4c94-9b0e-c75d7e562aba}-icudt52.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\icudt52.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\icuin52.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{134460ac-4546-41d4-8b0a-efe69948578e}-icuin52.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\icuin52.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\icuuc52.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{9bb6f0bb-829c-4774-819a-3f9048848828}-icuuc52.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\icuuc52.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\sandboxbroker.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{b280fe37-cd0f-4fbd-93e7-e5789a4e9d78}-sandboxbroker.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\sandboxbroker.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\gmp-fake\1.0\fake.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{a707049f-d3c7-4fb6-bd91-b8927cb442af}-fake.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\gmp-fake\1.0\fake.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>Files\xulrunner\gmp-fake\1.0\fake.info</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{cc763d2f-5d44-44af-8838-008019778fd4}-fake.info</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\xulrunner\gmp-fake\1.0\fake.info</DestinationFilename>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\xul.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{6010a50d-8d6b-43bf-8093-eb438f75bd31}-xul.dll</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox\xul.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
@@ -1182,6 +860,16 @@ If have .dll extension used like MP plugin configuration</Description>
         <Folder>Files\xulrunner</Folder>
         <Group>Common</Group>
         <Recursive>true</Recursive>
+      </FolderGroup>
+      <FolderGroup InstallType="CopyFile" SystemFile="false" Modified="true">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName />
+        <ZipFileName>Installer{CopyFile}\{a0987f05-0cf3-4615-bb1a-7ef393d176ff}-</ZipFileName>
+        <DestinationFilename>%PLUGIN%\Windows\Firefox</DestinationFilename>
+        <Folder>..\Source\BrowseTheWeb\Firefox</Folder>
+        <Group>Common</Group>
+        <Recursive>false</Recursive>
       </FolderGroup>
     </FolderGroups>
     <ProjectFilename>BrowseTheWeb.xmp2</ProjectFilename>

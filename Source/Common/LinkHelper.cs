@@ -124,7 +124,8 @@ namespace BrowseTheWeb
                         // some items just need a mousehover, and a ge.Click won't do that
                         {
                             Point p = DomHelper.GetCenterCoordinate(webBrowser.Document, ge);
-                            float zoom = webBrowser.GetMarkupDocumentViewer().GetFullZoomAttribute();
+                            var cv = Xpcom.QueryInterface<nsIDocShell>(webBrowser.WebBrowserFocus).GetContentViewerAttribute();
+                            float zoom = cv.GetFullZoomAttribute();
                             p.X = Convert.ToInt32(p.X * zoom);
                             p.Y = Convert.ToInt32(p.Y * zoom);
                             ClickOn(p);

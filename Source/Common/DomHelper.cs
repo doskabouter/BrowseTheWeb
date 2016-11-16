@@ -289,11 +289,12 @@ namespace BrowseTheWeb
             GeckoElementCollection iframes = document.GetElementsByTagName("iframe");
             MyLog.debug("page iframes cnt : " + iframes.Count<GeckoHtmlElement>());
             foreach (GeckoIFrameElement element in iframes)
-                id = AddLinksToPage(element.ContentDocument, id, settings);
+                if (element.ContentDocument != null)
+                    id = AddLinksToPage(element.ContentDocument, id, settings);
             return id;
         }
 
-        private static int GetMaxId(GeckoDocument document)
+        private static int GetMaxId(GeckoDomDocument document)
         {
             int maxId = 0;
             try
@@ -312,7 +313,7 @@ namespace BrowseTheWeb
 
             GeckoElementCollection iframes = document.GetElementsByTagName("iframe");
             foreach (GeckoIFrameElement element in iframes)
-                maxId = Math.Max(maxId, GetMaxId(element.ContentDocument));
+                maxId = Math.Max(maxId, GetMaxId(element.ContentWindow.Document));
             return maxId;
         }
 

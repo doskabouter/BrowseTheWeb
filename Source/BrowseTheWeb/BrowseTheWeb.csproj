@@ -33,6 +33,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>66be88dd</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -85,13 +86,13 @@
     <Reference Include="Dialogs">
       <HintPath>$(ProgramFiles)\Team MediaPortal\MediaPortal\plugins\Windows\Dialogs.dll</HintPath>
     </Reference>
-    <Reference Include="Geckofx-Core, Version=22.0.7.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
+    <Reference Include="Geckofx-Core, Version=45.0.22.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Release\Plugins\Windows\Geckofx-Core.dll</HintPath>
+      <HintPath>..\packages\Geckofx45.45.0.22\lib\net40\Geckofx-Core.dll</HintPath>
     </Reference>
-    <Reference Include="Geckofx-Winforms, Version=22.0.7.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=MSIL">
+    <Reference Include="Geckofx-Winforms, Version=45.0.22.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Release\Plugins\Windows\Geckofx-Winforms.dll</HintPath>
+      <HintPath>..\packages\Geckofx45.45.0.22\lib\net40\Geckofx-Winforms.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -193,6 +194,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Firefox\omni.ja" />
+    <None Include="packages.config" />
     <None Include="res\folder-icon.png" />
   </ItemGroup>
   <ItemGroup>
@@ -203,6 +206,28 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\edit-icon.png" />
+    <Content Include="Firefox\AccessibleMarshal.dll" />
+    <Content Include="Firefox\breakpadinjector.dll" />
+    <Content Include="Firefox\D3DCompiler_43.dll" />
+    <Content Include="Firefox\d3dcompiler_47.dll" />
+    <Content Include="Firefox\freebl3.dll" />
+    <Content Include="Firefox\icudt56.dll" />
+    <Content Include="Firefox\icuin56.dll" />
+    <Content Include="Firefox\icuuc56.dll" />
+    <Content Include="Firefox\lgpllibs.dll" />
+    <Content Include="Firefox\libEGL.dll" />
+    <Content Include="Firefox\libGLESv2.dll" />
+    <Content Include="Firefox\mozglue.dll" />
+    <Content Include="Firefox\msvcp120.dll" />
+    <Content Include="Firefox\msvcr120.dll" />
+    <Content Include="Firefox\nss3.dll" />
+    <Content Include="Firefox\nssckbi.dll" />
+    <Content Include="Firefox\nssdbm3.dll" />
+    <Content Include="Firefox\plugin-container.exe" />
+    <Content Include="Firefox\plugin-hang-ui.exe" />
+    <Content Include="Firefox\sandboxbroker.dll" />
+    <Content Include="Firefox\softokn3.dll" />
+    <Content Include="Firefox\xul.dll" />
     <Content Include="readme.txt" />
     <Content Include="res\fav-b-icon.png" />
     <Content Include="res\MouseCursor.cur" />
@@ -241,4 +266,11 @@
   <PropertyGroup>
     <PostBuildEvent>if "$(ConfigurationName)" == "Release"  "$(ProgramFiles)\Team MediaPortal\MediaPortal\MpeMaker" ..\..\BrowseTheWeb.xmp2 /B /UpdateXML</PostBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\Geckofx45.45.0.22\build\Geckofx45.targets" Condition="Exists('..\packages\Geckofx45.45.0.22\build\Geckofx45.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Geckofx45.45.0.22\build\Geckofx45.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Geckofx45.45.0.22\build\Geckofx45.targets'))" />
+  </Target>
 </Project>

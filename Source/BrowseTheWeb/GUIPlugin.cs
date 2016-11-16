@@ -291,9 +291,9 @@ namespace BrowseTheWeb
                 webBrowser.DomKeyDown += new EventHandler<DomKeyEventArgs>(webBrowser_DomKeyDown);
 
                 MyLog.debug("set zoom size to " + settings.FontZoom + "/" + zoom);
-
-                webBrowser.Window.TextZoom = settings.FontZoom;
-                webBrowser.GetMarkupDocumentViewer().SetFullZoomAttribute(zoom);
+                var cv = Xpcom.QueryInterface<nsIDocShell>(webBrowser.WebBrowserFocus).GetContentViewerAttribute();
+                cv.SetTextZoomAttribute(settings.FontZoom);
+                cv.SetFullZoomAttribute(zoom);
 
                 if (settings.Windowed)
                 {
@@ -692,13 +692,15 @@ namespace BrowseTheWeb
         private void OnZoomIn()
         {
             if (zoom < 3) zoom += 0.1f;
-            webBrowser.GetMarkupDocumentViewer().SetFullZoomAttribute(zoom);
+            var cv = Xpcom.QueryInterface<nsIDocShell>(webBrowser.WebBrowserFocus).GetContentViewerAttribute();
+            cv.SetFullZoomAttribute(zoom);
             if (!settings.Remote) GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
         }
         private void OnZoomOut()
         {
             if (zoom > 0.1f) zoom -= 0.1f;
-            webBrowser.GetMarkupDocumentViewer().SetFullZoomAttribute(zoom);
+            var cv = Xpcom.QueryInterface<nsIDocShell>(webBrowser.WebBrowserFocus).GetContentViewerAttribute();
+            cv.SetFullZoomAttribute(zoom);
             if (!settings.Remote) GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
         }
         private void OnMoveLeft()
@@ -826,7 +828,8 @@ namespace BrowseTheWeb
                 #region reset zoom
                 if (settings.ZoomPage)
                 {
-                    webBrowser.GetMarkupDocumentViewer().SetFullZoomAttribute(settings.DefaultZoom);
+                    var cv = Xpcom.QueryInterface<nsIDocShell>(webBrowser.WebBrowserFocus).GetContentViewerAttribute();
+                    cv.SetFullZoomAttribute(settings.DefaultZoom);
                     zoom = settings.DefaultZoom;
                     GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
                 }
@@ -835,7 +838,8 @@ namespace BrowseTheWeb
                     if (lastDomain != webBrowser.Document.Domain)
                     {
                         {
-                            webBrowser.GetMarkupDocumentViewer().SetFullZoomAttribute(settings.DefaultZoom);
+                            var cv = Xpcom.QueryInterface<nsIDocShell>(webBrowser.WebBrowserFocus).GetContentViewerAttribute();
+                            cv.SetFullZoomAttribute(settings.DefaultZoom);
                             zoom = settings.DefaultZoom;
                             GUIPropertyManager.SetProperty("#btWeb.status", "Zoom set to " + (int)(zoom * 100));
                         }

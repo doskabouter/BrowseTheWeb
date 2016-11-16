@@ -54,6 +54,9 @@ namespace BrowseTheWeb.Setup
             string oldXulPath = Path.Combine(unpackDirectory, "xulrunner");
             if (Directory.Exists(oldXulPath))
                 Directory.Delete(oldXulPath, true);
+            oldXulPath = Path.Combine(unpackDirectory, "Firefox");
+            if (Directory.Exists(oldXulPath))
+                Directory.Delete(oldXulPath, true);
 
             #endregion
 
