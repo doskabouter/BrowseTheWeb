@@ -65,7 +65,7 @@ namespace BrowseTheWeb
             GeckoElementCollection iframes = document.GetElementsByTagName("iframe");
             foreach (GeckoIFrameElement element in iframes)
             {
-                ge = GetElement(linkId, element.ContentDocument);
+                ge = GetElement(linkId, (GeckoDocument)element.ContentWindow.Document);
                 if (ge != null)
                     return ge;
             }
@@ -96,7 +96,7 @@ namespace BrowseTheWeb
             GeckoElementCollection iframes = root.GetElementsByTagName("iframe");
             foreach (GeckoIFrameElement element in iframes)
             {
-                if (element.ContentDocument.Equals(current))
+                if (element.ContentWindow.Document.Equals(current))
                 {
                     Point tmp = DocumentOffset(root, element.OwnerDocument);
                     result.X += element.GetBoundingClientRect().Left + tmp.X;
@@ -289,8 +289,8 @@ namespace BrowseTheWeb
             GeckoElementCollection iframes = document.GetElementsByTagName("iframe");
             MyLog.debug("page iframes cnt : " + iframes.Count<GeckoHtmlElement>());
             foreach (GeckoIFrameElement element in iframes)
-                if (element.ContentDocument != null)
-                    id = AddLinksToPage(element.ContentDocument, id, settings);
+                if (element.ContentWindow.Document != null && element.ContentWindow.Document is GeckoDocument)
+                    id = AddLinksToPage((GeckoDocument)element.ContentWindow.Document, id, settings);
             return id;
         }
 
