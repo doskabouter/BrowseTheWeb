@@ -17,12 +17,12 @@ namespace BrowseTheWeb
             "border-width: 1px ! important; " +
             "border-style: solid ! important; " +
             "border-radius: 2px 2px 2px 2px ! important; " +
-            "max-height: 10px ! important; " +
             "overflow: visible ! important; " +
             "float: none ! important; " +
             "display: inline;";
 
         private const string _spanstyle = _baseSpanStyle +
+            "max-height: 10px ! important; " +
             "padding: 0px 2px ! important; " +
             "margin-right: 2px; " +
             "max-width: 20px; " +
@@ -31,11 +31,12 @@ namespace BrowseTheWeb
             "left: 0; ";
 
         private const string _spanStyleObject = _baseSpanStyle +
+            "max-height: 16px ! important; " +
             "padding: 0px 2px 4px 2px ! important; " +
             "margin-right: 8px; " +
             "max-width: 30px; " +
             "position: absolute ! important;" +
-            "z-index-100; ";
+            "z-index:100; ";
 
         private const string btwebId = "btweb_id";
 
