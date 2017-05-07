@@ -326,7 +326,24 @@ namespace BrowseTheWeb
 
             GeckoElementCollection iframes = document.GetElementsByTagName("iframe");
             foreach (GeckoIFrameElement element in iframes)
+            {
+                bool loaded = false;
+                while (!loaded)
+                {
+                    try
+                    {
+                        var a = element.ContentWindow.Document;
+                        loaded = true;
+                    }
+                    catch
+                    {
+                        System.Threading.Thread.Sleep(100);
+                        System.Windows.Forms.Application.DoEvents();
+                    }
+                }
+
                 maxId = Math.Max(maxId, GetMaxId(element.ContentWindow.Document));
+            }
             return maxId;
         }
 
