@@ -119,6 +119,18 @@ namespace BrowseTheWeb
         private static int AddLinksToPage(GeckoDocument document, int id, Settings settings)
         {
             Dictionary<string, int> hrefs = new Dictionary<string, int>();
+
+            GeckoElementCollection videos = document.GetElementsByTagName("video");
+            MyLog.debug("page videos cnt : " + videos.Count<GeckoHtmlElement>());
+            foreach (var element in videos)
+                if (!elementDone(element))
+                {
+                    insertSpanAfter(id, null, element.Parent, "color:black;background-color:white", true);
+                    SetLinkAttributes(element, id);
+                    id++;
+                }
+
+
             GeckoElementCollection links = document.Links;
             MyLog.debug("page links cnt : " + links.Count<GeckoHtmlElement>());
             foreach (GeckoHtmlElement element in links) // no casting to GeckoAnchorElement, because document.links also returns GeckoAreaElemenets
