@@ -92,7 +92,7 @@
         <Author>Doskabouter/Mark Koenig (kroko)</Author>
         <HomePage>http://www.team-mediaportal.com/extensions/news-info/browse-the-web-webbrowser</HomePage>
         <ForumPage>http://forum.team-mediaportal.com/threads/browse-the-web-webbrowser.107285/</ForumPage>
-        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
+        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.xml</UpdateUrl>
         <Version>
           <Major>0</Major>
           <Minor>3</Minor>
@@ -102,7 +102,7 @@
         <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / Webbrowser.</ExtensionDescription>
         <VersionDescription>versioned installer</VersionDescription>
         <DevelopmentStatus>Stable</DevelopmentStatus>
-        <OnlineLocation>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.0.3.11.mpe1</OnlineLocation>
+        <OnlineLocation>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.0.3.11.mpe1</OnlineLocation>
         <ReleaseDate>2013-03-11T22:15:58.608769+01:00</ReleaseDate>
         <Tags>webbrowser, internet, web</Tags>
         <Location>..\..\BrowseTheWeb.mpe1</Location>
@@ -121,7 +121,7 @@ If have .exe extension the will be executed
 If have .dll extension used like MP plugin configuration</Description>
             </SectionParam>
             <SectionParam Name="Online Screenshots">
-              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/setup3.jpg</Value>
+              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/setup3.jpg</Value>
               <ValueType>String</ValueType>
               <Description>Online stored screenshot urls separated by ; </Description>
             </SectionParam>
@@ -232,7 +232,7 @@ If have .dll extension used like MP plugin configuration</Description>
         <Author>Doskabouter/Mark Koenig (kroko)</Author>
         <HomePage>http://www.team-mediaportal.com/extensions/news-info/browse-the-web-webbrowser</HomePage>
         <ForumPage>http://forum.team-mediaportal.com/threads/browse-the-web-webbrowser.107285/</ForumPage>
-        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
+        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.xml</UpdateUrl>
         <Version>
           <Major>1</Major>
           <Minor>0</Minor>
@@ -242,7 +242,7 @@ If have .dll extension used like MP plugin configuration</Description>
         <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / Webbrowser.</ExtensionDescription>
         <VersionDescription>Upgraded core to 18.0.2</VersionDescription>
         <DevelopmentStatus>Rc</DevelopmentStatus>
-        <OnlineLocation>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.1.0.0.mpe1</OnlineLocation>
+        <OnlineLocation>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.1.0.0.mpe1</OnlineLocation>
         <ReleaseDate>2013-03-11T22:59:55.6086995+01:00</ReleaseDate>
         <Tags>webbrowser, internet, web</Tags>
         <Location>..\..\BrowseTheWeb.mpe1</Location>
@@ -261,7 +261,7 @@ If have .exe extension the will be executed
 If have .dll extension used like MP plugin configuration</Description>
             </SectionParam>
             <SectionParam Name="Online Screenshots">
-              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/setup3.jpg</Value>
+              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/setup3.jpg</Value>
               <ValueType>String</ValueType>
               <Description>Online stored screenshot urls separated by ; </Description>
             </SectionParam>
@@ -380,7 +380,7 @@ If have .dll extension used like MP plugin configuration</Description>
         <Author>Doskabouter</Author>
         <HomePage>http://www.team-mediaportal.com/extensions/news-info/browse-the-web-webbrowser</HomePage>
         <ForumPage>http://forum.team-mediaportal.com/threads/browse-the-web-webbrowser.107285/</ForumPage>
-        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
+        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.xml</UpdateUrl>
         <Version>
           <Major>1</Major>
           <Minor>1</Minor>
@@ -394,7 +394,7 @@ Added skin selection to installer
 Fixed installation issues
 Skin improvements</VersionDescription>
         <DevelopmentStatus>Stable</DevelopmentStatus>
-        <OnlineLocation>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.1.1.0.0.mpe1</OnlineLocation>
+        <OnlineLocation>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.1.1.0.0.mpe1</OnlineLocation>
         <ReleaseDate>2013-04-08T21:18:37.2804854+02:00</ReleaseDate>
         <Tags>webbrowser, internet, web</Tags>
         <Location>..\..\BrowseTheWeb.mpe1</Location>
@@ -413,7 +413,7 @@ If have .exe extension the will be executed
 If have .dll extension used like MP plugin configuration</Description>
             </SectionParam>
             <SectionParam Name="Online Screenshots">
-              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/setup3.jpg</Value>
+              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/setup3.jpg</Value>
               <ValueType>String</ValueType>
               <Description>Online stored screenshot urls separated by ; </Description>
             </SectionParam>
@@ -532,7 +532,7 @@ If have .dll extension used like MP plugin configuration</Description>
         <Author>Doskabouter</Author>
         <HomePage>http://www.team-mediaportal.com/extensions/news-info/browse-the-web-webbrowser</HomePage>
         <ForumPage>http://forum.team-mediaportal.com/threads/browse-the-web-webbrowser.107285/</ForumPage>
-        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
+        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.xml</UpdateUrl>
         <Version>
           <Major>1</Major>
           <Minor>2</Minor>
@@ -545,7 +545,7 @@ Fixed click issue when zoom isn't 100%
 Fixed missing round corners at link-numbers
 Improved placement of link-numbers</VersionDescription>
         <DevelopmentStatus>Stable</DevelopmentStatus>
-        <OnlineLocation>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.1.2.0.0.mpe1</OnlineLocation>
+        <OnlineLocation>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.1.2.0.0.mpe1</OnlineLocation>
         <ReleaseDate>2013-05-18T21:31:58.202852+02:00</ReleaseDate>
         <Tags>webbrowser, internet, web</Tags>
         <Location>..\..\BrowseTheWeb.mpe1</Location>
@@ -564,7 +564,7 @@ If have .exe extension the will be executed
 If have .dll extension used like MP plugin configuration</Description>
             </SectionParam>
             <SectionParam Name="Online Screenshots">
-              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/setup3.jpg</Value>
+              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/setup3.jpg</Value>
               <ValueType>String</ValueType>
               <Description>Online stored screenshot urls separated by ; </Description>
             </SectionParam>
@@ -683,7 +683,7 @@ If have .dll extension used like MP plugin configuration</Description>
         <Author>Doskabouter</Author>
         <HomePage>http://www.team-mediaportal.com/extensions/news-info/browse-the-web-webbrowser</HomePage>
         <ForumPage>http://forum.team-mediaportal.com/threads/browse-the-web-webbrowser.107285/</ForumPage>
-        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
+        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.xml</UpdateUrl>
         <Version>
           <Major>1</Major>
           <Minor>3</Minor>
@@ -695,7 +695,7 @@ If have .dll extension used like MP plugin configuration</Description>
 Better handling of &lt;a&gt; elements with onclick handler
 Reuse numbers for &lt;a&gt; elements with same href</VersionDescription>
         <DevelopmentStatus>Stable</DevelopmentStatus>
-        <OnlineLocation>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.1.3.0.0.mpe1</OnlineLocation>
+        <OnlineLocation>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.1.3.0.0.mpe1</OnlineLocation>
         <ReleaseDate>2013-07-02T21:43:02.437834+02:00</ReleaseDate>
         <Tags>webbrowser, internet, web</Tags>
         <Location>..\..\BrowseTheWeb.mpe1</Location>
@@ -714,7 +714,7 @@ If have .exe extension the will be executed
 If have .dll extension used like MP plugin configuration</Description>
             </SectionParam>
             <SectionParam Name="Online Screenshots">
-              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/setup3.jpg</Value>
+              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/setup3.jpg</Value>
               <ValueType>String</ValueType>
               <Description>Online stored screenshot urls separated by ; </Description>
             </SectionParam>
@@ -833,7 +833,7 @@ If have .dll extension used like MP plugin configuration</Description>
         <Author>Doskabouter</Author>
         <HomePage>http://www.team-mediaportal.com/extensions/news-info/browse-the-web-webbrowser</HomePage>
         <ForumPage>http://forum.team-mediaportal.com/threads/browse-the-web-webbrowser.107285/</ForumPage>
-        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
+        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.xml</UpdateUrl>
         <Version>
           <Major>1</Major>
           <Minor>4</Minor>
@@ -844,7 +844,7 @@ If have .dll extension used like MP plugin configuration</Description>
         <VersionDescription>Fixed some gui issues
 Fixed Compatibility with Mediaportal 1.6.0</VersionDescription>
         <DevelopmentStatus>Stable</DevelopmentStatus>
-        <OnlineLocation>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.1.4.0.0.mpe1</OnlineLocation>
+        <OnlineLocation>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.1.4.0.0.mpe1</OnlineLocation>
         <ReleaseDate>2013-11-12T23:14:07.6287285+01:00</ReleaseDate>
         <Tags>webbrowser, internet, web</Tags>
         <Location>..\..\BrowseTheWeb.mpe1</Location>
@@ -863,7 +863,7 @@ If have .exe extension the will be executed
 If have .dll extension used like MP plugin configuration</Description>
             </SectionParam>
             <SectionParam Name="Online Screenshots">
-              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/setup3.jpg</Value>
+              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/setup3.jpg</Value>
               <ValueType>String</ValueType>
               <Description>Online stored screenshot urls separated by ; </Description>
             </SectionParam>
@@ -982,7 +982,7 @@ If have .dll extension used like MP plugin configuration</Description>
         <Author>Doskabouter</Author>
         <HomePage>http://www.team-mediaportal.com/extensions/news-info/browse-the-web-webbrowser</HomePage>
         <ForumPage>http://forum.team-mediaportal.com/threads/browse-the-web-webbrowser.107285/</ForumPage>
-        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
+        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.xml</UpdateUrl>
         <Version>
           <Major>1</Major>
           <Minor>5</Minor>
@@ -996,7 +996,7 @@ Fixed some mouse click issues
 Uses Gecko version 22
 </VersionDescription>
         <DevelopmentStatus>Stable</DevelopmentStatus>
-        <OnlineLocation>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.1.5.0.0.mpe1</OnlineLocation>
+        <OnlineLocation>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.1.5.0.0.mpe1</OnlineLocation>
         <ReleaseDate>2014-01-23T22:56:18.0702247+01:00</ReleaseDate>
         <Tags>webbrowser, internet, web</Tags>
         <Location>..\..\BrowseTheWeb.mpe1</Location>
@@ -1015,7 +1015,7 @@ If have .exe extension the will be executed
 If have .dll extension used like MP plugin configuration</Description>
             </SectionParam>
             <SectionParam Name="Online Screenshots">
-              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/setup3.jpg</Value>
+              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/setup3.jpg</Value>
               <ValueType>String</ValueType>
               <Description>Online stored screenshot urls separated by ; </Description>
             </SectionParam>
@@ -1134,7 +1134,7 @@ If have .dll extension used like MP plugin configuration</Description>
         <Author>Doskabouter</Author>
         <HomePage>http://www.team-mediaportal.com/extensions/news-info/browse-the-web-webbrowser</HomePage>
         <ForumPage>http://forum.team-mediaportal.com/threads/browse-the-web-webbrowser.107285/</ForumPage>
-        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
+        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.xml</UpdateUrl>
         <Version>
           <Major>1</Major>
           <Minor>5</Minor>
@@ -1148,7 +1148,7 @@ Fixed some mouse click issues
 Uses Gecko version 22
 </VersionDescription>
         <DevelopmentStatus>Stable</DevelopmentStatus>
-        <OnlineLocation>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.1.5.0.1.mpe1</OnlineLocation>
+        <OnlineLocation>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.1.5.0.1.mpe1</OnlineLocation>
         <ReleaseDate>2014-01-25T21:13:09.5882715+01:00</ReleaseDate>
         <Tags>webbrowser, internet, web</Tags>
         <Location>..\..\BrowseTheWeb.mpe1</Location>
@@ -1167,7 +1167,7 @@ If have .exe extension the will be executed
 If have .dll extension used like MP plugin configuration</Description>
             </SectionParam>
             <SectionParam Name="Online Screenshots">
-              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/setup3.jpg</Value>
+              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/setup3.jpg</Value>
               <ValueType>String</ValueType>
               <Description>Online stored screenshot urls separated by ; </Description>
             </SectionParam>
@@ -1286,7 +1286,7 @@ If have .dll extension used like MP plugin configuration</Description>
         <Author>Doskabouter</Author>
         <HomePage>http://www.team-mediaportal.com/extensions/news-info/browse-the-web-webbrowser</HomePage>
         <ForumPage>http://forum.team-mediaportal.com/threads/browse-the-web-webbrowser.107285/</ForumPage>
-        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
+        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.xml</UpdateUrl>
         <Version>
           <Major>1</Major>
           <Minor>6</Minor>
@@ -1321,7 +1321,7 @@ If have .exe extension the will be executed
 If have .dll extension used like MP plugin configuration</Description>
             </SectionParam>
             <SectionParam Name="Online Screenshots">
-              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/setup3.jpg</Value>
+              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/setup3.jpg</Value>
               <ValueType>String</ValueType>
               <Description>Online stored screenshot urls separated by ; </Description>
             </SectionParam>
@@ -1440,7 +1440,7 @@ If have .dll extension used like MP plugin configuration</Description>
         <Author>Doskabouter</Author>
         <HomePage>http://www.team-mediaportal.com/extensions/news-info/browse-the-web-webbrowser</HomePage>
         <ForumPage>http://forum.team-mediaportal.com/threads/browse-the-web-webbrowser.107285/</ForumPage>
-        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
+        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.xml</UpdateUrl>
         <Version>
           <Major>1</Major>
           <Minor>6</Minor>
@@ -1471,7 +1471,7 @@ If have .exe extension the will be executed
 If have .dll extension used like MP plugin configuration</Description>
             </SectionParam>
             <SectionParam Name="Online Screenshots">
-              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/setup3.jpg</Value>
+              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/setup3.jpg</Value>
               <ValueType>String</ValueType>
               <Description>Online stored screenshot urls separated by ; </Description>
             </SectionParam>
@@ -1590,7 +1590,7 @@ If have .dll extension used like MP plugin configuration</Description>
         <Author>Doskabouter</Author>
         <HomePage>http://www.team-mediaportal.com/extensions/news-info/browse-the-web-webbrowser</HomePage>
         <ForumPage>http://forum.team-mediaportal.com/threads/browse-the-web-webbrowser.107285/</ForumPage>
-        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
+        <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.xml</UpdateUrl>
         <Version>
           <Major>1</Major>
           <Minor>6</Minor>
@@ -1620,7 +1620,7 @@ If have .exe extension the will be executed
 If have .dll extension used like MP plugin configuration</Description>
             </SectionParam>
             <SectionParam Name="Online Screenshots">
-              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/setup3.jpg</Value>
+              <Value>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/browser1.jpg;https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/setup3.jpg</Value>
               <ValueType>String</ValueType>
               <Description>Online stored screenshot urls separated by ; </Description>
             </SectionParam>
