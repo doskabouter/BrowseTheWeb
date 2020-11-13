@@ -328,8 +328,10 @@ namespace BrowseTheWeb
             foreach (GeckoIFrameElement element in iframes)
             {
                 bool loaded = false;
-                while (!loaded)
+                int nAttempts = 0;
+                while (!loaded && (nAttempts <= 10))
                 {
+                    nAttempts++;
                     try
                     {
                         var a = element.ContentWindow.Document;
@@ -341,8 +343,8 @@ namespace BrowseTheWeb
                         System.Windows.Forms.Application.DoEvents();
                     }
                 }
-
-                maxId = Math.Max(maxId, GetMaxId(element.ContentWindow.Document));
+                if (loaded)
+                    maxId = Math.Max(maxId, GetMaxId(element.ContentWindow.Document));
             }
             return maxId;
         }
