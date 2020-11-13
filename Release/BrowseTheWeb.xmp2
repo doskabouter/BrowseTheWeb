@@ -48,13 +48,6 @@
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
               <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\Source\BrowseTheWeb\Firefox\D3DCompiler_43.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{a7361b82-0ef9-4f96-ad60-9adeda0a89e8}-D3DCompiler_43.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\Firefox\D3DCompiler_43.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
               <LocalFileName>..\Source\BrowseTheWeb\Firefox\d3dcompiler_47.dll</LocalFileName>
               <ZipFileName>Installer{CopyFile}\{a3b67aad-c133-4ce9-90ef-700060a93ffa}-d3dcompiler_47.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\Firefox\d3dcompiler_47.dll</DestinationFilename>
@@ -65,27 +58,6 @@
               <LocalFileName>..\Source\BrowseTheWeb\Firefox\freebl3.dll</LocalFileName>
               <ZipFileName>Installer{CopyFile}\{481bebb9-e077-445a-ab9b-ca4e6a5a8065}-freebl3.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\Firefox\freebl3.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\Source\BrowseTheWeb\Firefox\icudt56.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{ab770870-8033-4bae-8260-8661b7064796}-icudt56.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\Firefox\icudt56.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\Source\BrowseTheWeb\Firefox\icuin56.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{4928c1c5-09c6-422e-b879-b7a4963f01ba}-icuin56.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\Firefox\icuin56.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\Source\BrowseTheWeb\Firefox\icuuc56.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{658c5291-52e9-4fed-8239-fffd01658023}-icuuc56.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\Firefox\icuuc56.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
@@ -114,20 +86,6 @@
               <LocalFileName>..\Source\BrowseTheWeb\Firefox\mozglue.dll</LocalFileName>
               <ZipFileName>Installer{CopyFile}\{aa8b361a-28fb-41e5-9496-f63e313ad747}-mozglue.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\Firefox\mozglue.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\Source\BrowseTheWeb\Firefox\msvcp120.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{9dd86778-3496-420b-a631-1ff62c80cc45}-msvcp120.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\Firefox\msvcp120.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>OverwriteIfOlder</UpdateOption>
-              <LocalFileName>..\Source\BrowseTheWeb\Firefox\msvcr120.dll</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{6a754a75-3015-4cf0-bf09-970256e7c7c1}-msvcr120.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\Windows\Firefox\msvcr120.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
               <Param1 />
@@ -191,6 +149,27 @@
               <LocalFileName>..\Source\BrowseTheWeb\Firefox\xul.dll</LocalFileName>
               <ZipFileName>Installer{CopyFile}\{6010a50d-8d6b-43bf-8093-eb438f75bd31}-xul.dll</ZipFileName>
               <DestinationFilename>%Plugins%\Windows\Firefox\xul.dll</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\icudt58.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{fb2c9ac7-d84f-45f8-b65a-f6b13b16f676}-icudt58.dll</ZipFileName>
+              <DestinationFilename>%Plugins%\Windows\Firefox\icudt58.dll</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\icuin58.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{b5ba85d6-f4b2-433c-8323-bcede800ecf9}-icuin58.dll</ZipFileName>
+              <DestinationFilename>%Plugins%\Windows\Firefox\icuin58.dll</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>OverwriteIfOlder</UpdateOption>
+              <LocalFileName>..\Source\BrowseTheWeb\Firefox\icuuc58.dll</LocalFileName>
+              <ZipFileName>Installer{CopyFile}\{33af2941-f742-4433-88e0-5050b1d99df1}-icuuc58.dll</ZipFileName>
+              <DestinationFilename>%Plugins%\Windows\Firefox\icuuc58.dll</DestinationFilename>
             </FileItem>
           </Items>
         </Files>
@@ -537,21 +516,21 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <Name>Browse The Web</Name>
     <Id>2869e8cd-579e-4fdb-ad6d-19ff5bd4e46f</Id>
     <Author>Doskabouter</Author>
-    <HomePage>http://www.team-mediaportal.com/extensions/news-info/browse-the-web-webbrowser</HomePage>
-    <ForumPage>http://forum.team-mediaportal.com/threads/browse-the-web-webbrowser.107285/</ForumPage>
-    <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/Release/BrowseTheWeb.xml</UpdateUrl>
+    <HomePage>https://www.team-mediaportal.com/extensions/news-info/browse-the-web-webbrowser</HomePage>
+    <ForumPage>https://forum.team-mediaportal.com/threads/browse-the-web-webbrowser.107285/</ForumPage>
+    <UpdateUrl>https://raw.githubusercontent.com/doskabouter/BrowseTheWeb/master/Release/BrowseTheWeb.xml</UpdateUrl>
     <Version>
       <Major>1</Major>
-      <Minor>6</Minor>
-      <Build>2</Build>
+      <Minor>7</Minor>
+      <Build>0</Build>
       <Revision>0</Revision>
     </Version>
     <ExtensionDescription>Webrowser based on xulrunner and the "Gecko Browser" / Webbrowser.</ExtensionDescription>
-    <VersionDescription>Based on version 33 of core
-Disabled pop-up windows</VersionDescription>
+    <VersionDescription>Based on version 45 of core
+Added video elements</VersionDescription>
     <DevelopmentStatus>Stable</DevelopmentStatus>
     <OnlineLocation>http://www.team-mediaportal.com/index.php?option=com_mtree&amp;task=att_download&amp;link_id=72&amp;cf_id=24</OnlineLocation>
-    <ReleaseDate>2016-11-19T19:58:34.0815011+01:00</ReleaseDate>
+    <ReleaseDate>2020-11-13T15:28:05.7501435+01:00</ReleaseDate>
     <Tags>webbrowser, internet, web</Tags>
     <Location>..\..\BrowseTheWeb.mpe1</Location>
     <Params>
@@ -626,13 +605,6 @@ If have .dll extension used like MP plugin configuration</Description>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
         <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\Source\BrowseTheWeb\Firefox\D3DCompiler_43.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{a7361b82-0ef9-4f96-ad60-9adeda0a89e8}-D3DCompiler_43.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\Firefox\D3DCompiler_43.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
         <LocalFileName>..\Source\BrowseTheWeb\Firefox\d3dcompiler_47.dll</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{a3b67aad-c133-4ce9-90ef-700060a93ffa}-d3dcompiler_47.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\Firefox\d3dcompiler_47.dll</DestinationFilename>
@@ -643,27 +615,6 @@ If have .dll extension used like MP plugin configuration</Description>
         <LocalFileName>..\Source\BrowseTheWeb\Firefox\freebl3.dll</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{481bebb9-e077-445a-ab9b-ca4e6a5a8065}-freebl3.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\Firefox\freebl3.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\Source\BrowseTheWeb\Firefox\icudt56.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{ab770870-8033-4bae-8260-8661b7064796}-icudt56.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\Firefox\icudt56.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\Source\BrowseTheWeb\Firefox\icuin56.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{4928c1c5-09c6-422e-b879-b7a4963f01ba}-icuin56.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\Firefox\icuin56.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\Source\BrowseTheWeb\Firefox\icuuc56.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{658c5291-52e9-4fed-8239-fffd01658023}-icuuc56.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\Firefox\icuuc56.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
@@ -692,20 +643,6 @@ If have .dll extension used like MP plugin configuration</Description>
         <LocalFileName>..\Source\BrowseTheWeb\Firefox\mozglue.dll</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{aa8b361a-28fb-41e5-9496-f63e313ad747}-mozglue.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\Firefox\mozglue.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\Source\BrowseTheWeb\Firefox\msvcp120.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{9dd86778-3496-420b-a631-1ff62c80cc45}-msvcp120.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\Firefox\msvcp120.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>OverwriteIfOlder</UpdateOption>
-        <LocalFileName>..\Source\BrowseTheWeb\Firefox\msvcr120.dll</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{6a754a75-3015-4cf0-bf09-970256e7c7c1}-msvcr120.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\Windows\Firefox\msvcr120.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
         <Param1 />
@@ -769,6 +706,27 @@ If have .dll extension used like MP plugin configuration</Description>
         <LocalFileName>..\Source\BrowseTheWeb\Firefox\xul.dll</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{6010a50d-8d6b-43bf-8093-eb438f75bd31}-xul.dll</ZipFileName>
         <DestinationFilename>%Plugins%\Windows\Firefox\xul.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\icudt58.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{fb2c9ac7-d84f-45f8-b65a-f6b13b16f676}-icudt58.dll</ZipFileName>
+        <DestinationFilename>%Plugins%\Windows\Firefox\icudt58.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\icuin58.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{b5ba85d6-f4b2-433c-8323-bcede800ecf9}-icuin58.dll</ZipFileName>
+        <DestinationFilename>%Plugins%\Windows\Firefox\icuin58.dll</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>OverwriteIfOlder</UpdateOption>
+        <LocalFileName>..\Source\BrowseTheWeb\Firefox\icuuc58.dll</LocalFileName>
+        <ZipFileName>Installer{CopyFile}\{33af2941-f742-4433-88e0-5050b1d99df1}-icuuc58.dll</ZipFileName>
+        <DestinationFilename>%Plugins%\Windows\Firefox\icuuc58.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
