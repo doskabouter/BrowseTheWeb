@@ -280,15 +280,6 @@ namespace BrowseTheWeb
                         }
                     }
 
-                IDomHtmlCollection<GeckoElement> buttons = element.GetElementsByTagName("button");
-                foreach (GeckoHtmlElement button in buttons)
-                    if (!elementDone(button) && button.ClientRects.Length != 0)
-                    {
-                        SetLinkAttributes(button, id);
-                        insertSpanBefore(id, null, button);
-                        id++;
-                    }
-
                 IDomHtmlCollection<GeckoElement> selects = element.GetElementsByTagName("select");
                 foreach (GeckoHtmlElement select in selects)
                     if (!elementDone(select) && select.ClientRects.Length != 0)
@@ -298,6 +289,15 @@ namespace BrowseTheWeb
                         id++;
                     }
             }
+
+            GeckoElementCollection buttons = document.GetElementsByTagName("button");
+            foreach (GeckoHtmlElement button in buttons)
+                if (!elementDone(button) && button.ClientRects.Length != 0)
+                {
+                    SetLinkAttributes(button, id);
+                    insertSpanBefore(id, null, button);
+                    id++;
+                }
 
             GeckoElementCollection iframes = document.GetElementsByTagName("iframe");
             MyLog.debug("page iframes cnt : " + iframes.Count<GeckoHtmlElement>());
